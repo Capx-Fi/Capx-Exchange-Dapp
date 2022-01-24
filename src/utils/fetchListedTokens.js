@@ -7,6 +7,22 @@ import BigNumber from "bignumber.js";
 const GRAPHAPIURL =
   "https://api.studio.thegraph.com/query/16341/exchange/v0.0.7";
 
+function convertDateToString(timestamp) {
+    const unixTime = timestamp;
+    const date = new Date(unixTime * 1000);
+    let unlockDay = date.toLocaleDateString("en-US", {
+      day: "numeric",
+    });
+    let unlockMonth = date.toLocaleDateString("en-US", {
+      month: "long",
+    });
+    let unlockYear = date.toLocaleDateString("en-US", {
+      year: "numeric",
+    });
+    let displayGraphDate = `${unlockDay} ${unlockMonth}, ${unlockYear}`;
+    return displayGraphDate;
+  }
+
 export const fetchListedTokens = async () => {
   let listedTokens = [];
   const client = new ApolloClient({
@@ -52,7 +68,7 @@ export const fetchListedTokens = async () => {
           amountGet: order.amountGet,
           price: order.price,
           quantity: numOfTokens,
-          expiryTime: order.expiryTime,
+          expiryTime: convertDateToString(order.expiryTime),
         };
       })
       .flat();
