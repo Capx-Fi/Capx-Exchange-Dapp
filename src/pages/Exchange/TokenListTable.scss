@@ -1,0 +1,96 @@
+.tokenListTableContainer {
+  padding: 15px;
+  background: #171c1f;
+  border-top: 1px solid #2a383c;
+  border-radius: 16px;
+}
+.sorter-no-tooltip .ant-table-column-sorters:before {
+  content: none !important;
+}
+.ant-table-wrapper {
+  .ant-table {
+    background: #151517;
+    // border-radius: 16px;
+
+    border-bottom: 1px solid #2a383c;
+    ::-webkit-scrollbar:vertical {
+      @apply w-1.5 bg-dark-200;
+    }
+    ::-webkit-scrollbar:horizontal {
+      @apply h-1.5 bg-dark-200;
+    }
+    ::-webkit-scrollbar-thumb:vertical {
+      background: #4a6269;
+      @apply rounded-md h-16 bg-opacity-50;
+    }
+    ::-webkit-scrollbar-thumb:horizontal {
+      background: #4a6269;
+      @apply rounded-md w-16 bg-opacity-50;
+    }
+    ::-webkit-scrollbar-track {
+      @apply rounded-md;
+    }
+    .ant-table-header {
+        // .ant-table-column-title{
+        //     padding: 0 16px ;
+        // }
+    th:first-child{
+        padding-left: 32px;
+    }
+      th {
+        background: #171c1f;
+        padding: 16px;
+        border-bottom: 1px solid #2a383c;
+        color: rgba(131, 161, 169, 0.8);
+        font-weight: bold;
+        height: 50px;
+      }
+      // th:first-child{
+      //   border-radius: 16px 0 0 0;
+      // }
+      // th:last-child{
+      //   border-radius: 0 16px 0 0;
+      // }
+    }
+
+    .ant-table-tbody {
+      border-left: 1px solid #2a383c;
+      border-right: 1px solid #2a383c;
+      .ant-table-column-sort, .ant-table-tbody > tr > td.ant-table-cell-row-hover{
+          background: #151517;
+      }
+      .ant-empty-description{
+        color: rgba(241, 250, 242, 0.95);
+      }
+      tr {
+        td:first-child{
+            padding-left: 32px;
+        }
+        td {
+          border-bottom: 1px solid #2a383c;
+          padding: 16px;
+          color: rgba(241, 250, 242, 0.95);
+        }
+        &:hover {
+          td {
+            background: linear-gradient(
+              0deg,
+              rgba(50, 84, 63, 0.3) -2.35%,
+              rgba(39, 65, 50, 0.3) 52.44%,
+              rgba(24, 41, 31, 0.3) 105.29%
+            );
+          }
+        }
+        &:last-child {
+          td {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ant-table-cell-scrollbar {
+  box-shadow: none;
+}

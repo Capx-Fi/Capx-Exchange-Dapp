@@ -1,0 +1,7 @@
+.dd {
+  @apply flex flex-row justify-between items-center rounded-xl px-3 py-1 bg-dark-300  border text-grayLabel text-caption-1 font-semibold w-fit-content;
+}
+
+.option {
+  @apply block px-4 py-2 mx-auto w-11/12 text-caption-2 text-grayLabel hover:bg-dark-75 hover:text-white;
+}

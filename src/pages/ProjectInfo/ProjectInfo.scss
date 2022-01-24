@@ -1,0 +1,68 @@
+.infoHeader {
+  background: #171c1f;
+  border: 1px solid #2a383c;
+  box-sizing: border-box;
+  border-radius: 16px;
+  @apply w-full relative h-28  mb-10;
+  &_illustration {
+    @apply absolute bottom-0 right-0;
+  }
+  &_innerDiv {
+    @apply mr-16 text-left align-middle p-6;
+    &_title {
+      @apply text-tradeTitle text-caption-1 leading-caption-2 font-bold pb-1;
+    }
+    &_value {
+      @apply text-white text-subheading font-bold leading-subheading pb-2;
+    }
+  }
+}
+.main-container {
+  @apply flex mt-10;
+  &_left {
+    @apply w-8/12 pr-10;
+  }
+  &_right {
+    @apply w-4/12 pl-4;
+  }
+}
+
+.outerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  @apply w-full;
+  &_maincontainer {
+    @apply flex flex-col mb-10;
+    &_body {
+      background: #171c1f;
+      border: 1px solid #2a383c;
+      box-sizing: border-box;
+      border-radius: 16px;
+      @apply flex flex-col p-2 rounded-xl mx-auto mt-2;
+      &_title {
+        color: #83a1a9;
+        @apply py-3 pl-4 flex justify-start  text-caption-3 font-semibold;
+      }
+      &_innercontainer {
+        @apply bg-dark-400 w-full rounded-xl flex flex-col justify-start;
+        &_box {
+          @apply w-full flex flex-col text-left text-white justify-start items-start;
+        }
+        &_button {
+          background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
+          @apply rounded-lg py-3 flex justify-center items-center;
+          &_title {
+            @apply text-paragraph-2 text-dark-300 font-bold;
+          }
+          &_logo {
+            @apply pl-4;
+            img {
+              @apply w-6 h-6;
+            }
+          }
+        }
+      }
+    }
+  }
+}

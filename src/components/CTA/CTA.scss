@@ -1,0 +1,23 @@
+.button {
+  background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
+  border-radius: 6.88108px;
+  @apply rounded-lg justify-center items-center flex px-5 py-3 w-fit-content z-10  cursor-pointer;
+  &_icon {
+    @apply ml-2 w-5 text-black;
+  }
+  &_text {
+    @apply text-dark-400 font-bold text-caption-1;
+  }
+}
+
+.cbutton {
+  background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
+  border-radius: 6.88108px;
+  @apply rounded-lg justify-center items-center flex px-5 py-2 w-fit-content z-10  cursor-pointer;
+  &_icon {
+    @apply ml-2 w-5 text-black;
+  }
+  &_text {
+    @apply text-dark-400 font-bold text-caption-mid tracking-wide;
+  }
+}

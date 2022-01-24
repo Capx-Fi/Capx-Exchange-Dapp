@@ -1,0 +1,99 @@
+.singleOverviewCard {
+  background: linear-gradient(241.68deg, #1f2625 6.52%, #181a1b 97.75%);
+  border-radius: 12px;
+  @apply w-29v h-overview-card text-left pb-0 bg-opacity-30;
+  &_innerDiv {
+    @apply px-10 pt-10 pb-3;
+    &_title {
+      @apply text-grayLabel text-caption-2 leading-caption-2 font-bold pb-2;
+    }
+    &_value {
+      @apply text-white text-heading-3 font-normal leading-heading-2 pb-0;
+    }
+  }
+  &_change {
+    background: linear-gradient(241.68deg, #1f2625 6.52%, #181a1b 97.75%);
+
+    border-radius: 13.7622px;
+    @apply text-success-color-400 cursor-pointer w-fit-content px-3 flex flex-row py-1 ml-10 relative z-20 -bottom-3 font-semibold text-xs  leading-caption-2;
+  }
+  &_divider {
+    @apply border-b z-10;
+    opacity: 0.4;
+    border: 1px solid #2a383c;
+  }
+}
+
+.connectWalletCard {
+  background: linear-gradient(241.68deg, #1f2625 6.52%, #181a1b 97.75%);
+  border-radius: 12px;
+  @apply w-42v h-overview-card text-left pb-5 bg-opacity-30 relative;
+  &_innerDiv {
+    opacity: 1;
+    @apply px-10 py-10;
+    &_value {
+      @apply text-white pr-10 text-paragraph-1 mt-2 leading-paragraph-1  font-medium  pb-4;
+    }
+    &_button {
+      background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
+      border-radius: 6.88108px;
+      @apply rounded-xl justify-center items-center flex px-6 py-3 w-fit-content z-10   cursor-pointer;
+      &_icon {
+        @apply ml-2 w-5 text-black;
+      }
+      &_text {
+        @apply text-dark-400 font-bold text-caption-3;
+      }
+    }
+  }
+  &_illustration {
+    @apply absolute -bottom-12 h-36 w-36 -right-6;
+  }
+}
+
+.extendedOverviewCard {
+  @apply w-40v h-overview-card text-left pb-3 bg-opacity-30;
+  background: linear-gradient(241.68deg, #1f2625 6.52%, #181a1b 97.75%);
+  border-radius: 12px;
+  &_innerDiv {
+    @apply px-10 py-7;
+    &_title {
+      @apply text-grayLabel text-caption-3 leading-caption-3 font-bold pb-3;
+    }
+    &_value {
+      @apply text-white text-heading-2 font-medium leading-heading-2 pb-2;
+    }
+    &_change {
+      @apply text-success-color-400 font-medium text-caption-2 leading-caption-2;
+    }
+  }
+  &_divider {
+    @apply border-b;
+    opacity: 0.4;
+
+    border: 2px solid #2a383c;
+  }
+}
+
+.tradedVolume {
+  @apply w-full h-overview-card  pb-3 ml-20 bg-opacity-30;
+  background: linear-gradient(241.68deg, #1f2625 6.52%, #181a1b 97.75%);
+  border-radius: 12px;
+  &_innerDiv {
+    @apply mr-16 text-left;
+    &_title {
+      @apply text-tradeTitle text-caption-2 leading-caption-2 font-bold pb-1;
+    }
+    &_value {
+      @apply text-white text-2xl font-medium leading-subheading pb-2;
+    }
+    &_change {
+      @apply text-success-color-400 font-medium text-caption-2 leading-caption-2;
+    }
+  }
+  &_divider {
+    @apply border-b;
+    opacity: 0.4;
+    border: 2px solid #2a383c;
+  }
+}

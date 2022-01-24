@@ -1,0 +1,9 @@
+export const OPEN_SIDENAV = 'OPEN_SIDENAV';
+export const CLOSE_SIDENAV = 'CLOSE_SIDENAV';
+export const HIDE_SIDENAV = 'HIDE_SIDENAV';
+export const SHOW_SIDENAV = 'SHOW_SIDENAV';
+
+export const SET_EXCHANGE_SELL = 'SET_EXCHANGE_SELL';
+export const SET_EXCHANGE_BUY = 'SET_EXCHANGE_BUY';
+export const SET_BUY_TICKER = 'SET_BUY_TICKER';
+export const SET_SELL_TICKER = 'SET_SELL_TICKER';

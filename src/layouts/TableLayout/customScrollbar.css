@@ -1,0 +1,45 @@
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #2a383c;
+  border-radius: 88.1743px;
+  height: 80%;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4a6269;
+  border-radius: 88.1743px;
+  width: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #599504;
+}
+
+.tableFixHead {
+  width: 500px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.tableFixHead tbody {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  height: 450px;
+  border: none;
+}
+.tableFixHead thead tr {
+  display: block;
+  border: none;
+}
+.tableFixHead th,
+.tableFixHead td {
+  padding: 5px 10px;
+  width: 200px;
+  height: 50px;
+}

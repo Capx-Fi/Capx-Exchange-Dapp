@@ -1,0 +1,285 @@
+.exchangeScreen {
+  @apply w-82v mx-auto mt-8;
+  &_maincontainer {
+    @apply flex mt-8;
+  }
+  &_leftcontainer {
+    @apply w-8/12 pr-40 -mt-6;
+  }
+  &_rightcontainer {
+    @apply w-4/12 pl-4;
+
+    &_buyContainer {
+      @apply border rounded-2xl flex flex-col border-dark-50;
+      background: linear-gradient(0deg, #19201d 0%, #151618 101.42%),
+        rgba(21, 21, 23, 0.2);
+      &_header {
+        @apply px-6 py-4 flex flex-row h-16 border-b rounded-t-2xl border-dark-50 w-full;
+        background-color: #171c1f;
+        &_title {
+          @apply text-paragraph-1 text-primary-green-100 font-bold flex items-center;
+          &_icon {
+            @apply h-5 w-5;
+          }
+          &_text {
+            @apply ml-2;
+          }
+        }
+      }
+      &_body {
+        @apply mt-4 px-6;
+        &_payContainer {
+          @apply flex flex-col w-full mb-4;
+          &_title {
+            @apply text-caption-2 text-grayLabel mt-5 font-black text-left;
+          }
+
+          &_inputContainer {
+            @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2 ring-success-color-500;
+            &_lockWrapper {
+              @apply flex justify-center w-full items-center px-4;
+              &_icon {
+                @apply h-5 w-5;
+              }
+            }
+            &_input {
+              @apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 px-2;
+              &:focus {
+                @apply outline-none;
+              }
+            }
+            &_balanceContainer {
+              &_main {
+                @apply flex flex-row justify-between text-left items-center px-4;
+                &_text {
+                  @apply text-caption-2 text-grayLabel font-bold;
+                }
+                &_max {
+                  @apply text-caption-2 font-bold ml-2 cursor-pointer;
+                  background: -webkit-linear-gradient(
+                    355.38deg,
+                    #3f7ef8 -9.64%,
+                    #3ff8cc 87.34%
+                  );
+                  -webkit-background-clip: text;
+                  background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                }
+              }
+              &_value {
+                @apply text-left px-4 text-caption-2 text-grayLabel font-bold;
+              }
+            }
+          }
+        }
+        &_tokenContainer {
+          @apply flex flex-col w-full mb-4;
+          &_title {
+            @apply text-caption-2 text-grayLabel mt-5 font-black text-left;
+          }
+
+          &_inputContainer {
+            @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2 ring-success-color-500;
+            &_lockWrapper {
+              @apply flex justify-center items-center px-4;
+              &_icon {
+                @apply h-5 w-5;
+              }
+            }
+            &_input {
+              @apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 px-2;
+              &:focus {
+                @apply outline-none;
+              }
+            }
+            &_dateInput {
+              &:focus {
+                @apply outline-none;
+              }
+            }
+            &_timeInput {
+              @apply bg-dark-400 text-primary-green-100;
+            }
+            &_balanceContainer {
+              &_main {
+                @apply flex flex-row justify-between text-left items-center px-4;
+                &_text {
+                  @apply text-caption-2 text-grayLabel font-bold;
+                }
+                &_max {
+                  @apply text-caption-2 font-bold ml-2 cursor-pointer;
+                  background: -webkit-linear-gradient(
+                    355.38deg,
+                    #3f7ef8 -9.64%,
+                    #3ff8cc 87.34%
+                  );
+                  -webkit-background-clip: text;
+                  background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                }
+              }
+              &_value {
+                @apply text-left px-4 text-caption-2 text-grayLabel font-bold;
+              }
+            }
+          }
+        }
+        &_splitContainer {
+          @apply flex gap-4;
+        }
+        &_separator {
+          @apply w-full flex items-center;
+          height: 100px;
+          &_line {
+            @apply bg-dark-50;
+            height: 1px;
+          }
+          &_iconContainer {
+            @apply flex justify-center items-center;
+            &_icon {
+              @apply h-10;
+            }
+          }
+        }
+        &_expiryDetailsContainer {
+          @apply text-grayLabel text-caption-2 font-bold text-left py-4;
+        }
+        &_swapButton {
+          background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
+          @apply rounded-lg py-3 my-4 flex justify-center items-center cursor-pointer;
+          &_title {
+            @apply text-paragraph-2 text-dark-300 font-bold;
+          }
+          &_icon {
+            @apply pl-4;
+            img {
+              @apply w-6 h-6;
+            }
+          }
+        }
+      }
+      &_footer {
+        @apply h-5 border-t mt-8 border-dark-50;
+      }
+    }
+  }
+  &_header {
+    @apply py-1 mb-3 flex justify-between content-start;
+    &_titlecontainer {
+      @apply flex flex-col items-start;
+      &_title {
+        @apply text-subheading font-medium text-white;
+      }
+      &_subtitle {
+        @apply text-caption-1 text-grayLabel font-semibold mb-5;
+      }
+    }
+  }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+.react-date-picker {
+  @apply h-14 w-full border-none text-grayLabel;
+  &__calendar {
+    border-radius: 16px !important;
+  }
+  &__wrapper {
+    border: none !important;
+  }
+  &__inputGroup {
+    @apply pl-2;
+    text-align: left !important;
+    & > input {
+      @apply text-grayLabel;
+      &:focus {
+        outline: none !important;
+      }
+    }
+  }
+}
+.ant-picker-input > input {
+  @apply w-full border-none text-grayLabel;
+  color: rgba(74, 98, 105, 1) !important;
+}
+.ant-picker-panel-container {
+  @apply bg-dark-400;
+  background-color: rgba(21, 21, 23, 1) !important;
+  color: rgba(241, 250, 242, 0.3) !important;
+}
+.ant-picker-time-panel-cell {
+  @apply text-grayLabel;
+  &:hover {
+    background: #2a383c !important;
+  }
+}
+.ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell
+  .ant-picker-time-panel-cell-inner:hover {
+  background: #2a383c !important;
+}
+.ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell-selected
+  .ant-picker-time-panel-cell-inner {
+  @apply bg-dark-400;
+  background-color: rgba(21, 21, 23, 1) !important;
+  color: rgba(241, 250, 242, 0.3) !important;
+}
+.ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell
+  .ant-picker-time-panel-cell-inner {
+  color: rgba(241, 250, 242, 0.3) !important;
+}
+
+.react-calendar {
+  @apply bg-dark-400 rounded-2xl;
+  background-color: rgba(21, 21, 23, 1) !important;
+  &__month-view {
+    &__weekdays {
+      color: rgba(241, 250, 242, 0.3) !important;
+      text-decoration: none !important;
+    }
+  }
+  &__navigation {
+    @apply bg-dark-300;
+    border-radius: 16px !important;
+    color: rgba(241, 250, 242, 1) !important;
+    & > button {
+      background: #2a383c !important;
+      border-radius: 16px;
+      &:hover {
+        background: #2a383c !important;
+        border-radius: 16px;
+      }
+      &:focus {
+        outline: none !important;
+      }
+      &:active {
+        background: #2a383c !important;
+        border-radius: 16px;
+      }
+    }
+  }
+  &__tile {
+    color: rgba(241, 250, 242, 0.8) !important;
+    &:hover {
+      background: #2a383c !important;
+      border-radius: 16px;
+    }
+    &--now {
+      background: #2a383c !important;
+      border-radius: 16px;
+    }
+    &--active {
+      background: #0c4555 !important;
+      border-radius: 16px;
+    }
+  }
+}

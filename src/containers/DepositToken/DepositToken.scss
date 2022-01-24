@@ -1,0 +1,82 @@
+.DepositTokenScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  @apply w-full;
+  &_maincontainer {
+    @apply w-35v flex flex-col mt-24;
+    &_header {
+      @apply flex w-full justify-between text-paragraph-2 font-medium mb-8;
+      &_left {
+        @apply flex justify-between items-center;
+        &_title {
+          background: -webkit-linear-gradient(
+            355.38deg,
+            #3f7ef8 -9.64%,
+            #3ff8cc 87.34%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        &_logo {
+        }
+      }
+      &_right {
+        @apply flex justify-between items-center;
+        &_title {
+          background: -webkit-linear-gradient(
+            355.38deg,
+            #3f7ef8 -9.64%,
+            #3ff8cc 87.34%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        &_logo {
+        }
+      }
+    }
+    &_body {
+      filter: drop-shadow(0px 10px 50px rgba(43, 216, 0, 0.04));
+      background: radial-gradient(
+        143.33% 143.33% at 82.41% -4.96%,
+        rgba(132, 214, 164, 0.3) 0%,
+        rgba(18, 28, 32, 0.3) 100%
+      );
+      @apply flex flex-col p-2 rounded-3xl w-10/12 mx-auto;
+      &_title {
+        @apply py-6 pl-6 flex justify-start text-primary-green-100 text-subheading font-semibold;
+      }
+      &_innercontainer {
+        @apply bg-dark-400 w-full rounded-3xl px-10 pt-8 pb-16 flex flex-col justify-start;
+        &_box {
+          @apply w-full flex flex-col justify-start items-start pb-6;
+          &_title {
+            @apply text-caption-1 text-dark-100 font-bold pb-2;
+          }
+          &_value{
+              @apply flex w-full;
+          }
+        }
+        &_button{
+            background: linear-gradient(356.23deg, #96CF03 -65.8%, #F1FFF6 89%);
+            @apply rounded-lg py-3 flex justify-center items-center;
+            &_title{
+                @apply text-paragraph-2 text-dark-300 font-bold;
+            }
+            &_logo{
+                @apply pl-4;
+                img{
+                    @apply w-6 h-6;
+                }
+            }
+        }
+      }
+    }
+  }
+}

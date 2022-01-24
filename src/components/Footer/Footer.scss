@@ -1,0 +1,13 @@
+.footer {
+  @apply h-16 bottom-0 left-0 fixed flex bg-dark-400 w-full desktop:px-24 justify-center desktop:justify-start items-center border-t border-dark-200 z-50;
+  &_text {
+    @apply text-primary-green-100 font-light text-caption-3 leading-caption-3 opacity-40;
+  }
+}
+
+.footerVesting {
+  @apply h-16 bottom-0 right-0 fixed flex bg-dark-400 md:w-77p w-screen desktop:px-24 justify-center desktop:justify-end items-center border-t border-dark-200;
+  &_text {
+    @apply text-primary-green-100 font-light text-caption-3 leading-caption-3 opacity-40;
+  }
+}
