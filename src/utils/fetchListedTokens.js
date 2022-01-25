@@ -9,7 +9,7 @@ import Web3 from "web3";
 import { EXCHANGE_ABI } from "../contracts/ExchangeContract";
 import { EXCHANGE_CONTRACT_ADDRESS } from "../constants/config";
 const GRAPHAPIURL =
-  "https://api.studio.thegraph.com/query/16341/exchange/v0.1.1";
+  "https://api.studio.thegraph.com/query/16341/exchange/v0.1.3";
 
 function convertDateToString(timestamp) {
   const unixTime = timestamp;
@@ -30,6 +30,33 @@ function convertDateToString(timestamp) {
   let displayGraphDate = `${unlockDay} ${unlockMonth}, ${unlockYear} ${time}`;
   return displayGraphDate;
 }
+function convertToDate(timestamp) {
+  const unixTime = timestamp;
+  const date = new Date(unixTime * 1000);
+  let unlockDay = date.toLocaleDateString("en-US", {
+    day: "numeric",
+  });
+  let unlockMonth = date.toLocaleDateString("en-US", {
+    month: "long",
+  });
+  let unlockYear = date.toLocaleDateString("en-US", {
+    year: "numeric",
+  });
+  let displayGraphDate = `${unlockDay} ${unlockMonth}, ${unlockYear}`;
+  return displayGraphDate;
+}
+
+function convertToTime(timestamp) {
+  const unixTime = timestamp;
+  const date = new Date(unixTime * 1000);
+  let time = date.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  let displayGraphDate = `${time}`;
+  return displayGraphDate;
+}
+
 const web3 = new Web3(Web3.givenProvider);
 const exchangeContract = new web3.eth.Contract(
   EXCHANGE_ABI,
@@ -93,6 +120,8 @@ export const fetchListedTokens = async (account) => {
           price: order.price,
           quantity: numOfTokens - numReceived,
           expiryTimeActual: order.expiryTime,
+          displayExpiryDate: convertToDate(order.expiryTime),
+          displayExpiryTime: convertToTime(order.expiryTime),
           expiryTime: convertDateToString(order.expiryTime),
         };
       })

@@ -12,6 +12,7 @@ import { useWeb3React } from '@web3-react/core';
 import { fetchListedTokens } from '../../utils/fetchListedTokens';
 import { useDispatch } from 'react-redux';
 import { setBuyTicker } from '../../redux/actions/exchange';
+import { convertToInternationalCurrencySystem } from '../../utils/convertToInternationalCurrencySystem';
 
 const { Column, ColumnGroup } = Table;
 
@@ -106,13 +107,7 @@ function TokenBuyTable({ filter, setBalance }) {
           dataIndex="quantity"
           key="quantity"
           render={(value, row) => {
-            return (
-              <div>
-                {new Intl.NumberFormat("en-IN", {
-                  maximumSignificantDigits: 4,
-                }).format(Number(value))}
-              </div>
-            );
+            return <div>{convertToInternationalCurrencySystem(value)}</div>;
           }}
         />
         <Column title="Expiry Time" dataIndex="expiryTime" key="expiryTime" />

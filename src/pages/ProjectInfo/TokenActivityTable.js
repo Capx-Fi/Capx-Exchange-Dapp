@@ -9,6 +9,7 @@ import TokenLink from "../../assets/token-link.svg";
 
 import { hideSideNav } from "../../redux/actions/sideNav";
 import useWindowSize from "../../utils/windowSize";
+import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 
 const { Column, ColumnGroup } = Table;
 
@@ -49,7 +50,7 @@ function TokenActivityTable({ completeOrders }) {
           return (
             <div className="flex flex-row items-center mx-auto">
               {value}
-              <a href="https://shreyas.io" className="ml-2">
+              <a target="_blank" rel="noreferrer" href={`https://rinkeby.etherscan.io/token/${row.assetID}`} className="ml-2">
                 <img src={TokenLink} alt="deposit" />
               </a>
             </div>
@@ -76,6 +77,9 @@ function TokenActivityTable({ completeOrders }) {
         title="Quantity"
         dataIndex="completedQuantity"
         key="completedQuantity"
+        render={(value, row) => {
+          return <div>{convertToInternationalCurrencySystem(value)}</div>;
+        }}
       />
       <Column
         title="Fulfilled Date"

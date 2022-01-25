@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { hideSideNav } from "../../redux/actions/sideNav";
 import useWindowSize from "../../utils/windowSize";
 import { setProjectBuyTicker } from "../../redux/actions/exchange";
+import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 
 const { Column, ColumnGroup } = Table;
 
@@ -37,7 +38,7 @@ function TokenListTable({ activeOrders }) {
     <Table
       dataSource={activeOrders}
       pagination={false}
-      locale={{ emptyText:  "No Token Found" }}
+      locale={{ emptyText: "No Token Found" }}
       scroll={{ y: 480 }}
       onChange={onChange}
       onRow={(record) => {
@@ -85,13 +86,7 @@ function TokenListTable({ activeOrders }) {
         dataIndex="quantity"
         key="quantity"
         render={(value, row) => {
-          return (
-            <div>
-              {new Intl.NumberFormat("en-IN", {
-                maximumSignificantDigits: 4,
-              }).format(Number(value))}
-            </div>
-          );
+          return <div>{convertToInternationalCurrencySystem(value)}</div>;
         }}
       />
       <Column title="Expiry Time" dataIndex="expiryTime" key="expiryTime" />
@@ -101,14 +96,12 @@ function TokenListTable({ activeOrders }) {
         key="asset"
         render={(value, row) => {
           return (
-            <Link to={`/info/${value}`}>
               <div className="border cursor-pointer border-grayLabel py-2 rounded-lg flex flex-row justify-center w-fit-content px-3 mx-auto">
                 <img src={DepositIcon} alt="deposit" className="mr-2" />
                 <p className="text-success-color-400 uppercase font-bold text-caption-2">
                   BUY
                 </p>
               </div>
-            </Link>
           );
         }}
       />

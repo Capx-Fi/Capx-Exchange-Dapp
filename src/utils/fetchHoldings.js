@@ -4,7 +4,7 @@ import { CONTRACT_ABI_ERC20 } from "../contracts/SampleERC20";
 import Web3 from "web3";
 
 const GRAPHAPIURL =
-  "https://api.studio.thegraph.com/query/16341/exchange/v0.1.1";
+  "https://api.studio.thegraph.com/query/16341/exchange/v0.1.3";
 let data = [
   {
     id: "0x6c368bd8cc280a54ad443583d0bc18e4036a2f41",

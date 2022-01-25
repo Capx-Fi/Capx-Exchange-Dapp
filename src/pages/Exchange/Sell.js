@@ -175,6 +175,7 @@ function SellScreen() {
                 value={ticker && ticker.asset}
                 type={'text'}
                 ticker={ticker}
+                balance={null}
                 disabled={true}
                 icon={ticker && LockIcon}
               />

@@ -159,11 +159,11 @@ function BuyScreen({
           <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer'>
             <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_date'>
               {' '}
-              EXPIRY DATE: 28/02/2022
+              EXPIRY DATE: {ticker?.displayExpiryDate}
             </div>
             <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_time'>
               {' '}
-              EXPIRY TIME: 23:05
+              EXPIRY TIME: {ticker?.displayExpiryTime}
             </div>
           </div>
           <div

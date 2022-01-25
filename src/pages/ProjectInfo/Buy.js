@@ -128,7 +128,7 @@ function BuyScreen({
               }
               setMaxAmount={setMaxAmount}
               isMax={true}
-              balance={balance}
+              balance={ticker?.balance}
               value={ticker && ticker.amountGive}
             />
           </div>
@@ -151,7 +151,7 @@ function BuyScreen({
               icon={ticker && LockIcon}
               ticker={ticker}
               disabled={true}
-              balance={"15000"}
+              balance={null}
               isMax={false}
               value={ticker && ticker.amountGet}
             />
@@ -159,11 +159,11 @@ function BuyScreen({
           <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer">
             <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_date">
               {" "}
-              EXPIRY DATE: 28/02/2022
+              EXPIRY DATE: {ticker?.displayExpiryDate}
             </div>
             <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_time">
               {" "}
-              EXPIRY TIME: 23:05
+              EXPIRY TIME: {ticker?.displayExpiryTime}
             </div>
           </div>
           <div

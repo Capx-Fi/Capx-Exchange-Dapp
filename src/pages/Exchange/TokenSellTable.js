@@ -13,6 +13,8 @@ import { useWeb3React } from '@web3-react/core';
 import { useDispatch } from 'react-redux';
 import { setSellTicker, setTickerBalance } from '../../redux/actions/exchange';
 import { fetchContractBalances } from '../../utils/fetchContractBalances';
+import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
+
 
 const { Column, ColumnGroup } = Table;
 
@@ -57,10 +59,10 @@ function TokenSellTable({ filter }) {
 
   const dispatch = useDispatch();
   return (
-    <div className='tokenListTableContainer'>
+    <div className="tokenListTableContainer">
       <Table
         dataSource={portfolioHoldings}
-        locale={{ emptyText: loading ? 'Loading Tokens...' : 'No Token Found' }}
+        locale={{ emptyText: loading ? "Loading Tokens..." : "No Token Found" }}
         pagination={false}
         scroll={{ y: 500 }}
         onChange={onChange}
@@ -75,34 +77,41 @@ function TokenSellTable({ filter }) {
         }}
       >
         <Column
-          title='Asset'
+          title="Asset"
           sorter={(a, b) => a.asset - b.asset}
           showSorterTooltip={false}
-          width={'30%'}
-          dataIndex='asset'
-          key='asset'
+          width={"30%"}
+          dataIndex="asset"
+          key="asset"
           render={(value, row) => {
             return (
               <Link to={`/info/${row.assetID}`}>
-                <p className='text-white hover:text-primary-green-400'>
+                <p className="text-white hover:text-primary-green-400">
                   {value}
                 </p>
               </Link>
             );
           }}
         />
-        <Column title='Quantity' dataIndex='quantity' key='quantity' />
-        <Column title='Unlock Date' dataIndex='unlockDate' key='unlockDate' />
         <Column
-          title=''
-          dataIndex='asset'
-          key='asset'
+          title="Quantity"
+          dataIndex="quantity"
+          key="quantity"
+          render={(value, row) => {
+            return <div>{convertToInternationalCurrencySystem(value)}</div>;
+          }}
+        />
+        <Column title="Unlock Date" dataIndex="unlockDate" key="unlockDate" />
+        <Column
+          title=""
+          dataIndex="asset"
+          key="asset"
           render={(value, row) => {
             return (
-              <div className='border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto'>
-                <img src={SellIcon} alt='deposit' className='mr-2' />
+              <div className="border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto">
+                <img src={SellIcon} alt="deposit" className="mr-2" />
 
-                <p className='text-error-color-400 uppercase font-bold text-caption-2'>
+                <p className="text-error-color-400 uppercase font-bold text-caption-2">
                   SELL
                 </p>
               </div>

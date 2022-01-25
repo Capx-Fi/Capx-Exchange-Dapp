@@ -26,11 +26,11 @@ function InfoHeader({ ticker }) {
           )}
         </div>
         <div className='infoHeader_innerDiv'>
-          <p className='infoHeader_innerDiv_title'>{'LSP'}</p>
+          <p className='infoHeader_innerDiv_title'>{'Last Sale Price'}</p>
           <p className='infoHeader_innerDiv_value'>{'9.72'}</p>
         </div>
         <div className='infoHeader_innerDiv'>
-          <p className='infoHeader_innerDiv_title'>{'LSP'}</p>
+          <p className='infoHeader_innerDiv_title'>{'Average Price'}</p>
           <p className='infoHeader_innerDiv_value'>{'9.72'}</p>
         </div>
       </div>
