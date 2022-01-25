@@ -9,22 +9,34 @@ import SellIcon from '../../assets/sell.svg';
 import { hideSideNav } from '../../redux/actions/sideNav';
 import useWindowSize from '../../utils/windowSize';
 import { fetchPortfolio } from '../../utils/fetchPortfolio';
+import { useWeb3React } from '@web3-react/core';
 import { useDispatch } from 'react-redux';
-import { setSellTicker } from '../../redux/actions/exchange';
+import { setSellTicker, setTickerBalance } from '../../redux/actions/exchange';
+import { fetchContractBalances } from '../../utils/fetchContractBalances';
 
 const { Column, ColumnGroup } = Table;
 
 function TokenSellTable({ filter }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
   const [portfolioHoldings, setPortfolioHoldings] = useState([]);
+  const { active, account, chainId } = useWeb3React();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchPortfolioHoldings();
-  }, []);
+  }, [account, chainId]);
   const fetchPortfolioHoldings = async () => {
-    const holdings = await fetchPortfolio();
+    setLoading(true);
+    const holdings = await fetchPortfolio(account);
+    const contractHoldings = await fetchContractBalances(account);
+    const combinedHoldings = [...holdings, ...contractHoldings];
+    // sort combine holdings absed on unlock date
+    combinedHoldings.sort((a, b) => {
+      return new Date(b.date) - new Date(a.date);
+    });
+    setPortfolioHoldings(combinedHoldings);
     console.log(holdings);
-    setPortfolioHoldings(holdings);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -48,13 +60,16 @@ function TokenSellTable({ filter }) {
     <div className='tokenListTableContainer'>
       <Table
         dataSource={portfolioHoldings}
+        locale={{ emptyText: loading ? 'Loading Tokens...' : 'No Token Found' }}
         pagination={false}
         scroll={{ y: 500 }}
         onChange={onChange}
         onRow={(record) => {
           return {
             onClick: (e) => {
+              console.log(record);
               dispatch(setSellTicker(record));
+              dispatch(setTickerBalance(record.quantity));
             },
           };
         }}
@@ -68,7 +83,7 @@ function TokenSellTable({ filter }) {
           key='asset'
           render={(value, row) => {
             return (
-              <Link to={`/info/${value}`}>
+              <Link to={`/info/${row.assetID}`}>
                 <p className='text-white hover:text-primary-green-400'>
                   {value}
                 </p>
@@ -84,15 +99,13 @@ function TokenSellTable({ filter }) {
           key='asset'
           render={(value, row) => {
             return (
-              <Link to={`/exchange/${value}`}>
-                <div className='border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto'>
-                  <img src={SellIcon} alt='deposit' className='mr-2' />
+              <div className='border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto'>
+                <img src={SellIcon} alt='deposit' className='mr-2' />
 
-                  <p className='text-error-color-400 uppercase font-bold text-caption-2'>
-                    SELL
-                  </p>
-                </div>
-              </Link>
+                <p className='text-error-color-400 uppercase font-bold text-caption-2'>
+                  SELL
+                </p>
+              </div>
             );
           }}
         />

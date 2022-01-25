@@ -35,7 +35,7 @@
           }
 
           &_inputContainer {
-            @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2 ring-success-color-500;
+            @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
             &_lockWrapper {
               @apply flex justify-center w-full items-center px-4;
               &_icon {
@@ -79,7 +79,7 @@
           }
 
           &_inputContainer {
-            @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2 ring-success-color-500;
+            @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
             &_lockWrapper {
               @apply flex justify-center items-center px-4;
               &_icon {
@@ -247,6 +247,7 @@ input[type='number'] {
       text-decoration: none !important;
     }
   }
+
   &__navigation {
     @apply bg-dark-300;
     border-radius: 16px !important;
@@ -271,6 +272,11 @@ input[type='number'] {
     color: rgba(241, 250, 242, 0.8) !important;
     &:hover {
       background: #2a383c !important;
+      border-radius: 16px;
+    }
+    &:disabled{
+      background: #2a383c !important;
+      opacity: 0.2;
       border-radius: 16px;
     }
     &--now {

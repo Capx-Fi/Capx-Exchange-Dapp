@@ -16,8 +16,12 @@ import NextIcon from '../../assets/next-black.svg';
 import ConnectCTA from '../CTA/ConnectCTA';
 import { hideSideNav } from '../../redux/actions/sideNav';
 import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
+import { useLocation } from 'react-router-dom';
+import GlobalSearchBox from '../../layouts/TableLayout/GlobalSearchBox';
+import HeaderSearch from '../HeaderSearch/HeaderSearch';
 
-function Header({ vesting, hiddenNav, showSteps, exchange }) {
+function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
+  const location = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { active, account, library, connector, activate, deactivate } =
     useWeb3React();
@@ -66,7 +70,12 @@ function Header({ vesting, hiddenNav, showSteps, exchange }) {
             />
           </div>
         </a>
-        <ToggleSwitch />
+        
+        {active && (location.pathname.includes('info') ? (
+          <HeaderSearch />
+        ) : (
+          <ToggleSwitch />
+        ))}
         {!hiddenNav && (
           <div className='header_navbar'>
             {active ? (

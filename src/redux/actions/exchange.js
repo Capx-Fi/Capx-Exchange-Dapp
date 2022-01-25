@@ -1,8 +1,10 @@
 import {
   SET_BUY_TICKER,
+  SET_PROJECT_BUY_TICKER,
   SET_EXCHANGE_BUY,
   SET_EXCHANGE_SELL,
   SET_SELL_TICKER,
+  SET_TICKER_BALANCE,
 } from './types';
 
 export const setExchangeBuy = () => {
@@ -26,6 +28,23 @@ export const setBuyTicker = (buyTicker) => {
     dispatch({
       type: SET_BUY_TICKER,
       payload: buyTicker,
+    });
+  };
+};
+export const setProjectBuyTicker = (buyTicker) => {
+  return function (dispatch) {
+    dispatch({
+      type: SET_PROJECT_BUY_TICKER,
+      payload: buyTicker,
+    });
+  };
+};
+
+export const setTickerBalance = (tickerBalance) => {
+  return function (dispatch) {
+    dispatch({
+      type: SET_TICKER_BALANCE,
+      payload: tickerBalance,
     });
   };
 };

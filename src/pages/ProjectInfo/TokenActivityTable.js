@@ -12,20 +12,20 @@ import useWindowSize from "../../utils/windowSize";
 
 const { Column, ColumnGroup } = Table;
 
-function TokenActivityTable({ filter }) {
+function TokenActivityTable({ completeOrders }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
 
-  useEffect(() => {
-    console.log(filter);
-    if (filter === "" || filter === undefined) {
-      setTokenList(dummyDataExchange);
-    } else {
-      const filteredList = dummyDataExchange.filter((token) => {
-        return token.asset.toLowerCase().includes(filter?.toLowerCase());
-      });
-      setTokenList(filteredList);
-    }
-  }, [filter]);
+  // useEffect(() => {
+  //   console.log(filter);
+  //   if (filter === "" || filter === undefined) {
+  //     setTokenList(dummyDataExchange);
+  //   } else {
+  //     const filteredList = dummyDataExchange.filter((token) => {
+  //       return token.asset.toLowerCase().includes(filter?.toLowerCase());
+  //     });
+  //     setTokenList(filteredList);
+  //   }
+  // }, [filter]);
 
   function onChange(pagination, filters, sorter, extra) {
     console.log("params", pagination, filters, sorter, extra);
@@ -33,7 +33,7 @@ function TokenActivityTable({ filter }) {
   return (
     // <div className="tokenListTableContainer">
     <Table
-      dataSource={tokenList}
+      dataSource={completeOrders}
       pagination={false}
       scroll={{ y: 440 }}
       onChange={onChange}
@@ -46,19 +46,42 @@ function TokenActivityTable({ filter }) {
         dataIndex="asset"
         key="asset"
         render={(value, row) => {
-            return (
-                <div className="flex flex-row items-center mx-auto">
-                    {value}
-                    < a href="https://shreyas.io" className="ml-2">
-                    <img src={TokenLink} alt="deposit" />
-                    </a>
-                </div>
-            )
+          return (
+            <div className="flex flex-row items-center mx-auto">
+              {value}
+              <a href="https://shreyas.io" className="ml-2">
+                <img src={TokenLink} alt="deposit" />
+              </a>
+            </div>
+          );
         }}
       />
-      <Column title="Price" dataIndex="price" key="price" />
-      <Column title="Quantity" dataIndex="quantity" key="quantity" />
-      <Column title="Date" dataIndex="unlockDate" key="unlockDate" />
+      <Column
+        title="Price"
+        dataIndex="price"
+        key="price"
+        render={(value, row) => {
+          return (
+            <div>
+              {new Intl.NumberFormat("en-IN", {
+                style: "currency",
+                currency: "USD",
+                maximumSignificantDigits: 6,
+              }).format(Number(value))}
+            </div>
+          );
+        }}
+      />
+      <Column
+        title="Quantity"
+        dataIndex="completedQuantity"
+        key="completedQuantity"
+      />
+      <Column
+        title="Fulfilled Date"
+        dataIndex="fulfillOrderTimestamp"
+        key="fulfillOrderTimestamp"
+      />
     </Table>
   );
 }

@@ -1,0 +1,43 @@
+.refresherInput {
+  &_inputContainer {
+    @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
+    &_lockWrapper {
+      @apply flex justify-center w-full items-center px-4;
+      &_icon {
+        @apply h-5 w-5;
+      }
+    }
+    &_input {
+      @apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 px-2;
+      &:focus {
+        @apply outline-none;
+      }
+    }
+    &_balanceContainer {
+      &_main {
+        @apply flex flex-row justify-between text-left items-center px-4;
+        &_text {
+          @apply text-caption-2 text-grayLabel font-bold;
+        }
+        &_max {
+          @apply text-caption-2 font-bold ml-2 cursor-pointer;
+          background: -webkit-linear-gradient(
+            355.38deg,
+            #3f7ef8 -9.64%,
+            #3ff8cc 87.34%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+      &_value {
+        @apply text-left px-4 text-caption-2 text-grayLabel font-bold;
+      }
+    }
+  }
+}
+
+.warning_gradient_bg {
+  background: rgba(167, 88, 34, 0.05);
+}

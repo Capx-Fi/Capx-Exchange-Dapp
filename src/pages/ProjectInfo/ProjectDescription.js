@@ -8,50 +8,33 @@ import OuterContainer from './OuterContainer';
 import TokenListTable from './TokenListTable';
 import TokenActivityTable from './TokenActivityTable';
 
-function ProjectDescription() {
+function ProjectDescription({ projectDetails, completeOrders, activeOrders }) {
   return (
     <>
       <OuterContainer
         title={'PROJECT DESCRIPTION'}
         icon={infoIcon}
         content={
-          <p className='p-4 max-h-32 overflow-y-scroll'>
-            Capx is a suite of products in Decentralized Finance (DeFi) designed
-            to unlock trillions of dollars locked in vesting tokens. The Capx
-            Protocol will serve as a trustless and highly decentralized
-            financial infrastructure. The protocol enables individuals to
-            effortlessly execute smart-contract-base agreements at a fractional
-            cost compared to services provided by any financial institution.
-            Capx is a suite of products in Decentralized Finance (DeFi) designed
-            to unlock trillions of dollars locked in vesting tokens. The Capx
-            Protocol will serve as a trustless and highly decentralized
-            financial infrastructure. The protocol enables individuals to
-            effortlessly execute smart-contract-base agreements at a fractional
-            cost compared to services provided by any financial institution.
-            Capx is a suite of products in Decentralized Finance (DeFi) designed
-            to unlock trillions of dollars locked in vesting tokens. The Capx
-            Protocol will serve as a trustless and highly decentralized
-            financial infrastructure. The protocol enables individuals to
-            effortlessly execute smart-contract-base agreements at a fractional
-            cost compared to services provided by any financial institution.
-            Capx is a suite of products in Decentralized Finance (DeFi) designed
-            to unlock trillions of dollars locked in vesting tokens. The Capx
-            Protocol will serve as a trustless and highly decentralized
-            financial infrastructure. The protocol enables individuals to
-            effortlessly execute smart-contract-base agreements at a fractional
-            cost compared to services provided by any financial institution.
-          </p>
+          projectDetails?.projectDescription ? (
+            <p className='p-4 max-h-32 w-full overflow-y-scroll'>
+              {projectDetails?.projectDescription}
+            </p>
+          ) : (
+            <div className='h-20 bg-loadingBG text-loadingBG bg-opacity-40 animate-pulse w-full'></div>
+          )
         }
       />
       <OuterContainer
         title={'MARKET ACTIVITY'}
         icon={marketActivity}
-        content={<TokenActivityTable />}
+        completeOrders={completeOrders}
+        content={<TokenActivityTable completeOrders={completeOrders} />}
       />
       <OuterContainer
         title={'TOKENS WITH $CAPX'}
         icon={marketActivity}
-        content={<TokenListTable />}
+        activeOrders={activeOrders}
+        content={<TokenListTable activeOrders={activeOrders} />}
       />
     </>
   );

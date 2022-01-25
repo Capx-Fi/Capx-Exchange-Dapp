@@ -1,5 +1,6 @@
 .infoHeader {
   background: #171c1f;
+
   border: 1px solid #2a383c;
   box-sizing: border-box;
   border-radius: 16px;
@@ -10,7 +11,7 @@
   &_innerDiv {
     @apply mr-16 text-left align-middle p-6;
     &_title {
-      @apply text-tradeTitle text-caption-1 leading-caption-2 font-bold pb-1;
+      @apply text-tradeTitle text-caption-1 leading-caption-2 font-bold pb-2;
     }
     &_value {
       @apply text-white text-subheading font-bold leading-subheading pb-2;
@@ -31,15 +32,15 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
+
   @apply w-full;
   &_maincontainer {
-    @apply flex flex-col mb-10;
+    @apply flex flex-col mb-10 w-full;
     &_body {
       background: #171c1f;
       border: 1px solid #2a383c;
-      box-sizing: border-box;
       border-radius: 16px;
-      @apply flex flex-col p-2 rounded-xl mx-auto mt-2;
+      @apply flex flex-col p-2 rounded-xl  mt-2;
       &_title {
         color: #83a1a9;
         @apply py-3 pl-4 flex justify-start  text-caption-3 font-semibold;
@@ -65,4 +66,9 @@
       }
     }
   }
+}
+
+.loading-bg {
+  background: #171c1f96;
+  color: #171c1f96;
 }
