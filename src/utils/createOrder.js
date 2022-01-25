@@ -26,6 +26,16 @@ import moment from "moment";
 //         uint256 _expiryTime,
 //         int128 _direction
 //     )
+function toPlainString(num) {
+    return ("" + +num).replace(
+      /(-?)(\d*)\.?(\d*)e([+-]\d+)/,
+      function (a, b, c, d, e) {
+        return e < 0
+          ? b + "0." + Array(1 - e - c.length).join(0) + c + d
+          : b + c + d + Array(e - d.length + 1).join(0);
+      }
+    );
+  }
 
 function convert(str) {
     var date = new Date(str),
@@ -79,9 +89,9 @@ export const createOrder = async (
         result = await exchangeContract.methods
             .createOrder(
                 tokenGive,
-                amountGive,
+                toPlainString(amountGive),
                 tokenGet,
-                amountGet,
+                toPlainString(amountGet),
                 totalExpiryTime,
                 direction
             )
