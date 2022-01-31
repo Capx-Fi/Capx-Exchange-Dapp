@@ -1,31 +1,34 @@
-import { Table } from 'antd';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './TokenListTable.scss';
+import { Table } from "antd";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import "./TokenListTable.scss";
 
-import dummyDataExchange from '../../layouts/TableLayout/dummyDataExchange.json';
-import DepositIcon from '../../assets/DepositIcon.svg';
-
-import { hideSideNav } from '../../redux/actions/sideNav';
-import useWindowSize from '../../utils/windowSize';
-import { useWeb3React } from '@web3-react/core';
-import { fetchListedTokens } from '../../utils/fetchListedTokens';
-import { useDispatch } from 'react-redux';
-import { setBuyTicker } from '../../redux/actions/exchange';
-import { convertToInternationalCurrencySystem } from '../../utils/convertToInternationalCurrencySystem';
+import dummyDataExchange from "../../layouts/TableLayout/dummyDataExchange.json";
+import DepositIcon from "../../assets/DepositIcon.svg";
+import $ from "jquery";
+import { hideSideNav } from "../../redux/actions/sideNav";
+import useWindowSize from "../../utils/windowSize";
+import { useWeb3React } from "@web3-react/core";
+import { fetchListedTokens } from "../../utils/fetchListedTokens";
+import { useDispatch } from "react-redux";
+import { setBuyTicker } from "../../redux/actions/exchange";
+import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
+import { fetchProjectID } from "../../utils/fetchProjectDetails";
+import { useHistory } from "react-router-dom";
 
 const { Column, ColumnGroup } = Table;
 
-function TokenBuyTable({ filter, setBalance }) {
+function TokenBuyTable({ filter, setBalance, refresh }) {
   const [tokenList, setTokenList] = useState([]);
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const { active, account, chainId } = useWeb3React();
+  let history = useHistory();
 
   useEffect(() => {
     fetchListings();
-  }, [account, chainId]);
+  }, [account, chainId, refresh]);
   const fetchListings = async () => {
     setLoading(true);
     const listingData = await fetchListedTokens(account);
@@ -33,6 +36,11 @@ function TokenBuyTable({ filter, setBalance }) {
     setTokenList(listingData);
     setLoading(false);
   };
+    $(".ant-table-row").on("click", function () {
+      var selected = $(this).hasClass("highlight");
+      $(".ant-table-row").removeClass("highlight");
+      if (!selected) $(this).addClass("highlight");
+    });
 
   useEffect(() => {
     console.log(filter);
@@ -51,6 +59,10 @@ function TokenBuyTable({ filter, setBalance }) {
   }
 
   const dispatch = useDispatch();
+  const navigateProject = async (address) => {
+    const projectAddress = await fetchProjectID(address);
+    history.push(`/info/${projectAddress}`);
+  };
   return (
     <div className="tokenListTableContainer">
       <Table
@@ -78,16 +90,16 @@ function TokenBuyTable({ filter, setBalance }) {
           key="asset"
           render={(value, row) => {
             return (
-              <Link to={`/info/${row.assetID}`}>
+              <div className="cursor-pointer" onClick={()=>navigateProject(row.assetID)}>
                 <p className="text-white hover:text-primary-green-400">
                   {value}
                 </p>
-              </Link>
+              </div>
             );
           }}
         />
         <Column
-          title="Price"
+          title="Price (USDT)"
           dataIndex="price"
           key="price"
           render={(value, row) => {

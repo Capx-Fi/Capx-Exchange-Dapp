@@ -158,6 +158,7 @@ export const fetchOrderForTicker = async (
           initiator: order.initiator,
           amountSent: order.amountSent,
           amountReceived: order.amountReceived,
+          fulfillOrderTimestampInSeconds: order.fulfillOrderTimestamp,
           fulfillOrderTimestamp: convertDateToString(
             order.fulfillOrderTimestamp
           ),
@@ -166,6 +167,7 @@ export const fetchOrderForTicker = async (
           price: order.price,
           quantity: numOfTokens - numReceived,
           completedQuantity: numOfTokens,
+          expiryTimeInSeconds: order.expiryTime,
           displayExpiryDate: convertToDate(order.expiryTime),
           displayExpiryTime: convertToTime(order.expiryTime),
           expiryTime: convertDateToString(order.expiryTime),
@@ -190,6 +192,12 @@ export const fetchOrderForTicker = async (
     activeOrders.filter((order) => order.expiryTime > Date.now());
     const completeOrders = listedTokens.filter((order) => {
       return order.quantity === 0;
+    });
+    // sort completed orders in descending order of date completed
+    completeOrders.sort((a, b) => {
+      return (
+        b.fulfillOrderTimestampInSeconds - a.fulfillOrderTimestampInSeconds
+      );
     });
     // console.log(activeOrders, "activeOrders");
     console.log(completeOrders, "completeOrders");

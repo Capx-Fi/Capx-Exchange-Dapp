@@ -9,7 +9,7 @@ import tradeInfo from "../../assets/tradeInfo.svg";
 import cross from "../../assets/cross.svg";
 
 
-function Accordion({trade}) {
+function Accordion({trade, cancelOrder}) {
   const [setActive, setActiveState] = useState("");
   const [setHeight, setHeightState] = useState("0px");
 const [setDisplay, setDisplayState] = useState("displayBorder");
@@ -29,7 +29,7 @@ const [setDisplay, setDisplayState] = useState("displayBorder");
     switch (status) {
       case "Completed":
         return "bg-primary-green-300";
-      case "inProgress":
+      case "In Progress":
         return "bg-warning-color-400";
       case "Expired":
         return "bg-cyan";
@@ -41,7 +41,6 @@ const [setDisplay, setDisplayState] = useState("displayBorder");
         return "";
     }
   }
-
   return (
     <div className="py-4">
       <div
@@ -49,20 +48,18 @@ const [setDisplay, setDisplayState] = useState("displayBorder");
         className="tradesScreen_body_assetPairContainer"
       >
         <div className="tradesScreen_body_assetPairContainer_assetPair">
-          <p className="tradesScreen_body_assetPairContainer_title">
-            ASSET PAIR
-          </p>
+          <p className="tradesScreen_body_assetPairContainer_title">Assets</p>
           <div className="tradesScreen_body_assetPairContainer_value">
             <img className="w-5 mr-2" src={dummyToken} alt="token icon" />{" "}
-            {trade.give.name} / {trade.get.name}
+            {trade?.tokenGiveTicker}
           </div>
         </div>
         <div className="tradesScreen_body_assetPairContainer_giveToken">
           <p className="tradesScreen_body_assetPairContainer_title">
-            {trade.give.name}
+            {trade?.tokenGiveTicker}
           </p>
           <div className="tradesScreen_body_assetPairContainer_value">
-            {trade.give.amount}
+            {trade?.amountGiveDisplay}
           </div>
         </div>
         <div className="tradesScreen_body_assetPairContainer_swapIcon">
@@ -70,20 +67,20 @@ const [setDisplay, setDisplayState] = useState("displayBorder");
         </div>
         <div className="tradesScreen_body_assetPairContainer_getToken">
           <p className="tradesScreen_body_assetPairContainer_title">
-            {trade.get.name}
+            {trade?.tokenGetTicker}
           </p>
           <div className="tradesScreen_body_assetPairContainer_value">
-            {trade.get.amount}
+            {trade?.amountGetDisplay}
           </div>
         </div>
         <div className="tradesScreen_body_assetPairContainer_separator" />
         <div className="tradesScreen_body_assetPairContainer_status">
           <div
             className={`tradesScreen_body_assetPairContainer_status_value ${getStatusColor(
-              trade.status
+              trade?.statusName
             )}`}
           >
-            {trade.statusName}
+            {trade?.statusName}
           </div>
         </div>
         <div className="tradesScreen_body_assetPairContainer_chevron">
@@ -106,10 +103,12 @@ const [setDisplay, setDisplayState] = useState("displayBorder");
             <div className="accordion_body_left_title">EXCHANGED SO FAR :</div>
             <div className="accordion_body_left_value">
               <div className="accordion_body_left_value_give">
-                {trade.give.name}: {trade.give.amount}
+                <span>{trade?.tokenGiveTicker}: </span>
+                {trade?.amountSent}
               </div>
               <div className="accordion_body_left_value_get">
-                {trade.get.name}: {trade.get.amount}
+                <span>{trade?.tokenGetTicker}: </span>
+                {trade?.amountReceived}
               </div>
             </div>
           </div>
@@ -117,16 +116,26 @@ const [setDisplay, setDisplayState] = useState("displayBorder");
             <div className="accordion_body_right_title">REMAINING :</div>
             <div className="accordion_body_right_value">
               <div className="accordion_body_right_value_give">
-                {trade.give.name}: {trade.give.amount}
+                <span>{trade?.tokenGiveTicker}: </span>
+                {trade?.amountRemainingToSend}
               </div>
               <div className="accordion_body_right_value_get">
-                {trade.get.name}: {trade.get.amount}
+                <span>{trade?.tokenGetTicker}: </span>
+                {trade?.amountRemainingToReceive}
               </div>
             </div>
           </div>
         </div>
         <div className="accordion_footer">
-          <div className="accordion_footer_cancel">CANCEL TRADE <img className="w-5 ml-2" src={cross} alt="cross icon" /></div>
+          {trade?.status === 3 || trade?.status === 0 ? (
+            <div onClick={()=>cancelOrder(trade.id)} className="accordion_footer_cancel">
+              CANCEL TRADE{" "}
+              <img className="w-5 ml-2" src={cross} alt="cross icon" />
+            </div>
+          ) : (
+            ""
+          )}
+
           <hr className="accordion_sepend" />
         </div>
       </div>

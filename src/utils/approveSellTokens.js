@@ -6,16 +6,18 @@ export const approveSellTokens = async (
   tokenDecimal,
   EXCHANGE_CONTRACT_ADDRESS,
   setApproveModalStatus,
-  setTokenApproval
+  setTokenApproval,
+  setApproveModalOpen
 ) => {
   let totalAmount = new BigNumber(tokens).multipliedBy(
     Math.pow(10, tokenDecimal)
   );
+
   console.log("account", account);
-    console.log("totalAmount", totalAmount);
-    console.log("vestingTokenContract", vestingTokenContract);
-    console.log("EXCHANGE_CONTRACT_ADDRESS", EXCHANGE_CONTRACT_ADDRESS);
-    
+  console.log("totalAmount", totalAmount);
+  console.log("vestingTokenContract", vestingTokenContract);
+  console.log("EXCHANGE_CONTRACT_ADDRESS", EXCHANGE_CONTRACT_ADDRESS);
+  setApproveModalOpen(true);
   let sendAmount = totalAmount.toString(10);
   let approveResult = null;
   let approvedAmount = null;
@@ -70,23 +72,24 @@ export const approveSellTokens = async (
             .send({ from: account });
         } catch (err) {
           setApproveModalStatus("failure");
-        //   enqueueSnackbar("Token Approval Failed!", { variant: "error" });
+          //   enqueueSnackbar("Token Approval Failed!", { variant: "error" });
           console.log(err);
         }
         if (approveResult) {
           setApproveModalStatus("success");
-        //   enqueueSnackbar(
-        //     "Approval Successful! please proceed to transfer the tokens.",
-        //     {
-        //       variant: "success",
-        //     }
-        //   );
+          //   enqueueSnackbar(
+          //     "Approval Successful! please proceed to transfer the tokens.",
+          //     {
+          //       variant: "success",
+          //     }
+          //   );
           setTokenApproval(true);
         }
       }
     }
   }
   setTimeout(() => {
+    setApproveModalOpen(false);
     setApproveModalStatus("");
   }, 2500);
 };

@@ -117,6 +117,8 @@ export const fetchListedTokens = async (account) => {
           amountReceived: order.amountReceived,
           amountGive: giveTokens - numSent,
           amountGet: numOfTokens - numReceived,
+          maxAmountGet: numOfTokens - numReceived,
+          maxAmountGive: giveTokens - numSent,
           price: order.price,
           quantity: numOfTokens - numReceived,
           expiryTimeActual: order.expiryTime,

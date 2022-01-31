@@ -62,6 +62,7 @@ export const fetchPortfolio = async (account) => {
                 tokenDecimal: project.projectTokenDecimal,
                 quantity: numOfTokens,
                 unlockDate: displayDate,
+                isContract: false,
               };
             })
           )

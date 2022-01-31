@@ -1,32 +1,39 @@
-import { Table } from 'antd';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './TokenListTable.scss';
+import { Table } from "antd";
+import { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import "./TokenListTable.scss";
 
-import dummyDataExchange from '../../layouts/TableLayout/dummyDataExchange.json';
-import SellIcon from '../../assets/sell.svg';
+import dummyDataExchange from "../../layouts/TableLayout/dummyDataExchange.json";
+import SellIcon from "../../assets/sell.svg";
 
-import { hideSideNav } from '../../redux/actions/sideNav';
-import useWindowSize from '../../utils/windowSize';
-import { fetchPortfolio } from '../../utils/fetchPortfolio';
-import { useWeb3React } from '@web3-react/core';
-import { useDispatch } from 'react-redux';
-import { setSellTicker, setTickerBalance } from '../../redux/actions/exchange';
-import { fetchContractBalances } from '../../utils/fetchContractBalances';
+import { hideSideNav } from "../../redux/actions/sideNav";
+import $ from "jquery";
+import useWindowSize from "../../utils/windowSize";
+import { fetchPortfolio } from "../../utils/fetchPortfolio";
+import { useWeb3React } from "@web3-react/core";
+import { useDispatch } from "react-redux";
+import { setSellTicker, setTickerBalance } from "../../redux/actions/exchange";
+import { fetchContractBalances } from "../../utils/fetchContractBalances";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
-
+import { fetchProjectID } from "../../utils/fetchProjectDetails";
 
 const { Column, ColumnGroup } = Table;
 
-function TokenSellTable({ filter }) {
+function TokenSellTable({ filter, refresh }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
   const [portfolioHoldings, setPortfolioHoldings] = useState([]);
   const { active, account, chainId } = useWeb3React();
   const [loading, setLoading] = useState(false);
+  let history = useHistory();
 
   useEffect(() => {
     fetchPortfolioHoldings();
-  }, [account, chainId]);
+  }, [account, chainId, refresh]);
+  $(".ant-table-row").on("click", function () {
+    var selected = $(this).hasClass("highlight");
+    $(".ant-table-row").removeClass("highlight");
+    if (!selected) $(this).addClass("highlight");
+  });
   const fetchPortfolioHoldings = async () => {
     setLoading(true);
     const holdings = await fetchPortfolio(account);
@@ -43,7 +50,7 @@ function TokenSellTable({ filter }) {
 
   useEffect(() => {
     console.log(filter);
-    if (filter === '' || filter === undefined) {
+    if (filter === "" || filter === undefined) {
       setTokenList(portfolioHoldings);
     } else {
       const filteredList = portfolioHoldings.filter((token) => {
@@ -54,10 +61,14 @@ function TokenSellTable({ filter }) {
   }, [filter]);
 
   function onChange(pagination, filters, sorter, extra) {
-    console.log('params', pagination, filters, sorter, extra);
+    console.log("params", pagination, filters, sorter, extra);
   }
 
   const dispatch = useDispatch();
+  const navigateProject = async (address) => {
+    const projectAddress = await fetchProjectID(address);
+    history.push(`/info/${projectAddress}`);
+  };
   return (
     <div className="tokenListTableContainer">
       <Table
@@ -85,11 +96,11 @@ function TokenSellTable({ filter }) {
           key="asset"
           render={(value, row) => {
             return (
-              <Link to={`/info/${row.assetID}`}>
+              <div onClick={()=>navigateProject(row.assetID)}>
                 <p className="text-white hover:text-primary-green-400">
                   {value}
                 </p>
-              </Link>
+              </div>
             );
           }}
         />

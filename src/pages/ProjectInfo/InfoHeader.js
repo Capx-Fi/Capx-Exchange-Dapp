@@ -10,7 +10,7 @@ function InfoHeader({ ticker }) {
       <div className='flex flex-row'>
         <div className='infoHeader_innerDiv'>
           <p className='infoHeader_innerDiv_title'>{'PROJECT NAME'}</p>
-          {ticker ? (
+          {ticker !== 'undefined (undefined)' ? (
             <>
               <div className='flex flex-row'>
                 <div>

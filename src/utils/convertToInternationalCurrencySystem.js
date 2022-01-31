@@ -1,7 +1,6 @@
 import BigNumber from "bignumber.js";
 BigNumber.config({ EXPONENTIAL_AT: 2 });
 export function convertToInternationalCurrencySystem(labelValue) {
-  console.log("labelValue", labelValue);
   // Nine Zeroes for Billions
   const val =
     Math.abs(Number(labelValue)) >= 1.0e9

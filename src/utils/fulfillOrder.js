@@ -4,11 +4,14 @@ export const fulfillOrder = async (
   exchangeContract,
   account,
   tradeID,
-  totalAmount
+  totalAmount,
+  setBuyModalStatus,
+  setBuyModalOpen
 ) => {
+  setBuyModalOpen(true);
   let result = null;
   console.log("tradeID", tradeID);
-    console.log("totalAmount", totalAmount.toString());
+  console.log("totalAmount", totalAmount.toString());
 
   function toPlainString(num) {
     return ("" + +num).replace(
@@ -23,13 +26,18 @@ export const fulfillOrder = async (
 
   try {
     result = await exchangeContract.methods
-      .fulFillOrder(
-        tradeID,
-        toPlainString(totalAmount),
-      )
+      .fulFillOrder(tradeID, toPlainString(totalAmount))
       .send({ from: account });
+      if(result)
+      {
+        setBuyModalStatus("success");
+      }
   } catch (err) {
     console.log(err);
+    setBuyModalStatus("failure");
   }
-  return result;
+    setTimeout(() => {
+      setBuyModalOpen(false);
+      setBuyModalStatus("");
+    }, 2500);
 };

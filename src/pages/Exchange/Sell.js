@@ -1,32 +1,34 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { render } from 'react-dom';
-import { hideSideNav, showSideNav } from '../../redux/actions/sideNav';
-import { useDispatch, useSelector } from 'react-redux';
-import BuyIcon from '../../assets/buy.svg';
-import { setSellTicker } from '../../redux/actions/exchange';
-import { EXCHANGE_ABI } from '../../contracts/ExchangeContract';
-import { approveSellTokens } from '../../utils/approveSellTokens';
-import { createOrder } from '../../utils/createOrder';
+import React, { useEffect, useRef, useState } from "react";
+import { render } from "react-dom";
+import { hideSideNav, showSideNav } from "../../redux/actions/sideNav";
+import { useDispatch, useSelector } from "react-redux";
+import BuyIcon from "../../assets/buy.svg";
+import { setSellTicker } from "../../redux/actions/exchange";
+import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
+import { approveSellTokens } from "../../utils/approveSellTokens";
+import { createOrder } from "../../utils/createOrder";
 import {
   EXCHANGE_CONTRACT_ADDRESS,
   USDT_CONTRACT_ADDRESS,
-} from '../../constants/config';
-import { CONTRACT_ABI_ERC20 } from '../../contracts/SampleERC20';
-import Web3 from 'web3';
+} from "../../constants/config";
+import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
+import Web3 from "web3";
 
-import LockIcon from '../../assets/lock-asset.svg';
-import NextIcon from '../../assets/next-black.svg';
-import DatePicker from 'react-date-picker';
-import DropdownIcon from '../../assets/dropdown.svg';
-import { useWeb3React } from '@web3-react/core';
-import { TimePicker } from 'antd';
-import './antd.css';
-import moment from 'moment';
-import RefresherInput from '../../components/RefresherInput/RefresherInput';
-import WarningCard from '../../components/WarningCard/WarningCard';
-const format = 'HH:mm';
-
-function SellScreen() {
+import LockIcon from "../../assets/lock-asset.svg";
+import NextIcon from "../../assets/next-black.svg";
+import DatePicker from "react-date-picker";
+import DropdownIcon from "../../assets/dropdown.svg";
+import { useWeb3React } from "@web3-react/core";
+import { TimePicker } from "antd";
+import "./antd.css";
+import moment from "moment";
+import RefresherInput from "../../components/RefresherInput/RefresherInput";
+import WarningCard from "../../components/WarningCard/WarningCard";
+import ApproveModal from "../../components/Modals/VestAndApproveModal/ApproveModal";
+import SellModal from "../../components/Modals/VestAndApproveModal/SellModal";
+const format = "HH:mm";
+const currentDate = new Date();
+function SellScreen({ sellModalOpen, setSellModalOpen, approveModalOpen, setApproveModalOpen, refresh, setRefresh }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(hideSideNav());
@@ -38,7 +40,12 @@ function SellScreen() {
   const balance = useSelector((state) => state.exchange.tickerBalance);
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [approveModalStatus, setApproveModalStatus] = useState('');
+  const [approveModalStatus, setApproveModalStatus] = useState("");
+  const [sellModalStatus, setSellModalStatus] = useState("");
+  const [disabled, setDisabled] = useState(false);
+  const [warningDate, setWarningDate] = useState(false);
+
+
   const setAmount = (e) => {
     dispatch(setSellTicker({ ...ticker, price: e }));
   };
@@ -76,53 +83,105 @@ function SellScreen() {
       tokenDecimal,
       EXCHANGE_CONTRACT_ADDRESS,
       setApproveModalStatus,
-      setTokenApproval
+      setTokenApproval,
+      setApproveModalOpen
     );
     console.log(ticker);
   };
   const finalizeSwap = async () => {
-    const vestingTokenContract = new web3.eth.Contract(
-      CONTRACT_ABI_ERC20,
-      ticker.assetID
-    );
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
       EXCHANGE_CONTRACT_ADDRESS
     );
-    const usdtContract = new web3.eth.Contract(
-      CONTRACT_ABI_ERC20,
-      USDT_CONTRACT_ADDRESS
+    await createOrder(
+      exchangeContract,
+      account,
+      ticker,
+      setSellModalStatus,
+      setSellModalOpen
     );
-    const tokens = ticker.quantity;
-    const tokenDecimal = ticker.tokenDecimal;
-    console.log('tt', ticker);
-    await createOrder(exchangeContract, account, ticker);
-
+    setTimeout(() => {
+      setRefresh(!refresh);
+    }, 6000);
     console.log(ticker);
   };
+  function convert(str) {
+    var date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    let kp = [date.getFullYear(), mnth, day].join("-");
+    console.log("KP", kp.split("-"));
+    let timestamp =
+      new Date(
+        Date.UTC(kp.split("-")[0], kp.split("-")[1] - 1, kp.split("-")[2])
+      ).getTime() / 1000;
+    return timestamp;
+  }
+
+  function convertToSeconds(str) {
+    var date = new Date(str),
+      hours = ("0" + date.getHours()).slice(-2),
+      minutes = ("0" + date.getMinutes()).slice(-2);
+    return +hours * 60 * 60 + +minutes * 60;
+  }
+  let expiryTime = ticker?.expiryTime;
+  let expiryDate = ticker?.expiryDate;
+  let totalExpiryTime = convert(expiryDate) + convertToSeconds(expiryTime);
+
+  //total expiry time should be gretaer than current time otherwise setWarning
+  useEffect(() => {
+    if (totalExpiryTime < currentDate.getTime() / 1000) {
+      setWarningDate("Expiry Time should be greater than current time");
+    } else {
+      setWarningDate(false);
+    }
+  }, [totalExpiryTime]);
+  useEffect(() => {
+    if (
+      totalExpiryTime < currentDate.getTime() / 1000 ||
+      ticker?.price <= 0 ||
+      ticker?.quantity > balance
+    ) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+    console.log("disabled", disabled);
+  }, [ticker?.price, ticker?.quantity, totalExpiryTime, balance]);
 
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
-        !ticker && 'opacity-60 cursor-not-allowed'
+        !ticker && "opacity-60 cursor-not-allowed"
       }`}
     >
-      <div className='exchangeScreen_rightcontainer_buyContainer'>
-        <div className='exchangeScreen_rightcontainer_buyContainer_header'>
-          <div className='exchangeScreen_rightcontainer_buyContainer_header_title'>
+      <ApproveModal
+        open={approveModalOpen}
+        setOpen={setApproveModalOpen}
+        approveModalStatus={approveModalStatus}
+        setApproveModalStatus={setApproveModalStatus}
+      />
+      <SellModal
+        open={sellModalOpen}
+        setOpen={sellModalOpen}
+        sellModalStatus={sellModalStatus}
+      />
+      <div className="exchangeScreen_rightcontainer_buyContainer">
+        <div className="exchangeScreen_rightcontainer_buyContainer_header">
+          <div className="exchangeScreen_rightcontainer_buyContainer_header_title">
             <img
-              className='exchangeScreen_rightcontainer_buyContainer_header_title_icon'
+              className="exchangeScreen_rightcontainer_buyContainer_header_title_icon"
               src={BuyIcon}
-              alt='buy icon'
+              alt="buy icon"
             />
-            <div className='exchangeScreen_rightcontainer_buyContainer_header_title_text'>
-              SELL {ticker && '- ' + ticker.asset}
+            <div className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
+              SELL {ticker && "- " + ticker.asset}
             </div>
           </div>
         </div>
-        <div className='exchangeScreen_rightcontainer_buyContainer_body'>
-          <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer'>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title'>
+        <div className="exchangeScreen_rightcontainer_buyContainer_body">
+          <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer">
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title">
               QUANTITY
             </div>
             <RefresherInput
@@ -130,6 +189,9 @@ function SellScreen() {
               disabled={!ticker}
               balance={balance}
               isMax={true}
+              setMaxAmount={() => {
+                setQuantity(balance);
+              }}
               value={ticker?.quantity}
               setTicker={(e) => setQuantity(e.target.value)}
               warningText={
@@ -144,36 +206,37 @@ function SellScreen() {
               text={`INSUFFICIENT BALANCE. BUY MORE $${ticker && ticker.asset}`}
             />
           )}
-          <div className='exchangeScreen_rightcontainer_buyContainer_body_splitContainer'>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer'>
-              <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title'>
-                PRICE
+          <div className="exchangeScreen_rightcontainer_buyContainer_body_splitContainer">
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer">
+              <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title">
+                PRICE(USDT)
               </div>
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
                   !ticker
-                    ? 'pointer-events-none ring-dark-50'
-                    : 'ring-success-color-500 '
+                    ? "pointer-events-none ring-dark-50"
+                    : "ring-success-color-500 "
                 } `}
               >
-                <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper'>
+                <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper">
                   <input
-                    className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_input'
-                    type='number'
-                    placeholder='0'
+                    className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_input"
+                    type="number"
+                    placeholder="0"
                     value={ticker && ticker?.price}
                     onChange={(e) => setAmount(e.target.value)}
+                    warningText={ticker?.price <= 0 && "PRICE CANNOT BE ZERO"}
                   />
                 </div>
               </div>
             </div>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer'>
-              <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title'>
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer">
+              <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title">
                 TOKEN
               </div>
               <RefresherInput
                 value={ticker && ticker.asset}
-                type={'text'}
+                type={"text"}
                 ticker={ticker}
                 balance={null}
                 disabled={true}
@@ -181,24 +244,25 @@ function SellScreen() {
               />
             </div>
           </div>
+          {ticker?.price <= 0 && <WarningCard text={"PRICE CANNOT BE ZERO"} />}
 
-          <div className='exchangeScreen_rightcontainer_buyContainer_body_splitContainer'>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer'>
-              <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title'>
+          <div className="exchangeScreen_rightcontainer_buyContainer_body_splitContainer">
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer">
+              <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title">
                 EXPIRY DATE
               </div>
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
                   !ticker
-                    ? 'pointer-events-none ring-dark-50'
-                    : 'ring-success-color-500 '
+                    ? "pointer-events-none ring-dark-50"
+                    : "ring-success-color-500 "
                 } `}
               >
                 <div
                   className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper w-full ${
                     !ticker
-                      ? 'pointer-events-none ring-dark-50'
-                      : 'ring-success-color-500 '
+                      ? "pointer-events-none ring-dark-50"
+                      : "ring-success-color-500 "
                   } `}
                 >
                   <DatePicker
@@ -208,41 +272,41 @@ function SellScreen() {
                     minDate={new Date()}
                     calendarIcon={
                       <>
-                        <img src={DropdownIcon} alt='dropdown' />
+                        <img src={DropdownIcon} alt="dropdown" />
                       </>
                     }
                     showLeadingZeros={true}
-                    calendarClassName='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_dateInput'
+                    calendarClassName="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_dateInput"
                   />
                 </div>
               </div>
             </div>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer'>
-              <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title'>
-                EXPIRY TIME
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer">
+              <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title">
+                EXPIRY TIME (UTC)
               </div>
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
                   !ticker
-                    ? 'pointer-events-none ring-dark-50'
-                    : 'ring-success-color-500 '
+                    ? "pointer-events-none ring-dark-50"
+                    : "ring-success-color-500 "
                 } `}
               >
-                <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper w-full'>
+                <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper w-full">
                   <TimePicker
-                    defaultValue={ticker && ticker?.expiryTime}
+                    defaultValue={moment()}
                     allowClear={false}
                     disabled={!ticker}
                     bordered={false}
                     format={format}
                     onChange={(value) => setTime(value)}
-                    popupClassName='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_timeInput'
-                    className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_input'
+                    popupClassName="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_timeInput"
+                    className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_input"
                     minuteStep={15}
                     showNow={false}
                     suffixIcon={
                       <>
-                        <img src={DropdownIcon} alt='dropdown' />
+                        <img src={DropdownIcon} alt="dropdown" />
                       </>
                     }
                   />
@@ -250,8 +314,9 @@ function SellScreen() {
               </div>
             </div>
           </div>
+          {warningDate && <WarningCard text={warningDate} />}
 
-          <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer'>
+          <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer">
             {/* <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_date'>
               {' '}
               EXPIRY DATE: {moment(ticker?.expiryDate).format(
@@ -265,21 +330,26 @@ function SellScreen() {
           </div>
           <div
             onClick={() =>
-              tokenApproval ? finalizeSwap() : initiateSwapApproval()
+              tokenApproval || ticker?.isContract
+                ? finalizeSwap()
+                : initiateSwapApproval()
             }
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              !ticker && 'pointer-events-none cursor-not-allowed'
+              (!ticker || disabled) &&
+              "pointer-events-none cursor-not-allowed opacity-50"
             }`}
           >
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_swapButton_title'>
-              {tokenApproval ? 'SWAP TOKENS' : 'APPROVE TOKENS'}
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_swapButton_title">
+              {tokenApproval || ticker?.isContract
+                ? "SWAP TOKENS"
+                : "APPROVE TOKENS"}
             </div>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_swapButton_icon'>
-              <img src={NextIcon} alt='next icon' />
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_swapButton_icon">
+              <img src={NextIcon} alt="next icon" />
             </div>
           </div>
         </div>
-        <div className='exchangeScreen_rightcontainer_buyContainer_footer'></div>
+        <div className="exchangeScreen_rightcontainer_buyContainer_footer"></div>
       </div>
     </div>
   );

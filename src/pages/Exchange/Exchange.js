@@ -29,6 +29,10 @@ function ExchangeScreen({ match }) {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [filter, setFilter] = useState("");
+  const [approveModalOpen, setApproveModalOpen] = useState(false);
+  const [sellModalOpen, setSellModalOpen] = useState(false);
+  const [buyModalOpen, setBuyModalOpen] = useState(false);
+  const [refresh , setRefresh] = useState(false);
 
   console.log(payAmount, receiveAmount);
 
@@ -52,7 +56,12 @@ function ExchangeScreen({ match }) {
       {!active ? (
         <MetamaskModal />
       ) : (
-        <div className="exchangeScreen">
+        <div
+          style={{
+            filter: approveModalOpen || sellModalOpen || buyModalOpen ? "blur(10000px)" : "none",
+          }}
+          className="exchangeScreen"
+        >
           <div className="exchangeScreen_maincontainer">
             <div className="exchangeScreen_leftcontainer">
               <div className="exchangeScreen_header">
@@ -73,17 +82,26 @@ function ExchangeScreen({ match }) {
                 <GlobalSearchBox filter={filter} setFilter={setFilter} />
               </div>
               {mode === "sell" ? (
-                <TokenSellTable filter={filter} />
+                <TokenSellTable filter={filter} refresh={refresh}/>
               ) : (
                 <TokenBuyTable
                   setAmount={setAmount}
                   filter={filter}
                   setBalance={setBalance}
+                  refresh={refresh}
                 />
               )}
             </div>
             {mode === "sell" ? (
-              <SellScreen ticker={match.params.ticker} />
+              <SellScreen
+                ticker={match.params.ticker}
+                sellModalOpen={sellModalOpen}
+                setSellModalOpen={setSellModalOpen}
+                approveModalOpen={approveModalOpen}
+                setApproveModalOpen={setApproveModalOpen}
+                refresh={refresh}
+                setRefresh={setRefresh}
+              />
             ) : (
               <BuyScreen
                 ticker={match.params.ticker}
@@ -92,6 +110,12 @@ function ExchangeScreen({ match }) {
                 setAmount={setAmount}
                 balance={balance}
                 setMaxAmount={setMaxAmount}
+                buyModalOpen={buyModalOpen}
+                setBuyModalOpen={setBuyModalOpen}
+                approveModalOpen={approveModalOpen}
+                setApproveModalOpen={setApproveModalOpen}
+                refresh={refresh}
+                setRefresh={setRefresh}
               />
             )}
           </div>

@@ -1,5 +1,6 @@
 .tradesScreen {
-  @apply ml-24 w-7/12;
+  @apply mx-auto w-7/12;
+  max-width: 1300px;
   &_header {
     @apply px-4 pl-7 py-2 mb-5 mt-16 flex justify-between content-start;
     &_titlecontainer {
@@ -33,7 +34,7 @@
         rgba(18, 28, 32, 0.1) 100%
       );
       &_assetPair {
-        @apply flex flex-col justify-center items-start px-12 w-72;
+        @apply flex flex-col justify-center items-start px-12 w-80;
       }
       &_title {
         @apply text-caption-2 text-dark-100 font-bold;
@@ -42,13 +43,13 @@
         @apply text-paragraph-1 text-primary-green-100 font-normal flex;
       }
       &_getToken {
-        @apply flex flex-col justify-center items-start px-6 w-32;
+        @apply flex flex-col justify-center items-start px-6 w-40;
       }
       &_swapIcon {
         @apply flex flex-col justify-center items-start px-6;
       }
       &_giveToken {
-        @apply flex flex-col justify-center items-start px-6 w-32;
+        @apply flex flex-col justify-center items-start px-6 w-44;
       }
       &_separator {
         @apply h-full bg-dark-50 w-0.5 mx-12;
@@ -96,27 +97,39 @@ z-index: 1;
             @apply text-caption-2 text-grayLabel font-bold mb-2;
         }
         &_value{
-            @apply flex flex-row justify-start text-paragraph-2 text-primary-green-100 font-medium;
+            @apply flex flex-col justify-start text-paragraph-2 text-primary-green-100 font-medium;
             &_get{
-                @apply w-36 text-left items-start;
+              @apply text-left items-start;
+              &>span{
+                  @apply text-caption-1 text-primary-green-200 opacity-60 font-bold;
+                }
             }
             &_give{
-                @apply w-36 text-left items-start;
+                @apply text-left items-start;
+                &> span{
+                    @apply text-caption-1 text-primary-green-200 opacity-60 font-bold;
+                }
             }
         }
     }
     &_right{
-        @apply flex flex-col items-start;
+        @apply flex flex-col items-start pr-24;
         &_title{
             @apply text-caption-2 text-grayLabel font-bold mb-2;
         }
         &_value{
-            @apply flex flex-row text-paragraph-2 text-primary-green-100 font-medium;
+            @apply flex flex-col text-paragraph-2 text-primary-green-100 font-medium;
             &_get{
-                @apply w-36 text-left items-start;
+                @apply text-left items-start;
+                &>span{
+                    @apply text-primary-green-200 opacity-60;
+                }
             }
             &_give{
-                @apply w-36 text-left items-start;
+                @apply text-left items-start;
+                &>span{
+                    @apply text-primary-green-200 opacity-60;
+                }
             }
         }
     }
@@ -128,7 +141,7 @@ z-index: 1;
 .accordion_footer{
     @apply relative;
     &_cancel{
-        @apply flex flex-row justify-center items-center w-40 px-1 pb-1 text-caption-2 rounded-2xl text-warning-color-100 font-bold absolute -top-2.5 left-12;
+        @apply flex flex-row justify-center items-center w-40 px-1 pb-1 text-caption-2 rounded-2xl text-warning-color-100 font-bold absolute -top-2.5 left-12 cursor-pointer;
         background: #572B37;
         border: 1px solid rgba(134, 68, 83, 1);
     }

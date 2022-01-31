@@ -2,92 +2,86 @@ import "./TradesScreen.scss";
 import React, { useEffect, useRef, useState } from "react";
 import { render } from "react-dom";
 import DropDown from "./DropDown/DropDown";
-import dummyToken from "../../assets/dummyToken.svg";
-import swapIcon from "../../assets/swapIcon.svg";
-import threedot from "../../assets/threedot.svg";
-import threedotfilled from "../../assets/threedot-filled.svg";
+import { useWeb3React } from "@web3-react/core";
 import Accordion from "./Accordion";
+import MetamaskModal from "../../components/Modals/MetamaskModal/MetamaskModal";
+import { fetchTrades } from "../../utils/fetchTrades";
+import { cancelOrder } from "../../utils/cancelOrder";
+import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
+import { EXCHANGE_CONTRACT_ADDRESS } from "../../constants/config";
+import Web3 from "web3";
 
 function TradesScreen() {
+    const { active, account, chainId } = useWeb3React();
+      const web3 = new Web3(Web3.givenProvider);
+
   const [sortBy, setSortBy] = useState("Sort By");
-  const [setActive, setActiveState] = useState("");
-  const [setHeight, setHeightState] = useState("0px");
+  const [tradesData, setTradesData] = useState([]);
   const content = useRef(null);
-  const tradeData = [
-    {
-      get: { name: "RELT", amount: "0.456" },
-      give: { name: "USDT", amount: "0.234" },
-      status: "Completed",
-      statusName: "Completed",
-    },
-    {
-      get: { name: "CAPX", amount: "0.456" },
-      give: { name: "BNB", amount: "0.234" },
-      status: "inProgress",
-      statusName: "In Progress",
-    },
-    {
-      get: { name: "RISH", amount: "1.456" },
-      give: { name: "SHRE", amount: "100.234" },
-      status: "Expired",
-      statusName: "Expired",
-    },
-    {
-      get: { name: "MAD", amount: "4.456" },
-      give: { name: "PUL", amount: "74.234" },
-      status: "Cancelled",
-      statusName: "Cancelled",
-    },
-    {
-      get: { name: "RAG", amount: "34.456" },
-      give: { name: "SOOR", amount: "23.234" },
-      status: "Partial",
-      statusName: "Partial",
-    },
-    {
-      get: { name: "ETT", amount: "0.126" },
-      give: { name: "MARS", amount: "0.698" },
-      status: "Completed",
-      statusName: "Completed",
-    },
-  ];
-  const [trades, setTrades] = useState(tradeData);
+  const [resetTrade, setResetTrade] = useState([]);
   useEffect(() => {
-    if(sortBy==="Sort By" || sortBy==="All"){
-      setTrades(tradeData);
+    if(sortBy===5){
+      setTradesData(resetTrade);
     }
     else{
-      setTrades(tradeData.filter(trade=>trade.status===sortBy));
+      setTradesData(resetTrade.filter((trade) => trade.status === sortBy));
     }
 
   }, [sortBy])
-  function toggleAccordion() {
-    setActiveState(setActive === "" ? "active" : "");
-    setHeightState(
-      setActive === "active" ? "0px" : `${content.current.scrollHeight}px`
-    );
+  useEffect(() => {
+    if (account) {
+      console.log("account", account);
+      fetchTradeData(account);
+    }
+  }, [account, chainId]);
+  const fetchTradeData = async (account) => {
+    let orderList = [];
+    orderList = await fetchTrades(account);
+    setTradesData(orderList);
+    setResetTrade(orderList);
+    console.log("orderList", orderList);
+  };
+  const tryCancelOrder = async(orderId) => {
+        const exchangeContract = new web3.eth.Contract(
+          EXCHANGE_ABI,
+          EXCHANGE_CONTRACT_ADDRESS
+        );
+    console.log("orderId", orderId);
+    const order = await cancelOrder(exchangeContract, account, orderId);
+    console.log("order", order);
+    fetchTradeData(account);
   }
 
 
   return (
-    <div className="tradesScreen">
-      <div className="tradesScreen_header">
-        <div className="tradesScreen_header_titlecontainer">
-          <p className="tradesScreen_header_titlecontainer_title">Trades</p>
-          <p className="tradesScreen_header_titlecontainer_subtitle">
-            Discover new derivative assets to trade on Capx{" "}
-          </p>
+    <>
+      {!active ? (
+        <MetamaskModal />
+      ) : (
+        <div className="tradesScreen">
+          <div className="tradesScreen_header">
+            <div className="tradesScreen_header_titlecontainer">
+              <p className="tradesScreen_header_titlecontainer_title">Trades</p>
+              <p className="tradesScreen_header_titlecontainer_subtitle">
+                Discover new derivative assets to trade on Capx{" "}
+              </p>
+            </div>
+            <div className="tradesScreen_header_dropdowncontainer">
+              <DropDown sortBy={sortBy} setSortBy={setSortBy} />
+            </div>
+          </div>
+          <div className="tradesScreen_body">
+            {tradesData.map((trade, index) => (
+              <Accordion
+                trade={trade}
+                key={index}
+                cancelOrder={tryCancelOrder}
+              />
+            ))}
+          </div>
         </div>
-        <div className="tradesScreen_header_dropdowncontainer">
-          <DropDown sortBy={sortBy} setSortBy={setSortBy} />
-        </div>
-      </div>
-      <div className="tradesScreen_body">
-        {trades.map((trade, index) => (
-          <Accordion trade={trade} key={index} />
-        ))}
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

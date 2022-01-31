@@ -13,7 +13,7 @@ function DropDown({sortBy, setSortBy}) {
         onClick={() => setOpen(!open)}
       >
         <span className="mr-4">
-          {sortBy === "inProgress" ? "In Progress" : sortBy}
+          {sortBy === 0 ? "Expired" : sortBy === 1 ? "Cancelled" : sortBy === 2 ? "Completed" : sortBy === 3 ? "In Progress" : "All"}
         </span>
         <svg
           className="w-5 h-5 text-grayLabel dark:text-white"
@@ -33,7 +33,7 @@ function DropDown({sortBy, setSortBy}) {
           <p
             className="option"
             onClick={() => {
-              setSortBy("Completed");
+              setSortBy(2);
               setOpen(false);
             }}
           >
@@ -42,7 +42,7 @@ function DropDown({sortBy, setSortBy}) {
           <p
             className="option"
             onClick={() => {
-              setSortBy("inProgress");
+              setSortBy(3);
               setOpen(false);
             }}
           >
@@ -51,7 +51,7 @@ function DropDown({sortBy, setSortBy}) {
           <p
             className="option"
             onClick={() => {
-              setSortBy("Expired");
+              setSortBy(0);
               setOpen(false);
             }}
           >
@@ -60,7 +60,7 @@ function DropDown({sortBy, setSortBy}) {
           <p
             className="option"
             onClick={() => {
-              setSortBy("Cancelled");
+              setSortBy(1);
               setOpen(false);
             }}
           >
@@ -69,16 +69,7 @@ function DropDown({sortBy, setSortBy}) {
           <p
             className="option"
             onClick={() => {
-              setSortBy("Partial");
-              setOpen(false);
-            }}
-          >
-            Partial
-          </p>
-          <p
-            className="option"
-            onClick={() => {
-              setSortBy("All");
+              setSortBy(5);
               setOpen(false);
             }}
           >

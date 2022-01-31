@@ -22,12 +22,9 @@ import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
 import { useWeb3React } from "@web3-react/core";
 
 import Web3 from "web3";
+import WarningCard from "../../components/WarningCard/WarningCard";
 
 function BuyScreen({
-  payAmount,
-  receiveAmount,
-  balance,
-  setAmount,
   setMaxAmount,
 }) {
   const dispatch = useDispatch();
@@ -39,19 +36,13 @@ function BuyScreen({
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [approveModalStatus, setApproveModalStatus] = useState("");
+  const [disabled, setDisabled] = useState(false);
+
   const ticker = useSelector((state) => state.exchange.projectBuyTicker);
   const initiateSwapApproval = async () => {
     setButtonClicked(true);
 
     const vestingTokenContract = new web3.eth.Contract(
-      CONTRACT_ABI_ERC20,
-      USDT_CONTRACT_ADDRESS
-    );
-    const exchangeContract = new web3.eth.Contract(
-      EXCHANGE_ABI,
-      EXCHANGE_CONTRACT_ADDRESS
-    );
-    const usdtContract = new web3.eth.Contract(
       CONTRACT_ABI_ERC20,
       USDT_CONTRACT_ADDRESS
     );
@@ -69,17 +60,9 @@ function BuyScreen({
     console.log(ticker);
   };
   const finalizeSwap = async () => {
-    const vestingTokenContract = new web3.eth.Contract(
-      CONTRACT_ABI_ERC20,
-      ticker.assetID
-    );
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
       EXCHANGE_CONTRACT_ADDRESS
-    );
-    const usdtContract = new web3.eth.Contract(
-      CONTRACT_ABI_ERC20,
-      USDT_CONTRACT_ADDRESS
     );
     console.log("tt", ticker);
     let totalTokens = ticker.amountGive;
@@ -89,7 +72,14 @@ function BuyScreen({
 
     console.log(ticker);
   };
-
+  useEffect(() => {
+    if (ticker?.amountGive > ticker?.balance) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+    console.log(ticker);
+  }, [ticker?.amountGive]);
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
@@ -126,12 +116,14 @@ function BuyScreen({
                   })
                 )
               }
+              warningText={disabled && "You don't have enough balance"}
               setMaxAmount={setMaxAmount}
               isMax={true}
               balance={ticker?.balance}
               value={ticker && ticker.amountGive}
             />
           </div>
+          {disabled && <WarningCard text={`You don't have enough USDT`} />}
           <div className="exchangeScreen_rightcontainer_buyContainer_body_separator">
             <div className="exchangeScreen_rightcontainer_buyContainer_body_separator_line w-7/12"></div>
             <div className="exchangeScreen_rightcontainer_buyContainer_body_separator_iconContainer w-2/12">

@@ -16,7 +16,16 @@ export const fetchContractBalances = async (account) => {
     uri: GRAPHAPIURL,
     cache: new InMemoryCache(),
   });
-
+function toPlainString(num) {
+  return ("" + +num).replace(
+    /(-?)(\d*)\.?(\d*)e([+-]\d+)/,
+    function (a, b, c, d, e) {
+      return e < 0
+        ? b + "0." + Array(1 - e - c.length).join(0) + c + d
+        : b + c + d + Array(e - d.length + 1).join(0);
+    }
+  );
+}
   const liquidClient = new ApolloClient({
     uri: GRAPH_CONTROLLER_URL,
     cache: new InMemoryCache(),
@@ -94,6 +103,7 @@ export const fetchContractBalances = async (account) => {
         xData.actualBalance = new BigNumber(xData.totalBalance)
           .minus(xData.lockedBalance)
           .toString();
+        xData.actualBalance = toPlainString(xData.actualBalance);
         fetchContractBalances.push(xData);
       });
     });
@@ -121,7 +131,9 @@ export const fetchContractBalances = async (account) => {
           unlockTime: contractHolding.unlockTime,
           tokenDecimal: contractHolding.decimal,
           quantity: contractHolding.actualBalance,
+          balance: contractHolding.actualBalance,
           unlockDate: displayDate,
+          isContract: true,
         };
       }
     );
