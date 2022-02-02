@@ -7,6 +7,7 @@ import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
 import { useSnackbar } from 'notistack';
 import { injected } from '../../utils/connector';
 import ConnectCTA from '../../components/CTA/ConnectCTA';
+import { WRONG_CHAIN_MESSAGE } from '../../constants/config';
 
 import NextIcon from '../../assets/next-black.svg';
 
@@ -18,8 +19,8 @@ function TransactionHistory() {
       await activate(injected);
     } catch (ex) {
       if (ex instanceof UnsupportedChainIdError) {
-        enqueueSnackbar('Please connect to the Rinkeby Chain.', {
-          variant: 'error',
+        enqueueSnackbar(WRONG_CHAIN_MESSAGE, {
+          variant: "error",
         });
       }
       console.log(ex);
@@ -40,7 +41,7 @@ function TransactionHistory() {
           />
         </div>
       ) : (
-        <div className='w-9/12 ml-10'>
+        <div className='w-9/12 desktop:ml-6 desktop:pl-6 desktop:w-11/12 desktop:mt-10'>
           <TableInstanceWithSearch
             title={'Transaction History'}
             subTitle={'All Transaction History'}

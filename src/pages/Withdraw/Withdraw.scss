@@ -1,10 +1,10 @@
-.exchangeScreen {
+.withdrawScreen {
   @apply w-82v mx-auto mt-16;
   &_maincontainer {
     @apply flex mt-8;
   }
   &_leftcontainer {
-    @apply w-8/12 pr-40 -mt-6;
+    @apply w-8/12 pr-40 desktop:pr-20 -mt-6;
   }
   &_rightcontainer {
     @apply w-4/12 pl-4;

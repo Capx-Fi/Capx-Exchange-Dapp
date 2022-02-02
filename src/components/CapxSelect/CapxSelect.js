@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Select from 'react-select';
-
 function CapxSelect({
   verifyInput,
   selectedValue,
@@ -14,7 +13,6 @@ function CapxSelect({
   useEffect(() => {
     verifyInput && verifyInput();
   }, [tokenInputValue]);
-
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -74,7 +72,6 @@ function CapxSelect({
       borderBottom: '2px #2C432E',
     }),
   };
-
   return (
     <Select
       components={{
@@ -102,5 +99,4 @@ function CapxSelect({
     />
   );
 }
-
 export default CapxSelect;

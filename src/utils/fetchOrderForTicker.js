@@ -1,23 +1,22 @@
-// Orders created should not be completely filled, i.e. amountSent < amountGive || amountReceived < amountGet
-// expiryTime should be in future, i.e expiryTime > current_Timestamp in UTC.
+import { ApolloClient, InMemoryCache, gql, cache } from '@apollo/client';
+import BigNumber from 'bignumber.js';
+import Web3 from 'web3';
+import { EXCHANGE_ABI } from '../contracts/ExchangeContract';
+import {
+  BSC_CHAIN_ID,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
+  MATIC_CHAIN_ID,
+} from '../constants/config';
 
-// Make two separate arrays one for active orders, one for completed orders.
-
-import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
-import BigNumber from "bignumber.js";
-import Web3 from "web3";
-import { EXCHANGE_ABI } from "../contracts/ExchangeContract";
-import { EXCHANGE_CONTRACT_ADDRESS } from "../constants/config";
-const GRAPHAPIURL = "https://api.studio.thegraph.com/query/16341/exchange/v0.1.3";
-const CONTROLLER_GRAPH_URL =
-  "https://api.studio.thegraph.com/query/16341/liquid-original/v3.0.0"
-
-
-async function fetchDerivativeIDs(projectID) {
+async function fetchDerivativeIDs(projectID, wrappedURL) {
   const client = new ApolloClient({
-    uri: CONTROLLER_GRAPH_URL,
+    uri: wrappedURL,
     cache: new InMemoryCache(),
   });
+  let lsp = 0;
+  let asp = 0;
   const query = `query {
         projects (where:{id: "${projectID}"}) {
             id
@@ -47,18 +46,18 @@ async function fetchDerivativeIDs(projectID) {
 function convertDateToString(timestamp) {
   const unixTime = timestamp;
   const date = new Date(unixTime * 1000);
-  let unlockDay = date.toLocaleDateString("en-US", {
-    day: "numeric",
+  let unlockDay = date.toLocaleDateString('en-US', {
+    day: 'numeric',
   });
-  let unlockMonth = date.toLocaleDateString("en-US", {
-    month: "long",
+  let unlockMonth = date.toLocaleDateString('en-US', {
+    month: 'long',
   });
-  let unlockYear = date.toLocaleDateString("en-US", {
-    year: "numeric",
+  let unlockYear = date.toLocaleDateString('en-US', {
+    year: 'numeric',
   });
-  let time = date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
+  let time = date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
   });
   let displayGraphDate = `${unlockDay} ${unlockMonth}, ${unlockYear} ${time}`;
   return displayGraphDate;
@@ -66,14 +65,14 @@ function convertDateToString(timestamp) {
 function convertToDate(timestamp) {
   const unixTime = timestamp;
   const date = new Date(unixTime * 1000);
-  let unlockDay = date.toLocaleDateString("en-US", {
-    day: "numeric",
+  let unlockDay = date.toLocaleDateString('en-US', {
+    day: 'numeric',
   });
-  let unlockMonth = date.toLocaleDateString("en-US", {
-    month: "long",
+  let unlockMonth = date.toLocaleDateString('en-US', {
+    month: 'long',
   });
-  let unlockYear = date.toLocaleDateString("en-US", {
-    year: "numeric",
+  let unlockYear = date.toLocaleDateString('en-US', {
+    year: 'numeric',
   });
   let displayGraphDate = `${unlockDay} ${unlockMonth}, ${unlockYear}`;
   return displayGraphDate;
@@ -82,33 +81,40 @@ function convertToDate(timestamp) {
 function convertToTime(timestamp) {
   const unixTime = timestamp;
   const date = new Date(unixTime * 1000);
-  let time = date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
+  let time = date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
   });
   let displayGraphDate = `${time}`;
   return displayGraphDate;
 }
 
-
 export const fetchOrderForTicker = async (
   projectID,
   setActiveOrders,
   setCompleteOrders,
-  account
+  account,
+  chainId,
+  setLastSellingPrice,
+  setAverageSellingPrice,
+  exchangeURL,
+  wrappedURL,
+  CHAIN_USDT_CONTRACT_ADDRESS
 ) => {
   const web3 = new Web3(Web3.givenProvider);
   const exchangeContract = new web3.eth.Contract(
     EXCHANGE_ABI,
-    EXCHANGE_CONTRACT_ADDRESS
+    chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
+      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM
   );
-  console.log("Project ID", projectID);
-  let derivativeIDs = await fetchDerivativeIDs(projectID);
+  let derivativeIDs = await fetchDerivativeIDs(projectID, wrappedURL);
   derivativeIDs = derivativeIDs.map((s) => `"${s}"`).join(", ");
-  console.log("DerivativeIDs", derivativeIDs);
   let listedTokens = [];
   const client = new ApolloClient({
-    uri: GRAPHAPIURL,
+    uri: exchangeURL,
     cache: new InMemoryCache(),
   });
   const query = `query {
@@ -175,21 +181,30 @@ export const fetchOrderForTicker = async (
       })
       .flat();
     console.log(listedTokens, "dededededede");
-        let balance = await exchangeContract.methods
-          .unlockBalance("0x96711f91eb24a3D1dfA3eD308A84380DFD4CC1c7", account)
-          .call();
-        console.log(balance, "balance");
-        balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toNumber();
-            listedTokens = listedTokens.map((token) => {
-              return {
-                ...token,
-                balance,
-              };
-            });
-    const activeOrders = listedTokens.filter((order) => {
+    let balance = await exchangeContract.methods
+      .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
+      .call();
+    console.log(balance, "balance");
+    balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toNumber();
+    listedTokens = listedTokens.map((token) => {
+      return {
+        ...token,
+        balance,
+      };
+    });
+    let activeOrders = listedTokens.filter((order) => {
       return order.quantity > 0;
     });
-    activeOrders.filter((order) => order.expiryTime > Date.now());
+    activeOrders = activeOrders.filter((order) => {
+      return order.initiator !== account;
+    });
+    activeOrders = activeOrders.filter((order) => {
+      console.log(
+        order.expiryTimeInSeconds > Date.now() / 1000,
+        "order.expiryTime > Date.now()"
+      );
+      return order.expiryTimeInSeconds > Date.now() / 1000;
+    });
     const completeOrders = listedTokens.filter((order) => {
       return order.quantity === 0;
     });
@@ -199,17 +214,27 @@ export const fetchOrderForTicker = async (
         b.fulfillOrderTimestampInSeconds - a.fulfillOrderTimestampInSeconds
       );
     });
-    // console.log(activeOrders, "activeOrders");
-    console.log(completeOrders, "completeOrders");
+
+    let average_price = 0;
+    let total_quantity = 0;
+    let total_price = 0;
+    let last_price=0;
+    if(completeOrders?.length>0){
+    completeOrders.forEach((order) => {
+      total_quantity += order.completedQuantity;
+      total_price += order.price * order.completedQuantity;
+    });
+    average_price = total_price / total_quantity;
+
+    last_price = completeOrders[0].price;
+    average_price = parseFloat(average_price).toFixed(2);
+    last_price = parseFloat(last_price).toFixed(2);
+    }
+    setAverageSellingPrice(average_price);
+    setLastSellingPrice(last_price);
+
     setActiveOrders(activeOrders);
     setCompleteOrders(completeOrders);
-    //   listedTokens = listedTokens.filter(
-    //     (token) => token.amountSent < token.amountGive || token.amountReceived < token.amountGet
-    //     );
-    //     listedTokens = listedTokens.filter(
-    //         (token) => token.expiryTime > Date.now()
-    //     );
-    // console.log(listedTokens, "after filter");
   } catch (error) {
     console.log(error);
   }

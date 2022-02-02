@@ -3,13 +3,11 @@ import BigNumber from "bignumber.js";
 import Web3 from "web3";
 import { convertToInternationalCurrencySystem } from "./convertToInternationalCurrencySystem";
 
-const GRAPHAPIURL =
-  "https://api.studio.thegraph.com/query/16341/exchange/v0.1.3";
 
-export const fetchTrades = async (account) => {
+export const fetchTrades = async (account, exchangeURL) => {
   let orderList = [];
   const client = new ApolloClient({
-    uri: GRAPHAPIURL,
+    uri: exchangeURL,
     cache: new InMemoryCache(),
   });
   const fetchFormattedValue = (value, decimal) => {
@@ -57,13 +55,17 @@ export const fetchTrades = async (account) => {
         order.amountGive,
         order.tokenGiveDecimal
       );
-      order.amountGiveDisplay = convertToInternationalCurrencySystem(order.amountGive);
+      order.amountGiveDisplay = convertToInternationalCurrencySystem(
+        order.amountGive
+      );
       order.amountGet = record[1].amountGet;
       order.amountGet = fetchFormattedValue(
         order.amountGet,
         order.tokenGetDecimal
       );
-      order.amountGetDisplay = convertToInternationalCurrencySystem(order.amountGet);
+      order.amountGetDisplay = convertToInternationalCurrencySystem(
+        order.amountGet
+      );
       order.amountReceived = record[1].amountReceived;
       order.amountReceived = fetchFormattedValue(
         order.amountReceived,
@@ -79,7 +81,7 @@ export const fetchTrades = async (account) => {
       if (record[1].cancelled) {
         order.status = 1; // Cancelled
         order.statusName = "Cancelled";
-      } else if (record[1].fulfillOrderTimestamp > 0) {
+      } else if (record[1].fulfillOrderTimestamp > 0 || order.amountRemainingToReceive === 0) {
         order.status = 2; // Completed
         order.statusName = "Completed";
       } else if (record[1].expiryTime > currentTimeInUTC) {
@@ -94,8 +96,8 @@ export const fetchTrades = async (account) => {
     });
     // sort order list based on id in descending order
     orderList.sort((a, b) => {
-        return b.id - a.id;
-        });
+      return b.id - a.id;
+    });
   } catch (error) {
     console.log(error);
   }

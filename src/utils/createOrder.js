@@ -36,16 +36,16 @@ export const createOrder = async (
   account,
   ticker,
   setSellModalStatus,
-  setSellModalOpen
+  setSellModalOpen,
+  CHAIN_USDT_CONTRACT_ADDRESS
 ) => {
   setSellModalOpen(true);
   let totalAmount = new BigNumber(ticker.quantity).multipliedBy(
     Math.pow(10, ticker.tokenDecimal)
   );
-  console.log("ticker in create", ticker);
   let tokenGive = ticker.assetID;
   let amountGive = totalAmount;
-  let tokenGet = "0x96711f91eb24a3D1dfA3eD308A84380DFD4CC1c7";
+  let tokenGet = CHAIN_USDT_CONTRACT_ADDRESS;
   let amountGet = new BigNumber(
     totalAmount.multipliedBy(ticker.price)
   ).multipliedBy(Math.pow(10, 18));
@@ -54,14 +54,7 @@ export const createOrder = async (
   );
   let expiryTime = ticker.expiryTime;
   let expiryDate = ticker.expiryDate;
-  console.log("expiryTime", convertToSeconds(expiryTime));
-  console.log("expiryDate", convert(expiryDate));
   let totalExpiryTime = convert(expiryDate) + convertToSeconds(expiryTime);
-  console.log(totalExpiryTime, "totalExpiryTime");
-  console.log("tokenGive", tokenGive);
-  console.log("amountGive", amountGive);
-  console.log("tokenGet", tokenGet);
-  console.log("amountGet", amountGet);
   let direction = true;
   let result = null;
   try {

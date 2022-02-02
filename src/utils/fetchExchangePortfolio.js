@@ -17,7 +17,7 @@ export const fetchPortfolio = async (account) => {
   const query = `query{
   projects{
     projectTokenDecimal
-    derivatives (where: {wrappedTokenTicker_contains:"-S"}){
+    derivatives (where: {wrappedTokenTicker_not_contains:"-NT"}){
         id
     unlockTime
     wrappedTokenTicker

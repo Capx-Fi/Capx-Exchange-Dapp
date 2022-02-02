@@ -1,20 +1,20 @@
-import "./Exchange.scss";
-import React, { useEffect, useRef, useState } from "react";
-import { render } from "react-dom";
-import { hideSideNav, showSideNav } from "../../redux/actions/sideNav";
-import { useDispatch, useSelector } from "react-redux";
-import BuyIcon from "../../assets/buy.svg";
-import ScrollableTableInstance from "../../layouts/TableLayout/ScrollableTableInstance";
-import { ExchangeContractAddress } from "../../constants/config";
-import { useWeb3React } from "@web3-react/core";
+import './Exchange.scss';
+import React, { useEffect, useRef, useState } from 'react';
+import { render } from 'react-dom';
+import { hideSideNav, showSideNav } from '../../redux/actions/sideNav';
+import { useDispatch, useSelector } from 'react-redux';
+import BuyIcon from '../../assets/buy.svg';
+import ScrollableTableInstance from '../../layouts/TableLayout/ScrollableTableInstance';
+import { ExchangeContractAddress } from '../../constants/config';
+import { useWeb3React } from '@web3-react/core';
 
-import SellScreen from "./Sell";
-import BuyScreen from "./Buy";
-import GlobalSearchBox from "../../layouts/TableLayout/GlobalSearchBox";
-import TokenSellTable from "./TokenSellTable";
-import TokenBuyTable from "./TokenBuyTable";
-import MetamaskModal from "../../components/Modals/MetamaskModal/MetamaskModal";
-const format = "HH:mm";
+import SellScreen from './Sell';
+import BuyScreen from './Buy';
+import GlobalSearchBox from '../../layouts/TableLayout/GlobalSearchBox';
+import TokenSellTable from './TokenSellTable';
+import TokenBuyTable from './TokenBuyTable';
+import MetamaskModal from '../../components/Modals/MetamaskModal/MetamaskModal';
+const format = 'HH:mm';
 
 function ExchangeScreen({ match }) {
   const dispatch = useDispatch();
@@ -73,10 +73,10 @@ function ExchangeScreen({ match }) {
                       ? "Trending Tokens"
                       : "Listed Tokens"}
                   </p>
-                  <p className="exchangeScreen_header_titlecontainer_subtitle">
-                    {mode === "sell"
-                      ? "Sell your tokens on Capx"
-                      : "Buy available tokens listed on Capx"}
+                  <p className='exchangeScreen_header_titlecontainer_subtitle text-left'>
+                    {mode === 'sell'
+                      ? 'Sell your tokens on Capx'
+                      : 'Buy available tokens listed on Capx'}
                   </p>
                 </div>
                 <GlobalSearchBox filter={filter} setFilter={setFilter} />
@@ -85,7 +85,6 @@ function ExchangeScreen({ match }) {
                 <TokenSellTable filter={filter} refresh={refresh}/>
               ) : (
                 <TokenBuyTable
-                  setAmount={setAmount}
                   filter={filter}
                   setBalance={setBalance}
                   refresh={refresh}

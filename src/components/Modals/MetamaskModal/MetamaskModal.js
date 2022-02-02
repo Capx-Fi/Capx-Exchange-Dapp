@@ -8,6 +8,7 @@ import { injected } from "../../../utils/connector";
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
+import { WRONG_CHAIN_MESSAGE } from "../../../constants/config";
 import "../../../translations/i18n";
 function MetamaskModal() {
   const { active, account, library, connector, activate } = useWeb3React();
@@ -21,18 +22,15 @@ function MetamaskModal() {
     try {
       await activate(injected);
       if (unsupportedChainIdError) {
-        enqueueSnackbar("Please connect to the Rinkeby Chain.", {
+        enqueueSnackbar(WRONG_CHAIN_MESSAGE, {
           variant: "error",
         });
       }
     } catch (ex) {
       if (error instanceof UnsupportedChainIdError) {
-        enqueueSnackbar(
-          "Please connect to the Rinkeby Chain.",
-          {
-            variant: "error",
-          }
-        );
+        enqueueSnackbar(WRONG_CHAIN_MESSAGE, {
+          variant: "error",
+        });
       }
       alert(ex);
     }

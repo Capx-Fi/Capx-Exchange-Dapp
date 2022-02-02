@@ -1,15 +1,9 @@
 import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
 import BigNumber from "bignumber.js";
-const GRAPHAPIURL =
-  "https://api.studio.thegraph.com/query/16341/liquid-master/v3.0.0";
-const CONTROLLER_GRAPH_URL =
-  "https://api.studio.thegraph.com/query/16341/liquid-original/v3.0.0";
-const EXCHANGE_GRAPH_URL =
-  "https://api.studio.thegraph.com/query/16341/exchange/v0.1.3";
 
-async function fetchOrderTokens() {
+async function fetchOrderTokens(exchangeURL, masterURL, wrappedURL) {
   const client = new ApolloClient({
-    uri: EXCHANGE_GRAPH_URL,
+    uri: exchangeURL,
     cache: new InMemoryCache(),
   });
 
@@ -34,9 +28,14 @@ async function fetchOrderTokens() {
   }
 }
 
-async function fetchProjectIDForDerivatives(derivatives) {
+async function fetchProjectIDForDerivatives(
+  derivatives,
+  exchangeURL,
+  masterURL,
+  wrappedURL
+) {
   const client = new ApolloClient({
-    uri: CONTROLLER_GRAPH_URL,
+    uri: wrappedURL,
     cache: new InMemoryCache(),
   });
 
@@ -68,15 +67,20 @@ async function fetchProjectIDForDerivatives(derivatives) {
   }
 }
 
-export const fetchAllProjectData = async () => {
+export const fetchAllProjectData = async (exchangeURL, masterURL, wrappedURL) => {
   let _project = [];
-  let derivatives = await fetchOrderTokens();
+  let derivatives = await fetchOrderTokens(exchangeURL, masterURL, wrappedURL);
   console.log("DerivativesIDs", derivatives);
-  let projects = await fetchProjectIDForDerivatives(derivatives);
+  let projects = await fetchProjectIDForDerivatives(
+    derivatives,
+    exchangeURL,
+    masterURL,
+    wrappedURL
+  );
   console.log("ProjectIDs", projects);
 
   const client = new ApolloClient({
-    uri: GRAPHAPIURL,
+    uri: masterURL,
     cache: new InMemoryCache(),
   });
 

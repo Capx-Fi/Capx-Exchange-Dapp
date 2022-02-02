@@ -1,14 +1,10 @@
 import { Table } from "antd";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import "./TokenListTable.scss";
 
 import dummyDataExchange from "../../layouts/TableLayout/dummyDataExchange.json";
 import DepositIcon from "../../assets/DepositIcon.svg";
 import { useDispatch } from "react-redux";
-
-import { hideSideNav } from "../../redux/actions/sideNav";
-import useWindowSize from "../../utils/windowSize";
 import { setProjectBuyTicker } from "../../redux/actions/exchange";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 
@@ -16,18 +12,6 @@ const { Column, ColumnGroup } = Table;
 
 function TokenListTable({ activeOrders }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
-
-  // useEffect(() => {
-  //   console.log(filter);
-  //   if (filter === "" || filter === undefined) {
-  //     setTokenList(dummyDataExchange);
-  //   } else {
-  //     const filteredList = dummyDataExchange.filter((token) => {
-  //       return token.asset.toLowerCase().includes(filter?.toLowerCase());
-  //     });
-  //     setTokenList(filteredList);
-  //   }
-  // }, [filter]);
 
   function onChange(pagination, filters, sorter, extra) {
     console.log("params", pagination, filters, sorter, extra);
@@ -59,9 +43,7 @@ function TokenListTable({ activeOrders }) {
         key="asset"
         render={(value, row) => {
           return (
-            <Link to={`/info/${row.assetID}`}>
-              <p className="text-white hover:text-primary-green-400">{value}</p>
-            </Link>
+              <p className="text-white">{value}</p>
           );
         }}
       />

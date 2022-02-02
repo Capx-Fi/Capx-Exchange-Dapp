@@ -8,6 +8,7 @@ import { injected } from '../../utils/connector';
 import { useSnackbar } from 'notistack';
 import ConnectCTA from '../../components/CTA/ConnectCTA';
 import { fetchHoldings } from '../../utils/fetchHoldings';
+import { WRONG_CHAIN_MESSAGE } from '../../constants/config';
 
 import NextIcon from '../../assets/next-black.svg';
 
@@ -19,12 +20,9 @@ function Holdings() {
     if (active) {
       activate(injected, undefined, true).catch((error) => {
         if (error instanceof UnsupportedChainIdError) {
-          enqueueSnackbar(
-            'Please switch to the mainnet.',
-            {
-              variant: 'error',
-            }
-          );
+          enqueueSnackbar(WRONG_CHAIN_MESSAGE, {
+            variant: "error",
+          });
         }
       });
     }
@@ -41,8 +39,8 @@ function Holdings() {
       await activate(injected);
     } catch (ex) {
       if (ex instanceof UnsupportedChainIdError) {
-        enqueueSnackbar('Please connect to the Rinkeby Chain.', {
-          variant: 'error',
+        enqueueSnackbar(WRONG_CHAIN_MESSAGE, {
+          variant: "error",
         });
       }
       console.log(ex);
@@ -63,7 +61,7 @@ function Holdings() {
           />
         </div>
       ) : (
-        <div className='w-9/12 ml-10'>
+        <div className='w-9/12 ml-10 desktop:w-10/12 desktop:mt-10'>
           <TableInstanceWithSearch
             title={'Holdings'}
             subTitle={'Discover new derivative assets to trade on Capx'}

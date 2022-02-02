@@ -3,14 +3,10 @@
 
 import { ApolloClient, InMemoryCache, gql, cache } from '@apollo/client';
 import BigNumber from 'bignumber.js';
-const GRAPHAPIURL =
-  'https://api.studio.thegraph.com/query/16341/liquid-master/v3.0.0';
-const CONTROLLER_GRAPH_URL =
-  'https://api.studio.thegraph.com/query/16341/liquid-original/v3.0.0';
+export async function fetchProjectID(tokenAddress, wrappedURL) {
 
-export async function fetchProjectID(tokenAddress) {
   const client = new ApolloClient({
-    uri: CONTROLLER_GRAPH_URL,
+    uri: wrappedURL,
     cache: new InMemoryCache(),
   });
   const query = `query {
@@ -28,7 +24,7 @@ export async function fetchProjectID(tokenAddress) {
     const { data } = await client.query({
       query: gql(query),
     });
-    let id = '';
+    let id = "";
     data.projects.map((project) => {
       if (project.derivatives.length > 0) {
         id = project.projectTokenAddress;
@@ -39,10 +35,10 @@ export async function fetchProjectID(tokenAddress) {
     console.log(error);
   }
 }
-export const fetchProjectDetails = async (tokenAddress) => {
+export const fetchProjectDetails = async (tokenAddress, masterURL) => {
   let listedTokens = [];
   const client = new ApolloClient({
-    uri: GRAPHAPIURL,
+    uri: masterURL,
     cache: new InMemoryCache(),
   });
   const query = `query {
@@ -59,6 +55,7 @@ export const fetchProjectDetails = async (tokenAddress) => {
     const { data } = await client.query({
       query: gql(query),
     });
+    console.log(data,"projectdata");
     console.log(data.projects);
     let description = null;
     try {

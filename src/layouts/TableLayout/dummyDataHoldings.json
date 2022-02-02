@@ -1,22 +1,22 @@
 [
     {
         "asset": "RELT",
-        "balance": "10,987",
+        "balance": "1011",
         "deposit_id": 1,
         "withdraw_id":2
     },{
-        "asset": "RELT",
-        "balance": "10,987",
+        "asset": "CAPX",
+        "balance": "2022",
         "deposit_id": 1,
         "withdraw_id":2
     },{
-        "asset": "RELT",
-        "balance": "10,987",
+        "asset": "USDT",
+        "balance": "3033",
         "deposit_id": 1,
         "withdraw_id":2
     },{
-        "asset": "RELT",
-        "balance": "10,987",
+        "asset": "MATI",
+        "balance": "4044",
         "deposit_id": 1,
         "withdraw_id":2
     },{

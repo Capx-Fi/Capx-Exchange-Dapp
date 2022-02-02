@@ -11,6 +11,25 @@ import $ from "jquery";
 import useWindowSize from "../../utils/windowSize";
 import { fetchPortfolio } from "../../utils/fetchPortfolio";
 import { useWeb3React } from "@web3-react/core";
+import {
+  BSC_CHAIN_ID,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
+  CONTRACT_ADDRESS_CAPX_USDT_BSC,
+  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
+  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
+  MATIC_CHAIN_ID,
+  GRAPHAPIURL_EXCHANGE_BSC,
+  GRAPHAPIURL_EXCHANGE_MATIC,
+  GRAPHAPIURL_EXCHANGE_ETHEREUM,
+  GRAPHAPIURL_MASTER_BSC,
+  GRAPHAPIURL_MASTER_MATIC,
+  GRAPHAPIURL_MASTER_ETHEREUM,
+  GRAPHAPIURL_WRAPPED_MATIC,
+  GRAPHAPIURL_WRAPPED_BSC,
+  GRAPHAPIURL_WRAPPED_ETHEREUM,
+} from "../../constants/config";
 import { useDispatch } from "react-redux";
 import { setSellTicker, setTickerBalance } from "../../redux/actions/exchange";
 import { fetchContractBalances } from "../../utils/fetchContractBalances";
@@ -23,6 +42,36 @@ function TokenSellTable({ filter, refresh }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
   const [portfolioHoldings, setPortfolioHoldings] = useState([]);
   const { active, account, chainId } = useWeb3React();
+  const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
+    chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
+      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+  const CHAIN_USDT_CONTRACT_ADDRESS =
+    chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
+      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+  const exchangeURL =
+    chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? GRAPHAPIURL_EXCHANGE_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? GRAPHAPIURL_EXCHANGE_MATIC
+      : GRAPHAPIURL_EXCHANGE_ETHEREUM;
+  const wrappedURL =
+    chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? GRAPHAPIURL_WRAPPED_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? GRAPHAPIURL_WRAPPED_MATIC
+      : GRAPHAPIURL_WRAPPED_ETHEREUM;
+  const masterURL =
+    chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? GRAPHAPIURL_MASTER_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? GRAPHAPIURL_MASTER_MATIC
+      : GRAPHAPIURL_MASTER_ETHEREUM;
   const [loading, setLoading] = useState(false);
   let history = useHistory();
 
@@ -36,14 +85,19 @@ function TokenSellTable({ filter, refresh }) {
   });
   const fetchPortfolioHoldings = async () => {
     setLoading(true);
-    const holdings = await fetchPortfolio(account);
-    const contractHoldings = await fetchContractBalances(account);
+    const holdings = await fetchPortfolio(account, wrappedURL);
+    const contractHoldings = await fetchContractBalances(
+      account,
+      exchangeURL,
+      wrappedURL
+    );
     const combinedHoldings = [...holdings, ...contractHoldings];
     // sort combine holdings absed on unlock date
     combinedHoldings.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
     setPortfolioHoldings(combinedHoldings);
+    setTokenList(combinedHoldings);
     console.log(holdings);
     setLoading(false);
   };
@@ -66,13 +120,13 @@ function TokenSellTable({ filter, refresh }) {
 
   const dispatch = useDispatch();
   const navigateProject = async (address) => {
-    const projectAddress = await fetchProjectID(address);
+    const projectAddress = await fetchProjectID(address, wrappedURL);
     history.push(`/info/${projectAddress}`);
   };
   return (
     <div className="tokenListTableContainer">
       <Table
-        dataSource={portfolioHoldings}
+        dataSource={tokenList}
         locale={{ emptyText: loading ? "Loading Tokens..." : "No Token Found" }}
         pagination={false}
         scroll={{ y: 500 }}
@@ -96,8 +150,8 @@ function TokenSellTable({ filter, refresh }) {
           key="asset"
           render={(value, row) => {
             return (
-              <div onClick={()=>navigateProject(row.assetID)}>
-                <p className="text-white hover:text-primary-green-400">
+              <div onClick={() => navigateProject(row.assetID)}>
+                <p className="text-white hover:text-primary-green-400 cursor-pointer">
                   {value}
                 </p>
               </div>

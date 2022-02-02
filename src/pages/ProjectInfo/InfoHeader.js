@@ -4,7 +4,7 @@ import tickerDefault from '../../assets/tickerDefault.svg';
 
 import './ProjectInfo.scss';
 
-function InfoHeader({ ticker }) {
+function InfoHeader({ ticker, lastSellingPrice, averageSellingPrice }) {
   return (
     <div className='infoHeader'>
       <div className='flex flex-row'>
@@ -27,11 +27,11 @@ function InfoHeader({ ticker }) {
         </div>
         <div className='infoHeader_innerDiv'>
           <p className='infoHeader_innerDiv_title'>{'Last Sale Price'}</p>
-          <p className='infoHeader_innerDiv_value'>{'9.72'}</p>
+          <p className='infoHeader_innerDiv_value'>${lastSellingPrice}</p>
         </div>
         <div className='infoHeader_innerDiv'>
           <p className='infoHeader_innerDiv_title'>{'Average Price'}</p>
-          <p className='infoHeader_innerDiv_value'>{'9.72'}</p>
+          <p className='infoHeader_innerDiv_value'>${averageSellingPrice}</p>
         </div>
       </div>
       <img src={liquidDiamond} className='infoHeader_illustration' />

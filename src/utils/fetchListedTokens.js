@@ -3,13 +3,18 @@
 
 // Only show Orders where num of tokens not equal to number of tokens received.
 
-import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
-import BigNumber from "bignumber.js";
-import Web3 from "web3";
-import { EXCHANGE_ABI } from "../contracts/ExchangeContract";
-import { EXCHANGE_CONTRACT_ADDRESS } from "../constants/config";
-const GRAPHAPIURL =
-  "https://api.studio.thegraph.com/query/16341/exchange/v0.1.3";
+import { ApolloClient, InMemoryCache, gql, cache } from '@apollo/client';
+import BigNumber from 'bignumber.js';
+import Web3 from 'web3';
+import { EXCHANGE_ABI } from '../contracts/ExchangeContract';
+import {
+  BSC_CHAIN_ID,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
+  EXCHANGE_CONTRACT_ADDRESS,
+  MATIC_CHAIN_ID,
+} from '../constants/config';
 
 function convertDateToString(timestamp) {
   const unixTime = timestamp;
@@ -33,14 +38,14 @@ function convertDateToString(timestamp) {
 function convertToDate(timestamp) {
   const unixTime = timestamp;
   const date = new Date(unixTime * 1000);
-  let unlockDay = date.toLocaleDateString("en-US", {
-    day: "numeric",
+  let unlockDay = date.toLocaleDateString('en-US', {
+    day: 'numeric',
   });
-  let unlockMonth = date.toLocaleDateString("en-US", {
-    month: "long",
+  let unlockMonth = date.toLocaleDateString('en-US', {
+    month: 'long',
   });
-  let unlockYear = date.toLocaleDateString("en-US", {
-    year: "numeric",
+  let unlockYear = date.toLocaleDateString('en-US', {
+    year: 'numeric',
   });
   let displayGraphDate = `${unlockDay} ${unlockMonth}, ${unlockYear}`;
   return displayGraphDate;
@@ -49,23 +54,25 @@ function convertToDate(timestamp) {
 function convertToTime(timestamp) {
   const unixTime = timestamp;
   const date = new Date(unixTime * 1000);
-  let time = date.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
+  let time = date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
   });
   let displayGraphDate = `${time}`;
   return displayGraphDate;
 }
 
 const web3 = new Web3(Web3.givenProvider);
-const exchangeContract = new web3.eth.Contract(
-  EXCHANGE_ABI,
-  EXCHANGE_CONTRACT_ADDRESS
-);
-export const fetchListedTokens = async (account) => {
+
+export const fetchListedTokens = async (
+  account,
+  chainId,
+  exchangeURL,
+  CHAIN_USDT_CONTRACT_ADDRESS
+) => {
   let listedTokens = [];
   const client = new ApolloClient({
-    uri: GRAPHAPIURL,
+    uri: exchangeURL,
     cache: new InMemoryCache(),
   });
   const query = `query {
@@ -130,26 +137,29 @@ export const fetchListedTokens = async (account) => {
       .flat();
     console.log(listedTokens);
     listedTokens = listedTokens.filter((token) => token.quantity > 0);
-    let balance = await exchangeContract.methods.unlockBalance(
-      "0x96711f91eb24a3D1dfA3eD308A84380DFD4CC1c7",
-      account
-    ).call();
-    console.log(balance, "balance");
+    const exchangeContract = new web3.eth.Contract(
+      EXCHANGE_ABI,
+      chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
+      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM
+    );
+    let balance = await exchangeContract.methods
+      .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
+      .call();
     balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toNumber();
-    
+
     listedTokens = listedTokens.map((token) => {
       return {
         ...token,
         balance,
       };
     });
-    //   listedTokens = listedTokens.filter(
-    //     (token) => token.amountSent < token.amountGive || token.amountReceived < token.amountGet
-    //     );
-    // listedTokens = listedTokens.filter(
-    //   (token) => token.expiryTimeActual > Date.now()
-    // );
-    console.log(listedTokens, 'after filter');
+    // filter tokens whose expiry is gretaer than current time
+    listedTokens = listedTokens.filter((token) => {
+      return token.expiryTimeActual > Date.now() / 1000;
+    });
   } catch (error) {
     console.log(error);
   }

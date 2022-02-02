@@ -1,34 +1,48 @@
-import React, { useEffect, useRef, useState } from "react";
-import { render } from "react-dom";
-import { hideSideNav, showSideNav } from "../../redux/actions/sideNav";
-import { useDispatch, useSelector } from "react-redux";
-import BuyIcon from "../../assets/buy.svg";
-import { setSellTicker } from "../../redux/actions/exchange";
-import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
-import { approveSellTokens } from "../../utils/approveSellTokens";
-import { createOrder } from "../../utils/createOrder";
+import React, { useEffect, useRef, useState } from 'react';
+import { render } from 'react-dom';
+import { hideSideNav, showSideNav } from '../../redux/actions/sideNav';
+import { useDispatch, useSelector } from 'react-redux';
+import BuyIcon from '../../assets/buy.svg';
+import { setSellTicker } from '../../redux/actions/exchange';
+import BigNumber from "bignumber.js";
+import { EXCHANGE_ABI } from '../../contracts/ExchangeContract';
+import { approveSellTokens } from '../../utils/approveSellTokens';
+import { createOrder } from '../../utils/createOrder';
 import {
-  EXCHANGE_CONTRACT_ADDRESS,
-  USDT_CONTRACT_ADDRESS,
-} from "../../constants/config";
-import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
-import Web3 from "web3";
+  BSC_CHAIN_ID,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
+  CONTRACT_ADDRESS_CAPX_USDT_BSC,
+  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
+  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
+  MATIC_CHAIN_ID,
+} from '../../constants/config';
+import { CONTRACT_ABI_ERC20 } from '../../contracts/SampleERC20';
+import Web3 from 'web3';
 
-import LockIcon from "../../assets/lock-asset.svg";
-import NextIcon from "../../assets/next-black.svg";
-import DatePicker from "react-date-picker";
-import DropdownIcon from "../../assets/dropdown.svg";
-import { useWeb3React } from "@web3-react/core";
-import { TimePicker } from "antd";
-import "./antd.css";
-import moment from "moment";
-import RefresherInput from "../../components/RefresherInput/RefresherInput";
-import WarningCard from "../../components/WarningCard/WarningCard";
-import ApproveModal from "../../components/Modals/VestAndApproveModal/ApproveModal";
-import SellModal from "../../components/Modals/VestAndApproveModal/SellModal";
-const format = "HH:mm";
+import LockIcon from '../../assets/lock-asset.svg';
+import NextIcon from '../../assets/next-black.svg';
+import DatePicker from 'react-date-picker';
+import DropdownIcon from '../../assets/dropdown.svg';
+import { useWeb3React } from '@web3-react/core';
+import { TimePicker } from 'antd';
+import './antd.css';
+import moment from 'moment';
+import RefresherInput from '../../components/RefresherInput/RefresherInput';
+import WarningCard from '../../components/WarningCard/WarningCard';
+import ApproveModal from '../../components/Modals/VestAndApproveModal/ApproveModal';
+import SellModal from '../../components/Modals/VestAndApproveModal/SellModal';
+const format = 'HH:mm';
 const currentDate = new Date();
-function SellScreen({ sellModalOpen, setSellModalOpen, approveModalOpen, setApproveModalOpen, refresh, setRefresh }) {
+function SellScreen({
+  sellModalOpen,
+  setSellModalOpen,
+  approveModalOpen,
+  setApproveModalOpen,
+  refresh,
+  setRefresh,
+}) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(hideSideNav());
@@ -36,15 +50,26 @@ function SellScreen({ sellModalOpen, setSellModalOpen, approveModalOpen, setAppr
 
   const web3 = new Web3(Web3.givenProvider);
   const { active, account, chainId } = useWeb3React();
+  const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
+    chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
+      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+  const CHAIN_USDT_CONTRACT_ADDRESS =
+    chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
+      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
   const ticker = useSelector((state) => state.exchange.sellTicker);
   const balance = useSelector((state) => state.exchange.tickerBalance);
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [approveModalStatus, setApproveModalStatus] = useState("");
-  const [sellModalStatus, setSellModalStatus] = useState("");
+  const [approveModalStatus, setApproveModalStatus] = useState('');
+  const [sellModalStatus, setSellModalStatus] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [warningDate, setWarningDate] = useState(false);
-
 
   const setAmount = (e) => {
     dispatch(setSellTicker({ ...ticker, price: e }));
@@ -68,11 +93,11 @@ function SellScreen({ sellModalOpen, setSellModalOpen, approveModalOpen, setAppr
     );
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
-      EXCHANGE_CONTRACT_ADDRESS
+      CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
     const usdtContract = new web3.eth.Contract(
       CONTRACT_ABI_ERC20,
-      USDT_CONTRACT_ADDRESS
+      CHAIN_USDT_CONTRACT_ADDRESS
     );
     const tokens = ticker.quantity;
     const tokenDecimal = ticker.tokenDecimal;
@@ -81,47 +106,45 @@ function SellScreen({ sellModalOpen, setSellModalOpen, approveModalOpen, setAppr
       account,
       tokens,
       tokenDecimal,
-      EXCHANGE_CONTRACT_ADDRESS,
+      CHAIN_EXCHANGE_CONTRACT_ADDRESS,
       setApproveModalStatus,
       setTokenApproval,
       setApproveModalOpen
     );
-    console.log(ticker);
   };
   const finalizeSwap = async () => {
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
-      EXCHANGE_CONTRACT_ADDRESS
+      CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
     await createOrder(
       exchangeContract,
       account,
       ticker,
       setSellModalStatus,
-      setSellModalOpen
+      setSellModalOpen,
+      CHAIN_USDT_CONTRACT_ADDRESS,
     );
     setTimeout(() => {
       setRefresh(!refresh);
     }, 6000);
-    console.log(ticker);
   };
   function convert(str) {
     var date = new Date(str),
-      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-      day = ("0" + date.getDate()).slice(-2);
-    let kp = [date.getFullYear(), mnth, day].join("-");
-    console.log("KP", kp.split("-"));
+      mnth = ('0' + (date.getMonth() + 1)).slice(-2),
+      day = ('0' + date.getDate()).slice(-2);
+    let kp = [date.getFullYear(), mnth, day].join('-');
     let timestamp =
       new Date(
-        Date.UTC(kp.split("-")[0], kp.split("-")[1] - 1, kp.split("-")[2])
+        Date.UTC(kp.split('-')[0], kp.split('-')[1] - 1, kp.split('-')[2])
       ).getTime() / 1000;
     return timestamp;
   }
 
   function convertToSeconds(str) {
     var date = new Date(str),
-      hours = ("0" + date.getHours()).slice(-2),
-      minutes = ("0" + date.getMinutes()).slice(-2);
+      hours = ('0' + date.getHours()).slice(-2),
+      minutes = ('0' + date.getMinutes()).slice(-2);
     return +hours * 60 * 60 + +minutes * 60;
   }
   let expiryTime = ticker?.expiryTime;
@@ -131,7 +154,7 @@ function SellScreen({ sellModalOpen, setSellModalOpen, approveModalOpen, setAppr
   //total expiry time should be gretaer than current time otherwise setWarning
   useEffect(() => {
     if (totalExpiryTime < currentDate.getTime() / 1000) {
-      setWarningDate("Expiry Time should be greater than current time");
+      setWarningDate('Expiry Time should be greater than current time');
     } else {
       setWarningDate(false);
     }
@@ -146,7 +169,7 @@ function SellScreen({ sellModalOpen, setSellModalOpen, approveModalOpen, setAppr
     } else {
       setDisabled(false);
     }
-    console.log("disabled", disabled);
+    console.log('disabled', disabled);
   }, [ticker?.price, ticker?.quantity, totalExpiryTime, balance]);
 
   return (
@@ -196,12 +219,12 @@ function SellScreen({ sellModalOpen, setSellModalOpen, approveModalOpen, setAppr
               setTicker={(e) => setQuantity(e.target.value)}
               warningText={
                 ticker &&
-                ticker.quantity > balance &&
+                BigNumber(ticker?.quantity).isGreaterThan(balance) &&
                 `INSUFFICIENT BALANCE. BUY MORE $ ${ticker && ticker.asset}`
               }
             />
           </div>
-          {ticker && ticker.quantity > balance && (
+          {ticker && BigNumber(ticker?.quantity).isGreaterThan(balance) && (
             <WarningCard
               text={`INSUFFICIENT BALANCE. BUY MORE $${ticker && ticker.asset}`}
             />
@@ -316,18 +339,7 @@ function SellScreen({ sellModalOpen, setSellModalOpen, approveModalOpen, setAppr
           </div>
           {warningDate && <WarningCard text={warningDate} />}
 
-          <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer">
-            {/* <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_date'>
-              {' '}
-              EXPIRY DATE: {moment(ticker?.expiryDate).format(
-                'DD MMM YYYY'
-              )}{' '}
-            </div>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_time'>
-              {' '}
-              EXPIRY TIME: {moment(ticker?.expiryTime).format('hh:mm')}{' '}
-            </div> */}
-          </div>
+          <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer"></div>
           <div
             onClick={() =>
               tokenApproval || ticker?.isContract

@@ -1,13 +1,13 @@
 .exchangeScreen {
-  @apply w-82v mx-auto mt-16;
+  @apply w-85p mx-auto  mt-16 desktop:mt-8 desktop:pt-2 desktop:pl-2;
   &_maincontainer {
-    @apply flex mt-8;
+    @apply flex mt-4 w-full;
   }
   &_leftcontainer {
-    @apply w-8/12 pr-40 -mt-6;
+    @apply w-8/12 pr-40 desktop:pr-14 desktop:-mt-4 desktop:-ml-8 desktop:w-10/12;
   }
   &_rightcontainer {
-    @apply w-4/12 pl-4;
+    @apply w-4/12 pl-4 desktop:mt-0 desktop:w-5/12;
 
     &_buyContainer {
       @apply border rounded-2xl flex flex-col border-dark-50;
@@ -29,9 +29,9 @@
       &_body {
         @apply mt-4 px-6;
         &_payContainer {
-          @apply flex flex-col w-full mb-4;
+          @apply flex flex-col w-full mb-4 desktop:mb-3;
           &_title {
-            @apply text-caption-2 text-grayLabel mt-5 font-black text-left;
+            @apply text-caption-2 text-grayLabel mt-5 desktop:mt-3 font-black text-left;
           }
 
           &_inputContainer {
@@ -128,8 +128,8 @@
           @apply flex gap-4;
         }
         &_separator {
-          @apply w-full flex items-center;
-          height: 100px;
+          @apply w-full flex items-center h-8 desktop:h-24;
+
           &_line {
             @apply bg-dark-50;
             height: 1px;
@@ -239,9 +239,8 @@ input[type='number'] {
 }
 
 .react-calendar {
-  @apply bg-dark-400;
+  @apply bg-dark-400 rounded-2xl;
   background-color: rgba(21, 21, 23, 1) !important;
-  border: #0c4555 !important;
   &__month-view {
     &__weekdays {
       color: rgba(241, 250, 242, 0.3) !important;
@@ -255,17 +254,17 @@ input[type='number'] {
     color: rgba(241, 250, 242, 1) !important;
     & > button {
       background: #2a383c !important;
-      // border-radius: 16px;
+      border-radius: 16px;
       &:hover {
         background: #2a383c !important;
-        // border-radius: 16px;
+        border-radius: 16px;
       }
       &:focus {
         outline: none !important;
       }
       &:active {
         background: #2a383c !important;
-        // border-radius: 16px;
+        border-radius: 16px;
       }
     }
   }
@@ -273,20 +272,20 @@ input[type='number'] {
     color: rgba(241, 250, 242, 0.8) !important;
     &:hover {
       background: #2a383c !important;
-      // border-radius: 16px;
+      border-radius: 16px;
     }
-    &:disabled{
+    &:disabled {
       background: #2a383c !important;
       opacity: 0.2;
-      // border-radius: 16px;
+      border-radius: 16px;
     }
     &--now {
       background: #2a383c !important;
-      // border-radius: 16px;
+      border-radius: 16px;
     }
     &--active {
       background: #0c4555 !important;
-      // border-radius: 16px;
+      border-radius: 16px;
     }
   }
 }

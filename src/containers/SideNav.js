@@ -48,7 +48,7 @@ function SideNav() {
               </button>
             </div>
             <nav
-              className={`flex-grow w-screen md:w-full md:block px-4 pb-4 md:pb-0 md:overflow-y-auto ${
+              className={`flex-grow w-screen md:w-full md:block px-6 pb-2 md:pb-0 md:overflow-y-auto desktop:text-caption-3 ${
                 open ? "block" : "hidden"
               }`}
             >

@@ -17,5 +17,7 @@ code {
   opacity: 0.4;
   border: 1.2px solid #2a383c;
 }
-
+/* .ant-table-tbody > tr > td.ant-table-cell-row-hover {
+    background: #0c0808 !important;
+} */
 

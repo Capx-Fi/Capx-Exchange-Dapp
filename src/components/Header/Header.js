@@ -22,11 +22,31 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { useLocation } from "react-router-dom";
 import HeaderDropdown from "../HeaderSearch/HeaderDropdown";
 import { fetchAllProjectData } from "../../utils/fetchAllProjectData";
+import {
+  BSC_CHAIN_ID,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
+  CONTRACT_ADDRESS_CAPX_USDT_BSC,
+  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
+  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
+  MATIC_CHAIN_ID,
+  GRAPHAPIURL_EXCHANGE_BSC,
+  GRAPHAPIURL_EXCHANGE_MATIC,
+  GRAPHAPIURL_EXCHANGE_ETHEREUM,
+  GRAPHAPIURL_MASTER_BSC,
+  GRAPHAPIURL_MASTER_MATIC,
+  GRAPHAPIURL_MASTER_ETHEREUM,
+  GRAPHAPIURL_WRAPPED_MATIC,
+  GRAPHAPIURL_WRAPPED_BSC,
+  GRAPHAPIURL_WRAPPED_ETHEREUM,
+  WRONG_CHAIN_MESSAGE
+} from "../../constants/config";
 import DropDown from "./DropDown/DropDown";
+import AccountDropdown from "./AccountDropdown/AccountDropdown";
 
 function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   const location = useLocation();
-  console.log("location", location);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { active, account, library, connector, activate, deactivate, chainId } =
     useWeb3React();
@@ -36,7 +56,37 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   const currentChainId = metaState.chain.id?.toString();
   const [dashboardModal, setDashboardModal] = useState(false);
   const web3 = new Web3(Web3.givenProvider);
-  const [sortBy, setSortBy] = useState("Rinkeby");
+    const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
+      chainId?.toString() === BSC_CHAIN_ID.toString()
+        ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
+        : chainId?.toString() === MATIC_CHAIN_ID.toString()
+        ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
+        : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+    const CHAIN_USDT_CONTRACT_ADDRESS =
+      chainId?.toString() === BSC_CHAIN_ID.toString()
+        ? CONTRACT_ADDRESS_CAPX_USDT_BSC
+        : chainId?.toString() === MATIC_CHAIN_ID.toString()
+        ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
+        : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+    const exchangeURL =
+      chainId?.toString() === BSC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_EXCHANGE_BSC
+        : chainId?.toString() === MATIC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_EXCHANGE_MATIC
+        : GRAPHAPIURL_EXCHANGE_ETHEREUM;
+    const wrappedURL =
+      chainId?.toString() === BSC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_WRAPPED_BSC
+        : chainId?.toString() === MATIC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_WRAPPED_MATIC
+        : GRAPHAPIURL_WRAPPED_ETHEREUM;
+    const masterURL =
+      chainId?.toString() === BSC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_MASTER_BSC
+        : chainId?.toString() === MATIC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_MASTER_MATIC
+        : GRAPHAPIURL_MASTER_ETHEREUM;
+  const [sortBy, setSortBy] = useState("Ethereum");
   const handleCloseSelectDashboard = () => {
     setDashboardModal(false);
   };
@@ -45,37 +95,34 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
       await activate(injected);
     } catch (ex) {
       if (ex instanceof UnsupportedChainIdError) {
-        enqueueSnackbar("Please connect to the Rinkeby Chain.", {
+        enqueueSnackbar(WRONG_CHAIN_MESSAGE, {
           variant: "error",
         });
       }
-      console.log(ex);
     }
   }
   useEffect(() => {
+    if(active)
     fetchProjects();
-  }, []);
+  }, [account,chainId]);
   useEffect(() => {
-    console.log(chainId);
     if (chainId === 80001) setSortBy("Matic");
-    else setSortBy("Rinkeby");
+    else if (chainId === 97 ) setSortBy("BSC");
+    else setSortBy("Ethereum");
   }, [chainId]);
   const fetchProjects = async () => {
-    const projects = await fetchAllProjectData();
+    const projects = await fetchAllProjectData(exchangeURL, masterURL, wrappedURL);
     setProjectData(projects);
   };
-  console.log(Web3Provider.provider);
 
   const chainChange = async (chainName) => {
-    if (chainName === "Rinkeby") {
+    if (chainName === "Ethereum") {
       try {
         await web3.currentProvider.request({
           method: "wallet_switchEthereumChain",
           params: [{ chainId: "0x4" }],
         });
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     } else if (chainName === "Matic") {
       try {
         await web3.currentProvider.request({
@@ -94,36 +141,60 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
             },
           ],
         });
+        // await window.ethereum.request({
+        //   method: "wallet_addEthereumChain",
+        //   params: [
+        //     {
+        //       chainId: "0x89",
+        //       chainName: "Polygon",
+        //       nativeCurrency: {
+        //         name: "MATIC",
+        //         symbol: "MATIC",
+        //         decimals: 18,
+        //       },
+        //       rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
+        //       blockExplorerUrls: ["https://polygonscan.com/"],
+        //     },
+        //   ],
+        // });
+      } catch (error) {}
+    } else if (chainName === "BSC") {
+      try {
+        await web3.currentProvider.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: "0x61",
+              chainName: "Binance Smart Chain Test",
+              nativeCurrency: {
+                name: "BNB",
+                symbol: "BNB",
+                decimals: 18,
+              },
+              rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+              blockExplorerUrls: ["https://testnet.bscscan.com/"],
+            },
+          ],
+        });
+        // await window.ethereum.request({
+        //   method: "wallet_addEthereumChain",
+        //   params: [
+        //     {
+        //       chainId: "0x38",
+        //       chainName: "Binance Smart Chain",
+        //       nativeCurrency: {
+        //         name: "BNB",
+        //         symbol: "BNB",
+        //         decimals: 18,
+        //       },
+        //       rpcUrls: ["https://bsc-dataseed.binance.org/"],
+        //       blockExplorerUrls: ["https://bscscan.com/"],
+        //     },
+        //   ],
+        // });
       } catch (error) {
         console.log(error);
       }
-    }
-      else if (chainName === "BSC") {
-        try {
-          await web3.currentProvider.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: "0x61",
-                chainName: "Binance Smart Chain Test",
-                nativeCurrency: {
-                  name: "BNB",
-                  symbol: "BNB",
-                  decimals: 18,
-                },
-                rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
-                blockExplorerUrls: ["https://testnet.bscscan.com/"],
-              },
-            ],
-          });
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    
-     else {
-      console.log(sortBy);
-      console.log("error");
     }
   };
   async function disconnect() {
@@ -157,26 +228,37 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
               dropdownData={projectData}
               placeholderText={"Search for Assets or Projects"}
             />
-          ) : (
-            (location.pathname === "/exchange" || location.pathname === "/") ?(<ToggleSwitch />):(
-              null )
-          ))}
+          ) : location.pathname === "/exchange" || location.pathname === "/" ? (
+            <ToggleSwitch />
+          ) : null)}
         {!hiddenNav && (
           <div className="header_navbar">
             <DropDown sortBy={sortBy} chainChange={chainChange} />
             {active ? (
-              <div className="ml-4 header_navbar_logoutbutton">
-                <div className="header_navbar_logoutbutton_text">
-                  {" "}
-                  {`${account.substr(0, 6)}...${account.substr(-4)}`}
-                </div>
-                <img
-                  className="header_navbar_logoutbutton_icon"
-                  onClick={disconnect}
-                  src={LogoutIcon}
-                  alt="logout icon"
-                />
-              </div>
+              // <div className="ml-4 header_navbar_logoutbutton">
+              //   <div className="header_navbar_logoutbutton_text">
+              //     {" "}
+              //     {`${account.substr(0, 6)}...${account.substr(-4)}`}
+              //   </div>
+              //   <svg
+              //     className="w-5 h-5 text-white dark:text-white"
+              //     xmlns="http://www.w3.org/2000/svg"
+              //     viewBox="0 0 20 20"
+              //     fill="currentColor"
+              //   >
+              //     <path
+              //       fill-rule="evenodd"
+              //       d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              //       clip-rule="evenodd"
+              //     />
+              //   </svg>
+              // </div>
+              <AccountDropdown
+                disconnect={disconnect}
+                accountAddress={`${account.substr(0, 6)}...${account.substr(
+                  -4
+                )}`}
+              />
             ) : (
               <ConnectCTA
                 classes="cbutton"

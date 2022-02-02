@@ -6,9 +6,8 @@ import "./ToggleSwitch.scss"
 const ToggleSwitch = ({ id }) => {
   const dispatch = useDispatch();
   var mode = useSelector((state) => state.exchange.exchangeMode);
-  console.log(mode);
   return (
-    <div className='flex items-center justify-center w-full'>
+    <div className='flex items-center justify-center w-full desktop:-mx-64'>
       <label htmlFor={`${id}`} className='flex items-center cursor-pointer'>
         <div className='relative'>
           <input

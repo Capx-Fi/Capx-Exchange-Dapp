@@ -1,6 +1,8 @@
 .tradesScreen {
-  @apply mx-auto w-7/12;
-  max-width: 1300px;
+  @apply mx-auto w-7/12 desktop:w-10/12 flex flex-col;
+  width: fit-content;
+  max-width: 1100px;
+  min-width:800px;
   &_header {
     @apply px-4 pl-7 py-2 mb-5 mt-16 flex justify-between content-start;
     &_titlecontainer {
@@ -16,16 +18,16 @@
   &_body {
     @apply px-4 pb-2 w-full overflow-y-auto;
     height: 520px;
-          &::-webkit-scrollbar {
-        @apply w-1.5 bg-dark-200;
-      }
-      &::-webkit-scrollbar-thumb {
-        @apply rounded-md h-16;
-        background: linear-gradient(0deg, #2d884c -33.65%, #87dfa5 100%);
-      }
-      &::-webkit-scrollbar-track {
-        @apply rounded-md;
-      }
+    &::-webkit-scrollbar {
+      @apply w-1.5 bg-dark-200;
+    }
+    &::-webkit-scrollbar-thumb {
+      @apply rounded-md h-16;
+      background: linear-gradient(0deg, #2d884c -33.65%, #87dfa5 100%);
+    }
+    &::-webkit-scrollbar-track {
+      @apply rounded-md;
+    }
     &_assetPairContainer {
       @apply flex rounded-2xl border border-dark-50 h-24 z-50;
       background: radial-gradient(
@@ -68,81 +70,77 @@
 }
 
 .accordion__content {
-z-index: 1;
+  z-index: 1;
   overflow: auto;
   transition: max-height 0.3s ease;
-  background: #171C1F;
+  background: #171c1f;
   &::-webkit-scrollbar {
     display: none;
   }
   border-radius: 0px 0px 16px 16px;
 }
-.accordion_header{
-    @apply px-10 py-4 flex flex-row;
+.accordion_header {
+  @apply px-10 py-4 flex flex-row;
+  &_title {
+    @apply text-caption-1 text-primary-green-100 font-bold;
+  }
+}
+.accordion_separator {
+  @apply w-full mt-2 mb-3 border border-dark-50;
+}
+.accordion_body {
+  @apply px-12 py-6 flex flex-row justify-between;
+  &_left {
+    @apply flex flex-col items-start;
     &_title {
-      @apply text-caption-1 text-primary-green-100 font-bold;
+      @apply text-caption-2 text-grayLabel font-bold mb-2;
     }
-
-
-}
-.accordion_separator{
-    @apply w-full mt-2 mb-3 border border-dark-50;
-
-}
-.accordion_body{
-    @apply px-12 py-6 flex flex-row justify-between;
-    &_left{
-        @apply flex flex-col items-start;
-        &_title{
-            @apply text-caption-2 text-grayLabel font-bold mb-2;
+    &_value {
+      @apply flex flex-col justify-start text-paragraph-2 text-primary-green-100 font-medium;
+      &_get {
+        @apply text-left items-start;
+        & > span {
+          @apply text-caption-1 text-primary-green-200 opacity-60 font-bold;
         }
-        &_value{
-            @apply flex flex-col justify-start text-paragraph-2 text-primary-green-100 font-medium;
-            &_get{
-              @apply text-left items-start;
-              &>span{
-                  @apply text-caption-1 text-primary-green-200 opacity-60 font-bold;
-                }
-            }
-            &_give{
-                @apply text-left items-start;
-                &> span{
-                    @apply text-caption-1 text-primary-green-200 opacity-60 font-bold;
-                }
-            }
+      }
+      &_give {
+        @apply text-left items-start;
+        & > span {
+          @apply text-caption-1 text-primary-green-200 opacity-60 font-bold;
         }
+      }
     }
-    &_right{
-        @apply flex flex-col items-start pr-24;
-        &_title{
-            @apply text-caption-2 text-grayLabel font-bold mb-2;
-        }
-        &_value{
-            @apply flex flex-col text-paragraph-2 text-primary-green-100 font-medium;
-            &_get{
-                @apply text-left items-start;
-                &>span{
-                    @apply text-primary-green-200 opacity-60;
-                }
-            }
-            &_give{
-                @apply text-left items-start;
-                &>span{
-                    @apply text-primary-green-200 opacity-60;
-                }
-            }
-        }
+  }
+  &_right {
+    @apply flex flex-col items-start pr-24;
+    &_title {
+      @apply text-caption-2 text-grayLabel font-bold mb-2;
     }
-
-}
-.accordion_sepend{
-        @apply w-full mt-3 mb-8 border border-dark-50;
-}
-.accordion_footer{
-    @apply relative;
-    &_cancel{
-        @apply flex flex-row justify-center items-center w-40 px-1 pb-1 text-caption-2 rounded-2xl text-warning-color-100 font-bold absolute -top-2.5 left-12 cursor-pointer;
-        background: #572B37;
-        border: 1px solid rgba(134, 68, 83, 1);
+    &_value {
+      @apply flex flex-col text-paragraph-2 text-primary-green-100 font-medium;
+      &_get {
+        @apply text-left items-start;
+        & > span {
+          @apply text-primary-green-200 opacity-60;
+        }
+      }
+      &_give {
+        @apply text-left items-start;
+        & > span {
+          @apply text-primary-green-200 opacity-60;
+        }
+      }
     }
+  }
+}
+.accordion_sepend {
+  @apply w-full mt-3 mb-8 border border-dark-50;
+}
+.accordion_footer {
+  @apply relative;
+  &_cancel {
+    @apply flex flex-row justify-center items-center w-40 px-1 pb-1 text-caption-2 rounded-2xl text-warning-color-100 font-bold absolute -top-2.5 left-12 cursor-pointer;
+    background: #572b37;
+    border: 1px solid rgba(134, 68, 83, 1);
+  }
 }

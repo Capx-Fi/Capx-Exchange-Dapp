@@ -1,15 +1,12 @@
 import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
 import BigNumber from "bignumber.js";
 import moment from "moment";
-const GRAPHAPIURL =
-  "https://api.studio.thegraph.com/query/16341/liquid-original/v3.0.0";
-
 const format = "HH:mm";
 
-export const fetchPortfolio = async (account) => {
+export const fetchPortfolio = async (account, wrappedURL) => {
   let userHoldings = [];
   const client = new ApolloClient({
-    uri: GRAPHAPIURL,
+    uri: wrappedURL,
     cache: new InMemoryCache(),
   });
   const query = `query{
@@ -70,7 +67,7 @@ export const fetchPortfolio = async (account) => {
       )
       .flat();
     userHoldings.sort((a, b) => new Date(a.date) - new Date(b.date));
-    console.log(userHoldings,"uh");
+    console.log(userHoldings, "uh");
   } catch (e) {
     console.log(e);
   }

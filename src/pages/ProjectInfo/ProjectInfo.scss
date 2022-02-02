@@ -4,27 +4,27 @@
   border: 1px solid #2a383c;
   box-sizing: border-box;
   border-radius: 16px;
-  @apply w-full relative h-28  mb-10;
+  @apply w-full relative h-28  mb-10 -mr-48 pl-4;
   &_illustration {
-    @apply absolute bottom-0 right-0;
+    @apply absolute -bottom-1 right-0 h-20 desktop:h-24;
   }
   &_innerDiv {
-    @apply mr-16 text-left align-middle p-6;
+    @apply mr-16 text-left align-middle p-6 desktop:px-4;
     &_title {
-      @apply text-tradeTitle text-caption-1 leading-caption-2 font-bold pb-2;
+      @apply text-tradeTitle text-caption-1 leading-caption-2 font-bold pb-2 desktop:text-caption-3;
     }
     &_value {
-      @apply text-white text-subheading font-bold leading-subheading pb-2;
+      @apply text-white text-subheading font-bold leading-subheading pb-2 desktop:text-paragraph-1;
     }
   }
 }
 .main-container {
   @apply flex mt-16;
   &_left {
-    @apply w-8/12 pr-10;
+    @apply w-9/12 pr-14 pl-2 desktop:w-10/12 desktop:-ml-16;
   }
   &_right {
-    @apply w-4/12 pl-4;
+    @apply w-4/12 pl-6;
   }
 }
 
@@ -40,21 +40,21 @@
       background: #171c1f;
       border: 1px solid #2a383c;
       border-radius: 16px;
-      @apply flex flex-col p-2 rounded-xl  mt-2;
+      @apply flex flex-col p-4 rounded-xl mx-auto mt-2 desktop:mx-0;
       &_title {
         color: #83a1a9;
-        @apply py-3 pl-4 flex justify-start  text-caption-3 font-semibold;
+        @apply py-3 pl-4 flex justify-start text-caption-3 font-semibold desktop:text-caption-1 pb-2;
       }
       &_innercontainer {
         @apply bg-dark-400 w-full rounded-xl flex flex-col justify-start;
         &_box {
-          @apply w-full flex flex-col text-left text-white justify-start items-start;
+          @apply w-full flex flex-col text-left text-white justify-start items-start pb-1;
         }
         &_button {
           background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
           @apply rounded-lg py-3 flex justify-center items-center;
           &_title {
-            @apply text-paragraph-2 text-dark-300 font-bold;
+            @apply text-paragraph-2 text-dark-300 font-bold desktop:text-caption-2;
           }
           &_logo {
             @apply pl-4;

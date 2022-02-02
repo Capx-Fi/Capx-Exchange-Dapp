@@ -13,10 +13,6 @@ export const approveSellTokens = async (
     Math.pow(10, tokenDecimal)
   );
 
-  console.log("account", account);
-  console.log("totalAmount", totalAmount);
-  console.log("vestingTokenContract", vestingTokenContract);
-  console.log("EXCHANGE_CONTRACT_ADDRESS", EXCHANGE_CONTRACT_ADDRESS);
   setApproveModalOpen(true);
   let sendAmount = totalAmount.toString(10);
   let approveResult = null;

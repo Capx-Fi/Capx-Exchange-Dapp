@@ -18,7 +18,7 @@ function SideNavLink({ text }) {
 
   return (
     <NavLink
-      className={`flex tracking-tight flex-row p-1 pl-5 pr-5 text-paragraph-1 group h-12 w-9/12 items-center  m-6 rounded-lg transition-all duration-500 ease-in-out  hover:bg-primary-green-300 hover:shadow-md text-white ${
+      className={`flex tracking-tight flex-row p-1 pl-5 pr-5 text-paragraph-1 group h-12 w-9/12 items-center m-6 rounded-lg transition-all duration-500 ease-in-out hover:shadow-md hover:bg-dark-250 text-white laptop:text-caption-1 desktop:text-caption-1 desktop:py-4 ${
         location.pathname.substring(1) === textToLink(text)
           ? "font-bold active"
           : "font-normal"

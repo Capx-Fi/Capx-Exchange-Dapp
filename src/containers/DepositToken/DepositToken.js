@@ -5,12 +5,9 @@ import Select from 'react-select';
 import Header from '../AddNewMarketPair/Header';
 import InputField from './InputField';
 
-function DepositToken() {
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedTokenA, setSelectedTokenA] = useState(null);
-  const [selectedTokenB, setSelectedTokenB] = useState(null);
+function DepositToken({ location }) {
   const [tokenInputValue, setTokenInputValue] = useState(null);
-  const [dropdownData, setDropdownData] = useState();
+  const ticker = location.state.token
   useEffect(() => {
     verifyInput();
   }, [tokenInputValue]);
@@ -27,18 +24,7 @@ function DepositToken() {
 
   const [value, setValue] = useState(null);
 
-  const handleChange = (e) => {
-    setSelectedOption(e);
-  };
-  const handleChangeA = (e) => {
-    setSelectedTokenA(e);
-  };
-  const handleChangeB = (e) => {
-    setSelectedTokenB(e);
-  };
-  const handleInputChange = (inputValue) => {
-    setTokenInputValue(inputValue);
-  };
+
   return (
     <div className='DepositTokenScreen'>
       <div className='DepositTokenScreen_maincontainer'>
@@ -56,6 +42,7 @@ function DepositToken() {
                 <InputField
                   value
                   setValue={setValue}
+                  ticker={ticker}
                   valid={true}
                   className={`pb-4 w-full`}
                 />

@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 import "./DropDown.scss";
 import Web3 from "web3";
+import { useHistory } from "react-router-dom";
 
-function DropDown({ sortBy, chainChange }) {
+
+function AccountDropdown({ accountAddress, disconnect }) {
   const [open, setOpen] = useState(false);
   const web3 = new Web3(Web3.givenProvider);
+  const history = useHistory();
 
   return (
-    <div className="relative">
+    <div className="relative ml-4">
       <button
-        className={`header-dropdown-button ${
+        className={`header-account-dropdown-button ${
           open ? "border-success-color-400" : "border-dark-50"
         }`}
         onClick={() => setOpen(!open)}
       >
-        <span className="mr-4">{sortBy === "matic" ? "Matic" : sortBy}</span>
+        <span className="mr-4">{accountAddress}</span>
         <svg
-          className="w-5 h-5 text-grayLabel dark:text-white"
+          className="w-5 h-5 text-white dark:text-white"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
@@ -33,29 +36,29 @@ function DropDown({ sortBy, chainChange }) {
           <p
             className="option"
             onClick={() => {
-              chainChange("Ethereum");
+              history.push("/withdraw");
               setOpen(false);
             }}
           >
-            Ethereum
+            Withdraw
           </p>
           <p
             className="option"
             onClick={() => {
-              chainChange("Matic");
+              history.push("/trades");
               setOpen(false);
             }}
           >
-            Matic
+            Trades
           </p>
           <p
             className="option"
             onClick={() => {
-              chainChange("BSC");
+              disconnect();
               setOpen(false);
             }}
           >
-            BSC
+            Logout
           </p>
         </div>
       )}
@@ -63,4 +66,4 @@ function DropDown({ sortBy, chainChange }) {
   );
 }
 
-export default DropDown;
+export default AccountDropdown;

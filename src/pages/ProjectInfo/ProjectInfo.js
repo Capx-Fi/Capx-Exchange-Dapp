@@ -4,7 +4,25 @@ import { hideSideNav } from '../../redux/actions/sideNav';
 import BuyScreen from './Buy';
 import ProjectDescription from './ProjectDescription';
 
-import liquidDiamond from '../../assets/Capx-Diamond-Liquid.svg';
+import {
+  BSC_CHAIN_ID,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
+  CONTRACT_ADDRESS_CAPX_USDT_BSC,
+  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
+  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
+  MATIC_CHAIN_ID,
+  GRAPHAPIURL_EXCHANGE_BSC,
+  GRAPHAPIURL_EXCHANGE_MATIC,
+  GRAPHAPIURL_EXCHANGE_ETHEREUM,
+  GRAPHAPIURL_MASTER_BSC,
+  GRAPHAPIURL_MASTER_MATIC,
+  GRAPHAPIURL_MASTER_ETHEREUM,
+  GRAPHAPIURL_WRAPPED_MATIC,
+  GRAPHAPIURL_WRAPPED_BSC,
+  GRAPHAPIURL_WRAPPED_ETHEREUM,
+} from "../../constants/config";
 import InfoHeader from './InfoHeader';
 import { fetchProjectDetails } from '../../utils/fetchProjectDetails';
 import { useState } from 'react';
@@ -21,24 +39,66 @@ function ProjectInfo({ match }) {
   const [activeOrders, setActiveOrders] = useState([]);
   const [completeOrders, setCompleteOrders] = useState([]);
   const { active, account, chainId } = useWeb3React();
+  const [approveModalOpen, setApproveModalOpen] = useState(false);
+  const [buyModalOpen, setBuyModalOpen] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const [lastSellingPrice, setLastSellingPrice] = useState(0);
+  const [averageSellingPrice, setAverageSellingPrice] = useState(0);
+    const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
+      chainId?.toString() === BSC_CHAIN_ID.toString()
+        ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
+        : chainId?.toString() === MATIC_CHAIN_ID.toString()
+        ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
+        : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+    const CHAIN_USDT_CONTRACT_ADDRESS =
+      chainId?.toString() === BSC_CHAIN_ID.toString()
+        ? CONTRACT_ADDRESS_CAPX_USDT_BSC
+        : chainId?.toString() === MATIC_CHAIN_ID.toString()
+        ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
+        : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+    const exchangeURL =
+      chainId?.toString() === BSC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_EXCHANGE_BSC
+        : chainId?.toString() === MATIC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_EXCHANGE_MATIC
+        : GRAPHAPIURL_EXCHANGE_ETHEREUM;
+    const wrappedURL =
+      chainId?.toString() === BSC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_WRAPPED_BSC
+        : chainId?.toString() === MATIC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_WRAPPED_MATIC
+        : GRAPHAPIURL_WRAPPED_ETHEREUM;
+    const masterURL =
+      chainId?.toString() === BSC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_MASTER_BSC
+        : chainId?.toString() === MATIC_CHAIN_ID.toString()
+        ? GRAPHAPIURL_MASTER_MATIC
+        : GRAPHAPIURL_MASTER_ETHEREUM;
 
   useEffect(() => {
     getProjectDetails(match.params.ticker);
-  }, [match.params.ticker, active, account, chainId]);
+  }, [match.params.ticker, active, account, chainId, refresh]);
   const getProjectDetails = async () => {
-    if(active) {
-    const _projectDetails = await fetchProjectDetails(match.params.ticker);
+    if (active) {
+      console.log('fetching project details', match.params.ticker, masterURL);
+      const _projectDetails = await fetchProjectDetails(
+        match.params.ticker,
+        masterURL
+      );
 
-    setProjectDetails(_projectDetails);
-    const _activeOrders = await fetchOrderForTicker(
-      _projectDetails.id,
-      setActiveOrders,
-      setCompleteOrders,
-      account
-    );
-    console.log(projectDetails);
-    console.log(activeOrders);
-    console.log(completeOrders);
+      setProjectDetails(_projectDetails);
+      const _activeOrders = await fetchOrderForTicker(
+        _projectDetails.id,
+        setActiveOrders,
+        setCompleteOrders,
+        account,
+        chainId,
+        setLastSellingPrice,
+        setAverageSellingPrice,
+        exchangeURL,
+        wrappedURL,
+        CHAIN_USDT_CONTRACT_ADDRESS
+      );
     }
   };
   return (
@@ -46,11 +106,18 @@ function ProjectInfo({ match }) {
       {!active ? (
         <MetamaskModal />
       ) : (
-        <div className='w-82v mx-auto '>
-          <div className='main-container'>
-            <div className='main-container_left'>
+        <div
+          style={{
+            filter: approveModalOpen || buyModalOpen ? "blur(10000px)" : "none",
+          }}
+          className="w-82v mx-auto "
+        >
+          <div className="main-container">
+            <div className="main-container_left">
               <InfoHeader
                 ticker={`${projectDetails?.projectName} (${projectDetails.projectTokenTicker})`}
+                lastSellingPrice={lastSellingPrice}
+                averageSellingPrice={averageSellingPrice}
               />
               <ProjectDescription
                 projectDetails={projectDetails}
@@ -58,7 +125,14 @@ function ProjectInfo({ match }) {
                 completeOrders={completeOrders}
               />
             </div>
-            <BuyScreen />
+            <BuyScreen
+              buyModalOpen={buyModalOpen}
+              setBuyModalOpen={setBuyModalOpen}
+              approveModalOpen={approveModalOpen}
+              setApproveModalOpen={setApproveModalOpen}
+              refresh={refresh}
+              setRefresh={setRefresh}
+            />
           </div>
         </div>
       )}

@@ -21,7 +21,6 @@ function AddNewAsset() {
     verifyInput();
   }, [tokenInputValue]);
   const verifyInput = () => {
-    console.log(tokenInputValue);
     if (tokenInputValue === null) {
       return false;
     } else if (tokenInputValue?.length < 42) {

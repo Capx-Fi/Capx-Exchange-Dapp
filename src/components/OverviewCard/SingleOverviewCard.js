@@ -12,7 +12,7 @@ function SingleOverviewCard({ title, value, change }) {
       
       </div>
       <div className="singleOverviewCard_change">
-      <p >{change} </p>
+      <p>{change} </p>
       <img alt="next icon" src={nextGreen} className="w-4 ml-2"/>
       </div>
       <hr className="singleOverviewCard_divider" />

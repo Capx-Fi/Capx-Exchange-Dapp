@@ -1,24 +1,19 @@
-import "./Withdraw.scss";
-import React, { useEffect, useState } from "react";
-import { hideSideNav } from "../../redux/actions/sideNav";
-import { useDispatch, useSelector } from "react-redux";
-import { useWeb3React } from "@web3-react/core";
+import './Withdraw.scss';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useWeb3React } from '@web3-react/core';
 
-import GlobalSearchBox from "../../layouts/TableLayout/GlobalSearchBox";
-import MetamaskModal from "../../components/Modals/MetamaskModal/MetamaskModal";
-import WithdrawTokenTable from "./WithdrawTokenTable";
-import WithdrawContainer from "./WithdrawContainer";
-const format = "HH:mm";
+import GlobalSearchBox from '../../layouts/TableLayout/GlobalSearchBox';
+import MetamaskModal from '../../components/Modals/MetamaskModal/MetamaskModal';
+import WithdrawTokenTable from './WithdrawTokenTable';
+import BigNumber from "bignumber.js";
+
+import WithdrawContainer from './WithdrawContainer';
+const format = 'HH:mm';
 
 function WithdrawScreen({ match }) {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(hideSideNav());
-  }, []);
   const { active, account, chainId } = useWeb3React();
-  const [payAmount, setPayAmount] = useState(null);
-  const [receiveAmount, setReceiveAmount] = useState(null);
-  const [assetPrice, setAssetPrice] = useState(null);
   const [maxAmount, setMaxAmount] = useState(null);
   const [balance, setBalance] = useState(0);
   const [filter, setFilter] = useState("");
@@ -43,13 +38,13 @@ function WithdrawScreen({ match }) {
                   <p className="exchangeScreen_header_titlecontainer_title">
                     Your Portfolio
                   </p>
-                  <p className="exchangeScreen_header_titlecontainer_subtitle">
+                  <p className='withdrawScreen_header_titlecontainer_subtitle'>
                     Withdraw your tokens
                   </p>
                 </div>
                 <GlobalSearchBox filter={filter} setFilter={setFilter} />
               </div>
-              <WithdrawTokenTable filter={filter} reftch = {refetch}/>
+              <WithdrawTokenTable filter={filter} refetch = {refetch}/>
             </div>
 
             <WithdrawContainer

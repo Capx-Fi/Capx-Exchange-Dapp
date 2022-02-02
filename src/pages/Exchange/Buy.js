@@ -1,52 +1,83 @@
-import "./Exchange.scss";
-import React, { useEffect, useRef, useState } from "react";
-import { render } from "react-dom";
-import { hideSideNav, showSideNav } from "../../redux/actions/sideNav";
-import { useDispatch, useSelector } from "react-redux";
-import BuyIcon from "../../assets/buy.svg";
-import LockIcon from "../../assets/lock-asset.svg";
-import SwapIcon from "../../assets/swap.svg";
-import NextIcon from "../../assets/next-black.svg";
-import { setBuyTicker } from "../../redux/actions/exchange";
-import RefresherInput from "../../components/RefresherInput/RefresherInput";
-import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
-import { approveSellTokens } from "../../utils/approveSellTokens";
-import { fulfillOrder } from "../../utils/fulfillOrder";
-import BigNumber from "bignumber.js";
+import './Exchange.scss';
+import React, { useEffect, useRef, useState } from 'react';
+import { render } from 'react-dom';
+import { hideSideNav, showSideNav } from '../../redux/actions/sideNav';
+import { useDispatch, useSelector } from 'react-redux';
+import BuyIcon from '../../assets/buy.svg';
+import LockIcon from '../../assets/lock-asset.svg';
+import SwapIcon from '../../assets/swap.svg';
+import NextIcon from '../../assets/next-black.svg';
+import { setBuyTicker } from '../../redux/actions/exchange';
+import RefresherInput from '../../components/RefresherInput/RefresherInput';
+import { EXCHANGE_ABI } from '../../contracts/ExchangeContract';
+import { approveSellTokens } from '../../utils/approveSellTokens';
+import { fulfillOrder } from '../../utils/fulfillOrder';
+import BigNumber from 'bignumber.js';
 
 import {
-  EXCHANGE_CONTRACT_ADDRESS,
-  USDT_CONTRACT_ADDRESS,
+  BSC_CHAIN_ID,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
+  CONTRACT_ADDRESS_CAPX_USDT_BSC,
+  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
+  MATIC_CHAIN_ID,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
+  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
 } from "../../constants/config";
-import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
-import { useWeb3React } from "@web3-react/core";
+import { CONTRACT_ABI_ERC20 } from '../../contracts/SampleERC20';
+import { useWeb3React } from '@web3-react/core';
 
-import Web3 from "web3";
-import WarningCard from "../../components/WarningCard/WarningCard";
-import ApproveModal from "../../components/Modals/VestAndApproveModal/ApproveModal";
-import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
+import Web3 from 'web3';
+import WarningCard from '../../components/WarningCard/WarningCard';
+import ApproveModal from '../../components/Modals/VestAndApproveModal/ApproveModal';
+import BuyModal from '../../components/Modals/VestAndApproveModal/BuyModal';
 
-function BuyScreen({ setMaxAmount, approveModalOpen, setApproveModalOpen, buyModalOpen, setBuyModalOpen, refresh, setRefresh }) {
+function BuyScreen({
+  setMaxAmount,
+  approveModalOpen,
+  setApproveModalOpen,
+  buyModalOpen,
+  setBuyModalOpen,
+  refresh,
+  setRefresh,
+}) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(hideSideNav());
   }, []);
   const web3 = new Web3(Web3.givenProvider);
   const { active, account, chainId } = useWeb3React();
+
+  const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
+    chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
+      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+  const CHAIN_USDT_CONTRACT_ADDRESS =
+    chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
+      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [approveModalStatus, setApproveModalStatus] = useState("");
-  const [buyModalStatus, setBuyModalStatus] = useState("");
+  const [approveModalStatus, setApproveModalStatus] = useState('');
+  const [buyModalStatus, setBuyModalStatus] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [warningCheck, setWarningCheck] = useState(false);
   const ticker = useSelector((state) => state.exchange.buyTicker);
+  const resetValue = () => {
+    dispatch(setBuyTicker(null));
+  };
   const initiateSwapApproval = async () => {
     setButtonClicked(true);
 
     const vestingTokenContract = new web3.eth.Contract(
       CONTRACT_ABI_ERC20,
-      USDT_CONTRACT_ADDRESS
+      CHAIN_USDT_CONTRACT_ADDRESS
     );
+
     const tokens = ticker.amountGive - ticker?.balance;
     const tokenDecimal = 18;
     await approveSellTokens(
@@ -54,7 +85,7 @@ function BuyScreen({ setMaxAmount, approveModalOpen, setApproveModalOpen, buyMod
       account,
       tokens,
       tokenDecimal,
-      EXCHANGE_CONTRACT_ADDRESS,
+      CHAIN_EXCHANGE_CONTRACT_ADDRESS,
       setApproveModalStatus,
       setTokenApproval,
       setApproveModalOpen
@@ -64,13 +95,21 @@ function BuyScreen({ setMaxAmount, approveModalOpen, setApproveModalOpen, buyMod
   const finalizeSwap = async () => {
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
-      EXCHANGE_CONTRACT_ADDRESS
+      CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
-    console.log("tt", ticker);
+    console.log('tt', ticker);
     let totalTokens = ticker.amountGive;
     let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 18));
     let tradeID = ticker.tradeID;
-    await fulfillOrder(exchangeContract, account, tradeID, totalAmount, setBuyModalStatus, setBuyModalOpen);
+    await fulfillOrder(
+      exchangeContract,
+      account,
+      tradeID,
+      totalAmount,
+      setBuyModalStatus,
+      setBuyModalOpen,
+      resetValue
+    );
     setTimeout(() => {
       setRefresh(!refresh);
     }, 6000);
@@ -84,20 +123,15 @@ function BuyScreen({ setMaxAmount, approveModalOpen, setApproveModalOpen, buyMod
       setDisabled(false);
     }
     if (ticker?.amountGive > ticker?.balance) {
-      console.log("warning");
       setWarningCheck(true);
     } else {
-      console.log("no warning");
       setWarningCheck(false);
     }
-    console.log(warningCheck);
-
-    console.log(ticker);
   }, [ticker?.amountGive]);
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
-        !ticker && "opacity-60 cursor-not-allowed"
+        !ticker && 'opacity-60 cursor-not-allowed'
       }`}
     >
       <ApproveModal
@@ -106,24 +140,24 @@ function BuyScreen({ setMaxAmount, approveModalOpen, setApproveModalOpen, buyMod
         approveModalStatus={approveModalStatus}
         setApproveModalStatus={setApproveModalStatus}
       />
-      <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus}/>
-      <div className="exchangeScreen_rightcontainer_buyContainer">
-        <div className="exchangeScreen_rightcontainer_buyContainer_header">
-          <div className="exchangeScreen_rightcontainer_buyContainer_header_title">
+      <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus} />
+      <div className='exchangeScreen_rightcontainer_buyContainer'>
+        <div className='exchangeScreen_rightcontainer_buyContainer_header'>
+          <div className='exchangeScreen_rightcontainer_buyContainer_header_title'>
             <img
-              className="exchangeScreen_rightcontainer_buyContainer_header_title_icon"
+              className='exchangeScreen_rightcontainer_buyContainer_header_title_icon'
               src={BuyIcon}
-              alt="buy icon"
+              alt='buy icon'
             />
-            <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
-              BUY {ticker ? " - " + ticker.asset : ""}
+            <p className='exchangeScreen_rightcontainer_buyContainer_header_title_text'>
+              BUY {ticker ? ' - ' + ticker.asset : ''}
             </p>
           </div>
         </div>
-        <div className="exchangeScreen_rightcontainer_buyContainer_body">
-          <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer">
-            <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer_title">
-              YOU PAY {ticker && ": USDT"}
+        <div className='exchangeScreen_rightcontainer_buyContainer_body'>
+          <div className='exchangeScreen_rightcontainer_buyContainer_body_payContainer'>
+            <div className='exchangeScreen_rightcontainer_buyContainer_body_payContainer_title'>
+              YOU PAY {ticker && ': USDT'}
             </div>
             <RefresherInput
               ticker={ticker}
@@ -159,20 +193,20 @@ function BuyScreen({ setMaxAmount, approveModalOpen, setApproveModalOpen, buyMod
               text={`Not enough balance on DEX! Approve the difference amount to fulfill your order.`}
             />
           )}
-          <div className="exchangeScreen_rightcontainer_buyContainer_body_separator">
-            <div className="exchangeScreen_rightcontainer_buyContainer_body_separator_line w-7/12"></div>
-            <div className="exchangeScreen_rightcontainer_buyContainer_body_separator_iconContainer w-2/12">
+          <div className='exchangeScreen_rightcontainer_buyContainer_body_separator'>
+            <div className='exchangeScreen_rightcontainer_buyContainer_body_separator_line w-7/12'></div>
+            <div className='exchangeScreen_rightcontainer_buyContainer_body_separator_iconContainer w-2/12'>
               <img
-                className="exchangeScreen_rightcontainer_buyContainer_body_separator_iconContainer_icon"
+                className='exchangeScreen_rightcontainer_buyContainer_body_separator_iconContainer_icon'
                 src={SwapIcon}
-                alt="swap icon"
+                alt='swap icon'
               />
             </div>
-            <div className="exchangeScreen_rightcontainer_buyContainer_body_separator_line w-3/12"></div>
+            <div className='exchangeScreen_rightcontainer_buyContainer_body_separator_line w-3/12'></div>
           </div>
-          <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer">
-            <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer_title">
-              YOU RECEIVE {ticker && ": " + ticker.asset}
+          <div className='exchangeScreen_rightcontainer_buyContainer_body_payContainer'>
+            <div className='exchangeScreen_rightcontainer_buyContainer_body_payContainer_title'>
+              YOU RECEIVE {ticker && ': ' + ticker.asset}
             </div>
             <RefresherInput
               icon={ticker && LockIcon}
@@ -202,13 +236,13 @@ function BuyScreen({ setMaxAmount, approveModalOpen, setApproveModalOpen, buyMod
               }}
             />
           </div>
-          <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer">
-            <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_date">
-              {" "}
+          <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer'>
+            <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_date'>
+              {' '}
               EXPIRY DATE: {ticker?.displayExpiryDate}
             </div>
-            <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_time">
-              {" "}
+            <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_time'>
+              {' '}
               EXPIRY TIME: {ticker?.displayExpiryTime}
             </div>
           </div>
@@ -220,26 +254,23 @@ function BuyScreen({ setMaxAmount, approveModalOpen, setApproveModalOpen, buyMod
             }
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
               (!ticker || disabled) &&
-              "pointer-events-none cursor-not-allowed opacity-50"
+              'pointer-events-none cursor-not-allowed opacity-50'
             }`}
           >
             <div
-              className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton_title ${
-                (!ticker || disabled) &&
-                "pointer-events-none cursor-not-allowed opacity-50"
-              }`}
+              className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton_title`}
             >
               {tokenApproval || ticker?.balance - ticker?.amountGive >= 0
-                ? "SWAP TOKENS"
-                : "APPROVE TOKENS"}
+                ? 'SWAP TOKENS'
+                : 'APPROVE TOKENS'}
               {console.log(ticker?.balance - ticker?.amountGive)}
             </div>
-            <div className="exchangeScreen_rightcontainer_buyContainer_body_swapButton_icon">
-              <img src={NextIcon} alt="next icon" />
+            <div className='exchangeScreen_rightcontainer_buyContainer_body_swapButton_icon'>
+              <img src={NextIcon} alt='next icon' />
             </div>
           </div>
         </div>
-        <div className="exchangeScreen_rightcontainer_buyContainer_footer"></div>
+        <div className='exchangeScreen_rightcontainer_buyContainer_footer'></div>
       </div>
     </div>
   );

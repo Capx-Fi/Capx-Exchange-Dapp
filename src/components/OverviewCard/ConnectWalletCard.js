@@ -9,6 +9,7 @@ import { useSnackbar } from "notistack";
 import {injected} from "../../utils/connector"
 import ExtendedOverviewCard from "./ExtendedOverviewCard";
 import DeskCTA from "../CTA/DeskCTA";
+import {WRONG_CHAIN_MESSAGE} from "../../constants/config";
 
 
 function ConnectWalletCard() {
@@ -22,7 +23,7 @@ function ConnectWalletCard() {
       await activate(injected);
     } catch (ex) {
       if (ex instanceof UnsupportedChainIdError) {
-        enqueueSnackbar("Please connect to the Rinkeby Chain.", { variant: "error" });
+        enqueueSnackbar(WRONG_CHAIN_MESSAGE, { variant: "error" });
       }
       console.log(ex);
     }

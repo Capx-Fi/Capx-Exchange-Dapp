@@ -16,7 +16,7 @@ function ExtendedOverviewCard({ title, value, change, title2, value2, change2 })
           <p className="extendedOverviewCard_innerDiv_change">{change2}</p>
         </div>
       </div>
-      <hr className="extendedOverviewCard_divider" />
+      <hr className="extendedOverviewCard_divider w-full -mt-7" />
     </div>
   );
 }

@@ -6,9 +6,9 @@ import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Lottie from "lottie-react";
-import BuyingToChain from "../../../assets/Buy/Buying.json";
-import BuyingSuccess from "../../../assets/Buy/Buy-success.json";
-import BuyingFailed from "../../../assets/Buy/Buy-failed.json";
+import ApproveToChain from "../../../assets/Approve/Approve-to-Chain.json";
+import ApproveToChainSuccess from "../../../assets/Approve/Approve-successful.json";
+import ApproveToChainFailure from "../../../assets/Approve/Approve-failed.json";
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -34,15 +34,32 @@ const useStyles = makeStyles((theme) => ({
     },
 
     "@media (max-width:420px)": {
-      width: "300px",
+      width: "280px",
       borderRadius: "16px",
     },
   },
 }));
-function BuyModal({ open, setOpen, buyModalStatus }) {
+function CancelModal({
+  imageData,
+  buyMode,
+  openAdUrl,
+  handleBuy,
+  showModal,
+  open,
+  setOpen,
+  cancelModalStatus,
+}) {
   const [viewNFTID, setviewNFTID] = React.useState("");
   const [viewNFTDet, setviewNFTDet] = React.useState("");
   const classes = useStyles();
+
+  const handleOpen = (index, items) => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Modal
@@ -58,31 +75,31 @@ function BuyModal({ open, setOpen, buyModalStatus }) {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <div className="flex flex-col laptop:flex-row justify-center mx-auto items-center laptop:h-72 pb-8">
+          <div className="flex flex-col laptop:flex-row justify-center mx-auto items-center laptop:h-72 pb-8 mt-8">
             <Lottie
-              className="w-32 laptop:w-64"
+              className="w-24 tablet:w-32 laptop:w-56 "
               loop={true}
               animationData={
-                buyModalStatus === "success"
-                  ? BuyingSuccess
-                  : buyModalStatus === "failure"
-                  ? BuyingFailed
-                  : BuyingToChain
+                cancelModalStatus === "success"
+                  ? ApproveToChainSuccess
+                  : cancelModalStatus === "failure"
+                  ? ApproveToChainFailure
+                  : ApproveToChain
               }
             />
-            <div className="text-white text-center laptop:text-left text-paragraph-2 leading-paragraph-2 tablet:text-heading-1 tablet:leading-heading-1 font-semibold w-8/12 laptop:w-6/12">
-              {buyModalStatus === "success"
-                ? "Tokens successfully bought!"
-                : buyModalStatus === "failure"
+            <div className="text-white text-center font-bold tablet:font-semibold laptop:text-left text-paragraph-2 leading-paragraph-2 tablet:text-heading-2 tablet:leading-heading-2 laptop:text-heading-1 laptop:leading-heading-1 w-8/12 laptop:w-6/12">
+              {cancelModalStatus === "success"
+                ? "Order has been successfully cancelled."
+                : cancelModalStatus === "failure"
                 ? "Oops! We have encountered an error. Please try again!"
-                : "Almost there... Fulfilling order!"}
+                : "The order is being cancelled!"}
             </div>
           </div>
-          <hr className="border-dark-200 mt-2 mb-4 h-2"></hr>
+          <hr className="border-dark-200 mt-2 h-2"></hr>
         </div>
       </Fade>
     </Modal>
   );
 }
 
-export default BuyModal;
+export default CancelModal;

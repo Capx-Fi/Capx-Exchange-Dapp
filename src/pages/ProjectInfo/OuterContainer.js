@@ -10,7 +10,7 @@ function OuterContainer({ icon, content, title }) {
       <div className='outerContainer_maincontainer'>
         <div className='outerContainer_maincontainer_body'>
           <div className='outerContainer_maincontainer_body_title'>
-            <img src={icon} className='mr-2 h-4' alt="project icon" /> {title}
+            <img src={icon} className='mr-2 h-4 desktop:mt-1' alt="project icon" /> {title}
           </div>
           <div className='outerContainer_maincontainer_body_innercontainer'>
             <div className='outerContainer_maincontainer_body_innercontainer_box'>

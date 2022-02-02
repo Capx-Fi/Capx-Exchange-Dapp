@@ -1,4 +1,14 @@
 import BigNumber from "bignumber.js";
+function toPlainString(num) {
+  return ("" + +num).replace(
+    /(-?)(\d*)\.?(\d*)e([+-]\d+)/,
+    function (a, b, c, d, e) {
+      return e < 0
+        ? b + "0." + Array(1 - e - c.length).join(0) + c + d
+        : b + c + d + Array(e - d.length + 1).join(0);
+    }
+  );
+}
 export const withdrawToken = async (
   exchangeContract,
   account,
@@ -7,7 +17,8 @@ export const withdrawToken = async (
   setWithdrawModalOpen,
   setWithdrawModalStatus,
   setButtonDisabled,
-  enqueueSnackbar
+  enqueueSnackbar,
+  resetValue
 ) => {
   setWithdrawModalOpen(true);
 
@@ -15,11 +26,12 @@ export const withdrawToken = async (
 
   try {
     result = await exchangeContract.methods
-      .withdrawToken(assetID, totalAmount)
+      .withdrawToken(assetID, toPlainString(totalAmount))
       .send({ from: account });
     if (result) {
       setWithdrawModalStatus("success");
       enqueueSnackbar("Transaction Successful", { variant: "success" });
+      resetValue();
     } else {
       setWithdrawModalStatus("failure");
       enqueueSnackbar("Sorry transaction failed", { variant: "error" });
