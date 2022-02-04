@@ -56,9 +56,9 @@ export const createOrder = async (
     result = await exchangeContract.methods
       .createOrder(
         tokenGive,
-        amountGive,
+        amountGive.toString(),
         tokenGet,
-        amountGet,
+        amountGet.toString(),
         totalExpiryTime,
         direction
       )
