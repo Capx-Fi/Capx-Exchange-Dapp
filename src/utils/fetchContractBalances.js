@@ -2,25 +2,43 @@ import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
 import BigNumber from "bignumber.js";
 import Web3 from "web3";
 import moment from "moment";
+import { EXCHANGE_ABI } from "../contracts/ExchangeContract";
+import {
+  BSC_CHAIN_ID,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
+  EXCHANGE_CONTRACT_ADDRESS,
+  MATIC_CHAIN_ID,
+} from "../constants/config";
 const format = "HH:mm";
-
-export const fetchContractBalances = async (account, exchangeURL, wrappedURL) => {
+const web3 = new Web3(Web3.givenProvider);
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 18],
+});
+export const fetchContractBalances = async (
+  account,
+  exchangeURL,
+  wrappedURL,
+  chainId
+) => {
   let fetchContractBalances = [];
   let userContractHoldings = [];
   const client = new ApolloClient({
     uri: exchangeURL,
     cache: new InMemoryCache(),
   });
-  function toPlainString(num) {
-    return ("" + +num).replace(
-      /(-?)(\d*)\.?(\d*)e([+-]\d+)/,
-      function (a, b, c, d, e) {
-        return e < 0
-          ? b + "0." + Array(1 - e - c.length).join(0) + c + d
-          : b + c + d + Array(e - d.length + 1).join(0);
-      }
-    );
-  }
+  const exchangeContract = new web3.eth.Contract(
+    EXCHANGE_ABI,
+    chainId?.toString() === BSC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
+      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM
+  );
+  
   const liquidClient = new ApolloClient({
     uri: wrappedURL,
     cache: new InMemoryCache(),
@@ -87,49 +105,57 @@ export const fetchContractBalances = async (account, exchangeURL, wrappedURL) =>
         xData.unlockTime = assetUnlockTime.derivatives.find(
           (derivative) => derivative.id === total[1].assetID
         ).unlockTime;
-        xData.totalBalance = new BigNumber(total[1].totalValue)
-          .dividedBy(Math.pow(10, xData.decimal))
-          .toNumber();
+        xData.totalBalance = new BigNumber(total[1].totalValue).toString();
         xData.lockedBalance = assetToLockedBalance[total[1].assetID]
-          ? new BigNumber(assetToLockedBalance[total[1].assetID])
-              .dividedBy(Math.pow(10, xData.decimal))
-              .toNumber()
+          ? new BigNumber(assetToLockedBalance[total[1].assetID]).toString()
           : 0;
-        xData.actualBalance = new BigNumber(xData.totalBalance)
-          .minus(xData.lockedBalance)
-          .toString();
-        xData.actualBalance = toPlainString(xData.actualBalance);
+        // xData.actualBalance = new BigNumber(xData.totalBalance)
+        //   .minus(xData.lockedBalance)
+        //   .toString();
+
+        xData.actualBalance = 0;
         fetchContractBalances.push(xData);
       });
     });
-    userContractHoldings = fetchContractBalances.map((contractHolding) => {
-      const unixTime = contractHolding.unlockTime;
-      const date = new Date(unixTime * 1000);
-      let unlockDay = date.toLocaleDateString("en-US", {
-        day: "numeric",
-      });
-      let unlockMonth = date.toLocaleDateString("en-US", {
-        month: "long",
-      });
-      let unlockYear = date.toLocaleDateString("en-US", {
-        year: "numeric",
-      });
-      let displayDate = `${unlockDay} ${unlockMonth}, ${unlockYear}`;
-      return {
-        date,
-        asset: contractHolding.asset,
-        assetID: contractHolding.assetID,
-        price: null,
-        expiryDate: new Date(),
-        expiryTime: moment("12:15", format),
-        unlockTime: contractHolding.unlockTime,
-        tokenDecimal: contractHolding.decimal,
-        quantity: contractHolding.actualBalance,
-        balance: contractHolding.actualBalance,
-        unlockDate: displayDate,
-        isContract: true,
-      };
-    });
+    console.log(fetchContractBalances, "fcbcb");
+    userContractHoldings = await Promise.all(
+      fetchContractBalances.map(async (contractHolding) => {
+        let balance = await exchangeContract.methods
+          .unlockBalance(contractHolding.assetID, account)
+          .call();
+        balance = new BigNumber(balance)
+          .dividedBy(Math.pow(10, contractHolding.decimal)).toString();
+        console.log(balance, "balance");
+        console.log(balance, "balance after string");
+        contractHolding.actualBalance = balance;
+        const unixTime = contractHolding.unlockTime;
+        const date = new Date(unixTime * 1000);
+        let unlockDay = date.toLocaleDateString("en-US", {
+          day: "numeric",
+        });
+        let unlockMonth = date.toLocaleDateString("en-US", {
+          month: "long",
+        });
+        let unlockYear = date.toLocaleDateString("en-US", {
+          year: "numeric",
+        });
+        let displayDate = `${unlockDay} ${unlockMonth}, ${unlockYear}`;
+        return {
+          date,
+          asset: contractHolding.asset,
+          assetID: contractHolding.assetID,
+          price: null,
+          expiryDate: new Date(),
+          expiryTime: moment("12:15", format),
+          unlockTime: contractHolding.unlockTime,
+          tokenDecimal: contractHolding.decimal,
+          quantity: contractHolding.actualBalance,
+          balance: contractHolding.actualBalance,
+          unlockDate: displayDate,
+          isContract: true,
+        };
+      })
+    );
     userContractHoldings = userContractHoldings.filter(
       (holding) => holding.quantity > 0
     );

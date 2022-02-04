@@ -4,7 +4,7 @@ import { hideSideNav, showSideNav } from '../../redux/actions/sideNav';
 import { useDispatch, useSelector } from 'react-redux';
 import BuyIcon from '../../assets/buy.svg';
 import { setSellTicker } from '../../redux/actions/exchange';
-import BigNumber from "bignumber.js";
+import BigNumber from 'bignumber.js';
 import { EXCHANGE_ABI } from '../../contracts/ExchangeContract';
 import { approveSellTokens } from '../../utils/approveSellTokens';
 import { createOrder } from '../../utils/createOrder';
@@ -35,6 +35,11 @@ import ApproveModal from '../../components/Modals/VestAndApproveModal/ApproveMod
 import SellModal from '../../components/Modals/VestAndApproveModal/SellModal';
 const format = 'HH:mm';
 const currentDate = new Date();
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 18],
+});
 function SellScreen({
   sellModalOpen,
   setSellModalOpen,
@@ -71,6 +76,7 @@ function SellScreen({
   const [disabled, setDisabled] = useState(false);
   const [warningDate, setWarningDate] = useState(false);
 
+
   const setAmount = (e) => {
     dispatch(setSellTicker({ ...ticker, price: e }));
   };
@@ -83,6 +89,9 @@ function SellScreen({
   };
   const setQuantity = (e) => {
     dispatch(setSellTicker({ ...ticker, quantity: e }));
+  };
+  const setSellNull = () => {
+    dispatch(setSellTicker( null));
   };
   const initiateSwapApproval = async () => {
     setButtonClicked(true);
@@ -99,7 +108,10 @@ function SellScreen({
       CONTRACT_ABI_ERC20,
       CHAIN_USDT_CONTRACT_ADDRESS
     );
-    const tokens = ticker.quantity;
+    let tokens = (new BigNumber(ticker.quantity).minus(ticker.balance).plus(0.1)).toString();
+    console.log(tokens,"tokens");
+    console.log(ticker.balance,"balance");
+    console.log(ticker.quantity,"quantity");
     const tokenDecimal = ticker.tokenDecimal;
     await approveSellTokens(
       vestingTokenContract,
@@ -109,7 +121,7 @@ function SellScreen({
       CHAIN_EXCHANGE_CONTRACT_ADDRESS,
       setApproveModalStatus,
       setTokenApproval,
-      setApproveModalOpen
+      setApproveModalOpen,
     );
   };
   const finalizeSwap = async () => {
@@ -124,6 +136,7 @@ function SellScreen({
       setSellModalStatus,
       setSellModalOpen,
       CHAIN_USDT_CONTRACT_ADDRESS,
+      setSellNull
     );
     setTimeout(() => {
       setRefresh(!refresh);
@@ -147,6 +160,7 @@ function SellScreen({
       minutes = ('0' + date.getMinutes()).slice(-2);
     return +hours * 60 * 60 + +minutes * 60;
   }
+      
   let expiryTime = ticker?.expiryTime;
   let expiryDate = ticker?.expiryDate;
   let totalExpiryTime = convert(expiryDate) + convertToSeconds(expiryTime);
@@ -163,7 +177,7 @@ function SellScreen({
     if (
       totalExpiryTime < currentDate.getTime() / 1000 ||
       ticker?.price <= 0 ||
-      ticker?.quantity > balance
+      BigNumber(ticker?.quantity).isGreaterThan(balance)
     ) {
       setDisabled(true);
     } else {
@@ -342,7 +356,8 @@ function SellScreen({
           <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer"></div>
           <div
             onClick={() =>
-              tokenApproval || ticker?.isContract
+              tokenApproval ||
+              BigNumber(ticker?.quantity).isLessThanOrEqualTo(ticker?.balance)
                 ? finalizeSwap()
                 : initiateSwapApproval()
             }
@@ -352,7 +367,8 @@ function SellScreen({
             }`}
           >
             <div className="exchangeScreen_rightcontainer_buyContainer_body_swapButton_title">
-              {tokenApproval || ticker?.isContract
+              {tokenApproval ||
+              BigNumber(ticker?.quantity).isLessThanOrEqualTo(ticker?.balance)
                 ? "SWAP TOKENS"
                 : "APPROVE TOKENS"}
             </div>

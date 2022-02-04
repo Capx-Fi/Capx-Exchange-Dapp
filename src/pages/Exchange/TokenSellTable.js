@@ -35,6 +35,12 @@ import { setSellTicker, setTickerBalance } from "../../redux/actions/exchange";
 import { fetchContractBalances } from "../../utils/fetchContractBalances";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 import { fetchProjectID } from "../../utils/fetchProjectDetails";
+import BigNumber from "bignumber.js";
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 18],
+});
 
 const { Column, ColumnGroup } = Table;
 
@@ -89,16 +95,41 @@ function TokenSellTable({ filter, refresh }) {
     const contractHoldings = await fetchContractBalances(
       account,
       exchangeURL,
-      wrappedURL
+      wrappedURL,
+      chainId
     );
     const combinedHoldings = [...holdings, ...contractHoldings];
-    // sort combine holdings absed on unlock date
-    combinedHoldings.sort((a, b) => {
+    // check all the holdings and sum those who have same assetID
+    const portfolioHoldings = combinedHoldings.reduce((acc, curr) => {
+      const existing = acc.find((item) => item.assetID === curr.assetID);
+      if (!existing) {
+        return [...acc, curr];
+      } else {
+        existing.quantity = new BigNumber(curr.quantity)
+          .plus(existing.quantity)
+          .toString();
+        existing.balance = new BigNumber(curr.balance)
+          .plus(existing.balance)
+          .toString();
+        existing.maxQuantity = existing.quantity;
+        return acc;
+      }
+    }, []);
+    console.log("portfolioHoldings", portfolioHoldings);
+    // convert quanityt to international currency system
+    const convertedPortfolioHoldings = portfolioHoldings.map((item) => {
+      const convertedItem = { ...item };
+      convertedItem.quantity = (item.quantity).toString();
+      convertedItem.maxQuantity = convertedItem.quantity;
+      convertedItem.balance = (item.balance).toString();
+      return convertedItem;
+    });
+    convertedPortfolioHoldings.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
-    setPortfolioHoldings(combinedHoldings);
-    setTokenList(combinedHoldings);
-    console.log(holdings);
+    setPortfolioHoldings(convertedPortfolioHoldings);
+    setTokenList(convertedPortfolioHoldings);
+    console.log(convertedPortfolioHoldings, "fifjfdjfj");
     setLoading(false);
   };
 
@@ -136,7 +167,7 @@ function TokenSellTable({ filter, refresh }) {
             onClick: (e) => {
               console.log(record);
               dispatch(setSellTicker(record));
-              dispatch(setTickerBalance(record.quantity));
+              dispatch(setTickerBalance(record.maxQuantity));
             },
           };
         }}

@@ -1,14 +1,9 @@
 import BigNumber from "bignumber.js";
-function toPlainString(num) {
-  return ("" + +num).replace(
-    /(-?)(\d*)\.?(\d*)e([+-]\d+)/,
-    function (a, b, c, d, e) {
-      return e < 0
-        ? b + "0." + Array(1 - e - c.length).join(0) + c + d
-        : b + c + d + Array(e - d.length + 1).join(0);
-    }
-  );
-}
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 18],
+});
 export const withdrawToken = async (
   exchangeContract,
   account,
@@ -26,7 +21,7 @@ export const withdrawToken = async (
 
   try {
     result = await exchangeContract.methods
-      .withdrawToken(assetID, toPlainString(totalAmount))
+      .withdrawToken(assetID, totalAmount)
       .send({ from: account });
     if (result) {
       setWithdrawModalStatus("success");

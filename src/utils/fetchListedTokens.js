@@ -15,6 +15,11 @@ import {
   EXCHANGE_CONTRACT_ADDRESS,
   MATIC_CHAIN_ID,
 } from '../constants/config';
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 18],
+});
 
 function convertDateToString(timestamp) {
   const unixTime = timestamp;
@@ -103,17 +108,13 @@ export const fetchListedTokens = async (
     listedTokens = data.orders
       .map((order) => {
         const numOfTokens = new BigNumber(order?.amountGive)
-          .dividedBy(Math.pow(10, order.tokenGiveDecimal))
-          .toNumber();
+          .dividedBy(Math.pow(10, order.tokenGiveDecimal));
         const numReceived = new BigNumber(order?.amountSent)
-          .dividedBy(Math.pow(10, order.tokenGetDecimal))
-          .toNumber();
+          .dividedBy(Math.pow(10, order.tokenGetDecimal));
         const numSent = new BigNumber(order?.amountReceived)
-          .dividedBy(Math.pow(10, order.tokenGiveDecimal))
-          .toNumber();
+          .dividedBy(Math.pow(10, order.tokenGiveDecimal));
         const giveTokens = new BigNumber(order?.amountGet)
-          .dividedBy(Math.pow(10, order.tokenGetDecimal))
-          .toNumber();
+          .dividedBy(Math.pow(10, order.tokenGetDecimal));
         return {
           tradeID: order.id,
           asset: order.tokenGiveTicker,
@@ -122,12 +123,12 @@ export const fetchListedTokens = async (
           initiator: order.initiator,
           amountSent: order.amountSent,
           amountReceived: order.amountReceived,
-          amountGive: giveTokens - numSent,
-          amountGet: numOfTokens - numReceived,
-          maxAmountGet: numOfTokens - numReceived,
-          maxAmountGive: giveTokens - numSent,
+          amountGive: giveTokens.minus(numSent),
+          amountGet: numOfTokens.minus(numReceived),
+          maxAmountGet: numOfTokens.minus(numReceived),
+          maxAmountGive: giveTokens.minus(numSent),
           price: order.price,
-          quantity: numOfTokens - numReceived,
+          quantity: numOfTokens.minus(numReceived),
           expiryTimeActual: order.expiryTime,
           displayExpiryDate: convertToDate(order.expiryTime),
           displayExpiryTime: convertToTime(order.expiryTime),
@@ -148,6 +149,7 @@ export const fetchListedTokens = async (
     let balance = await exchangeContract.methods
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
       .call();
+    console.log(balance,"USDT BALANCE");
     balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toNumber();
 
     listedTokens = listedTokens.map((token) => {

@@ -1,4 +1,4 @@
-import BigNumber from "bignumber.js";
+import BigNumber from 'bignumber.js';
 export const approveSellTokens = async (
   vestingTokenContract,
   account,
@@ -7,7 +7,7 @@ export const approveSellTokens = async (
   EXCHANGE_CONTRACT_ADDRESS,
   setApproveModalStatus,
   setTokenApproval,
-  setApproveModalOpen
+  setApproveModalOpen,
 ) => {
   let totalAmount = new BigNumber(tokens).multipliedBy(
     Math.pow(10, tokenDecimal)
@@ -23,24 +23,24 @@ export const approveSellTokens = async (
       .allowance(account, EXCHANGE_CONTRACT_ADDRESS)
       .call();
   } catch (err) {
-    setApproveModalStatus("failure");
+    setApproveModalStatus('failure');
     // enqueueSnackbar("Token Approval Failed!", { variant: "error" });
     console.log(err);
   }
   if (approvedAmount) {
     approvedAmount = new BigNumber(approvedAmount);
-    if (approvedAmount.dividedBy(Math.pow(10, 6)).toString(10) === "0") {
+    if (approvedAmount.dividedBy(Math.pow(10, 6)).toString(10) === '0') {
       try {
         approveResult = await vestingTokenContract.methods
           .approve(EXCHANGE_CONTRACT_ADDRESS, sendAmount)
           .send({ from: account });
       } catch (err) {
-        setApproveModalStatus("failure");
+        setApproveModalStatus('failure');
         // enqueueSnackbar("Token Approval Failed!", { variant: "error" });
         console.log(err);
       }
       if (approveResult) {
-        setApproveModalStatus("success");
+        setApproveModalStatus('success');
         // enqueueSnackbar(
         //   "Approval Successful! Please proceed to transfer the tokens.",
         //   { variant: "success" }
@@ -57,7 +57,7 @@ export const approveSellTokens = async (
           )
           .send({ from: account });
       } catch (err) {
-        setApproveModalStatus("failure");
+        setApproveModalStatus('failure');
         // enqueueSnackbar("Token Approval Failed!", { variant: "error" });
         console.log(err);
       }
@@ -67,12 +67,12 @@ export const approveSellTokens = async (
             .approve(EXCHANGE_CONTRACT_ADDRESS, sendAmount)
             .send({ from: account });
         } catch (err) {
-          setApproveModalStatus("failure");
+          setApproveModalStatus('failure');
           //   enqueueSnackbar("Token Approval Failed!", { variant: "error" });
           console.log(err);
         }
         if (approveResult) {
-          setApproveModalStatus("success");
+          setApproveModalStatus('success');
           //   enqueueSnackbar(
           //     "Approval Successful! please proceed to transfer the tokens.",
           //     {
@@ -86,6 +86,6 @@ export const approveSellTokens = async (
   }
   setTimeout(() => {
     setApproveModalOpen(false);
-    setApproveModalStatus("");
+    setApproveModalStatus('');
   }, 2500);
 };

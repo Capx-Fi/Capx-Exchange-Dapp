@@ -1,6 +1,4 @@
 import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
-import BigNumber from "bignumber.js";
-
 async function fetchOrderTokens(exchangeURL, masterURL, wrappedURL) {
   const client = new ApolloClient({
     uri: exchangeURL,

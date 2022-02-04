@@ -9,7 +9,11 @@ import {
   CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
   MATIC_CHAIN_ID,
 } from '../constants/config';
-
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 18],
+});
 async function fetchDerivativeIDs(projectID, wrappedURL) {
   const client = new ApolloClient({
     uri: wrappedURL,
@@ -168,10 +172,10 @@ export const fetchOrderForTicker = async (
           fulfillOrderTimestamp: convertDateToString(
             order.fulfillOrderTimestamp
           ),
-          amountGive: giveTokens - numSent,
-          amountGet: numOfTokens - numReceived,
+          amountGive: giveTokens.minus(numSent),
+          amountGet: numOfTokens.minus(numReceived),
           price: order.price,
-          quantity: numOfTokens - numReceived,
+          quantity: numOfTokens.minus(numReceived),
           completedQuantity: numOfTokens,
           expiryTimeInSeconds: order.expiryTime,
           displayExpiryDate: convertToDate(order.expiryTime),

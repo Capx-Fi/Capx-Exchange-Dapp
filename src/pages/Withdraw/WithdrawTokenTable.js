@@ -38,6 +38,11 @@ import {
 } from "../../redux/actions/withdraw";
 import BigNumber from "bignumber.js";
 import Web3 from "web3";
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 18],
+});
 
 const { Column } = Table;
 
@@ -103,7 +108,7 @@ function WithdrawTokenTable({ filter, refetch }) {
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
       .call();
     console.log(balance, "balance");
-    balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toNumber();
+    balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toString();
     // make a USDT object and add it to the holdings
     const usdt = {
       asset: "USDT",

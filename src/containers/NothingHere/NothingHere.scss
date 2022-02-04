@@ -1,0 +1,50 @@
+.nothinghere {
+  @apply h-70v bg-dark-400 flex;
+
+  &_maincontainer {
+    @apply flex flex-col justify-center items-start m-auto;
+    &_herocontainer {
+      @apply px-8 py-8 tablet:pl-16 tablet:pr-12 tablet:-ml-12 laptop:ml-0 tablet:py-16 desktop:py-8 rounded-lg tablet:rounded-2xl desktop:rounded-4xl text-white relative w-80v tablet:w-70v laptop:w-62v flex flex-col items-center;
+
+      max-width: 960px;
+      &_cname {
+        @apply flex rounded-lg object-contain w-fit-content px-3 mb-4 py-2.5 text-caption-4 tablet:text-caption-2 leading-caption-4 tablet:leading-caption-2;
+      }
+      &_title {
+        @apply text-heading-2 leading-heading-2 tablet:text-display-1 tablet:leading-display-1 font-bold laptop:text-display-2 laptop:leading-display-2 desktop:text-display-1 desktop:leading-display-1 desktop:font-semibold w-10/12 tablet:w-11/12 text-center tablet:text-left;
+      }
+      &_subtitle {
+        @apply py-6 desktop:pt-4 desktop:pb-8 text-caption-2 leading-caption-2 tablet:text-subheading tablet:leading-subheading laptop:text-paragraph-2 laptop:leading-paragraph-2 desktop:text-paragraph-1 desktop:leading-paragraph-1 text-center font-medium;
+      }
+      &_button {
+        @apply rounded-xl flex px-3 py-2 tablet:px-5 tablet:py-3 tablet:mb-16 laptop:mb-0 laptop:px-6 laptop:py-5 items-center justify-center text-center w-fit-content cursor-pointer;
+        background: linear-gradient(180deg, #97d10a -8.65%, #206300 100%);
+        &_text {
+          @apply mr-3 text-caption-3 leading-caption-3 tablet:text-caption-1 tablet:leading-caption-1 desktop:text-subheading desktop:leading-subheading font-medium;
+        }
+        &_icon {
+          @apply w-5 ml-2;
+        }
+      }
+      &_notfoundillustration {
+        @apply h-auto w-auto;
+      }
+    }
+    &_dashboardcontainer {
+      @apply mt-4 px-4 py-4 tablet:pl-16 tablet:pr-12 tablet:-ml-12 laptop:ml-0 tablet:py-3 desktop:py-3 rounded-lg tablet:rounded-xl desktop:rounded-2xl text-white relative w-80v tablet:w-60v laptop:w-50v desktop:w-40v flex items-center justify-between;
+      &_text {
+        @apply text-caption-3 leading-caption-3 tablet:text-caption-1 tablet:leading-caption-1 laptop:text-paragraph-1 laptop:leading-paragraph-1 desktop:text-paragraph-2 desktop:leading-paragraph-2 text-center tablet:text-left;
+      }
+      &_button {
+        @apply rounded-lg flex px-6 py-1 desktop:px-6 desktop:py-2 items-center justify-center text-center w-fit-content cursor-pointer mt-4 tablet:my-6;
+        background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
+        &_text {
+          @apply mr-3  text-caption-3 leading-caption-3 tablet:text-caption-2 tablet:leading-caption-2 laptop:text-paragraph-2 laptop:leading-paragraph-2 font-bold text-dark-400;
+        }
+        &_icon {
+          @apply w-3 text-dark-400;
+        }
+      }
+    }
+  }
+}

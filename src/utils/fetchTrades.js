@@ -3,7 +3,11 @@ import BigNumber from "bignumber.js";
 import Web3 from "web3";
 import { convertToInternationalCurrencySystem } from "./convertToInternationalCurrencySystem";
 
-
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 18],
+});
 export const fetchTrades = async (account, exchangeURL) => {
   let orderList = [];
   const client = new ApolloClient({
@@ -11,7 +15,7 @@ export const fetchTrades = async (account, exchangeURL) => {
     cache: new InMemoryCache(),
   });
   const fetchFormattedValue = (value, decimal) => {
-    return new BigNumber(value).dividedBy(Math.pow(10, decimal)).toNumber();
+    return new BigNumber(value).dividedBy(Math.pow(10, decimal)).toString();
   };
 
   const query = `query {

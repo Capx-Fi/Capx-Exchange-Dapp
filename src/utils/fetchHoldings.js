@@ -2,6 +2,11 @@ import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
 import BigNumber from "bignumber.js";
 import { CONTRACT_ABI_ERC20 } from "../contracts/SampleERC20";
 import Web3 from "web3";
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 18],
+});
 
 const GRAPHAPIURL =
   "https://api.studio.thegraph.com/query/16341/exchange/v0.1.3";
@@ -82,11 +87,11 @@ const assetQuery = `query{
         xdata.assetID = total[1].assetID;
         xdata.totalBalance = new BigNumber(total[1].totalValue)
           .dividedBy(Math.pow(10, xdata.decimal))
-          .toNumber();
+          .toString();
         xdata.lockedBalance = assetToLockedBalance[total[1].assetID]
           ? new BigNumber(assetToLockedBalance[total[1].assetID])
               .dividedBy(Math.pow(10, xdata.decimal))
-              .toNumber()
+              .toString()
           : 0;
         xdata.actualBalance = ((new BigNumber(xdata.totalBalance)).minus(xdata.lockedBalance)).toString();
         _data.push(xdata);

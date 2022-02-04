@@ -1,10 +1,35 @@
 import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
 import BigNumber from "bignumber.js";
+
 import moment from "moment";
 const format = "HH:mm";
+BigNumber.config({ ROUNDING_MODE: 3, DECIMAL_PLACES: 18, EXPONENTIAL_AT: [-18,18] });
 
 export const fetchPortfolio = async (account, wrappedURL) => {
   let userHoldings = [];
+    function numberToString(num) {
+      let numStr = String(num);
+
+      if (Math.abs(num) < 1.0) {
+        let e = parseInt(num.toString().split("e-")[1]);
+        if (e) {
+          let negative = num < 0;
+          if (negative) num *= -1;
+          num *= Math.pow(10, e - 1);
+          numStr = "0." + new Array(e).join("0") + num.toString().substring(2);
+          if (negative) numStr = "-" + numStr;
+        }
+      } else {
+        let e = parseInt(num.toString().split("+")[1]);
+        if (e > 20) {
+          e -= 20;
+          num /= Math.pow(10, e);
+          numStr = num.toString() + new Array(e + 1).join("0");
+        }
+      }
+
+      return numStr;
+    }
   const client = new ApolloClient({
     uri: wrappedURL,
     cache: new InMemoryCache(),
@@ -48,7 +73,9 @@ export const fetchPortfolio = async (account, wrappedURL) => {
               let displayDate = `${unlockDay} ${unlockMonth}, ${unlockYear}`;
               let numOfTokens = new BigNumber(holder?.tokenAmount)
                 .dividedBy(Math.pow(10, project.projectTokenDecimal))
-                .toNumber();
+                .toString();
+              console.log(numOfTokens.toString(),"num of tokens");
+              // numOfTokens = numOfTokens;
               return {
                 date: date,
                 asset: derivative.wrappedTokenTicker,
@@ -59,6 +86,7 @@ export const fetchPortfolio = async (account, wrappedURL) => {
                 tokenDecimal: project.projectTokenDecimal,
                 quantity: numOfTokens,
                 unlockDate: displayDate,
+                balance: 0,
                 isContract: false,
               };
             })

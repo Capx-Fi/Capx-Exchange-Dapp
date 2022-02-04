@@ -2,7 +2,7 @@
   @apply mx-auto w-7/12 desktop:w-10/12 flex flex-col;
   width: fit-content;
   max-width: 1100px;
-  min-width:800px;
+  min-width: 800px;
   &_header {
     @apply px-4 pl-7 py-2 mb-5 mt-16 flex justify-between content-start;
     &_titlecontainer {
@@ -143,4 +143,8 @@
     background: #572b37;
     border: 1px solid rgba(134, 68, 83, 1);
   }
+}
+
+.asset_loading {
+  @apply h-4 w-auto animate-pulse bg-dark-100;
 }

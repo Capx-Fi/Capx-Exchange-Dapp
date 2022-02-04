@@ -6,7 +6,6 @@ import { useWeb3React } from '@web3-react/core';
 import GlobalSearchBox from '../../layouts/TableLayout/GlobalSearchBox';
 import MetamaskModal from '../../components/Modals/MetamaskModal/MetamaskModal';
 import WithdrawTokenTable from './WithdrawTokenTable';
-import BigNumber from "bignumber.js";
 
 import WithdrawContainer from './WithdrawContainer';
 const format = 'HH:mm';
