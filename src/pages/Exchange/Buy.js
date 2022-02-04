@@ -102,7 +102,7 @@ function BuyScreen({
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
     let totalTokens = ticker.amountGive;
-    let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 18));
+    let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));
     let tradeID = ticker.tradeID;
     await fulfillOrder(
       exchangeContract,

@@ -43,7 +43,7 @@ export const createOrder = async (
   let tokenGet = CHAIN_USDT_CONTRACT_ADDRESS;
   let amountGet = new BigNumber(
     totalAmount.multipliedBy(ticker.price)
-  ).multipliedBy(Math.pow(10, 18));
+  ).multipliedBy(Math.pow(10, 6));
   amountGet = new BigNumber(
     amountGet.dividedBy(Math.pow(10, ticker.tokenDecimal))
   );
