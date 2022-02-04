@@ -70,6 +70,9 @@ function WithdrawContainer({
     );
     let totalTokens = ticker.quantity;
     let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 18));
+    if(ticker.assetID === "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"){
+      totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));
+    }
     let assetID = ticker.assetID;
     await withdrawToken(
       exchangeContract,
