@@ -149,16 +149,12 @@ export const fetchOrderForTicker = async (
       .map((order) => {
         const numOfTokens = new BigNumber(order?.amountGive)
           .dividedBy(Math.pow(10, order.tokenGiveDecimal))
-          .toNumber();
         const numReceived = new BigNumber(order?.amountSent)
           .dividedBy(Math.pow(10, order.tokenGetDecimal))
-          .toNumber();
         const numSent = new BigNumber(order?.amountReceived)
           .dividedBy(Math.pow(10, order.tokenGiveDecimal))
-          .toNumber();
         const giveTokens = new BigNumber(order?.amountGet)
           .dividedBy(Math.pow(10, order.tokenGetDecimal))
-          .toNumber();
         return {
           tradeID: order.id,
           asset: order.tokenGiveTicker,
@@ -202,9 +198,11 @@ export const fetchOrderForTicker = async (
     activeOrders = activeOrders.filter((order) => {
       return order.expiryTimeInSeconds > Date.now() / 1000;
     });
+
     const completeOrders = listedTokens.filter((order) => {
-      return order.quantity === 0;
+      return order.quantity.toString() === "0";
     });
+    console.log(completeOrders);
     // sort completed orders in descending order of date completed
     completeOrders.sort((a, b) => {
       return (

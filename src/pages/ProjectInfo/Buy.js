@@ -119,6 +119,7 @@ function BuyScreen({
       totalAmount,
       setBuyModalStatus,
       setBuyModalOpen,
+      setTokenApproval,
       resetValue
     );
     setTimeout(() => {

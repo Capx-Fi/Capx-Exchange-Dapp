@@ -83,7 +83,7 @@ function BuyScreen({
       CHAIN_USDT_CONTRACT_ADDRESS
     );
 
-    const tokens = ticker.amountGive.minus(ticker?.balance);
+    const tokens = (new BigNumber(ticker.amountGive)).minus(ticker?.balance);
     const tokenDecimal = 18;
     await approveSellTokens(
       vestingTokenContract,
@@ -111,6 +111,7 @@ function BuyScreen({
       totalAmount,
       setBuyModalStatus,
       setBuyModalOpen,
+      setTokenApproval,
       resetValue
     );
     setTimeout(() => {

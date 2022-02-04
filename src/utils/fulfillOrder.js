@@ -7,6 +7,7 @@ export const fulfillOrder = async (
   totalAmount,
   setBuyModalStatus,
   setBuyModalOpen,
+  setTokenApproval,
   resetValue
 ) => {
   setBuyModalOpen(true);
@@ -19,6 +20,7 @@ export const fulfillOrder = async (
       .send({ from: account });
     if (result) {
       setBuyModalStatus("success");
+      setTokenApproval(false);
       resetValue();
     }
   } catch (err) {

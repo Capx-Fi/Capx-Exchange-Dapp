@@ -76,6 +76,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
       : GRAPHAPIURL_MASTER_ETHEREUM;
   useEffect(() => {
     fetchListings();
+    console.log('refresh', refresh);
   }, [account, chainId, refresh]);
   const fetchListings = async () => {
     setLoading(true);
