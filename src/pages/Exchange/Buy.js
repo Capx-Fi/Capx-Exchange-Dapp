@@ -34,7 +34,7 @@ import BuyModal from '../../components/Modals/VestAndApproveModal/BuyModal';
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
-  EXPONENTIAL_AT: [-18, 18],
+  EXPONENTIAL_AT: [-18, 36],
 });
 
 function BuyScreen({

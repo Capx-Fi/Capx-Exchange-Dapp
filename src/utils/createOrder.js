@@ -4,7 +4,7 @@ import moment from "moment";
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
-  EXPONENTIAL_AT: [-18, 18],
+  EXPONENTIAL_AT: [-18, 36],
 });
 
 function convert(str) {

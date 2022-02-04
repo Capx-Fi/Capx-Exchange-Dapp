@@ -12,7 +12,7 @@ import {
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
-  EXPONENTIAL_AT: [-18, 18],
+  EXPONENTIAL_AT: [-18, 36],
 });
 async function fetchDerivativeIDs(projectID, wrappedURL) {
   const client = new ApolloClient({

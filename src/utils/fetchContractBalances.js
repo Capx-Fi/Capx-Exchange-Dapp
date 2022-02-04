@@ -16,7 +16,7 @@ const web3 = new Web3(Web3.givenProvider);
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
-  EXPONENTIAL_AT: [-18, 18],
+  EXPONENTIAL_AT: [-18, 36],
 });
 export const fetchContractBalances = async (
   account,
