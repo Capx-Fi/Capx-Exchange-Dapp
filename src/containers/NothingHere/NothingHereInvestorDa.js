@@ -20,12 +20,12 @@ function NothingHereTrades() {
           <div className='nothinghere_maincontainer_herocontainer_subtitle'>
             No Trades Found
           </div>
-          <DeskCTA
+          {/* <DeskCTA
             onClick={() => history.push('/')}
             title='Add Tardes'
             classes='button'
             icon={NextIcon}
-          />
+          /> */}
         </div>
       </section>
     </article>
