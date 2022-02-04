@@ -107,7 +107,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     if (active) fetchProjects();
   }, [account, chainId]);
   useEffect(() => {
-    if (chainId === 80001) setSortBy('Matic');
+    if (chainId === 80001 || chainId === 137) setSortBy('Matic');
     else if (chainId === 97) setSortBy('BSC');
     else setSortBy('Ethereum');
   }, [chainId]);
@@ -130,38 +130,38 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
       } catch (error) {}
     } else if (chainName === 'Matic') {
       try {
-        await web3.currentProvider.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: '0x13881',
-              chainName: 'Polygon Testnet',
-              nativeCurrency: {
-                name: 'MATIC',
-                symbol: 'MATIC',
-                decimals: 18,
-              },
-              rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
-              blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
-            },
-          ],
-        });
-        // await window.ethereum.request({
-        //   method: "wallet_addEthereumChain",
+        // await web3.currentProvider.request({
+        //   method: 'wallet_addEthereumChain',
         //   params: [
         //     {
-        //       chainId: "0x89",
-        //       chainName: "Polygon",
+        //       chainId: '0x13881',
+        //       chainName: 'Polygon Testnet',
         //       nativeCurrency: {
-        //         name: "MATIC",
-        //         symbol: "MATIC",
+        //         name: 'MATIC',
+        //         symbol: 'MATIC',
         //         decimals: 18,
         //       },
-        //       rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
-        //       blockExplorerUrls: ["https://polygonscan.com/"],
+        //       rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
+        //       blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
         //     },
         //   ],
         // });
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: "0x89",
+              chainName: "Polygon",
+              nativeCurrency: {
+                name: "MATIC",
+                symbol: "MATIC",
+                decimals: 18,
+              },
+              rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
+              blockExplorerUrls: ["https://polygonscan.com/"],
+            },
+          ],
+        });
       } catch (error) {}
     } else if (chainName === 'BSC') {
       try {
