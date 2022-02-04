@@ -68,7 +68,6 @@ function WithdrawContainer({
       EXCHANGE_ABI,
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
-    console.log('tt', ticker);
     let totalTokens = ticker.quantity;
     let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 18));
     let assetID = ticker.assetID;

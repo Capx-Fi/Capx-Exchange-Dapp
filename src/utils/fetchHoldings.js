@@ -66,7 +66,6 @@ const assetQuery = `query{
       query: gql(query),
     });
     const { data: assetData } = await client.query({ query: gql(assetQuery) });
-    console.log(data);
     let _data = [];
     Object.entries(data.users).forEach((record) => {
       let userdata = record[1];
@@ -98,7 +97,6 @@ const assetQuery = `query{
       });
     });
     fetchTotalHoldings = _data;
-    console.log(fetchTotalHoldings);
   } catch (error) {
     console.log(error);
   }

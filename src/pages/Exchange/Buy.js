@@ -31,6 +31,11 @@ import Web3 from 'web3';
 import WarningCard from '../../components/WarningCard/WarningCard';
 import ApproveModal from '../../components/Modals/VestAndApproveModal/ApproveModal';
 import BuyModal from '../../components/Modals/VestAndApproveModal/BuyModal';
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 18],
+});
 
 function BuyScreen({
   setMaxAmount,
@@ -78,7 +83,7 @@ function BuyScreen({
       CHAIN_USDT_CONTRACT_ADDRESS
     );
 
-    const tokens = ticker.amountGive - ticker?.balance;
+    const tokens = ticker.amountGive.minus(ticker?.balance);
     const tokenDecimal = 18;
     await approveSellTokens(
       vestingTokenContract,
@@ -90,14 +95,12 @@ function BuyScreen({
       setTokenApproval,
       setApproveModalOpen
     );
-    console.log(ticker);
   };
   const finalizeSwap = async () => {
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
-    console.log('tt', ticker);
     let totalTokens = ticker.amountGive;
     let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 18));
     let tradeID = ticker.tradeID;
@@ -114,7 +117,6 @@ function BuyScreen({
       setRefresh(!refresh);
     }, 6000);
 
-    console.log(ticker);
   };
   useEffect(() => {
     if (ticker?.amountGive <= 0 || ticker?.amountGet <= 0) {
@@ -263,7 +265,6 @@ function BuyScreen({
               {tokenApproval || ticker?.balance - ticker?.amountGive >= 0
                 ? 'SWAP TOKENS'
                 : 'APPROVE TOKENS'}
-              {console.log(ticker?.balance - ticker?.amountGive)}
             </div>
             <div className='exchangeScreen_rightcontainer_buyContainer_body_swapButton_icon'>
               <img src={NextIcon} alt='next icon' />

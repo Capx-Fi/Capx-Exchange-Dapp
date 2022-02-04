@@ -145,7 +145,6 @@ export const fetchOrderForTicker = async (
     const { data } = await client.query({
       query: gql(query),
     });
-    console.log("data", data);
     listedTokens = data.orders
       .map((order) => {
         const numOfTokens = new BigNumber(order?.amountGive)
@@ -184,11 +183,9 @@ export const fetchOrderForTicker = async (
         };
       })
       .flat();
-    console.log(listedTokens, "dededededede");
     let balance = await exchangeContract.methods
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
       .call();
-    console.log(balance, "balance");
     balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toNumber();
     listedTokens = listedTokens.map((token) => {
       return {
@@ -203,10 +200,6 @@ export const fetchOrderForTicker = async (
       return order.initiator !== account;
     });
     activeOrders = activeOrders.filter((order) => {
-      console.log(
-        order.expiryTimeInSeconds > Date.now() / 1000,
-        "order.expiryTime > Date.now()"
-      );
       return order.expiryTimeInSeconds > Date.now() / 1000;
     });
     const completeOrders = listedTokens.filter((order) => {

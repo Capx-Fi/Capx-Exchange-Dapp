@@ -107,7 +107,6 @@ function WithdrawTokenTable({ filter, refetch }) {
     let balance = await exchangeContract.methods
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
       .call();
-    console.log(balance, "balance");
     balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toString();
     // make a USDT object and add it to the holdings
     const usdt = {
@@ -124,12 +123,10 @@ function WithdrawTokenTable({ filter, refetch }) {
     });
     setPortfolioHoldings([usdt, ...holdings]);
     setTokenList([usdt, ...holdings]);
-    console.log(holdings);
     setLoading(false);
   };
 
   useEffect(() => {
-    console.log(filter);
     if (filter === "" || filter === undefined) {
       setTokenList(portfolioHoldings);
     } else {

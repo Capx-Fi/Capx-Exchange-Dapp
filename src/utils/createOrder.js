@@ -12,7 +12,6 @@ function convert(str) {
     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
     day = ("0" + date.getDate()).slice(-2);
   let kp = [date.getFullYear(), mnth, day].join("-");
-  console.log("KP", kp.split("-"));
   let timestamp =
     new Date(
       Date.UTC(kp.split("-")[0], kp.split("-")[1] - 1, kp.split("-")[2])
@@ -53,7 +52,6 @@ export const createOrder = async (
   let totalExpiryTime = convert(expiryDate) + convertToSeconds(expiryTime);
   let direction = true;
   let result = null;
-  console.log(tokenGive, amountGive, tokenGet, amountGet, totalExpiryTime);
   try {
     result = await exchangeContract.methods
       .createOrder(

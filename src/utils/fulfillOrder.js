@@ -11,8 +11,6 @@ export const fulfillOrder = async (
 ) => {
   setBuyModalOpen(true);
   let result = null;
-  console.log("tradeID", tradeID);
-  console.log("totalAmount", totalAmount.toString());
 
 
   try {

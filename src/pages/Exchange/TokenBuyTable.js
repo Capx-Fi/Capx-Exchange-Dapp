@@ -96,7 +96,6 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
   });
 
   useEffect(() => {
-    console.log(filter);
     if (filter === '' || filter === undefined) {
       setTokenList(listings);
     } else {
@@ -127,7 +126,6 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
         onRow={(record) => {
           return {
             onClick: (e) => {
-              console.log('onTableBuy', record);
               dispatch(setBuyTicker(record));
               setBalance(record.balance);
             },

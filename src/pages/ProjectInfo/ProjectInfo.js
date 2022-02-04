@@ -80,7 +80,6 @@ function ProjectInfo({ match }) {
   }, [match.params.ticker, active, account, chainId, refresh]);
   const getProjectDetails = async () => {
     if (active) {
-      console.log('fetching project details', match.params.ticker, masterURL);
       const _projectDetails = await fetchProjectDetails(
         match.params.ticker,
         masterURL

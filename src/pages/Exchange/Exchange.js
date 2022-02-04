@@ -34,8 +34,6 @@ function ExchangeScreen({ match }) {
   const [buyModalOpen, setBuyModalOpen] = useState(false);
   const [refresh , setRefresh] = useState(false);
 
-  console.log(payAmount, receiveAmount);
-
   var mode = useSelector((state) => state.exchange.exchangeMode);
 
   const setAmount = (quantity, price) => {
@@ -45,8 +43,6 @@ function ExchangeScreen({ match }) {
   };
   const setMaxAmount = () => {
     const maxPay = Math.min(balance, payAmount);
-    console.log(maxPay);
-    console.log(Number(assetPrice));
     setReceiveAmount(maxPay / Number(assetPrice));
     setPayAmount(maxPay);
   };

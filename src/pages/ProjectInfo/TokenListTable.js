@@ -28,7 +28,6 @@ function TokenListTable({ activeOrders }) {
       onRow={(record) => {
         return {
           onClick: (e) => {
-            console.log("onTableBuy", record);
             dispatch(setProjectBuyTicker(record));
           },
         };

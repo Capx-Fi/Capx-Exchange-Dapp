@@ -62,17 +62,14 @@ function TradesScreen() {
   }, [sortBy]);
   useEffect(() => {
     if (account) {
-      console.log("account", account);
       fetchTradeData(account);
       setLoading(false);
     }
   }, [account, chainId]);
   const fetchTradeData = async (account) => {
-    console.log("trades data", tradesData);
     const orderList = await fetchTrades(account, exchangeURL);
     setTradesData(orderList);
     setResetTrade(orderList);
-    console.log("orderList", orderList);
   };
   const tryCancelOrder = async (orderId) => {
     const exchangeContract = new web3.eth.Contract(

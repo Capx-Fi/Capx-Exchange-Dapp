@@ -105,6 +105,5 @@ export const fetchTrades = async (account, exchangeURL) => {
   } catch (error) {
     console.log(error);
   }
-  console.log(orderList);
   return orderList;
 };

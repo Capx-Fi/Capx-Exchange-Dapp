@@ -115,7 +115,6 @@ function TokenSellTable({ filter, refresh }) {
         return acc;
       }
     }, []);
-    console.log("portfolioHoldings", portfolioHoldings);
     // convert quanityt to international currency system
     const convertedPortfolioHoldings = portfolioHoldings.map((item) => {
       const convertedItem = { ...item };
@@ -129,12 +128,10 @@ function TokenSellTable({ filter, refresh }) {
     });
     setPortfolioHoldings(convertedPortfolioHoldings);
     setTokenList(convertedPortfolioHoldings);
-    console.log(convertedPortfolioHoldings, "fifjfdjfj");
     setLoading(false);
   };
 
   useEffect(() => {
-    console.log(filter);
     if (filter === "" || filter === undefined) {
       setTokenList(portfolioHoldings);
     } else {
@@ -165,7 +162,6 @@ function TokenSellTable({ filter, refresh }) {
         onRow={(record) => {
           return {
             onClick: (e) => {
-              console.log(record);
               dispatch(setSellTicker(record));
               dispatch(setTickerBalance(record.maxQuantity));
             },

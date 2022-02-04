@@ -1,5 +1,4 @@
 const inputJson = require("./data.json");
-// console.log(inputJson)
 
 
 export function sortIncomingData(inputJson) {

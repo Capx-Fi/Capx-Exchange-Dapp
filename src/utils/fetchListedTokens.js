@@ -17,8 +17,8 @@ import {
 } from '../constants/config';
 BigNumber.config({
   ROUNDING_MODE: 3,
-  DECIMAL_PLACES: 18,
-  EXPONENTIAL_AT: [-18, 18],
+  DECIMAL_PLACES: 19,
+  EXPONENTIAL_AT: [-19, 19],
 });
 
 function convertDateToString(timestamp) {
@@ -123,12 +123,12 @@ export const fetchListedTokens = async (
           initiator: order.initiator,
           amountSent: order.amountSent,
           amountReceived: order.amountReceived,
-          amountGive: giveTokens.minus(numSent),
-          amountGet: numOfTokens.minus(numReceived),
-          maxAmountGet: numOfTokens.minus(numReceived),
-          maxAmountGive: giveTokens.minus(numSent),
+          amountGive: (giveTokens.minus(numSent)).toString(),
+          amountGet: (numOfTokens.minus(numReceived)).toString(),
+          maxAmountGet: (numOfTokens.minus(numReceived)).toString(),
+          maxAmountGive: (giveTokens.minus(numSent)).toString(),
           price: order.price,
-          quantity: numOfTokens.minus(numReceived),
+          quantity: (numOfTokens.minus(numReceived)).toString(),
           expiryTimeActual: order.expiryTime,
           displayExpiryDate: convertToDate(order.expiryTime),
           displayExpiryTime: convertToTime(order.expiryTime),
@@ -136,7 +136,6 @@ export const fetchListedTokens = async (
         };
       })
       .flat();
-    console.log(listedTokens);
     listedTokens = listedTokens.filter((token) => token.quantity > 0);
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
@@ -149,7 +148,6 @@ export const fetchListedTokens = async (
     let balance = await exchangeContract.methods
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
       .call();
-    console.log(balance,"USDT BALANCE");
     balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toNumber();
 
     listedTokens = listedTokens.map((token) => {

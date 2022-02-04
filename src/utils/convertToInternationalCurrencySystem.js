@@ -17,6 +17,5 @@ export function convertToInternationalCurrencySystem(labelValue) {
       Math.abs(Number(labelValue)) <= 1.0e-3
       ? Number(labelValue)
       : Math.abs(Number(labelValue).toFixed(4));
-  // console.log("val", val.toString());
   return val.toString();
 }

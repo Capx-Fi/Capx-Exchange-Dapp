@@ -81,7 +81,6 @@ function SellScreen({
     dispatch(setSellTicker({ ...ticker, price: e }));
   };
   const setDate = (e) => {
-    console.log(e);
     dispatch(setSellTicker({ ...ticker, expiryDate: e }));
   };
   const setTime = (e) => {
@@ -109,9 +108,6 @@ function SellScreen({
       CHAIN_USDT_CONTRACT_ADDRESS
     );
     let tokens = (new BigNumber(ticker.quantity).minus(ticker.balance).plus(0.1)).toString();
-    console.log(tokens,"tokens");
-    console.log(ticker.balance,"balance");
-    console.log(ticker.quantity,"quantity");
     const tokenDecimal = ticker.tokenDecimal;
     await approveSellTokens(
       vestingTokenContract,
@@ -183,7 +179,6 @@ function SellScreen({
     } else {
       setDisabled(false);
     }
-    console.log('disabled', disabled);
   }, [ticker?.price, ticker?.quantity, totalExpiryTime, balance]);
 
   return (

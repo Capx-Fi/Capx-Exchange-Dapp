@@ -84,7 +84,6 @@ export const fetchContractBalances = async (
       query: gql(getAssetUnlockTime),
     });
 
-    console.log(holdingsData);
     Object.entries(holdingsData.users).forEach((record) => {
       let userData = record[1];
       let userTotalData = userData.totalBalance;
@@ -117,7 +116,6 @@ export const fetchContractBalances = async (
         fetchContractBalances.push(xData);
       });
     });
-    console.log(fetchContractBalances, "fcbcb");
     userContractHoldings = await Promise.all(
       fetchContractBalances.map(async (contractHolding) => {
         let balance = await exchangeContract.methods
@@ -125,8 +123,6 @@ export const fetchContractBalances = async (
           .call();
         balance = new BigNumber(balance)
           .dividedBy(Math.pow(10, contractHolding.decimal)).toString();
-        console.log(balance, "balance");
-        console.log(balance, "balance after string");
         contractHolding.actualBalance = balance;
         const unixTime = contractHolding.unlockTime;
         const date = new Date(unixTime * 1000);
@@ -159,7 +155,6 @@ export const fetchContractBalances = async (
     userContractHoldings = userContractHoldings.filter(
       (holding) => holding.quantity > 0
     );
-    console.log("User Holdings", userContractHoldings);
   } catch (error) {
     console.log(error);
   }

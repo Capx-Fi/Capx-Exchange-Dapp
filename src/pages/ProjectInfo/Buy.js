@@ -91,7 +91,7 @@ function BuyScreen({
       CONTRACT_ABI_ERC20,
       CHAIN_USDT_CONTRACT_ADDRESS
     );
-    const tokens = ticker.amountGive - ticker?.balance;
+    const tokens = (new BigNumber(ticker.amountGive)).minus(ticker?.balance);
     const tokenDecimal = 18;
     await approveSellTokens(
       vestingTokenContract,
@@ -103,14 +103,12 @@ function BuyScreen({
       setTokenApproval,
       setApproveModalOpen
     );
-    console.log(ticker);
   };
   const finalizeSwap = async () => {
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
-    console.log("tt", ticker);
     let totalTokens = ticker.amountGive;
     let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 18));
     let tradeID = ticker.tradeID;
@@ -126,7 +124,6 @@ function BuyScreen({
     setTimeout(() => {
       setRefresh(!refresh);
     }, 6000);
-    console.log(ticker);
   };
   useEffect(() => {
     if (ticker?.amountGive <= 0 || ticker?.amountGet <= 0) {
@@ -135,15 +132,10 @@ function BuyScreen({
       setDisabled(false);
     }
     if (ticker?.amountGive > ticker?.balance) {
-      console.log("warning");
       setWarningCheck(true);
     } else {
-      console.log("no warning");
       setWarningCheck(false);
     }
-    console.log(warningCheck);
-
-    console.log(ticker);
   }, [ticker?.amountGive]);
   return (
     <div
@@ -276,7 +268,6 @@ function BuyScreen({
               {tokenApproval || ticker?.balance - ticker?.amountGive >= 0
                 ? "SWAP TOKENS"
                 : "APPROVE TOKENS"}
-              {console.log(ticker?.balance - ticker?.amountGive)}
             </div>
             <div className="exchangeScreen_rightcontainer_buyContainer_body_swapButton_icon">
               <img src={NextIcon} alt="next icon" />

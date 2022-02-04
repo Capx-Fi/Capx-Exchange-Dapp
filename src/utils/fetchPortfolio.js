@@ -52,7 +52,6 @@ export const fetchPortfolio = async (account, wrappedURL) => {
     const { data } = await client.query({
       query: gql(query),
     });
-    console.log(data);
     userHoldings = data.projects
       .map((project) =>
         project?.derivatives
@@ -74,7 +73,6 @@ export const fetchPortfolio = async (account, wrappedURL) => {
               let numOfTokens = new BigNumber(holder?.tokenAmount)
                 .dividedBy(Math.pow(10, project.projectTokenDecimal))
                 .toString();
-              console.log(numOfTokens.toString(),"num of tokens");
               // numOfTokens = numOfTokens;
               return {
                 date: date,
@@ -95,7 +93,6 @@ export const fetchPortfolio = async (account, wrappedURL) => {
       )
       .flat();
     userHoldings.sort((a, b) => new Date(a.date) - new Date(b.date));
-    console.log(userHoldings, "uh");
   } catch (e) {
     console.log(e);
   }

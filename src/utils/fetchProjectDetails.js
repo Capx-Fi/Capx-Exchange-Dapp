@@ -55,8 +55,6 @@ export const fetchProjectDetails = async (tokenAddress, masterURL) => {
     const { data } = await client.query({
       query: gql(query),
     });
-    console.log(data,"projectdata");
-    console.log(data.projects);
     let description = null;
     try {
       const res = await fetch(
