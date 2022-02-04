@@ -5,7 +5,7 @@ import Web3 from "web3";
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
-  EXPONENTIAL_AT: [-18, 18],
+  EXPONENTIAL_AT: [-18, 36],
 });
 
 const GRAPHAPIURL =
