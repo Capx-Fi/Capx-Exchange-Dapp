@@ -69,13 +69,13 @@ function BuyScreen({
   const [disabled, setDisabled] = useState(false);
   const [warningCheck, setWarningCheck] = useState(false);
     const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-      chainId?.toString() === BSC_CHAIN_ID.toString()
+      chainId?.toString() === BSC_CHAIN_ID?.toString()
         ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
         : chainId?.toString() === MATIC_CHAIN_ID.toString()
         ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
         : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
     const CHAIN_USDT_CONTRACT_ADDRESS =
-      chainId?.toString() === BSC_CHAIN_ID.toString()
+      chainId?.toString() === BSC_CHAIN_ID?.toString()
         ? CONTRACT_ADDRESS_CAPX_USDT_BSC
         : chainId?.toString() === MATIC_CHAIN_ID.toString()
         ? CONTRACT_ADDRESS_CAPX_USDT_MATIC

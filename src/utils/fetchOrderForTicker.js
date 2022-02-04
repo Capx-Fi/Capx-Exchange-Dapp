@@ -108,7 +108,7 @@ export const fetchOrderForTicker = async (
   const web3 = new Web3(Web3.givenProvider);
   const exchangeContract = new web3.eth.Contract(
     EXCHANGE_ABI,
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC

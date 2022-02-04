@@ -32,7 +32,7 @@ export const fetchContractBalances = async (
   });
   const exchangeContract = new web3.eth.Contract(
     EXCHANGE_ABI,
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC

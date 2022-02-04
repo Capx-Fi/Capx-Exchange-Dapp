@@ -58,31 +58,31 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
 
   const web3 = new Web3(Web3.givenProvider);
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
       : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_USDT_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
       : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
   const exchangeURL =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? GRAPHAPIURL_EXCHANGE_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? GRAPHAPIURL_EXCHANGE_MATIC
       : GRAPHAPIURL_EXCHANGE_ETHEREUM;
   const wrappedURL =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? GRAPHAPIURL_WRAPPED_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? GRAPHAPIURL_WRAPPED_MATIC
       : GRAPHAPIURL_WRAPPED_ETHEREUM;
   const masterURL =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? GRAPHAPIURL_MASTER_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? GRAPHAPIURL_MASTER_MATIC
