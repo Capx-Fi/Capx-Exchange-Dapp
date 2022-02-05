@@ -15,6 +15,11 @@ import {
   EXCHANGE_CONTRACT_ADDRESS,
   MATIC_CHAIN_ID,
 } from '../constants/config';
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 19,
+  EXPONENTIAL_AT: [-19, 19],
+});
 
 function convertDateToString(timestamp) {
   const unixTime = timestamp;
@@ -103,17 +108,13 @@ export const fetchListedTokens = async (
     listedTokens = data.orders
       .map((order) => {
         const numOfTokens = new BigNumber(order?.amountGive)
-          .dividedBy(Math.pow(10, order.tokenGiveDecimal))
-          .toNumber();
+          .dividedBy(Math.pow(10, order.tokenGiveDecimal));
         const numReceived = new BigNumber(order?.amountSent)
-          .dividedBy(Math.pow(10, order.tokenGetDecimal))
-          .toNumber();
+          .dividedBy(Math.pow(10, order.tokenGetDecimal));
         const numSent = new BigNumber(order?.amountReceived)
-          .dividedBy(Math.pow(10, order.tokenGiveDecimal))
-          .toNumber();
+          .dividedBy(Math.pow(10, order.tokenGiveDecimal));
         const giveTokens = new BigNumber(order?.amountGet)
-          .dividedBy(Math.pow(10, order.tokenGetDecimal))
-          .toNumber();
+          .dividedBy(Math.pow(10, order.tokenGetDecimal));
         return {
           tradeID: order.id,
           asset: order.tokenGiveTicker,
@@ -122,12 +123,12 @@ export const fetchListedTokens = async (
           initiator: order.initiator,
           amountSent: order.amountSent,
           amountReceived: order.amountReceived,
-          amountGive: giveTokens - numSent,
-          amountGet: numOfTokens - numReceived,
-          maxAmountGet: numOfTokens - numReceived,
-          maxAmountGive: giveTokens - numSent,
+          amountGive: (giveTokens.minus(numSent)).toString(),
+          amountGet: (numOfTokens.minus(numReceived)).toString(),
+          maxAmountGet: (numOfTokens.minus(numReceived)).toString(),
+          maxAmountGive: (giveTokens.minus(numSent)).toString(),
           price: order.price,
-          quantity: numOfTokens - numReceived,
+          quantity: (numOfTokens.minus(numReceived)).toString(),
           expiryTimeActual: order.expiryTime,
           displayExpiryDate: convertToDate(order.expiryTime),
           displayExpiryTime: convertToTime(order.expiryTime),
@@ -135,11 +136,10 @@ export const fetchListedTokens = async (
         };
       })
       .flat();
-    console.log(listedTokens);
     listedTokens = listedTokens.filter((token) => token.quantity > 0);
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
-      chainId?.toString() === BSC_CHAIN_ID.toString()
+      chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC

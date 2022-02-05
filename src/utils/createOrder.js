@@ -1,23 +1,17 @@
 import BigNumber from "bignumber.js";
 import { time } from "highcharts";
 import moment from "moment";
-function toPlainString(num) {
-  return ("" + +num).replace(
-    /(-?)(\d*)\.?(\d*)e([+-]\d+)/,
-    function (a, b, c, d, e) {
-      return e < 0
-        ? b + "0." + Array(1 - e - c.length).join(0) + c + d
-        : b + c + d + Array(e - d.length + 1).join(0);
-    }
-  );
-}
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 36],
+});
 
 function convert(str) {
   var date = new Date(str),
     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
     day = ("0" + date.getDate()).slice(-2);
   let kp = [date.getFullYear(), mnth, day].join("-");
-  console.log("KP", kp.split("-"));
   let timestamp =
     new Date(
       Date.UTC(kp.split("-")[0], kp.split("-")[1] - 1, kp.split("-")[2])
@@ -37,7 +31,8 @@ export const createOrder = async (
   ticker,
   setSellModalStatus,
   setSellModalOpen,
-  CHAIN_USDT_CONTRACT_ADDRESS
+  CHAIN_USDT_CONTRACT_ADDRESS,
+  setSellNull
 ) => {
   setSellModalOpen(true);
   let totalAmount = new BigNumber(ticker.quantity).multipliedBy(
@@ -48,7 +43,7 @@ export const createOrder = async (
   let tokenGet = CHAIN_USDT_CONTRACT_ADDRESS;
   let amountGet = new BigNumber(
     totalAmount.multipliedBy(ticker.price)
-  ).multipliedBy(Math.pow(10, 18));
+  ).multipliedBy(Math.pow(10, 6));
   amountGet = new BigNumber(
     amountGet.dividedBy(Math.pow(10, ticker.tokenDecimal))
   );
@@ -61,15 +56,16 @@ export const createOrder = async (
     result = await exchangeContract.methods
       .createOrder(
         tokenGive,
-        toPlainString(amountGive),
+        amountGive.toString(),
         tokenGet,
-        toPlainString(amountGet),
+        amountGet.toString(),
         totalExpiryTime,
         direction
       )
       .send({ from: account });
     if (result) {
       setSellModalStatus("success");
+      setSellNull();
     }
   } catch (err) {
     console.log(err);

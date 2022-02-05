@@ -38,6 +38,11 @@ import {
 } from "../../redux/actions/withdraw";
 import BigNumber from "bignumber.js";
 import Web3 from "web3";
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 36],
+});
 
 const { Column } = Table;
 
@@ -46,31 +51,31 @@ function WithdrawTokenTable({ filter, refetch }) {
   const [portfolioHoldings, setPortfolioHoldings] = useState([]);
   const { active, account, chainId } = useWeb3React();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
       : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_USDT_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
       : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
   const exchangeURL =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? GRAPHAPIURL_EXCHANGE_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? GRAPHAPIURL_EXCHANGE_MATIC
       : GRAPHAPIURL_EXCHANGE_ETHEREUM;
   const wrappedURL =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? GRAPHAPIURL_WRAPPED_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? GRAPHAPIURL_WRAPPED_MATIC
       : GRAPHAPIURL_WRAPPED_ETHEREUM;
   const masterURL =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? GRAPHAPIURL_MASTER_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? GRAPHAPIURL_MASTER_MATIC
@@ -102,8 +107,7 @@ function WithdrawTokenTable({ filter, refetch }) {
     let balance = await exchangeContract.methods
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
       .call();
-    console.log(balance, "balance");
-    balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toNumber();
+    balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toString();
     // make a USDT object and add it to the holdings
     const usdt = {
       asset: "USDT",
@@ -119,12 +123,10 @@ function WithdrawTokenTable({ filter, refetch }) {
     });
     setPortfolioHoldings([usdt, ...holdings]);
     setTokenList([usdt, ...holdings]);
-    console.log(holdings);
     setLoading(false);
   };
 
   useEffect(() => {
-    console.log(filter);
     if (filter === "" || filter === undefined) {
       setTokenList(portfolioHoldings);
     } else {

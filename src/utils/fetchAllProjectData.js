@@ -1,6 +1,4 @@
 import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
-import BigNumber from "bignumber.js";
-
 async function fetchOrderTokens(exchangeURL, masterURL, wrappedURL) {
   const client = new ApolloClient({
     uri: exchangeURL,
@@ -21,7 +19,6 @@ async function fetchOrderTokens(exchangeURL, masterURL, wrappedURL) {
     data.orders.map((order) => {
       derivatives.push(order.tokenGive);
     });
-    console.log(derivatives);
     return derivatives.map((s) => `"${s}"`).join(", ");
   } catch (error) {
     console.log(error);
@@ -70,14 +67,12 @@ async function fetchProjectIDForDerivatives(
 export const fetchAllProjectData = async (exchangeURL, masterURL, wrappedURL) => {
   let _project = [];
   let derivatives = await fetchOrderTokens(exchangeURL, masterURL, wrappedURL);
-  console.log("DerivativesIDs", derivatives);
   let projects = await fetchProjectIDForDerivatives(
     derivatives,
     exchangeURL,
     masterURL,
     wrappedURL
   );
-  console.log("ProjectIDs", projects);
 
   const client = new ApolloClient({
     uri: masterURL,

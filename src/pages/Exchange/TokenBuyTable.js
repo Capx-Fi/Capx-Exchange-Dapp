@@ -45,37 +45,38 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
   const { active, account, chainId } = useWeb3React();
   let history = useHistory();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
       : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_USDT_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
       : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
   const exchangeURL =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? GRAPHAPIURL_EXCHANGE_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? GRAPHAPIURL_EXCHANGE_MATIC
       : GRAPHAPIURL_EXCHANGE_ETHEREUM;
   const wrappedURL =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? GRAPHAPIURL_WRAPPED_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? GRAPHAPIURL_WRAPPED_MATIC
       : GRAPHAPIURL_WRAPPED_ETHEREUM;
   const masterURL =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? GRAPHAPIURL_MASTER_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? GRAPHAPIURL_MASTER_MATIC
       : GRAPHAPIURL_MASTER_ETHEREUM;
   useEffect(() => {
     fetchListings();
+    console.log('refresh', refresh);
   }, [account, chainId, refresh]);
   const fetchListings = async () => {
     setLoading(true);
@@ -96,7 +97,6 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
   });
 
   useEffect(() => {
-    console.log(filter);
     if (filter === '' || filter === undefined) {
       setTokenList(listings);
     } else {
@@ -127,7 +127,6 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
         onRow={(record) => {
           return {
             onClick: (e) => {
-              console.log('onTableBuy', record);
               dispatch(setBuyTicker(record));
               setBalance(record.balance);
             },

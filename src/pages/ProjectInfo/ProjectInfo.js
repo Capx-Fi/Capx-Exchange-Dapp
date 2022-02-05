@@ -45,31 +45,31 @@ function ProjectInfo({ match }) {
   const [lastSellingPrice, setLastSellingPrice] = useState(0);
   const [averageSellingPrice, setAverageSellingPrice] = useState(0);
     const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-      chainId?.toString() === BSC_CHAIN_ID.toString()
+      chainId?.toString() === BSC_CHAIN_ID?.toString()
         ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
         : chainId?.toString() === MATIC_CHAIN_ID.toString()
         ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
         : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
     const CHAIN_USDT_CONTRACT_ADDRESS =
-      chainId?.toString() === BSC_CHAIN_ID.toString()
+      chainId?.toString() === BSC_CHAIN_ID?.toString()
         ? CONTRACT_ADDRESS_CAPX_USDT_BSC
         : chainId?.toString() === MATIC_CHAIN_ID.toString()
         ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
         : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
     const exchangeURL =
-      chainId?.toString() === BSC_CHAIN_ID.toString()
+      chainId?.toString() === BSC_CHAIN_ID?.toString()
         ? GRAPHAPIURL_EXCHANGE_BSC
         : chainId?.toString() === MATIC_CHAIN_ID.toString()
         ? GRAPHAPIURL_EXCHANGE_MATIC
         : GRAPHAPIURL_EXCHANGE_ETHEREUM;
     const wrappedURL =
-      chainId?.toString() === BSC_CHAIN_ID.toString()
+      chainId?.toString() === BSC_CHAIN_ID?.toString()
         ? GRAPHAPIURL_WRAPPED_BSC
         : chainId?.toString() === MATIC_CHAIN_ID.toString()
         ? GRAPHAPIURL_WRAPPED_MATIC
         : GRAPHAPIURL_WRAPPED_ETHEREUM;
     const masterURL =
-      chainId?.toString() === BSC_CHAIN_ID.toString()
+      chainId?.toString() === BSC_CHAIN_ID?.toString()
         ? GRAPHAPIURL_MASTER_BSC
         : chainId?.toString() === MATIC_CHAIN_ID.toString()
         ? GRAPHAPIURL_MASTER_MATIC
@@ -80,7 +80,6 @@ function ProjectInfo({ match }) {
   }, [match.params.ticker, active, account, chainId, refresh]);
   const getProjectDetails = async () => {
     if (active) {
-      console.log('fetching project details', match.params.ticker, masterURL);
       const _projectDetails = await fetchProjectDetails(
         match.params.ticker,
         masterURL

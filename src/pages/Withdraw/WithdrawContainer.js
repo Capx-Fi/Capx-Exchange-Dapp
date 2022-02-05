@@ -45,7 +45,7 @@ function WithdrawContainer({
   const web3 = new Web3(Web3.givenProvider);
   const { active, account, chainId } = useWeb3React();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
@@ -68,9 +68,11 @@ function WithdrawContainer({
       EXCHANGE_ABI,
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
-    console.log('tt', ticker);
     let totalTokens = ticker.quantity;
     let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 18));
+    if(ticker.assetID === "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"){
+      totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));
+    }
     let assetID = ticker.assetID;
     await withdrawToken(
       exchangeContract,

@@ -9,7 +9,11 @@ import {
   CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
   MATIC_CHAIN_ID,
 } from '../constants/config';
-
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 36],
+});
 async function fetchDerivativeIDs(projectID, wrappedURL) {
   const client = new ApolloClient({
     uri: wrappedURL,
@@ -104,7 +108,7 @@ export const fetchOrderForTicker = async (
   const web3 = new Web3(Web3.givenProvider);
   const exchangeContract = new web3.eth.Contract(
     EXCHANGE_ABI,
-    chainId?.toString() === BSC_CHAIN_ID.toString()
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
@@ -141,21 +145,16 @@ export const fetchOrderForTicker = async (
     const { data } = await client.query({
       query: gql(query),
     });
-    console.log("data", data);
     listedTokens = data.orders
       .map((order) => {
         const numOfTokens = new BigNumber(order?.amountGive)
           .dividedBy(Math.pow(10, order.tokenGiveDecimal))
-          .toNumber();
         const numReceived = new BigNumber(order?.amountSent)
           .dividedBy(Math.pow(10, order.tokenGetDecimal))
-          .toNumber();
         const numSent = new BigNumber(order?.amountReceived)
           .dividedBy(Math.pow(10, order.tokenGiveDecimal))
-          .toNumber();
         const giveTokens = new BigNumber(order?.amountGet)
           .dividedBy(Math.pow(10, order.tokenGetDecimal))
-          .toNumber();
         return {
           tradeID: order.id,
           asset: order.tokenGiveTicker,
@@ -168,10 +167,10 @@ export const fetchOrderForTicker = async (
           fulfillOrderTimestamp: convertDateToString(
             order.fulfillOrderTimestamp
           ),
-          amountGive: giveTokens - numSent,
-          amountGet: numOfTokens - numReceived,
+          amountGive: giveTokens.minus(numSent),
+          amountGet: numOfTokens.minus(numReceived),
           price: order.price,
-          quantity: numOfTokens - numReceived,
+          quantity: numOfTokens.minus(numReceived),
           completedQuantity: numOfTokens,
           expiryTimeInSeconds: order.expiryTime,
           displayExpiryDate: convertToDate(order.expiryTime),
@@ -180,11 +179,9 @@ export const fetchOrderForTicker = async (
         };
       })
       .flat();
-    console.log(listedTokens, "dededededede");
     let balance = await exchangeContract.methods
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
       .call();
-    console.log(balance, "balance");
     balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toNumber();
     listedTokens = listedTokens.map((token) => {
       return {
@@ -199,15 +196,13 @@ export const fetchOrderForTicker = async (
       return order.initiator !== account;
     });
     activeOrders = activeOrders.filter((order) => {
-      console.log(
-        order.expiryTimeInSeconds > Date.now() / 1000,
-        "order.expiryTime > Date.now()"
-      );
       return order.expiryTimeInSeconds > Date.now() / 1000;
     });
+
     const completeOrders = listedTokens.filter((order) => {
-      return order.quantity === 0;
+      return order.quantity.toString() === "0";
     });
+    console.log(completeOrders);
     // sort completed orders in descending order of date completed
     completeOrders.sort((a, b) => {
       return (
