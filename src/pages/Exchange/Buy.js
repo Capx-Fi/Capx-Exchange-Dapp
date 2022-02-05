@@ -31,6 +31,12 @@ import Web3 from 'web3';
 import WarningCard from '../../components/WarningCard/WarningCard';
 import ApproveModal from '../../components/Modals/VestAndApproveModal/ApproveModal';
 import BuyModal from '../../components/Modals/VestAndApproveModal/BuyModal';
+
+// New Import
+
+import { validateBuyAmount } from '../../utils/validateBuyAmount';
+
+
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
@@ -77,6 +83,9 @@ function BuyScreen({
   };
   const initiateSwapApproval = async () => {
     setButtonClicked(true);
+
+    console.log("My Ticker",ticker)
+    console.log(await validateBuyAmount(ticker))
 
     const vestingTokenContract = new web3.eth.Contract(
       CONTRACT_ABI_ERC20,
@@ -131,6 +140,7 @@ function BuyScreen({
       setWarningCheck(false);
     }
   }, [ticker?.amountGive]);
+  console.log("My log : ",ticker)
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
@@ -179,7 +189,7 @@ function BuyScreen({
                     setBuyTicker({
                       ...ticker,
                       amountGive: e.target.value,
-                      amountGet: e.target.value / ticker.price,
+                      amountGet: (e.target.value / ticker.price).toString(),
                     })
                   );
                 }

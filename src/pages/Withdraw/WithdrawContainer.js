@@ -32,6 +32,10 @@ import { withdrawToken } from '../../utils/withdrawToken';
 import { setWithdrawTicker } from '../../redux/actions/withdraw';
 import WithdrawModal from '../../components/Modals/VestAndApproveModal/WithdrawModal';
 
+// New Import 
+
+import { validateWithdrawAmount } from '../../utils/validateWithdrawAmount';
+
 function WithdrawContainer({
   withdrawModalOpen,
   setWithdrawModalOpen,
@@ -69,10 +73,15 @@ function WithdrawContainer({
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
     let totalTokens = ticker.quantity;
-    let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 18));
-    if(ticker.assetID === "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"){
-      totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));
-    }
+    console.log("My withdraw - ",ticker)
+    let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, ticker.tokenDecimal));
+    
+    // if(ticker.assetID === "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"){
+    //   totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));
+    // }
+    
+    console.log(await validateWithdrawAmount(ticker));
+
     let assetID = ticker.assetID;
     await withdrawToken(
       exchangeContract,

@@ -176,6 +176,8 @@ export const fetchOrderForTicker = async (
           displayExpiryDate: convertToDate(order.expiryTime),
           displayExpiryTime: convertToTime(order.expiryTime),
           expiryTime: convertDateToString(order.expiryTime),
+          derivativeDecimal : order.tokenGiveDecimal,
+          stableCoinDecimal : order.tokenGetDecimal
         };
       })
       .flat();

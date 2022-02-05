@@ -105,6 +105,7 @@ export const fetchListedTokens = async (
     const { data } = await client.query({
       query: gql(query),
     });
+    
     listedTokens = data.orders
       .map((order) => {
         const numOfTokens = new BigNumber(order?.amountGive)
@@ -115,6 +116,29 @@ export const fetchListedTokens = async (
           .dividedBy(Math.pow(10, order.tokenGiveDecimal));
         const giveTokens = new BigNumber(order?.amountGet)
           .dividedBy(Math.pow(10, order.tokenGetDecimal));
+
+        // Hacky Part
+
+        console.log("Order Data :--",order)
+
+        // Derivative
+        let amountBNGive = new BigNumber(order.amountGive)
+        
+        // USDT
+        let amountBNGet = new BigNumber(order.amountGet)
+
+        let priceBNGive = amountBNGive.dividedBy(Math.pow(10,order.tokenGiveDecimal));
+        let priceBNGet = amountBNGet.dividedBy(Math.pow(10,order.tokenGetDecimal));
+
+        // Price BN calculation
+        let priceBN = priceBNGet.dividedBy(priceBNGive);
+        
+        console.log("Price ---",priceBN.toString(10));
+
+
+        // Hacky Part Ends
+
+        
         return {
           tradeID: order.id,
           asset: order.tokenGiveTicker,
@@ -127,12 +151,16 @@ export const fetchListedTokens = async (
           amountGet: (numOfTokens.minus(numReceived)).toString(),
           maxAmountGet: (numOfTokens.minus(numReceived)).toString(),
           maxAmountGive: (giveTokens.minus(numSent)).toString(),
-          price: order.price,
+          // price: order.price,
+          // Calculation method mentioned above
+          price: priceBN.toString(10),
           quantity: (numOfTokens.minus(numReceived)).toString(),
           expiryTimeActual: order.expiryTime,
           displayExpiryDate: convertToDate(order.expiryTime),
           displayExpiryTime: convertToTime(order.expiryTime),
           expiryTime: convertDateToString(order.expiryTime),
+          derivativeDecimal : order.tokenGiveDecimal,
+          stableCoinDecimal : order.tokenGetDecimal
         };
       })
       .flat();

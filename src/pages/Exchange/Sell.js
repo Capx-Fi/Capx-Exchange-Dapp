@@ -33,6 +33,12 @@ import RefresherInput from '../../components/RefresherInput/RefresherInput';
 import WarningCard from '../../components/WarningCard/WarningCard';
 import ApproveModal from '../../components/Modals/VestAndApproveModal/ApproveModal';
 import SellModal from '../../components/Modals/VestAndApproveModal/SellModal';
+
+// New Import Helper function
+
+import { validateSellAmount } from '../../utils/validateSellAmount';
+
+
 const format = 'HH:mm';
 const currentDate = new Date();
 BigNumber.config({
@@ -80,6 +86,7 @@ function SellScreen({
   const setAmount = (e) => {
     dispatch(setSellTicker({ ...ticker, price: e }));
   };
+
   const setDate = (e) => {
     dispatch(setSellTicker({ ...ticker, expiryDate: e }));
   };
@@ -94,6 +101,11 @@ function SellScreen({
   };
   const initiateSwapApproval = async () => {
     setButtonClicked(true);
+    
+
+    // HARDCODED USDT DECIMAL VALUE
+    console.log(await validateSellAmount(ticker,"6"));
+
 
     const vestingTokenContract = new web3.eth.Contract(
       CONTRACT_ABI_ERC20,
@@ -236,6 +248,12 @@ function SellScreen({
           {ticker && BigNumber(ticker?.quantity).isGreaterThan(balance) && (
             <WarningCard
               text={`INSUFFICIENT BALANCE. BUY MORE $${ticker && ticker.asset}`}
+            />
+          )}
+          {console.log("in html",validateSellAmount(ticker,"6")["amountGiveLegal"])}
+          {validateSellAmount(ticker,"6")["amountGiveLegal"]  && validateSellAmount(ticker,"6")["USDTLegal"]  && (
+            <WarningCard
+              text={`INVALID INPUT`}
             />
           )}
           <div className="exchangeScreen_rightcontainer_buyContainer_body_splitContainer">

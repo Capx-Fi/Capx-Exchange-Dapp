@@ -42,6 +42,11 @@ import Web3 from "web3";
 import WarningCard from "../../components/WarningCard/WarningCard";
 import ApproveModal from "../../components/Modals/VestAndApproveModal/ApproveModal";
 import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
+
+// New Import
+
+import { validateBuyAmount } from '../../utils/validateBuyAmount';
+
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
@@ -84,8 +89,12 @@ function BuyScreen({
         const resetValue = () => {
           dispatch(setProjectBuyTicker(null));
         };
+         
   const initiateSwapApproval = async () => {
     setButtonClicked(true);
+
+    console.log(ticker)
+         console.log(await validateBuyAmount(ticker))
 
     const vestingTokenContract = new web3.eth.Contract(
       CONTRACT_ABI_ERC20,
@@ -109,6 +118,10 @@ function BuyScreen({
       EXCHANGE_ABI,
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
+
+    
+
+
     let totalTokens = ticker.amountGive;
     let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));
     let tradeID = ticker.tradeID;
@@ -186,7 +199,7 @@ function BuyScreen({
                     setProjectBuyTicker({
                       ...ticker,
                       amountGive: e.target.value,
-                      amountGet: e.target.value / ticker.price,
+                      amountGet: (e.target.value / ticker.price).toString(),
                     })
                   );
                 }
