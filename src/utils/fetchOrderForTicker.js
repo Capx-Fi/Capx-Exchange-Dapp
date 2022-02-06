@@ -141,6 +141,8 @@ export const fetchOrderForTicker = async (
             tokenGiveTicker
         }
     }`;
+
+  
   try {
     const { data } = await client.query({
       query: gql(query),
@@ -150,11 +152,36 @@ export const fetchOrderForTicker = async (
         const numOfTokens = new BigNumber(order?.amountGive)
           .dividedBy(Math.pow(10, order.tokenGiveDecimal))
         const numReceived = new BigNumber(order?.amountSent)
-          .dividedBy(Math.pow(10, order.tokenGetDecimal))
-        const numSent = new BigNumber(order?.amountReceived)
           .dividedBy(Math.pow(10, order.tokenGiveDecimal))
+        const numSent = new BigNumber(order?.amountReceived)
+          .dividedBy(Math.pow(10, order.tokenGetDecimal))
         const giveTokens = new BigNumber(order?.amountGet)
           .dividedBy(Math.pow(10, order.tokenGetDecimal))
+        
+          // Hacky Part
+
+          console.log("Order Data :--", order);
+
+          // Derivative
+          let amountBNGive = new BigNumber(order.amountGive);
+  
+          // USDT
+          let amountBNGet = new BigNumber(order.amountGet);
+  
+          let priceBNGive = amountBNGive.dividedBy(
+            Math.pow(10, order.tokenGiveDecimal)
+          );
+          let priceBNGet = amountBNGet.dividedBy(
+            Math.pow(10, order.tokenGetDecimal)
+          );
+  
+          // Price BN calculation
+          let priceBN = priceBNGet.dividedBy(priceBNGive);
+  
+          console.log("Price ---", priceBN.toString(10));
+
+          // Hacky Part
+
         return {
           tradeID: order.id,
           asset: order.tokenGiveTicker,
@@ -169,7 +196,9 @@ export const fetchOrderForTicker = async (
           ),
           amountGive: giveTokens.minus(numSent),
           amountGet: numOfTokens.minus(numReceived),
-          price: order.price,
+
+          // price: order.price,
+          price: priceBN,
           quantity: numOfTokens.minus(numReceived),
           completedQuantity: numOfTokens,
           expiryTimeInSeconds: order.expiryTime,
@@ -200,8 +229,9 @@ export const fetchOrderForTicker = async (
     activeOrders = activeOrders.filter((order) => {
       return order.expiryTimeInSeconds > Date.now() / 1000;
     });
-
     const completeOrders = listedTokens.filter((order) => {
+      console.log("Ord val : ",order)
+      console.log(order.quantity.toString(10))
       return order.quantity.toString() === "0";
     });
     console.log(completeOrders);

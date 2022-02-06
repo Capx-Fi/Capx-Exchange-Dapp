@@ -10,12 +10,21 @@ import TokenLink from "../../assets/token-link.svg";
 import { hideSideNav } from "../../redux/actions/sideNav";
 import useWindowSize from "../../utils/windowSize";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
+import {
+  BSC_CHAIN_ID,
+  ETHEREUM_CHAIN_ID,
+  MATIC_CHAIN_ID,
+  EXPLORER_BSC,
+  EXPLORER_MATIC,
+  EXPLORER_ETHEREUM
+} from "../../constants/config";
+import { useWeb3React } from '@web3-react/core';
 
 const { Column, ColumnGroup } = Table;
 
 function TokenActivityTable({ completeOrders }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
-
+  const { active, account, chainId } = useWeb3React();
   // useEffect(() => {
   //   console.log(filter);
   //   if (filter === "" || filter === undefined) {
@@ -27,6 +36,15 @@ function TokenActivityTable({ completeOrders }) {
   //     setTokenList(filteredList);
   //   }
   // }, [filter]);
+
+  const EXPLORER_URL =
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
+      ? EXPLORER_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? EXPLORER_MATIC
+      : EXPLORER_ETHEREUM;
+  
+
 
   function onChange(pagination, filters, sorter, extra) {
     console.log("params", pagination, filters, sorter, extra);
@@ -50,7 +68,7 @@ function TokenActivityTable({ completeOrders }) {
           return (
             <div className="flex flex-row items-center mx-auto">
               {value}
-              <a target="_blank" rel="noreferrer" href={`https://rinkeby.etherscan.io/token/${row.assetID}`} className="ml-2">
+              <a target="_blank" rel="noreferrer" href={`${EXPLORER_URL}${row.assetID}`} className="ml-2">
                 <img src={TokenLink} alt="deposit" />
               </a>
             </div>

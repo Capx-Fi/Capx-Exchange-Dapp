@@ -177,11 +177,14 @@ function WithdrawContainer({
               text={`Not enough balance on DEX! Approve the difference amount to fulfill your order.`}
             />
           )}
+          {(!checkWithdraw?.["amountWithdrawLegal"]) && (
+            <WarningCard text={`INVALID INPUT`} />
+          )}
           <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer'></div>
           <div
             onClick={() => tryWithdraw()}
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              (!ticker || disabled) &&
+              (!ticker || disabled || !checkWithdraw?.["amountWithdrawLegal"]) &&
               'pointer-events-none cursor-not-allowed opacity-50'
             }`}
           >

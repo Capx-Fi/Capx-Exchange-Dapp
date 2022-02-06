@@ -104,11 +104,12 @@ function BuyScreen({
       CONTRACT_ABI_ERC20,
       CHAIN_USDT_CONTRACT_ADDRESS
     );
-    const tokens = new BigNumber(checkBuy.stableCoinValue).minus(
-      BigNumber(ticker?.balance).multipliedBy(
-        Math.pow(10, ticker?.stableCoinDecimal)
-      )
-    );
+    const tokens = new BigNumber(checkBuy.stableCoinValue);
+    // const tokens = new BigNumber(checkBuy.stableCoinValue).minus(
+    //   BigNumber(ticker?.balance).multipliedBy(
+    //     Math.pow(10, ticker?.stableCoinDecimal)
+    //   )
+    // );
     const tokenDecimal = ticker?.stableCoinDecimal;
     await approveSellTokens(
       vestingTokenContract,
@@ -221,6 +222,9 @@ function BuyScreen({
             />
           </div>
           {warningCheck && <WarningCard text={`You don't have enough USDT`} />}
+          {(!checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) && (
+            <WarningCard text={`INVALID INPUT`} />
+          )}
           <div className="exchangeScreen_rightcontainer_buyContainer_body_separator">
             <div className="exchangeScreen_rightcontainer_buyContainer_body_separator_line w-7/12"></div>
             <div className="exchangeScreen_rightcontainer_buyContainer_body_separator_iconContainer w-2/12">
@@ -281,7 +285,7 @@ function BuyScreen({
                 : initiateSwapApproval()
             }
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              (!ticker || disabled) &&
+              (!ticker || disabled || !checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) &&
               "pointer-events-none cursor-not-allowed opacity-50"
             }`}
           >

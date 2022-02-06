@@ -224,6 +224,9 @@ function BuyScreen({
               text={`Not enough balance on DEX! Approve the difference amount to fulfill your order.`}
             />
           )}
+          {(!checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) && (
+            <WarningCard text={`INVALID INPUT`} />
+          )}
           <div className='exchangeScreen_rightcontainer_buyContainer_body_separator'>
             <div className='exchangeScreen_rightcontainer_buyContainer_body_separator_line w-7/12'></div>
             <div className='exchangeScreen_rightcontainer_buyContainer_body_separator_iconContainer w-2/12'>
@@ -284,7 +287,7 @@ function BuyScreen({
                 : initiateSwapApproval()
             }
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              (!ticker || disabled) &&
+              (!ticker || disabled || !checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) &&
               'pointer-events-none cursor-not-allowed opacity-50'
             }`}
           >
