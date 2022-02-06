@@ -57,6 +57,7 @@ function WithdrawContainer({
   const [withdrawModalStatus, setWithdrawModalStatus] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [checkWithdraw, setCheckWithdraw] = useState({});
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const [warningCheck, setWarningCheck] = useState(false);
@@ -67,6 +68,11 @@ function WithdrawContainer({
   const resetValue = () => {
     dispatch(setWithdrawTicker(null));
   };
+    const checkValidWithdraw = async () => {
+      const checkValidity = await validateWithdrawAmount(ticker);
+      console.log(checkValidity);
+      setCheckWithdraw(checkValidity);
+    };
   const tryWithdraw = async () => {
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
@@ -99,6 +105,9 @@ function WithdrawContainer({
       setRefetch(!refetch);
     }, 6000);
   };
+    useEffect(() => {
+      checkValidWithdraw();
+    }, [ticker?.quantity, ticker?.price]);
   useEffect(() => {
     if (ticker?.quantity === "" || ticker?.quantity <= 0 || ticker?.quantity === null) {
       setDisabled(true);

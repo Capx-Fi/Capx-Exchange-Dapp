@@ -14,8 +14,6 @@ import { approveSellTokens } from "../../utils/approveSellTokens";
 import { fulfillOrder } from "../../utils/fulfillOrder";
 import BigNumber from "bignumber.js";
 
-
-
 import {
   BSC_CHAIN_ID,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
@@ -45,7 +43,7 @@ import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
 
 // New Import
 
-import { validateBuyAmount } from '../../utils/validateBuyAmount';
+import { validateBuyAmount } from "../../utils/validateBuyAmount";
 
 BigNumber.config({
   ROUNDING_MODE: 3,
@@ -73,35 +71,45 @@ function BuyScreen({
   const [buyModalStatus, setBuyModalStatus] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [warningCheck, setWarningCheck] = useState(false);
-    const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-      chainId?.toString() === BSC_CHAIN_ID?.toString()
-        ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-        : chainId?.toString() === MATIC_CHAIN_ID.toString()
-        ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-        : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
-    const CHAIN_USDT_CONTRACT_ADDRESS =
-      chainId?.toString() === BSC_CHAIN_ID?.toString()
-        ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-        : chainId?.toString() === MATIC_CHAIN_ID.toString()
-        ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-        : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+  const [checkBuy, setCheckBuy] = useState({});
+
+  const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
+      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+  const CHAIN_USDT_CONTRACT_ADDRESS =
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
+      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
   const ticker = useSelector((state) => state.exchange.projectBuyTicker);
-        const resetValue = () => {
-          dispatch(setProjectBuyTicker(null));
-        };
-         
+  const resetValue = () => {
+    dispatch(setProjectBuyTicker(null));
+  };
+  const checkValidBuy = async () => {
+    const checkValidity = await validateBuyAmount(ticker);
+    console.log(checkValidity);
+    setCheckBuy(checkValidity);
+  };
   const initiateSwapApproval = async () => {
     setButtonClicked(true);
 
-    console.log(ticker)
-         console.log(await validateBuyAmount(ticker))
+    console.log(ticker);
+    console.log(await validateBuyAmount(ticker));
 
     const vestingTokenContract = new web3.eth.Contract(
       CONTRACT_ABI_ERC20,
       CHAIN_USDT_CONTRACT_ADDRESS
     );
-    const tokens = (new BigNumber(ticker.amountGive)).minus(ticker?.balance);
-    const tokenDecimal = 18;
+    const tokens = new BigNumber(checkBuy.stableCoinValue).minus(
+      BigNumber(ticker?.balance).multipliedBy(
+        Math.pow(10, ticker?.stableCoinDecimal)
+      )
+    );
+    const tokenDecimal = ticker?.stableCoinDecimal;
     await approveSellTokens(
       vestingTokenContract,
       account,
@@ -119,11 +127,8 @@ function BuyScreen({
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
 
-    
-
-
     let totalTokens = ticker.amountGive;
-    let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));
+    let totalAmount = checkBuy?.stableCoinValue;
     let tradeID = ticker.tradeID;
     await fulfillOrder(
       exchangeContract,
@@ -137,8 +142,12 @@ function BuyScreen({
     );
     setTimeout(() => {
       setRefresh(!refresh);
+      setTokenApproval(false);
     }, 6000);
   };
+  useEffect(() => {
+    checkValidBuy();
+  }, [ticker?.amountGet, ticker?.amountGive]);
   useEffect(() => {
     if (ticker?.amountGive <= 0 || ticker?.amountGet <= 0) {
       setDisabled(true);

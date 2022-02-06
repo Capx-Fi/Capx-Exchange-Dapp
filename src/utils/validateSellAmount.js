@@ -8,7 +8,7 @@ export const validateSellAmount = async (
     let returnObj = {}
     // await console.log("We HERE 1");
     // await console.log(ticker);
-    let bn_amountGive = new BigNumber(ticker.quantity).multipliedBy(Math.pow(10,Number(ticker.tokenDecimal)))
+    let bn_amountGive = new BigNumber(ticker?.quantity).multipliedBy(Math.pow(10,Number(ticker?.tokenDecimal)))
     
     // await console.log("Ticker - aG ",bn_amountGive.toString(10));
 
@@ -27,7 +27,8 @@ export const validateSellAmount = async (
 
     // using Math.pow(10,Number("6") as "6" because USDT decimal
     // USDTdecimal SHOULD BE IN STRING
-    let pmulquant = new BigNumber(ticker.quantity).multipliedBy(Math.pow(10,Number(USDTdecimal))).multipliedBy(ticker.price);
+    let pmulquant = new BigNumber(ticker?.quantity).multipliedBy(Math.pow(10,Number(USDTdecimal))).multipliedBy(ticker?.price);
+    console.log("pmulquant",pmulquant.toString(10));
     
     // await console.log("price with quant - aG2 ",pmulquant.toString(10));
     
@@ -35,7 +36,7 @@ export const validateSellAmount = async (
     
     let compareResult = pmulquant.comparedTo(new BigNumber(1));
     
-    await console.log("Comparison Result - aG3 ",compareResult);
+    console.log("Comparison Result - aG3 ",compareResult);
 
     if(compareResult > -1)
     returnObj["USDTLegal"] = true

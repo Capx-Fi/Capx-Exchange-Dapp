@@ -6,12 +6,12 @@ export const validateBuyAmount = async (
       // using Math.pow(10,Number("6") as "6" because USDT decimal
       // THIS TICKER
       // AMOUNT_GIVE ==== STABLE COIN ==== USDT
-      let USDTdecimal = ticker.stableCoinDecimal
+      let USDTdecimal = ticker?.stableCoinDecimal
     
 
     let returnObj = {}
 
-    let bn_stableCoin = new BigNumber(ticker.amountGive).multipliedBy(Math.pow(10,Number(ticker.stableCoinDecimal)))
+    let bn_stableCoin = new BigNumber(ticker?.amountGive).multipliedBy(Math.pow(10,Number(ticker?.stableCoinDecimal)))
 
     
     // await console.log("Ticker - aG ",bn_amountGive.toString(10));
@@ -31,7 +31,7 @@ export const validateBuyAmount = async (
     // AMOUNT GET IS DERIVATIVE
 
     
-    let bn_derivativeAmount = new BigNumber(ticker.amountGet).multipliedBy(Math.pow(10,Number(ticker.derivativeDecimal)));
+    let bn_derivativeAmount = new BigNumber(ticker?.amountGet).multipliedBy(Math.pow(10,Number(ticker?.derivativeDecimal)));
     // await console.log("price with quant - aG2 ",pmulquant.toString(10));
     
     // Big number comparison with big number 0
