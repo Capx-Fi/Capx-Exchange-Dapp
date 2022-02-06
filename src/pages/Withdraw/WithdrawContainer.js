@@ -80,7 +80,7 @@ function WithdrawContainer({
     );
     let totalTokens = ticker.quantity;
     console.log("My withdraw - ",ticker)
-    let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, ticker.tokenDecimal));
+    let totalAmount = checkWithdraw.amountWithdrawValue;
     
     // if(ticker.assetID === "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"){
     //   totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));

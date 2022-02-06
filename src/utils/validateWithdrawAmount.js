@@ -6,7 +6,7 @@ export const validateWithdrawAmount = async (
 
     let returnObj = {}
     
-    let bn_amountWithdraw = new BigNumber(ticker.quantity).multipliedBy(Math.pow(10,Number(ticker.tokenDecimal)))
+    let bn_amountWithdraw = new BigNumber(ticker?.quantity).multipliedBy(Math.pow(10,Number(ticker?.tokenDecimal)))
     
 
     let amountWithdrawCompare = bn_amountWithdraw.comparedTo(new BigNumber(1));
