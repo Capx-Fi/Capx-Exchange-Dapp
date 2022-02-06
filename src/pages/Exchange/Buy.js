@@ -10,6 +10,7 @@ import NextIcon from '../../assets/next-black.svg';
 import { setBuyTicker } from '../../redux/actions/exchange';
 import RefresherInput from '../../components/RefresherInput/RefresherInput';
 import { EXCHANGE_ABI } from '../../contracts/ExchangeContract';
+import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
 import { approveSellTokens } from '../../utils/approveSellTokens';
 import { fulfillOrder } from '../../utils/fulfillOrder';
 import BigNumber from 'bignumber.js';
@@ -24,13 +25,18 @@ import {
   CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
   CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
 } from "../../constants/config";
-import { CONTRACT_ABI_ERC20 } from '../../contracts/SampleERC20';
 import { useWeb3React } from '@web3-react/core';
 
 import Web3 from 'web3';
 import WarningCard from '../../components/WarningCard/WarningCard';
 import ApproveModal from '../../components/Modals/VestAndApproveModal/ApproveModal';
 import BuyModal from '../../components/Modals/VestAndApproveModal/BuyModal';
+
+// New Import
+
+import { validateBuyAmount } from '../../utils/validateBuyAmount';
+
+
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
@@ -65,26 +71,43 @@ function BuyScreen({
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
       : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+    const tokenGetInst = new web3.eth.Contract(
+      CONTRACT_ABI_ERC20,
+      CHAIN_USDT_CONTRACT_ADDRESS
+    );
+
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [approveModalStatus, setApproveModalStatus] = useState('');
   const [buyModalStatus, setBuyModalStatus] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [warningCheck, setWarningCheck] = useState(false);
+  const [checkBuy, setCheckBuy] = useState({});
+
   const ticker = useSelector((state) => state.exchange.buyTicker);
+
   const resetValue = () => {
     dispatch(setBuyTicker(null));
   };
+    const checkValidBuy = async () => {
+      const checkValidity = await validateBuyAmount(ticker);
+      console.log(checkValidity);
+      setCheckBuy(checkValidity);
+    };
   const initiateSwapApproval = async () => {
     setButtonClicked(true);
+
+    console.log(await validateBuyAmount(ticker))
 
     const vestingTokenContract = new web3.eth.Contract(
       CONTRACT_ABI_ERC20,
       CHAIN_USDT_CONTRACT_ADDRESS
     );
 
-    const tokens = (new BigNumber(ticker.amountGive)).minus(ticker?.balance);
-    const tokenDecimal = 18;
+    const tokens = new BigNumber(checkBuy.stableCoinValue).minus(
+      BigNumber(ticker?.balance).multipliedBy(Math.pow(10, ticker?.stableCoinDecimal))
+    );
+    const tokenDecimal = ticker?.stableCoinDecimal;
     await approveSellTokens(
       vestingTokenContract,
       account,
@@ -102,7 +125,7 @@ function BuyScreen({
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
     let totalTokens = ticker.amountGive;
-    let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));
+    let totalAmount = checkBuy?.stableCoinValue;
     let tradeID = ticker.tradeID;
     await fulfillOrder(
       exchangeContract,
@@ -115,10 +138,14 @@ function BuyScreen({
       resetValue
     );
     setTimeout(() => {
+      setTokenApproval(false);
       setRefresh(!refresh);
     }, 6000);
 
   };
+    useEffect(() => {
+      checkValidBuy();
+    }, [ticker?.amountGet, ticker?.amountGive]);
   useEffect(() => {
     if (ticker?.amountGive <= 0 || ticker?.amountGet <= 0) {
       setDisabled(true);
@@ -131,6 +158,7 @@ function BuyScreen({
       setWarningCheck(false);
     }
   }, [ticker?.amountGive]);
+  console.log("My log : ",ticker)
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
@@ -179,7 +207,7 @@ function BuyScreen({
                     setBuyTicker({
                       ...ticker,
                       amountGive: e.target.value,
-                      amountGet: e.target.value / ticker.price,
+                      amountGet: (e.target.value / ticker.price).toString(),
                     })
                   );
                 }
@@ -195,6 +223,9 @@ function BuyScreen({
             <WarningCard
               text={`Not enough balance on DEX! Approve the difference amount to fulfill your order.`}
             />
+          )}
+          {(!checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) && (
+            <WarningCard text={`INVALID INPUT`} />
           )}
           <div className='exchangeScreen_rightcontainer_buyContainer_body_separator'>
             <div className='exchangeScreen_rightcontainer_buyContainer_body_separator_line w-7/12'></div>
@@ -256,7 +287,7 @@ function BuyScreen({
                 : initiateSwapApproval()
             }
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              (!ticker || disabled) &&
+              (!ticker || disabled || !checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) &&
               'pointer-events-none cursor-not-allowed opacity-50'
             }`}
           >

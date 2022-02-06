@@ -60,9 +60,12 @@ export const fetchProjectDetails = async (tokenAddress, masterURL) => {
       const res = await fetch(
         `https://milliondollarhomepage.mypinata.cloud/ipfs/${data.projects[0].projectDocHash}`
       );
+      await console.log("Res response",res)
       const desc = await res.json();
-      description = desc.description;
+      description = await desc.description;
+      await console.log(desc)
     } catch (error) {
+      description = "N/A";
       console.log(error);
     }
     listedTokens = { ...data.projects[0], projectDescription: description };

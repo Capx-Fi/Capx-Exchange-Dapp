@@ -32,6 +32,10 @@ import { withdrawToken } from '../../utils/withdrawToken';
 import { setWithdrawTicker } from '../../redux/actions/withdraw';
 import WithdrawModal from '../../components/Modals/VestAndApproveModal/WithdrawModal';
 
+// New Import 
+
+import { validateWithdrawAmount } from '../../utils/validateWithdrawAmount';
+
 function WithdrawContainer({
   withdrawModalOpen,
   setWithdrawModalOpen,
@@ -53,6 +57,7 @@ function WithdrawContainer({
   const [withdrawModalStatus, setWithdrawModalStatus] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [checkWithdraw, setCheckWithdraw] = useState({});
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const [warningCheck, setWarningCheck] = useState(false);
@@ -63,16 +68,24 @@ function WithdrawContainer({
   const resetValue = () => {
     dispatch(setWithdrawTicker(null));
   };
+    const checkValidWithdraw = async () => {
+      const checkValidity = await validateWithdrawAmount(ticker);
+      console.log(checkValidity);
+      setCheckWithdraw(checkValidity);
+    };
   const tryWithdraw = async () => {
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
     let totalTokens = ticker.quantity;
-    let totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 18));
-    if(ticker.assetID === "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"){
-      totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));
-    }
+    console.log("My withdraw - ",ticker)
+    let totalAmount = checkWithdraw.amountWithdrawValue;
+    
+    // if(ticker.assetID === "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"){
+    //   totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));
+    // }
+
     let assetID = ticker.assetID;
     await withdrawToken(
       exchangeContract,
@@ -90,6 +103,9 @@ function WithdrawContainer({
       setRefetch(!refetch);
     }, 6000);
   };
+    useEffect(() => {
+      checkValidWithdraw();
+    }, [ticker?.quantity, ticker?.price]);
   useEffect(() => {
     if (ticker?.quantity === "" || ticker?.quantity <= 0 || ticker?.quantity === null) {
       setDisabled(true);
@@ -161,11 +177,14 @@ function WithdrawContainer({
               text={`Not enough balance on DEX! Approve the difference amount to fulfill your order.`}
             />
           )}
+          {(!checkWithdraw?.["amountWithdrawLegal"]) && (
+            <WarningCard text={`INVALID INPUT`} />
+          )}
           <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer'></div>
           <div
             onClick={() => tryWithdraw()}
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              (!ticker || disabled) &&
+              (!ticker || disabled || !checkWithdraw?.["amountWithdrawLegal"]) &&
               'pointer-events-none cursor-not-allowed opacity-50'
             }`}
           >

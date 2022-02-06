@@ -13,6 +13,7 @@ import { fetchContractBalances } from "../../utils/fetchContractBalances";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 import { fetchProjectID } from "../../utils/fetchProjectDetails";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
+import { CONTRACT_ABI_ERC20 } from '../../contracts/SampleERC20';
 import {
   BSC_CHAIN_ID,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
@@ -43,6 +44,7 @@ BigNumber.config({
   DECIMAL_PLACES: 18,
   EXPONENTIAL_AT: [-18, 36],
 });
+
 
 const { Column } = Table;
 
@@ -88,6 +90,9 @@ function WithdrawTokenTable({ filter, refetch }) {
     EXCHANGE_ABI,
     CHAIN_EXCHANGE_CONTRACT_ADDRESS
   );
+
+  
+
   useEffect(() => {
     fetchPortfolioHoldings();
   }, [account, chainId, refetch]);
@@ -102,22 +107,37 @@ function WithdrawTokenTable({ filter, refetch }) {
     const holdings = await fetchContractBalances(
       account.toString(),
       exchangeURL,
-      wrappedURL
+      wrappedURL,
+      chainId
     );
     let balance = await exchangeContract.methods
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
       .call();
-    balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toString();
+
+
+    
+      const stableCoinContract = new web3.eth.Contract(
+        CONTRACT_ABI_ERC20,
+        CHAIN_USDT_CONTRACT_ADDRESS
+      );
+
+      let stableCoinDecimal = await stableCoinContract.methods.decimals().call();
+      let stableCoinSymbol = await stableCoinContract.methods.symbol().call();
+      
+    // HARDCODING FOR USDT MATIC AT THE MOMENT... Need a cleaner fix
+
+    balance = new BigNumber(balance).dividedBy(Math.pow(10, stableCoinDecimal)).toString();
     // make a USDT object and add it to the holdings
     const usdt = {
-      asset: "USDT",
+      asset: stableCoinSymbol,
       balance: balance,
       quantity: balance,
       price: null,
-      tokenDecimal: 18,
+      tokenDecimal: stableCoinDecimal,
       isContract: true,
       assetID: CHAIN_USDT_CONTRACT_ADDRESS,
     };
+    console.log("My Holdings - ",holdings)
     holdings.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
