@@ -1,6 +1,9 @@
 import BigNumber from "bignumber.js";
 import { time } from "highcharts";
 import moment from "moment";
+import { CONTRACT_ABI_ERC20 } from "../contracts/SampleERC20";
+import Web3 from "web3";
+
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
@@ -35,18 +38,28 @@ export const createOrder = async (
   setSellNull
 ) => {
   setSellModalOpen(true);
+  const web3 = new Web3(Web3.givenProvider);
+
   let totalAmount = new BigNumber(ticker.quantity).multipliedBy(
     Math.pow(10, ticker.tokenDecimal)
   );
+  const tokenInst = new web3.eth.Contract(
+    CONTRACT_ABI_ERC20,
+    CHAIN_USDT_CONTRACT_ADDRESS
+  );
+  const tokenSymbol = await tokenInst.methods.symbol().call();
+  console.log(tokenSymbol, "tokenSymbol");
+  const USDTTokenDecimal = await tokenInst.methods.decimals().call();
   let tokenGive = ticker.assetID;
   let amountGive = totalAmount;
   let tokenGet = CHAIN_USDT_CONTRACT_ADDRESS;
   let amountGet = new BigNumber(
     totalAmount.multipliedBy(ticker.price)
-  ).multipliedBy(Math.pow(10, 6));
+  ).multipliedBy(Math.pow(10, USDTTokenDecimal));
   amountGet = new BigNumber(
     amountGet.dividedBy(Math.pow(10, ticker.tokenDecimal))
   );
+  amountGet = amountGet.toFixed(USDTTokenDecimal,1);
   let expiryTime = ticker.expiryTime;
   let expiryDate = ticker.expiryDate;
   let totalExpiryTime = convert(expiryDate) + convertToSeconds(expiryTime);

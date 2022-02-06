@@ -107,7 +107,7 @@ function SellScreen({
       CONTRACT_ABI_ERC20,
       CHAIN_USDT_CONTRACT_ADDRESS
     );
-    let tokens = (new BigNumber(ticker.quantity).minus(ticker.balance).plus(0.1)).toString();
+    let tokens = (new BigNumber(ticker.quantity).minus(ticker.balance)).toString();
     const tokenDecimal = ticker.tokenDecimal;
     await approveSellTokens(
       vestingTokenContract,

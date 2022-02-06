@@ -1,4 +1,9 @@
 import BigNumber from 'bignumber.js';
+BigNumber.config({
+  ROUNDING_MODE: 3,
+  DECIMAL_PLACES: 18,
+  EXPONENTIAL_AT: [-18, 36],
+});
 export const approveSellTokens = async (
   vestingTokenContract,
   account,
@@ -29,18 +34,20 @@ export const approveSellTokens = async (
   }
   if (approvedAmount) {
     approvedAmount = new BigNumber(approvedAmount);
-    if (approvedAmount.dividedBy(Math.pow(10, 6)).toString(10) === '0') {
+    if (
+      approvedAmount.dividedBy(Math.pow(10, tokenDecimal)).toString(10) === "0"
+    ) {
       try {
         approveResult = await vestingTokenContract.methods
           .approve(EXCHANGE_CONTRACT_ADDRESS, sendAmount)
           .send({ from: account });
       } catch (err) {
-        setApproveModalStatus('failure');
+        setApproveModalStatus("failure");
         // enqueueSnackbar("Token Approval Failed!", { variant: "error" });
         console.log(err);
       }
       if (approveResult) {
-        setApproveModalStatus('success');
+        setApproveModalStatus("success");
         // enqueueSnackbar(
         //   "Approval Successful! Please proceed to transfer the tokens.",
         //   { variant: "success" }
@@ -53,11 +60,13 @@ export const approveSellTokens = async (
         approve0Result = await vestingTokenContract.methods
           .approve(
             EXCHANGE_CONTRACT_ADDRESS,
-            new BigNumber(0).multipliedBy(Math.pow(10, 6)).toString(10)
+            new BigNumber(0)
+              .multipliedBy(Math.pow(10, tokenDecimal))
+              .toString(10)
           )
           .send({ from: account });
       } catch (err) {
-        setApproveModalStatus('failure');
+        setApproveModalStatus("failure");
         // enqueueSnackbar("Token Approval Failed!", { variant: "error" });
         console.log(err);
       }
@@ -67,12 +76,12 @@ export const approveSellTokens = async (
             .approve(EXCHANGE_CONTRACT_ADDRESS, sendAmount)
             .send({ from: account });
         } catch (err) {
-          setApproveModalStatus('failure');
+          setApproveModalStatus("failure");
           //   enqueueSnackbar("Token Approval Failed!", { variant: "error" });
           console.log(err);
         }
         if (approveResult) {
-          setApproveModalStatus('success');
+          setApproveModalStatus("success");
           //   enqueueSnackbar(
           //     "Approval Successful! please proceed to transfer the tokens.",
           //     {
