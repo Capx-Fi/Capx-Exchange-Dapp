@@ -192,13 +192,12 @@ function WithdrawTokenTable({ filter, refetch }) {
           dataIndex="asset"
           key="asset"
           render={(value, row) => {
+            console.log("row", row, CHAIN_USDT_CONTRACT_ADDRESS);
             return (
               <>
-                {row.asset === USDT_CONTRACT_ADDRESS ? (
+                {row.assetID === CHAIN_USDT_CONTRACT_ADDRESS.toString() ? (
                   <div>
-                    <p className="text-white cursor-pointer">
-                      {value}
-                    </p>
+                    <p className="text-white cursor-pointer">{value}</p>
                   </div>
                 ) : (
                   <div onClick={() => navigateProject(row.assetID)}>
