@@ -95,10 +95,10 @@ function SellScreen({
   };
 
   useEffect(() => {
-    if (approveModalStatus === 'success') {
+    if (sellModalStatus === 'success') {
       resetValue();
     }
-  }, [approveModalStatus]);
+  }, [sellModalStatus]);
 
   const setAmount = (e) => {
     dispatch(setSellTicker({ ...ticker, price: e }));

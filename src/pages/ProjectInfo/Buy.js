@@ -92,6 +92,13 @@ function BuyScreen({
         Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
         dispatch(setProjectBuyTicker({ ...nullBuyTicker }));
   };
+
+  useEffect(() => {
+    if (buyModalStatus === 'success') {
+      resetValue();
+    }
+  }, [buyModalStatus]);
+
   const checkValidBuy = async () => {
     const checkValidity = await validateBuyAmount(ticker);
     setCheckBuy(checkValidity);
@@ -223,7 +230,7 @@ function BuyScreen({
               value={ticker && ticker.amountGive}
             />
           </div>
-          {warningCheck && <WarningCard text={`You don't have enough USDT`} />}
+          {warningCheck && <WarningCard text={`You don't have enough `+ ticker.GetAsset} />}
           {(!checkBuy?.["stableCoinLegal"] ||
             !checkBuy?.["DerivativeLegal"]) && (
             <WarningCard text={`INVALID INPUT`} />
