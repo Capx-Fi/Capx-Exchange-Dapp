@@ -162,7 +162,7 @@ function BuyScreen({
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
-        !ticker && 'opacity-60 cursor-not-allowed'
+        !ticker && "opacity-60 cursor-not-allowed"
       }`}
     >
       <ApproveModal
@@ -172,29 +172,29 @@ function BuyScreen({
         setApproveModalStatus={setApproveModalStatus}
       />
       <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus} />
-      <div className='exchangeScreen_rightcontainer_buyContainer'>
-        <div className='exchangeScreen_rightcontainer_buyContainer_header'>
-          <div className='exchangeScreen_rightcontainer_buyContainer_header_title'>
+      <div className="exchangeScreen_rightcontainer_buyContainer">
+        <div className="exchangeScreen_rightcontainer_buyContainer_header">
+          <div className="exchangeScreen_rightcontainer_buyContainer_header_title">
             <img
-              className='exchangeScreen_rightcontainer_buyContainer_header_title_icon'
+              className="exchangeScreen_rightcontainer_buyContainer_header_title_icon"
               src={BuyIcon}
-              alt='buy icon'
+              alt="buy icon"
             />
-            <p className='exchangeScreen_rightcontainer_buyContainer_header_title_text'>
-              BUY {ticker ? ' - ' + ticker.asset : ''}
+            <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
+              BUY {ticker ? " - " + ticker.asset : ""}
             </p>
           </div>
         </div>
-        <div className='exchangeScreen_rightcontainer_buyContainer_body'>
-          <div className='exchangeScreen_rightcontainer_buyContainer_body_payContainer'>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_payContainer_title'>
-              YOU PAY {ticker && ': USDT'}
+        <div className="exchangeScreen_rightcontainer_buyContainer_body">
+          <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer">
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer_title">
+              YOU PAY {ticker && ": USDT"}
             </div>
             <RefresherInput
               ticker={ticker}
               disabled={!ticker}
               setTicker={(e) => {
-                if (e.target.value / ticker.price > ticker?.maxAmountGet) {
+                if ((BigNumber(e.target.value).dividedBy(ticker.price)).isGreaterThan(ticker?.maxAmountGet)) {
                   dispatch(
                     setBuyTicker({
                       ...ticker,
@@ -224,23 +224,24 @@ function BuyScreen({
               text={`Not enough balance on DEX! Approve the difference amount to fulfill your order.`}
             />
           )}
-          {(!checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) && (
+          {(!checkBuy?.["stableCoinLegal"] ||
+            !checkBuy?.["DerivativeLegal"]) && (
             <WarningCard text={`INVALID INPUT`} />
           )}
-          <div className='exchangeScreen_rightcontainer_buyContainer_body_separator'>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_separator_line w-7/12'></div>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_separator_iconContainer w-2/12'>
+          <div className="exchangeScreen_rightcontainer_buyContainer_body_separator">
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_separator_line w-7/12"></div>
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_separator_iconContainer w-2/12">
               <img
-                className='exchangeScreen_rightcontainer_buyContainer_body_separator_iconContainer_icon'
+                className="exchangeScreen_rightcontainer_buyContainer_body_separator_iconContainer_icon"
                 src={SwapIcon}
-                alt='swap icon'
+                alt="swap icon"
               />
             </div>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_separator_line w-3/12'></div>
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_separator_line w-3/12"></div>
           </div>
-          <div className='exchangeScreen_rightcontainer_buyContainer_body_payContainer'>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_payContainer_title'>
-              YOU RECEIVE {ticker && ': ' + ticker.asset}
+          <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer">
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer_title">
+              YOU RECEIVE {ticker && ": " + ticker.asset}
             </div>
             <RefresherInput
               icon={ticker && LockIcon}
@@ -250,7 +251,9 @@ function BuyScreen({
               balance={null}
               value={ticker && ticker.amountGet}
               setTicker={(e) => {
-                if (e.target.value > ticker?.maxAmountGet) {
+                if (
+                  BigNumber(e.target.value).isGreaterThan(ticker?.maxAmountGet)
+                ) {
                   dispatch(
                     setBuyTicker({
                       ...ticker,
@@ -270,40 +273,49 @@ function BuyScreen({
               }}
             />
           </div>
-          <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer'>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_date'>
-              {' '}
+          <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer">
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_date">
+              {" "}
               EXPIRY DATE: {ticker?.displayExpiryDate}
             </div>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_time'>
-              {' '}
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer_time">
+              {" "}
               EXPIRY TIME: {ticker?.displayExpiryTime}
             </div>
           </div>
           <div
             onClick={() =>
-              tokenApproval || ticker?.balance - ticker?.amountGive >= 0
+              tokenApproval ||
+              BigNumber(ticker?.balance)
+                .minus(ticker?.amountGive)
+                .isGreaterThan(0)
                 ? finalizeSwap()
                 : initiateSwapApproval()
             }
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              (!ticker || disabled || !checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) &&
-              'pointer-events-none cursor-not-allowed opacity-50'
+              (!ticker ||
+                disabled ||
+                !checkBuy?.["stableCoinLegal"] ||
+                !checkBuy?.["DerivativeLegal"]) &&
+              "pointer-events-none cursor-not-allowed opacity-50"
             }`}
           >
             <div
               className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton_title`}
             >
-              {tokenApproval || ticker?.balance - ticker?.amountGive >= 0
-                ? 'SWAP TOKENS'
-                : 'APPROVE TOKENS'}
+              {tokenApproval ||
+              BigNumber(ticker?.balance)
+                .minus(ticker?.amountGive)
+                .isGreaterThan(0)
+                ? "SWAP TOKENS"
+                : "APPROVE TOKENS"}
             </div>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_swapButton_icon'>
-              <img src={NextIcon} alt='next icon' />
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_swapButton_icon">
+              <img src={NextIcon} alt="next icon" />
             </div>
           </div>
         </div>
-        <div className='exchangeScreen_rightcontainer_buyContainer_footer'></div>
+        <div className="exchangeScreen_rightcontainer_buyContainer_footer"></div>
       </div>
     </div>
   );

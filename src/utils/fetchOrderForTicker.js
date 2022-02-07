@@ -1,14 +1,15 @@
-import { ApolloClient, InMemoryCache, gql, cache } from '@apollo/client';
-import BigNumber from 'bignumber.js';
-import Web3 from 'web3';
-import { EXCHANGE_ABI } from '../contracts/ExchangeContract';
+import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
+import BigNumber from "bignumber.js";
+import Web3 from "web3";
+import { EXCHANGE_ABI } from "../contracts/ExchangeContract";
+import { CONTRACT_ABI_ERC20 } from "../contracts/SampleERC20";
 import {
   BSC_CHAIN_ID,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
   MATIC_CHAIN_ID,
-} from '../constants/config';
+} from "../constants/config";
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
@@ -50,18 +51,18 @@ async function fetchDerivativeIDs(projectID, wrappedURL) {
 function convertDateToString(timestamp) {
   const unixTime = timestamp;
   const date = new Date(unixTime * 1000);
-  let unlockDay = date.toLocaleDateString('en-US', {
-    day: 'numeric',
+  let unlockDay = date.toLocaleDateString("en-US", {
+    day: "numeric",
   });
-  let unlockMonth = date.toLocaleDateString('en-US', {
-    month: 'long',
+  let unlockMonth = date.toLocaleDateString("en-US", {
+    month: "long",
   });
-  let unlockYear = date.toLocaleDateString('en-US', {
-    year: 'numeric',
+  let unlockYear = date.toLocaleDateString("en-US", {
+    year: "numeric",
   });
-  let time = date.toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
+  let time = date.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
   });
   let displayGraphDate = `${unlockDay} ${unlockMonth}, ${unlockYear} ${time}`;
   return displayGraphDate;
@@ -69,14 +70,14 @@ function convertDateToString(timestamp) {
 function convertToDate(timestamp) {
   const unixTime = timestamp;
   const date = new Date(unixTime * 1000);
-  let unlockDay = date.toLocaleDateString('en-US', {
-    day: 'numeric',
+  let unlockDay = date.toLocaleDateString("en-US", {
+    day: "numeric",
   });
-  let unlockMonth = date.toLocaleDateString('en-US', {
-    month: 'long',
+  let unlockMonth = date.toLocaleDateString("en-US", {
+    month: "long",
   });
-  let unlockYear = date.toLocaleDateString('en-US', {
-    year: 'numeric',
+  let unlockYear = date.toLocaleDateString("en-US", {
+    year: "numeric",
   });
   let displayGraphDate = `${unlockDay} ${unlockMonth}, ${unlockYear}`;
   return displayGraphDate;
@@ -85,9 +86,9 @@ function convertToDate(timestamp) {
 function convertToTime(timestamp) {
   const unixTime = timestamp;
   const date = new Date(unixTime * 1000);
-  let time = date.toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
+  let time = date.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
   });
   let displayGraphDate = `${time}`;
   return displayGraphDate;
@@ -142,45 +143,48 @@ export const fetchOrderForTicker = async (
         }
     }`;
 
-  
   try {
     const { data } = await client.query({
       query: gql(query),
     });
     listedTokens = data.orders
       .map((order) => {
-        const numOfTokens = new BigNumber(order?.amountGive)
-          .dividedBy(Math.pow(10, order.tokenGiveDecimal))
-        const numReceived = new BigNumber(order?.amountSent)
-          .dividedBy(Math.pow(10, order.tokenGiveDecimal))
-        const numSent = new BigNumber(order?.amountReceived)
-          .dividedBy(Math.pow(10, order.tokenGetDecimal))
-        const giveTokens = new BigNumber(order?.amountGet)
-          .dividedBy(Math.pow(10, order.tokenGetDecimal))
-        
-          // Hacky Part
+        const numOfTokens = new BigNumber(order?.amountGive).dividedBy(
+          Math.pow(10, order.tokenGiveDecimal)
+        );
+        const numReceived = new BigNumber(order?.amountSent).dividedBy(
+          Math.pow(10, order.tokenGiveDecimal)
+        );
+        const numSent = new BigNumber(order?.amountReceived).dividedBy(
+          Math.pow(10, order.tokenGetDecimal)
+        );
+        const giveTokens = new BigNumber(order?.amountGet).dividedBy(
+          Math.pow(10, order.tokenGetDecimal)
+        );
 
-          console.log("Order Data :--", order);
+        // Hacky Part
 
-          // Derivative
-          let amountBNGive = new BigNumber(order.amountGive);
-  
-          // USDT
-          let amountBNGet = new BigNumber(order.amountGet);
-  
-          let priceBNGive = amountBNGive.dividedBy(
-            Math.pow(10, order.tokenGiveDecimal)
-          );
-          let priceBNGet = amountBNGet.dividedBy(
-            Math.pow(10, order.tokenGetDecimal)
-          );
-  
-          // Price BN calculation
-          let priceBN = priceBNGet.dividedBy(priceBNGive);
-  
-          console.log("Price ---", priceBN.toString(10));
+        console.log("Order Data :--", order);
 
-          // Hacky Part
+        // Derivative
+        let amountBNGive = new BigNumber(order.amountGive);
+
+        // USDT
+        let amountBNGet = new BigNumber(order.amountGet);
+
+        let priceBNGive = amountBNGive.dividedBy(
+          Math.pow(10, order.tokenGiveDecimal)
+        );
+        let priceBNGet = amountBNGet.dividedBy(
+          Math.pow(10, order.tokenGetDecimal)
+        );
+
+        // Price BN calculation
+        let priceBN = priceBNGet.dividedBy(priceBNGive);
+
+        console.log("Price ---", priceBN.toString(10));
+
+        // Hacky Part
 
         return {
           tradeID: order.id,
@@ -205,15 +209,25 @@ export const fetchOrderForTicker = async (
           displayExpiryDate: convertToDate(order.expiryTime),
           displayExpiryTime: convertToTime(order.expiryTime),
           expiryTime: convertDateToString(order.expiryTime),
-          derivativeDecimal : order.tokenGiveDecimal,
-          stableCoinDecimal : order.tokenGetDecimal
+          derivativeDecimal: order.tokenGiveDecimal,
+          stableCoinDecimal: order.tokenGetDecimal,
         };
       })
       .flat();
+    const web3 = new Web3(Web3.givenProvider);
+    const tokenInst = new web3.eth.Contract(
+      CONTRACT_ABI_ERC20,
+      CHAIN_USDT_CONTRACT_ADDRESS
+    );
+    const tokenSymbol = await tokenInst.methods.symbol().call();
+    console.log(tokenSymbol, "tokenSymbol");
+    const USDTTokenDecimal = await tokenInst.methods.decimals().call();
     let balance = await exchangeContract.methods
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
       .call();
-    balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toNumber();
+    balance = new BigNumber(balance)
+      .dividedBy(Math.pow(10, USDTTokenDecimal))
+      .toNumber();
     listedTokens = listedTokens.map((token) => {
       return {
         ...token,
@@ -230,8 +244,8 @@ export const fetchOrderForTicker = async (
       return order.expiryTimeInSeconds > Date.now() / 1000;
     });
     const completeOrders = listedTokens.filter((order) => {
-      console.log("Ord val : ",order)
-      console.log(order.quantity.toString(10))
+      console.log("Ord val : ", order);
+      console.log(order.quantity.toString(10));
       return order.quantity.toString() === "0";
     });
     console.log(completeOrders);
@@ -245,17 +259,17 @@ export const fetchOrderForTicker = async (
     let average_price = 0;
     let total_quantity = 0;
     let total_price = 0;
-    let last_price=0;
-    if(completeOrders?.length>0){
-    completeOrders.forEach((order) => {
-      total_quantity += order.completedQuantity;
-      total_price += order.price * order.completedQuantity;
-    });
-    average_price = total_price / total_quantity;
+    let last_price = 0;
+    if (completeOrders?.length > 0) {
+      completeOrders.forEach((order) => {
+        total_quantity += order.completedQuantity;
+        total_price += order.price * order.completedQuantity;
+      });
+      average_price = total_price / total_quantity;
 
-    last_price = completeOrders[0].price;
-    average_price = parseFloat(average_price).toFixed(2);
-    last_price = parseFloat(last_price).toFixed(2);
+      last_price = completeOrders[0].price;
+      average_price = parseFloat(average_price).toFixed(2);
+      last_price = parseFloat(last_price).toFixed(2);
     }
     setAverageSellingPrice(average_price);
     setLastSellingPrice(last_price);

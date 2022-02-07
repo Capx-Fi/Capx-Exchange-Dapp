@@ -196,7 +196,11 @@ function BuyScreen({
               ticker={ticker}
               disabled={!ticker}
               setTicker={(e) => {
-                if (e.target.value / ticker.price > ticker?.maxAmountGet) {
+                if (
+                  BigNumber(e.target.value)
+                    .dividedBy(ticker.price)
+                    .isGreaterThan(ticker?.maxAmountGet)
+                ) {
                   dispatch(
                     setProjectBuyTicker({
                       ...ticker,
@@ -222,7 +226,8 @@ function BuyScreen({
             />
           </div>
           {warningCheck && <WarningCard text={`You don't have enough USDT`} />}
-          {(!checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) && (
+          {(!checkBuy?.["stableCoinLegal"] ||
+            !checkBuy?.["DerivativeLegal"]) && (
             <WarningCard text={`INVALID INPUT`} />
           )}
           <div className="exchangeScreen_rightcontainer_buyContainer_body_separator">
@@ -248,7 +253,9 @@ function BuyScreen({
               balance={null}
               value={ticker && ticker.amountGet}
               setTicker={(e) => {
-                if (e.target.value > ticker?.maxAmountGet) {
+                if (
+                  BigNumber(e.target.value).isGreaterThan(ticker?.maxAmountGet)
+                ) {
                   dispatch(
                     setProjectBuyTicker({
                       ...ticker,
@@ -280,19 +287,28 @@ function BuyScreen({
           </div>
           <div
             onClick={() =>
-              tokenApproval || ticker?.balance - ticker?.amountGive >= 0
+              tokenApproval ||
+              BigNumber(ticker?.balance)
+                .minus(ticker?.amountGive)
+                .isGreaterThan(0)
                 ? finalizeSwap()
                 : initiateSwapApproval()
             }
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              (!ticker || disabled || !checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) &&
+              (!ticker ||
+                disabled ||
+                !checkBuy?.["stableCoinLegal"] ||
+                !checkBuy?.["DerivativeLegal"]) &&
               "pointer-events-none cursor-not-allowed opacity-50"
             }`}
           >
             <div
               className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton_title`}
             >
-              {tokenApproval || ticker?.balance - ticker?.amountGive >= 0
+              {tokenApproval ||
+              BigNumber(ticker?.balance)
+                .minus(ticker?.amountGive)
+                .isGreaterThan(0)
                 ? "SWAP TOKENS"
                 : "APPROVE TOKENS"}
             </div>
