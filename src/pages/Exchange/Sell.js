@@ -100,6 +100,10 @@ function SellScreen({
     }
   }, [sellModalStatus]);
 
+  useEffect(() => {
+    resetValue();
+  }, [account]);
+
   const setAmount = (e) => {
     dispatch(setSellTicker({ ...ticker, price: e }));
   };
