@@ -257,7 +257,7 @@ function SellScreen({
               alt="buy icon"
             />
             <div className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
-              SELL {(ticker?.asset !== undefined || ticker?.asset !== "") && "- " + ticker?.asset}
+              SELL {(ticker?.asset !== undefined) && "- " + ticker?.asset}
             </div>
           </div>
         </div>
