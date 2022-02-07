@@ -1,20 +1,20 @@
-import { Table } from 'antd';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './TokenListTable.scss';
+import { Table } from "antd";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import "./TokenListTable.scss";
 
-import dummyDataExchange from '../../layouts/TableLayout/dummyDataExchange.json';
-import DepositIcon from '../../assets/DepositIcon.svg';
-import $ from 'jquery';
-import { hideSideNav } from '../../redux/actions/sideNav';
-import useWindowSize from '../../utils/windowSize';
-import { useWeb3React } from '@web3-react/core';
-import { fetchListedTokens } from '../../utils/fetchListedTokens';
-import { useDispatch } from 'react-redux';
-import { setBuyTicker } from '../../redux/actions/exchange';
-import { convertToInternationalCurrencySystem } from '../../utils/convertToInternationalCurrencySystem';
-import { fetchProjectID } from '../../utils/fetchProjectDetails';
-import { useHistory } from 'react-router-dom';
+import dummyDataExchange from "../../layouts/TableLayout/dummyDataExchange.json";
+import DepositIcon from "../../assets/DepositIcon.svg";
+import $ from "jquery";
+import { hideSideNav } from "../../redux/actions/sideNav";
+import useWindowSize from "../../utils/windowSize";
+import { useWeb3React } from "@web3-react/core";
+import { fetchListedTokens } from "../../utils/fetchListedTokens";
+import { useDispatch } from "react-redux";
+import { setBuyTicker } from "../../redux/actions/exchange";
+import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
+import { fetchProjectID } from "../../utils/fetchProjectDetails";
+import { useHistory } from "react-router-dom";
 import {
   BSC_CHAIN_ID,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
@@ -34,6 +34,7 @@ import {
   GRAPHAPIURL_WRAPPED_BSC,
   GRAPHAPIURL_WRAPPED_ETHEREUM,
 } from "../../constants/config";
+import { useSelector } from "react-redux";
 
 const { Column, ColumnGroup } = Table;
 
@@ -41,6 +42,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
   const [tokenList, setTokenList] = useState([]);
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
+  const ticker = useSelector((state) => state.exchange.buyTicker);
 
   const { active, account, chainId } = useWeb3React();
   let history = useHistory();
@@ -75,8 +77,13 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
       ? GRAPHAPIURL_MASTER_MATIC
       : GRAPHAPIURL_MASTER_ETHEREUM;
   useEffect(() => {
+    let nullBuyTicker = ticker;
+    if(nullBuyTicker) {
+    Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+    dispatch(setBuyTicker({ ...nullBuyTicker }));
+    }
     fetchListings();
-    console.log('refresh', refresh);
+    console.log("refresh", refresh);
   }, [account, chainId, refresh]);
   const fetchListings = async () => {
     setLoading(true);
@@ -90,14 +97,14 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
     setTokenList(listingData);
     setLoading(false);
   };
-  $('.ant-table-row').on('click', function () {
-    var selected = $(this).hasClass('highlight');
-    $('.ant-table-row').removeClass('highlight');
-    if (!selected) $(this).addClass('highlight');
+  $(".ant-table-row").on("click", function () {
+    var selected = $(this).hasClass("highlight");
+    $(".ant-table-row").removeClass("highlight");
+    if (!selected) $(this).addClass("highlight");
   });
 
   useEffect(() => {
-    if (filter === '' || filter === undefined) {
+    if (filter === "" || filter === undefined) {
       setTokenList(listings);
     } else {
       const filteredList = listings.filter((token) => {
@@ -108,7 +115,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
   }, [filter]);
 
   function onChange(pagination, filters, sorter, extra) {
-    console.log('params', pagination, filters, sorter, extra);
+    console.log("params", pagination, filters, sorter, extra);
   }
 
   const dispatch = useDispatch();
@@ -117,11 +124,11 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
     history.push(`/info/${projectAddress}`);
   };
   return (
-    <div className='tokenListTableContainer'>
+    <div className="tokenListTableContainer">
       <Table
         dataSource={tokenList}
         pagination={false}
-        locale={{ emptyText: loading ? 'Loading Tokens...' : 'No Token Found' }}
+        locale={{ emptyText: loading ? "Loading Tokens..." : "No Token Found" }}
         scroll={{ y: 480 }}
         onChange={onChange}
         onRow={(record) => {
@@ -134,16 +141,16 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
         }}
       >
         <Column
-          title='Asset'
+          title="Asset"
           sorter={(a, b) => a.asset - b.asset}
           showSorterTooltip={false}
-          width={'22%'}
-          dataIndex='asset'
-          key='asset'
+          width={"22%"}
+          dataIndex="asset"
+          key="asset"
           render={(value, row) => {
             return (
               <div onClick={() => navigateProject(row.assetID)}>
-                <p className='text-white hover:text-primary-green-400 cursor-pointer'>
+                <p className="text-white hover:text-primary-green-400 cursor-pointer">
                   {value}
                 </p>
               </div>
@@ -151,15 +158,15 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
           }}
         />
         <Column
-          title='Price (USDT)'
-          dataIndex='price'
-          key='price'
+          title="Price (USDT)"
+          dataIndex="price"
+          key="price"
           render={(value, row) => {
             return (
               <div>
-                {new Intl.NumberFormat('en-IN', {
-                  style: 'currency',
-                  currency: 'USD',
+                {new Intl.NumberFormat("en-IN", {
+                  style: "currency",
+                  currency: "USD",
                   maximumSignificantDigits: 6,
                 }).format(Number(value))}
               </div>
@@ -167,23 +174,23 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
           }}
         />
         <Column
-          title='Quantity'
-          dataIndex='quantity'
-          key='quantity'
+          title="Quantity"
+          dataIndex="quantity"
+          key="quantity"
           render={(value, row) => {
             return <div>{convertToInternationalCurrencySystem(value)}</div>;
           }}
         />
-        <Column title='Expiry Time' dataIndex='expiryTime' key='expiryTime' />
+        <Column title="Expiry Time" dataIndex="expiryTime" key="expiryTime" />
         <Column
-          title=''
-          dataIndex='asset'
-          key='asset'
+          title=""
+          dataIndex="asset"
+          key="asset"
           render={(value, row) => {
             return (
-              <div className='border cursor-pointer border-grayLabel py-2 rounded-lg flex flex-row justify-center w-fit-content px-3 mx-auto'>
-                <img src={DepositIcon} alt='deposit' className='mr-2' />
-                <p className='text-success-color-400 uppercase font-bold text-caption-2'>
+              <div className="border cursor-pointer border-grayLabel py-2 rounded-lg flex flex-row justify-center w-fit-content px-3 mx-auto">
+                <img src={DepositIcon} alt="deposit" className="mr-2" />
+                <p className="text-success-color-400 uppercase font-bold text-caption-2">
                   BUY
                 </p>
               </div>

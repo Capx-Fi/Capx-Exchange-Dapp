@@ -8,7 +8,7 @@ import WithdrawIcon from "../../assets/DepositIcon.svg";
 
 import $ from "jquery";
 import { useWeb3React } from "@web3-react/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchContractBalances } from "../../utils/fetchContractBalances";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 import { fetchProjectID } from "../../utils/fetchProjectDetails";
@@ -52,6 +52,7 @@ const { Column } = Table;
 function WithdrawTokenTable({ filter, refetch }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
   const [portfolioHoldings, setPortfolioHoldings] = useState([]);
+  const ticker = useSelector((state) => state.withdraw.withdrawTicker);
   const { active, account, chainId } = useWeb3React();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
     chainId?.toString() === BSC_CHAIN_ID?.toString()
@@ -95,6 +96,11 @@ function WithdrawTokenTable({ filter, refetch }) {
   
 
   useEffect(() => {
+        let nullBuyTicker = ticker;
+        if (nullBuyTicker) {
+          Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+          dispatch(setWithdrawTicker({ ...nullBuyTicker }));
+        }
     fetchPortfolioHoldings();
   }, [account, chainId, refetch]);
   $(".ant-table-row").on("click", function () {

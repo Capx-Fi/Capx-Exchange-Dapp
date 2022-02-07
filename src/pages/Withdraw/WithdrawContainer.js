@@ -1,14 +1,14 @@
-import './Withdraw.scss';
-import React, { useEffect, useRef, useState } from 'react';
-import { render } from 'react-dom';
-import { hideSideNav, showSideNav } from '../../redux/actions/sideNav';
-import { useDispatch, useSelector } from 'react-redux';
-import BuyIcon from '../../assets/buy.svg';
-import NextIcon from '../../assets/next-black.svg';
-import RefresherInput from '../../components/RefresherInput/RefresherInput';
-import { EXCHANGE_ABI } from '../../contracts/ExchangeContract';
-import BigNumber from 'bignumber.js';
-import { useSnackbar } from 'notistack';
+import "./Withdraw.scss";
+import React, { useEffect, useRef, useState } from "react";
+import { render } from "react-dom";
+import { hideSideNav, showSideNav } from "../../redux/actions/sideNav";
+import { useDispatch, useSelector } from "react-redux";
+import BuyIcon from "../../assets/buy.svg";
+import NextIcon from "../../assets/next-black.svg";
+import RefresherInput from "../../components/RefresherInput/RefresherInput";
+import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
+import BigNumber from "bignumber.js";
+import { useSnackbar } from "notistack";
 
 import {
   BSC_CHAIN_ID,
@@ -21,20 +21,19 @@ import {
   GRAPHAPIURL_EXCHANGE_MATIC,
   GRAPHAPIURL_EXCHANGE_ETHEREUM,
 } from "../../constants/config";
-import { CONTRACT_ABI_ERC20 } from '../../contracts/SampleERC20';
-import { useWeb3React } from '@web3-react/core';
+import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
+import { useWeb3React } from "@web3-react/core";
 
+import Web3 from "web3";
+import WarningCard from "../../components/WarningCard/WarningCard";
+import ApproveModal from "../../components/Modals/VestAndApproveModal/ApproveModal";
+import { withdrawToken } from "../../utils/withdrawToken";
+import { setWithdrawTicker } from "../../redux/actions/withdraw";
+import WithdrawModal from "../../components/Modals/VestAndApproveModal/WithdrawModal";
 
-import Web3 from 'web3';
-import WarningCard from '../../components/WarningCard/WarningCard';
-import ApproveModal from '../../components/Modals/VestAndApproveModal/ApproveModal';
-import { withdrawToken } from '../../utils/withdrawToken';
-import { setWithdrawTicker } from '../../redux/actions/withdraw';
-import WithdrawModal from '../../components/Modals/VestAndApproveModal/WithdrawModal';
+// New Import
 
-// New Import 
-
-import { validateWithdrawAmount } from '../../utils/validateWithdrawAmount';
+import { validateWithdrawAmount } from "../../utils/validateWithdrawAmount";
 
 function WithdrawContainer({
   withdrawModalOpen,
@@ -54,7 +53,7 @@ function WithdrawContainer({
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
       : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
-  const [withdrawModalStatus, setWithdrawModalStatus] = useState('');
+  const [withdrawModalStatus, setWithdrawModalStatus] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [checkWithdraw, setCheckWithdraw] = useState({});
@@ -66,22 +65,24 @@ function WithdrawContainer({
     dispatch(setWithdrawTicker({ ...ticker, quantity: e }));
   };
   const resetValue = () => {
-    dispatch(setWithdrawTicker(null));
+    let nullBuyTicker = ticker;
+    Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+    dispatch(setWithdrawTicker({ ...nullBuyTicker }));
   };
-    const checkValidWithdraw = async () => {
-      const checkValidity = await validateWithdrawAmount(ticker);
-      console.log(checkValidity);
-      setCheckWithdraw(checkValidity);
-    };
+  const checkValidWithdraw = async () => {
+    const checkValidity = await validateWithdrawAmount(ticker);
+    console.log(checkValidity);
+    setCheckWithdraw(checkValidity);
+  };
   const tryWithdraw = async () => {
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
     let totalTokens = ticker.quantity;
-    console.log("My withdraw - ",ticker)
+    console.log("My withdraw - ", ticker);
     let totalAmount = checkWithdraw.amountWithdrawValue;
-    
+
     // if(ticker.assetID === "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"){
     //   totalAmount = new BigNumber(totalTokens).multipliedBy(Math.pow(10, 6));
     // }
@@ -103,11 +104,15 @@ function WithdrawContainer({
       setRefetch(!refetch);
     }, 6000);
   };
-    useEffect(() => {
-      checkValidWithdraw();
-    }, [ticker?.quantity, ticker?.price]);
   useEffect(() => {
-    if (ticker?.quantity === "" || ticker?.quantity <= 0 || ticker?.quantity === null) {
+    checkValidWithdraw();
+  }, [ticker?.quantity, ticker?.price]);
+  useEffect(() => {
+    if (
+      ticker?.quantity === "" ||
+      ticker?.quantity <= 0 ||
+      ticker?.quantity === null
+    ) {
       setDisabled(true);
     } else {
       setDisabled(false);
@@ -116,7 +121,7 @@ function WithdrawContainer({
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
-        !ticker && 'opacity-60 cursor-not-allowed'
+        !ticker && "opacity-60 cursor-not-allowed"
       }`}
     >
       <WithdrawModal
@@ -125,22 +130,22 @@ function WithdrawContainer({
         withdrawModalStatus={withdrawModalStatus}
         setWithdrawModalStatus={setWithdrawModalStatus}
       />
-      <div className='exchangeScreen_rightcontainer_buyContainer'>
-        <div className='exchangeScreen_rightcontainer_buyContainer_header'>
-          <div className='exchangeScreen_rightcontainer_buyContainer_header_title'>
+      <div className="exchangeScreen_rightcontainer_buyContainer">
+        <div className="exchangeScreen_rightcontainer_buyContainer_header">
+          <div className="exchangeScreen_rightcontainer_buyContainer_header_title">
             <img
-              className='exchangeScreen_rightcontainer_buyContainer_header_title_icon'
+              className="exchangeScreen_rightcontainer_buyContainer_header_title_icon"
               src={BuyIcon}
-              alt='buy icon'
+              alt="buy icon"
             />
-            <p className='exchangeScreen_rightcontainer_buyContainer_header_title_text'>
-              WITHDRAW {ticker ? ' - ' + ticker.asset : ''}
+            <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
+              WITHDRAW {ticker ? " - " + ticker.asset : ""}
             </p>
           </div>
         </div>
-        <div className='exchangeScreen_rightcontainer_buyContainer_body'>
-          <div className='exchangeScreen_rightcontainer_buyContainer_body_payContainer'>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_payContainer_title'>
+        <div className="exchangeScreen_rightcontainer_buyContainer_body">
+          <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer">
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer_title">
               Enter Withdraw Amount
             </div>
             <RefresherInput
@@ -169,7 +174,7 @@ function WithdrawContainer({
                 setQuantity(ticker?.balance);
               }}
               balance={ticker?.balance}
-              value={ticker ? ticker.quantity : ''}
+              value={ticker ? ticker.quantity : ""}
             />
           </div>
           {warningCheck && (
@@ -177,31 +182,33 @@ function WithdrawContainer({
               text={`Not enough balance on DEX! Approve the difference amount to fulfill your order.`}
             />
           )}
-          {(!checkWithdraw?.["amountWithdrawLegal"]) && (
+          {!checkWithdraw?.["amountWithdrawLegal"] && (
             <WarningCard text={`INVALID INPUT`} />
           )}
-          <div className='exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer'></div>
+          <div className="exchangeScreen_rightcontainer_buyContainer_body_expiryDetailsContainer"></div>
           <div
             onClick={() => tryWithdraw()}
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              (!ticker || disabled || !checkWithdraw?.["amountWithdrawLegal"]) &&
-              'pointer-events-none cursor-not-allowed opacity-50'
+              (!ticker ||
+                disabled ||
+                !checkWithdraw?.["amountWithdrawLegal"]) &&
+              "pointer-events-none cursor-not-allowed opacity-50"
             }`}
           >
             <div
               className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton_title ${
                 (!ticker || disabled) &&
-                'pointer-events-none cursor-not-allowed'
+                "pointer-events-none cursor-not-allowed"
               }`}
             >
               WITHDRAW TOKENS
             </div>
-            <div className='exchangeScreen_rightcontainer_buyContainer_body_swapButton_icon'>
-              <img src={NextIcon} alt='next icon' />
+            <div className="exchangeScreen_rightcontainer_buyContainer_body_swapButton_icon">
+              <img src={NextIcon} alt="next icon" />
             </div>
           </div>
         </div>
-        <div className='exchangeScreen_rightcontainer_buyContainer_footer'></div>
+        <div className="exchangeScreen_rightcontainer_buyContainer_footer"></div>
       </div>
     </div>
   );

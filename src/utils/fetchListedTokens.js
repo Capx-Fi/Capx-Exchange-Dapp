@@ -147,6 +147,10 @@ export const fetchListedTokens = async (
         // Hacky Part Ends
 
         return {
+          give: order.amountGive,
+          get: order.amountGet,
+          received: order.amountReceived,
+          sent: order.amountSent,
           tradeID: order.id,
           asset: order.tokenGiveTicker,
           assetID: order.tokenGive,
