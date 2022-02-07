@@ -144,7 +144,6 @@ function WithdrawTokenTable({ filter, refetch }) {
       isContract: true,
       assetID: CHAIN_USDT_CONTRACT_ADDRESS,
     };
-    console.log("My Holdings - ",holdings)
     holdings.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
@@ -198,7 +197,7 @@ function WithdrawTokenTable({ filter, refetch }) {
           dataIndex="asset"
           key="asset"
           render={(value, row) => {
-            console.log("row", row, CHAIN_USDT_CONTRACT_ADDRESS);
+            // console.log("row", row, CHAIN_USDT_CONTRACT_ADDRESS);
             return (
               <>
                 {row.assetID === CHAIN_USDT_CONTRACT_ADDRESS.toString() ? (

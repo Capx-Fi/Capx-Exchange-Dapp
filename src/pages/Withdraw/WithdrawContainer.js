@@ -71,7 +71,6 @@ function WithdrawContainer({
   };
   const checkValidWithdraw = async () => {
     const checkValidity = await validateWithdrawAmount(ticker);
-    console.log(checkValidity);
     setCheckWithdraw(checkValidity);
   };
   const tryWithdraw = async () => {

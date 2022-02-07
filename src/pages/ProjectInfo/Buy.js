@@ -94,15 +94,10 @@ function BuyScreen({
   };
   const checkValidBuy = async () => {
     const checkValidity = await validateBuyAmount(ticker);
-    console.log(checkValidity);
     setCheckBuy(checkValidity);
   };
   const initiateSwapApproval = async () => {
     setButtonClicked(true);
-
-    console.log(ticker);
-    console.log(await validateBuyAmount(ticker));
-
     const vestingTokenContract = new web3.eth.Contract(
       CONTRACT_ABI_ERC20,
       CHAIN_USDT_CONTRACT_ADDRESS
