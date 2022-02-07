@@ -32,6 +32,7 @@ import {
   GRAPHAPIURL_WRAPPED_MATIC,
   GRAPHAPIURL_WRAPPED_BSC,
   GRAPHAPIURL_WRAPPED_ETHEREUM,
+  USDT_CONTRACT_ADDRESS,
 } from "../../constants/config";
 import {
   setAssetBalance,
@@ -192,11 +193,21 @@ function WithdrawTokenTable({ filter, refetch }) {
           key="asset"
           render={(value, row) => {
             return (
-              <div onClick={() => navigateProject(row.assetID)}>
-                <p className="text-white hover:text-primary-green-400 cursor-pointer">
-                  {value}
-                </p>
-              </div>
+              <>
+                {row.asset === USDT_CONTRACT_ADDRESS ? (
+                  <div>
+                    <p className="text-white cursor-pointer">
+                      {value}
+                    </p>
+                  </div>
+                ) : (
+                  <div onClick={() => navigateProject(row.assetID)}>
+                    <p className="text-white hover:text-primary-green-400 cursor-pointer">
+                      {value}
+                    </p>
+                  </div>
+                )}
+              </>
             );
           }}
         />
