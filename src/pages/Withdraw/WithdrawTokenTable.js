@@ -8,11 +8,12 @@ import WithdrawIcon from "../../assets/DepositIcon.svg";
 
 import $ from "jquery";
 import { useWeb3React } from "@web3-react/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchContractBalances } from "../../utils/fetchContractBalances";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 import { fetchProjectID } from "../../utils/fetchProjectDetails";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
+import { CONTRACT_ABI_ERC20 } from '../../contracts/SampleERC20';
 import {
   BSC_CHAIN_ID,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
@@ -31,6 +32,7 @@ import {
   GRAPHAPIURL_WRAPPED_MATIC,
   GRAPHAPIURL_WRAPPED_BSC,
   GRAPHAPIURL_WRAPPED_ETHEREUM,
+  USDT_CONTRACT_ADDRESS,
 } from "../../constants/config";
 import {
   setAssetBalance,
@@ -44,11 +46,13 @@ BigNumber.config({
   EXPONENTIAL_AT: [-18, 36],
 });
 
+
 const { Column } = Table;
 
 function WithdrawTokenTable({ filter, refetch }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
   const [portfolioHoldings, setPortfolioHoldings] = useState([]);
+  const ticker = useSelector((state) => state.withdraw.withdrawTicker);
   const { active, account, chainId } = useWeb3React();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
     chainId?.toString() === BSC_CHAIN_ID?.toString()
@@ -88,7 +92,15 @@ function WithdrawTokenTable({ filter, refetch }) {
     EXCHANGE_ABI,
     CHAIN_EXCHANGE_CONTRACT_ADDRESS
   );
+
+  
+
   useEffect(() => {
+        let nullBuyTicker = ticker;
+        if (nullBuyTicker) {
+          Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+          dispatch(setWithdrawTicker({ ...nullBuyTicker }));
+        }
     fetchPortfolioHoldings();
   }, [account, chainId, refetch]);
   $(".ant-table-row").on("click", function () {
@@ -102,19 +114,33 @@ function WithdrawTokenTable({ filter, refetch }) {
     const holdings = await fetchContractBalances(
       account.toString(),
       exchangeURL,
-      wrappedURL
+      wrappedURL,
+      chainId
     );
     let balance = await exchangeContract.methods
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
       .call();
-    balance = new BigNumber(balance).dividedBy(Math.pow(10, 18)).toString();
+
+
+    
+      const stableCoinContract = new web3.eth.Contract(
+        CONTRACT_ABI_ERC20,
+        CHAIN_USDT_CONTRACT_ADDRESS
+      );
+
+      let stableCoinDecimal = await stableCoinContract.methods.decimals().call();
+      let stableCoinSymbol = await stableCoinContract.methods.symbol().call();
+      
+    // HARDCODING FOR USDT MATIC AT THE MOMENT... Need a cleaner fix
+
+    balance = new BigNumber(balance).dividedBy(Math.pow(10, stableCoinDecimal)).toString();
     // make a USDT object and add it to the holdings
     const usdt = {
-      asset: "USDT",
+      asset: stableCoinSymbol,
       balance: balance,
       quantity: balance,
       price: null,
-      tokenDecimal: 18,
+      tokenDecimal: stableCoinDecimal,
       isContract: true,
       assetID: CHAIN_USDT_CONTRACT_ADDRESS,
     };
@@ -171,12 +197,21 @@ function WithdrawTokenTable({ filter, refetch }) {
           dataIndex="asset"
           key="asset"
           render={(value, row) => {
+            // console.log("row", row, CHAIN_USDT_CONTRACT_ADDRESS);
             return (
-              <div onClick={() => navigateProject(row.assetID)}>
-                <p className="text-white hover:text-primary-green-400 cursor-pointer">
-                  {value}
-                </p>
-              </div>
+              <>
+                {row.assetID === CHAIN_USDT_CONTRACT_ADDRESS.toString() ? (
+                  <div>
+                    <p className="text-white cursor-pointer">{value}</p>
+                  </div>
+                ) : (
+                  <div onClick={() => navigateProject(row.assetID)}>
+                    <p className="text-white hover:text-primary-green-400 cursor-pointer">
+                      {value}
+                    </p>
+                  </div>
+                )}
+              </>
             );
           }}
         />

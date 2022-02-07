@@ -13,7 +13,7 @@ export const fulfillOrder = async (
   setBuyModalOpen(true);
   let result = null;
 
-
+  console.log(account,tradeID,totalAmount,);
   try {
     result = await exchangeContract.methods
       .fulFillOrder(tradeID, totalAmount)

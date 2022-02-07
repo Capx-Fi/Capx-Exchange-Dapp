@@ -36,6 +36,9 @@ import { fetchContractBalances } from "../../utils/fetchContractBalances";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 import { fetchProjectID } from "../../utils/fetchProjectDetails";
 import BigNumber from "bignumber.js";
+import moment from "moment";
+import { useSelector } from "react-redux";
+const format = "HH:mm";
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
@@ -48,6 +51,7 @@ function TokenSellTable({ filter, refresh }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
   const [portfolioHoldings, setPortfolioHoldings] = useState([]);
   const { active, account, chainId } = useWeb3React();
+  const ticker = useSelector((state) => state.exchange.sellTicker);
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
     chainId?.toString() === BSC_CHAIN_ID?.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
@@ -82,6 +86,18 @@ function TokenSellTable({ filter, refresh }) {
   let history = useHistory();
 
   useEffect(() => {
+    let nullSellTicker = ticker;
+
+    if (nullSellTicker) {
+      Object.keys(nullSellTicker).forEach((i) => (nullSellTicker[i] = ""));
+      dispatch(
+        setSellTicker({
+          ...nullSellTicker,
+          expiryDate: new Date(),
+          expiryTime: moment("12:15", format),
+        })
+      );
+    }
     fetchPortfolioHoldings();
   }, [account, chainId, refresh]);
   $(".ant-table-row").on("click", function () {
@@ -118,9 +134,9 @@ function TokenSellTable({ filter, refresh }) {
     // convert quanityt to international currency system
     const convertedPortfolioHoldings = portfolioHoldings.map((item) => {
       const convertedItem = { ...item };
-      convertedItem.quantity = (item.quantity).toString();
+      convertedItem.quantity = item.quantity.toString();
       convertedItem.maxQuantity = convertedItem.quantity;
-      convertedItem.balance = (item.balance).toString();
+      convertedItem.balance = item.balance.toString();
       return convertedItem;
     });
     convertedPortfolioHoldings.sort((a, b) => {

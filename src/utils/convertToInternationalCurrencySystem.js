@@ -10,9 +10,7 @@ export function convertToInternationalCurrencySystem(labelValue) {
       ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(4) + "M"
       : // Three Zeroes for Thousands
       Math.abs(Number(labelValue)) >= 1.0e3
-      ? new Intl.NumberFormat("en-IN", {
-          maximumSignificantDigits: 4,
-        }).format(Number(labelValue))
+      ? Math.round((Number(labelValue) + Number.EPSILON) * 10000) / 10000
       : // In decimal value.
       Math.abs(Number(labelValue)) <= 1.0e-3
       ? Number(labelValue)
