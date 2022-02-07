@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
 import BigNumber from "bignumber.js";
 import Web3 from "web3";
-import moment from "moment";
+
 import { EXCHANGE_ABI } from "../contracts/ExchangeContract";
 import {
   BSC_CHAIN_ID,
@@ -12,9 +12,9 @@ import {
   MATIC_CHAIN_ID,
   CONTRACT_ADDRESS_CAPX_USDT_MATIC,
   CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC
-
+  CONTRACT_ADDRESS_CAPX_USDT_BSC,
 } from "../constants/config";
+import moment from "moment";
 const format = "HH:mm";
 const web3 = new Web3(Web3.givenProvider);
 BigNumber.config({
@@ -42,16 +42,17 @@ export const fetchContractBalances = async (
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
       : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM
   );
-  
-  // Getting stable coin
-  const stableCoin = chainId?.toString() === BSC_CHAIN_ID?.toString()
-  ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-  : chainId?.toString() === MATIC_CHAIN_ID.toString()
-  ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-  : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM
-  console.log("-Stable coin-",stableCoin)
 
-  console.log("-chain ID-",chainId)
+  // Getting stable coin
+  const stableCoin =
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
+      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+  console.log("-Stable coin-", stableCoin);
+
+  console.log("-chain ID-", chainId);
   const liquidClient = new ApolloClient({
     uri: wrappedURL,
     cache: new InMemoryCache(),
@@ -106,13 +107,14 @@ export const fetchContractBalances = async (
         assetToLockedBalance[locked[1].assetID] = locked[1].lockedValue;
       });
       Object.entries(userTotalData).forEach((total) => {
-
         // Not printing stable coin again
-        console.log(total[1].assetID,stableCoin)
-        if(web3.utils.toChecksumAddress(total[1].assetID)===web3.utils.toChecksumAddress(stableCoin)){
-          return
+        console.log(total[1].assetID, stableCoin);
+        if (
+          web3.utils.toChecksumAddress(total[1].assetID) ===
+          web3.utils.toChecksumAddress(stableCoin)
+        ) {
+          return;
         }
-
 
         let xData = {};
         xData.asset = assetData.assets.find(
@@ -123,15 +125,15 @@ export const fetchContractBalances = async (
         ).tokenDecimal;
         xData.assetID = total[1].assetID;
 
-        
-          console.log(assetUnlockTime.derivatives.find(
+        console.log(
+          assetUnlockTime.derivatives.find(
             (derivative) => derivative.id === total[1].assetID
-            ),"----")
-          xData.unlockTime = assetUnlockTime.derivatives.find(
-            (derivative) => derivative.id === total[1].assetID
-            ).unlockTime;
-            
-
+          ),
+          "----"
+        );
+        xData.unlockTime = assetUnlockTime.derivatives.find(
+          (derivative) => derivative.id === total[1].assetID
+        ).unlockTime;
 
         xData.totalBalance = new BigNumber(total[1].totalValue).toString();
         xData.lockedBalance = assetToLockedBalance[total[1].assetID]
@@ -147,16 +149,21 @@ export const fetchContractBalances = async (
     });
     userContractHoldings = await Promise.all(
       fetchContractBalances.map(async (contractHolding) => {
-        await console.log("Before issue")
-        await console.log("Before issue values" , contractHolding.assetID, account)
-        await console.log(exchangeContract)
+        await console.log("Before issue");
+        await console.log(
+          "Before issue values",
+          contractHolding.assetID,
+          account
+        );
+        await console.log(exchangeContract);
 
         let balance = await exchangeContract.methods
-        .unlockBalance(contractHolding.assetID, account)
-        .call();
-        await console.log("After issue")
+          .unlockBalance(contractHolding.assetID, account)
+          .call();
+        await console.log("After issue");
         balance = new BigNumber(balance)
-          .dividedBy(Math.pow(10, contractHolding.decimal)).toString();
+          .dividedBy(Math.pow(10, contractHolding.decimal))
+          .toString();
         contractHolding.actualBalance = balance;
         const unixTime = contractHolding.unlockTime;
         const date = new Date(unixTime * 1000);
@@ -191,7 +198,7 @@ export const fetchContractBalances = async (
     );
   } catch (error) {
     console.log(error);
-    console.log("Holdings error")
+    console.log("Holdings error");
   }
   return userContractHoldings;
 };
