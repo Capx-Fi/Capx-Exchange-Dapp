@@ -7,6 +7,7 @@ import BuyIcon from "../../assets/buy.svg";
 import LockIcon from "../../assets/lock-asset.svg";
 import SwapIcon from "../../assets/swap.svg";
 import NextIcon from "../../assets/next-black.svg";
+import { setBuyTicker } from "../../redux/actions/exchange";
 import { setProjectBuyTicker } from "../../redux/actions/exchange";
 import RefresherInput from "../../components/RefresherInput/RefresherInput";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
@@ -87,7 +88,9 @@ function BuyScreen({
       : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
   const ticker = useSelector((state) => state.exchange.projectBuyTicker);
   const resetValue = () => {
-    dispatch(setProjectBuyTicker(null));
+        let nullBuyTicker = ticker;
+        Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+        dispatch(setBuyTicker({ ...nullBuyTicker }));
   };
   const checkValidBuy = async () => {
     const checkValidity = await validateBuyAmount(ticker);
@@ -190,7 +193,7 @@ function BuyScreen({
         <div className="exchangeScreen_rightcontainer_buyContainer_body">
           <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer">
             <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer_title">
-              YOU PAY {ticker && ": USDT"}
+              YOU PAY {ticker && ": " + ticker.GetAsset}
             </div>
             <RefresherInput
               ticker={ticker}

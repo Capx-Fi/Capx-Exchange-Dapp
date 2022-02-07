@@ -190,7 +190,7 @@ function BuyScreen({
         <div className="exchangeScreen_rightcontainer_buyContainer_body">
           <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer">
             <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer_title">
-              YOU PAY {ticker && ": USDT"}
+              YOU PAY {ticker && ": " + ticker.GetAsset}
             </div>
             <RefresherInput
               ticker={ticker}
