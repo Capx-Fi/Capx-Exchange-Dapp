@@ -90,7 +90,7 @@ function BuyScreen({
   const resetValue = () => {
         let nullBuyTicker = ticker;
         Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
-        dispatch(setBuyTicker({ ...nullBuyTicker }));
+        dispatch(setProjectBuyTicker({ ...nullBuyTicker }));
   };
   const checkValidBuy = async () => {
     const checkValidity = await validateBuyAmount(ticker);
