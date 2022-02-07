@@ -169,7 +169,7 @@ function BuyScreen({
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
-        !ticker && "opacity-60 cursor-not-allowed"
+        (!ticker || !ticker?.asset || ticker?.asset === '') && "opacity-60 cursor-not-allowed"
       }`}
     >
       <ApproveModal
