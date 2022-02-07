@@ -7,6 +7,7 @@ import BuyIcon from "../../assets/buy.svg";
 import LockIcon from "../../assets/lock-asset.svg";
 import SwapIcon from "../../assets/swap.svg";
 import NextIcon from "../../assets/next-black.svg";
+import { setBuyTicker } from "../../redux/actions/exchange";
 import { setProjectBuyTicker } from "../../redux/actions/exchange";
 import RefresherInput from "../../components/RefresherInput/RefresherInput";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
@@ -87,19 +88,23 @@ function BuyScreen({
       : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
   const ticker = useSelector((state) => state.exchange.projectBuyTicker);
   const resetValue = () => {
-    dispatch(setProjectBuyTicker(null));
+        let nullBuyTicker = ticker;
+        Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+        dispatch(setProjectBuyTicker({ ...nullBuyTicker }));
   };
+
+  useEffect(() => {
+    if (buyModalStatus === 'success') {
+      resetValue();
+    }
+  }, [buyModalStatus]);
+
   const checkValidBuy = async () => {
     const checkValidity = await validateBuyAmount(ticker);
-    console.log(checkValidity);
     setCheckBuy(checkValidity);
   };
   const initiateSwapApproval = async () => {
     setButtonClicked(true);
-
-    console.log(ticker);
-    console.log(await validateBuyAmount(ticker));
-
     const vestingTokenContract = new web3.eth.Contract(
       CONTRACT_ABI_ERC20,
       CHAIN_USDT_CONTRACT_ADDRESS
@@ -164,7 +169,7 @@ function BuyScreen({
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
-        !ticker && "opacity-60 cursor-not-allowed"
+        (!ticker || !ticker?.asset || ticker?.asset === '') && "opacity-60 cursor-not-allowed"
       }`}
     >
       <ApproveModal
@@ -190,13 +195,17 @@ function BuyScreen({
         <div className="exchangeScreen_rightcontainer_buyContainer_body">
           <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer">
             <div className="exchangeScreen_rightcontainer_buyContainer_body_payContainer_title">
-              YOU PAY {ticker && ": USDT"}
+              YOU PAY {ticker && ": " + ticker.GetAsset}
             </div>
             <RefresherInput
               ticker={ticker}
               disabled={!ticker}
               setTicker={(e) => {
-                if (e.target.value / ticker.price > ticker?.maxAmountGet) {
+                if (
+                  BigNumber(e.target.value)
+                    .dividedBy(ticker.price)
+                    .isGreaterThan(ticker?.maxAmountGet)
+                ) {
                   dispatch(
                     setProjectBuyTicker({
                       ...ticker,
@@ -221,8 +230,9 @@ function BuyScreen({
               value={ticker && ticker.amountGive}
             />
           </div>
-          {warningCheck && <WarningCard text={`You don't have enough USDT`} />}
-          {(!checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) && (
+          {warningCheck && <WarningCard text={`You don't have enough `+ ticker.GetAsset} />}
+          {(!checkBuy?.["stableCoinLegal"] ||
+            !checkBuy?.["DerivativeLegal"]) && (
             <WarningCard text={`INVALID INPUT`} />
           )}
           <div className="exchangeScreen_rightcontainer_buyContainer_body_separator">
@@ -248,7 +258,9 @@ function BuyScreen({
               balance={null}
               value={ticker && ticker.amountGet}
               setTicker={(e) => {
-                if (e.target.value > ticker?.maxAmountGet) {
+                if (
+                  BigNumber(e.target.value).isGreaterThan(ticker?.maxAmountGet)
+                ) {
                   dispatch(
                     setProjectBuyTicker({
                       ...ticker,
@@ -280,19 +292,28 @@ function BuyScreen({
           </div>
           <div
             onClick={() =>
-              tokenApproval || ticker?.balance - ticker?.amountGive >= 0
+              tokenApproval ||
+              BigNumber(ticker?.balance)
+                .minus(ticker?.amountGive)
+                .isGreaterThan(0)
                 ? finalizeSwap()
                 : initiateSwapApproval()
             }
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              (!ticker || disabled || !checkBuy?.["stableCoinLegal"] || !checkBuy?.["DerivativeLegal"]) &&
+              (!ticker ||
+                disabled ||
+                !checkBuy?.["stableCoinLegal"] ||
+                !checkBuy?.["DerivativeLegal"]) &&
               "pointer-events-none cursor-not-allowed opacity-50"
             }`}
           >
             <div
               className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton_title`}
             >
-              {tokenApproval || ticker?.balance - ticker?.amountGive >= 0
+              {tokenApproval ||
+              BigNumber(ticker?.balance)
+                .minus(ticker?.amountGive)
+                .isGreaterThan(0)
                 ? "SWAP TOKENS"
                 : "APPROVE TOKENS"}
             </div>

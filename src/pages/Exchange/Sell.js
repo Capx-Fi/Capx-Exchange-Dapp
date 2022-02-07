@@ -38,7 +38,6 @@ import SellModal from "../../components/Modals/VestAndApproveModal/SellModal";
 // New Import Helper function
 
 import { validateSellAmount } from "../../utils/validateSellAmount";
-
 const format = "HH:mm";
 const currentDate = new Date();
 BigNumber.config({
@@ -88,6 +87,29 @@ function SellScreen({
   const [warningDate, setWarningDate] = useState(false);
   const [checkSell, setCheckSell] = useState({});
 
+  const resetValue = () => {
+    let nullSellTicker = ticker;
+    if(nullSellTicker)
+    Object.keys(nullSellTicker).forEach((i) => (nullSellTicker[i] = ""));
+    dispatch(
+      setSellTicker({
+        ...nullSellTicker,
+        expiryDate: new Date(),
+        expiryTime: moment("12:15", format),
+      })
+    );
+  };
+
+  useEffect(() => {
+    if (sellModalStatus === "success") {
+      resetValue();
+    }
+  }, [sellModalStatus]);
+
+  useEffect(() => {
+    resetValue();
+  }, [account]);
+
   const setAmount = (e) => {
     dispatch(setSellTicker({ ...ticker, price: e }));
   };
@@ -114,7 +136,7 @@ function SellScreen({
 
   const checkValidSell = async () => {
     const tokenDecimal = await tokenGetInst.methods.decimals().call();
-    console.log(tokenDecimal,"Tok Dec");
+    console.log(tokenDecimal, "Tok Dec");
     const checkValidity = await validateSellAmount(ticker, tokenDecimal);
     console.log(checkValidity);
     setCheckSell(checkValidity);
@@ -211,7 +233,8 @@ function SellScreen({
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
-        !ticker && "opacity-60 cursor-not-allowed"
+        (!ticker || !ticker?.asset || ticker?.asset === "") &&
+        "opacity-60 cursor-not-allowed"
       }`}
     >
       <ApproveModal
@@ -234,7 +257,7 @@ function SellScreen({
               alt="buy icon"
             />
             <div className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
-              SELL {ticker && "- " + ticker.asset}
+              SELL {(ticker?.asset !== undefined) && "- " + ticker?.asset}
             </div>
           </div>
         </div>
@@ -245,7 +268,7 @@ function SellScreen({
             </div>
             <RefresherInput
               ticker={ticker}
-              disabled={!ticker}
+              disabled={!ticker?.asset || ticker?.asset === ""}
               balance={balance}
               isMax={true}
               setMaxAmount={() => {
@@ -285,7 +308,7 @@ function SellScreen({
                     className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_input"
                     type="number"
                     placeholder="0"
-                    value={ticker && ticker?.price}
+                    value={ticker ? ticker?.price : ""}
                     onChange={(e) => setAmount(e.target.value)}
                     warningText={ticker?.price <= 0 && "PRICE CANNOT BE ZERO"}
                   />
@@ -297,7 +320,7 @@ function SellScreen({
                 TOKEN
               </div>
               <RefresherInput
-                value={ticker && ticker.asset}
+                value={ticker ? ticker.asset : ""}
                 type={"text"}
                 ticker={ticker}
                 balance={null}
@@ -315,14 +338,14 @@ function SellScreen({
               </div>
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
-                  !ticker
+                  !ticker || !ticker?.asset || ticker?.asset === ""
                     ? "pointer-events-none ring-dark-50"
                     : "ring-success-color-500 "
                 } `}
               >
                 <div
                   className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper w-full ${
-                    !ticker
+                    !ticker || !ticker?.asset || ticker?.asset === ""
                       ? "pointer-events-none ring-dark-50"
                       : "ring-success-color-500 "
                   } `}

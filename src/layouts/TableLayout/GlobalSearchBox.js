@@ -23,7 +23,7 @@ const GlobalSearchBox = ({ filter, setFilter }) => {
           autoFocus
           className='bg-dark-400 w-full bg-none rounded-tr-full rounded-br-full text-md outline-none pr-2 text-white'
           type='text'
-          placeholder='Search asset pair'
+          placeholder='Search assets'
           value={value || ''}
           onChange={(e) => {
             setValue(e.target.value);

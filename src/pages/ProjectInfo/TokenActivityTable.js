@@ -25,17 +25,6 @@ const { Column, ColumnGroup } = Table;
 function TokenActivityTable({ completeOrders }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
   const { active, account, chainId } = useWeb3React();
-  // useEffect(() => {
-  //   console.log(filter);
-  //   if (filter === "" || filter === undefined) {
-  //     setTokenList(dummyDataExchange);
-  //   } else {
-  //     const filteredList = dummyDataExchange.filter((token) => {
-  //       return token.asset.toLowerCase().includes(filter?.toLowerCase());
-  //     });
-  //     setTokenList(filteredList);
-  //   }
-  // }, [filter]);
 
   const EXPLORER_URL =
     chainId?.toString() === BSC_CHAIN_ID?.toString()

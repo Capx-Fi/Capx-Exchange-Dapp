@@ -8,7 +8,7 @@ import WithdrawIcon from "../../assets/DepositIcon.svg";
 
 import $ from "jquery";
 import { useWeb3React } from "@web3-react/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchContractBalances } from "../../utils/fetchContractBalances";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 import { fetchProjectID } from "../../utils/fetchProjectDetails";
@@ -32,6 +32,7 @@ import {
   GRAPHAPIURL_WRAPPED_MATIC,
   GRAPHAPIURL_WRAPPED_BSC,
   GRAPHAPIURL_WRAPPED_ETHEREUM,
+  USDT_CONTRACT_ADDRESS,
 } from "../../constants/config";
 import {
   setAssetBalance,
@@ -51,6 +52,7 @@ const { Column } = Table;
 function WithdrawTokenTable({ filter, refetch }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
   const [portfolioHoldings, setPortfolioHoldings] = useState([]);
+  const ticker = useSelector((state) => state.withdraw.withdrawTicker);
   const { active, account, chainId } = useWeb3React();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
     chainId?.toString() === BSC_CHAIN_ID?.toString()
@@ -94,6 +96,11 @@ function WithdrawTokenTable({ filter, refetch }) {
   
 
   useEffect(() => {
+        let nullBuyTicker = ticker;
+        if (nullBuyTicker) {
+          Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+          dispatch(setWithdrawTicker({ ...nullBuyTicker }));
+        }
     fetchPortfolioHoldings();
   }, [account, chainId, refetch]);
   $(".ant-table-row").on("click", function () {
@@ -137,7 +144,6 @@ function WithdrawTokenTable({ filter, refetch }) {
       isContract: true,
       assetID: CHAIN_USDT_CONTRACT_ADDRESS,
     };
-    console.log("My Holdings - ",holdings)
     holdings.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
@@ -191,12 +197,21 @@ function WithdrawTokenTable({ filter, refetch }) {
           dataIndex="asset"
           key="asset"
           render={(value, row) => {
+            // console.log("row", row, CHAIN_USDT_CONTRACT_ADDRESS);
             return (
-              <div onClick={() => navigateProject(row.assetID)}>
-                <p className="text-white hover:text-primary-green-400 cursor-pointer">
-                  {value}
-                </p>
-              </div>
+              <>
+                {row.assetID === CHAIN_USDT_CONTRACT_ADDRESS.toString() ? (
+                  <div>
+                    <p className="text-white cursor-pointer">{value}</p>
+                  </div>
+                ) : (
+                  <div onClick={() => navigateProject(row.assetID)}>
+                    <p className="text-white hover:text-primary-green-400 cursor-pointer">
+                      {value}
+                    </p>
+                  </div>
+                )}
+              </>
             );
           }}
         />

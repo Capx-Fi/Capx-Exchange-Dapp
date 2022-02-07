@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { hideSideNav } from '../../redux/actions/sideNav';
 import BuyScreen from './Buy';
 import ProjectDescription from './ProjectDescription';
+import { setProjectBuyTicker } from "../../redux/actions/exchange";
 
 import {
   BSC_CHAIN_ID,
@@ -29,12 +30,14 @@ import { useState } from 'react';
 import { fetchOrderForTicker } from '../../utils/fetchOrderForTicker';
 import { useWeb3React } from '@web3-react/core';
 import MetamaskModal from '../../components/Modals/MetamaskModal/MetamaskModal';
+import { useSelector } from 'react-redux';
 
 function ProjectInfo({ match }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(hideSideNav());
   }, []);
+    const ticker = useSelector((state) => state.exchange.projectBuyTicker);
   const [projectDetails, setProjectDetails] = useState({});
   const [activeOrders, setActiveOrders] = useState([]);
   const [completeOrders, setCompleteOrders] = useState([]);
@@ -76,6 +79,11 @@ function ProjectInfo({ match }) {
         : GRAPHAPIURL_MASTER_ETHEREUM;
 
   useEffect(() => {
+        let nullBuyTicker = ticker;
+        if (nullBuyTicker) {
+          Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+          dispatch(setProjectBuyTicker({ ...nullBuyTicker }));
+        }
     getProjectDetails(match.params.ticker);
   }, [match.params.ticker, active, account, chainId, refresh]);
   const getProjectDetails = async () => {
