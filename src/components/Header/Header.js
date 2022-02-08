@@ -108,7 +108,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   }, [account, chainId]);
   useEffect(() => {
     if (chainId === 80001 || chainId === 137) setSortBy('Matic');
-    else if (chainId === 97) setSortBy('BSC');
+    else if (chainId === 97 || chainId === 56) setSortBy('BSC');
     else setSortBy('Ethereum');
   }, [chainId]);
   const fetchProjects = async () => {
