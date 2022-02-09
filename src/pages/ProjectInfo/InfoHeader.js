@@ -1,3 +1,4 @@
+import { Tooltip, withStyles } from '@material-ui/core';
 import React from 'react';
 import liquidDiamond from '../../assets/Capx-Diamond-Liquid.svg';
 import tickerDefault from '../../assets/tickerDefault.svg';
@@ -5,6 +6,16 @@ import tickerDefault from '../../assets/tickerDefault.svg';
 import './ProjectInfo.scss';
 
 function InfoHeader({ ticker, lastSellingPrice, averageSellingPrice }) {
+  const HtmlTooltip = withStyles((theme) => ({
+    tooltip: {
+      background: '#2A383C',
+      color: '#F1FAF2',
+      maxWidth: 800,
+      fontSize: theme.typography.pxToRem(12),
+      borderRadius: '4px',
+      zIndex: 100,
+    },
+  }))(Tooltip);
   return (
     <div className='infoHeader'>
       <div className='flex flex-row'>
@@ -16,9 +27,25 @@ function InfoHeader({ ticker, lastSellingPrice, averageSellingPrice }) {
                 <div>
                   <img src={tickerDefault} className='mr-2' />
                 </div>
-                <div>
-                  <p className='infoHeader_innerDiv_value'>{ticker}</p>
-                </div>
+                <HtmlTooltip
+                  arrow
+                  placement='right-start'
+                  title={
+                    <React.Fragment className='flex justify-between'>
+                      <span className='flex justify-between items-center font-bold pr-2'>
+                        {ticker}
+                      </span>
+                    </React.Fragment>
+                  }
+                >
+                  <div>
+                    <p className='infoHeader_innerDiv_value'>
+                      {ticker.length > 20
+                        ? ticker.substring(0, 20).concat('...')
+                        : ticker}
+                    </p>
+                  </div>
+                </HtmlTooltip>
               </div>
             </>
           ) : (
