@@ -1,6 +1,7 @@
 import BigNumber from "bignumber.js";
 
-export const validateBuyAmount = async (ticker) => {
+export const validateBuyAmount = async (ticker, amountGet, amountGive) => {
+  console.log("INPUT", amountGet, amountGive);
   // using Math.pow(10,Number("6") as "6" because USDT decimal
   // THIS TICKER
   // AMOUNT_GIVE ==== STABLE COIN ==== USDT
@@ -8,7 +9,7 @@ export const validateBuyAmount = async (ticker) => {
 
   let returnObj = {};
 
-  let bn_stableCoin = new BigNumber(ticker?.amountGive).multipliedBy(
+  let bn_stableCoin = new BigNumber(amountGive).multipliedBy(
     Math.pow(10, Number(ticker?.stableCoinDecimal))
   );
 
@@ -20,6 +21,7 @@ export const validateBuyAmount = async (ticker) => {
   else returnObj["stableCoinLegal"] = false;
 
   let stableCoinLegal = bn_stableCoin.integerValue();
+  console.log("Amount Give Integer Val -- ", stableCoinLegal.toString(10));
 
   // await console.log("Amount Give Integer Val -- ",amountGiveLegal.toString(10));
   returnObj["stableCoinValue"] = stableCoinLegal.toString(10);
@@ -28,7 +30,7 @@ export const validateBuyAmount = async (ticker) => {
     .toString(10);
   // AMOUNT GET IS DERIVATIVE
 
-  let bn_derivativeAmount = new BigNumber(ticker?.amountGet).multipliedBy(
+  let bn_derivativeAmount = new BigNumber(amountGet).multipliedBy(
     Math.pow(10, Number(ticker?.derivativeDecimal))
   );
   // await console.log("price with quant - aG2 ",pmulquant.toString(10));
@@ -47,6 +49,6 @@ export const validateBuyAmount = async (ticker) => {
   returnObj["amountGetDerivativeValue"] = new BigNumber(integerVal)
     .dividedBy(Math.pow(10, ticker?.derivativeDecimal))
     .toString(10);
-
+  console.log("OUTPUT", returnObj);
   return returnObj;
 };

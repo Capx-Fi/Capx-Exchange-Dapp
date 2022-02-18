@@ -35,7 +35,6 @@ import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
 // New Import
 
 import { validateBuyAmount } from "../../utils/validateBuyAmount";
-import { validateAmountGetGive } from "../../utils/validateAmountGetGive";
 
 BigNumber.config({
   ROUNDING_MODE: 3,
@@ -53,9 +52,12 @@ function BuyScreen({
   setRefresh,
 }) {
   const dispatch = useDispatch();
+
+  const ticker = useSelector((state) => state.exchange.buyTicker);
   useEffect(() => {
     dispatch(hideSideNav());
   }, []);
+
   const web3 = new Web3(Web3.givenProvider);
   const { active, account, chainId } = useWeb3React();
 
@@ -84,13 +86,12 @@ function BuyScreen({
   const [warningCheck, setWarningCheck] = useState(false);
   const [checkBuy, setCheckBuy] = useState({});
 
-  const ticker = useSelector((state) => state.exchange.buyTicker);
-
   const resetValue = () => {
     let nullBuyTicker = ticker;
     Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
     dispatch(setBuyTicker({ ...nullBuyTicker }));
   };
+
   const checkValidBuy = async () => {
     const checkValidity = await validateBuyAmount(ticker);
     console.log("checkValidity", checkValidity);
@@ -159,6 +160,11 @@ function BuyScreen({
     }
   }, [ticker?.amountGive]);
   console.log("My log : ", ticker);
+
+  useEffect(() => {
+    console.log("CHECK BUY", checkBuy);
+  }, [checkBuy]);
+
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
@@ -200,37 +206,35 @@ function BuyScreen({
                     .dividedBy(ticker.price)
                     .isGreaterThan(ticker?.maxAmountGet)
                 ) {
-                  dispatch(
-                    setBuyTicker({
-                      ...ticker,
-                      amountGive: validateAmountGetGive(
-                        ticker,
-                        ticker?.maxAmountGet,
-                        ticker?.maxAmountGet * ticker?.price
-                      ).amountGiveStableCoin,
-                      amountGet: validateAmountGetGive(
-                        ticker,
-                        ticker?.maxAmountGet,
-                        ticker?.maxAmountGet * ticker?.price
-                      ).amountGetDerivativeValue,
-                    })
-                  );
+                  validateBuyAmount(
+                    ticker,
+                    ticker?.maxAmountGet,
+                    ticker?.maxAmountGet * ticker?.price
+                  ).then((res) => {
+                    setCheckBuy(res);
+                    dispatch(
+                      setBuyTicker({
+                        ...ticker,
+                        amountGet: res["amountGetDerivativeValue"],
+                        amountGive: res["amountGiveStableCoin"],
+                      })
+                    );
+                  });
                 } else {
-                  dispatch(
-                    setBuyTicker({
-                      ...ticker,
-                      amountGive: validateAmountGetGive(
-                        ticker,
-                        e.target.value / ticker.price,
-                        e.target.value
-                      ).amountGiveStableCoin,
-                      amountGet: validateAmountGetGive(
-                        ticker,
-                        e.target.value / ticker.price,
-                        e.target.value
-                      ).aamountGetDerivativeValues,
-                    })
-                  );
+                  validateBuyAmount(
+                    ticker,
+                    e.target.value / ticker.price,
+                    e.target.value
+                  ).then((res) => {
+                    setCheckBuy(res);
+                    dispatch(
+                      setBuyTicker({
+                        ...ticker,
+                        amountGive: res["amountGiveStableCoin"],
+                        amountGet: res["amountGetDerivativeValue"],
+                      })
+                    );
+                  });
                 }
               }}
               warningText={warningCheck && "You don't have enough balance"}
@@ -275,21 +279,36 @@ function BuyScreen({
                 if (
                   BigNumber(e.target.value).isGreaterThan(ticker?.maxAmountGet)
                 ) {
-                  dispatch(
-                    setBuyTicker({
-                      ...ticker,
-                      amountGive: ticker?.maxAmountGet * ticker?.price,
-                      amountGet: ticker?.maxAmountGet,
-                    })
-                  );
+                  validateBuyAmount(
+                    ticker,
+                    ticker?.maxAmountGet,
+                    ticker?.maxAmountGet * ticker?.price
+                  ).then((res) => {
+                    setCheckBuy(res);
+                    dispatch(
+                      setBuyTicker({
+                        ...ticker,
+                        amountGet: res["amountGetDerivativeValue"],
+                        amountGive: res["amountGiveStableCoin"],
+                      })
+                    );
+                  });
                 } else {
-                  dispatch(
-                    setBuyTicker({
-                      ...ticker,
-                      amountGive: e.target.value * ticker?.price,
-                      amountGet: e.target.value,
-                    })
-                  );
+                  console.log("e.target.value", e.target.value);
+                  validateBuyAmount(
+                    ticker,
+                    e.target.value,
+                    e.target.value * ticker?.price
+                  ).then((res) => {
+                    setCheckBuy(res);
+                    dispatch(
+                      setBuyTicker({
+                        ...ticker,
+                        amountGet: res["amountGetDerivativeValue"],
+                        amountGive: res["amountGiveStableCoin"],
+                      })
+                    );
+                  });
                 }
               }}
             />
