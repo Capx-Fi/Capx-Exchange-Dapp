@@ -21,10 +21,164 @@
 .main-container {
   @apply flex mt-16;
   &_left {
-    @apply w-9/12 pr-14 pl-2 desktop:w-10/12 desktop:-ml-16;
+    @apply w-8/12 pr-40 breakpoint:pr-0 desktop:pr-40 desktop:-ml-8 desktop:w-75v;
   }
-  &_right {
-    @apply w-4/12 pl-6;
+  &_rightcontainer {
+    @apply w-4/12 pl-4 desktop:w-30v desktop:pr-10 breakpoint:pl-14 breakpoint:pr-10 desktop:-ml-48;
+
+    &_buyContainer {
+      @apply border rounded-2xl flex flex-col border-dark-50;
+      background: linear-gradient(0deg, #19201d 0%, #151618 101.42%),
+        rgba(21, 21, 23, 0.2);
+      &_header {
+        @apply px-6 py-4 flex flex-row h-16 border-b rounded-t-2xl border-dark-50 w-full;
+        background-color: #171c1f;
+        &_title {
+          @apply text-paragraph-1 text-primary-green-100 font-bold flex items-center;
+          &_icon {
+            @apply h-5 w-5;
+          }
+          &_text {
+            @apply ml-2;
+          }
+        }
+      }
+      &_body {
+        @apply mt-4 px-6;
+        &_payContainer {
+          @apply flex flex-col w-full mb-4 desktop:mb-3;
+          &_title {
+            @apply text-caption-2 text-grayLabel mt-5 desktop:mt-3 font-black text-left;
+          }
+
+          &_inputContainer {
+            @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
+            &_lockWrapper {
+              @apply flex justify-center w-full items-center px-4;
+              &_icon {
+                @apply h-5 w-5;
+              }
+            }
+            &_input {
+              @apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 px-2;
+              &:focus {
+                @apply outline-none;
+              }
+            }
+            &_balanceContainer {
+              &_main {
+                @apply flex flex-row justify-between text-left items-center px-4;
+                &_text {
+                  @apply text-caption-2 text-grayLabel font-bold;
+                }
+                &_max {
+                  @apply text-caption-2 font-bold ml-2 cursor-pointer;
+                  background: -webkit-linear-gradient(
+                    355.38deg,
+                    #3f7ef8 -9.64%,
+                    #3ff8cc 87.34%
+                  );
+                  -webkit-background-clip: text;
+                  background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                }
+              }
+              &_value {
+                @apply text-left px-4 text-caption-2 text-grayLabel font-bold;
+              }
+            }
+          }
+        }
+        &_tokenContainer {
+          @apply flex flex-col w-full mb-4;
+          &_title {
+            @apply text-caption-2 text-grayLabel mt-5 font-black text-left;
+          }
+
+          &_inputContainer {
+            @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
+            &_lockWrapper {
+              @apply flex justify-center items-center px-4;
+              &_icon {
+                @apply h-5 w-5;
+              }
+            }
+            &_input {
+              @apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 px-2;
+              &:focus {
+                @apply outline-none;
+              }
+            }
+            &_dateInput {
+              &:focus {
+                @apply outline-none;
+              }
+            }
+            &_timeInput {
+              @apply bg-dark-400 text-primary-green-100;
+            }
+            &_balanceContainer {
+              &_main {
+                @apply flex flex-row justify-between text-left items-center px-4;
+                &_text {
+                  @apply text-caption-2 text-grayLabel font-bold;
+                }
+                &_max {
+                  @apply text-caption-2 font-bold ml-2 cursor-pointer;
+                  background: -webkit-linear-gradient(
+                    355.38deg,
+                    #3f7ef8 -9.64%,
+                    #3ff8cc 87.34%
+                  );
+                  -webkit-background-clip: text;
+                  background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                }
+              }
+              &_value {
+                @apply text-left px-4 text-caption-2 text-grayLabel font-bold;
+              }
+            }
+          }
+        }
+        &_splitContainer {
+          @apply flex gap-4;
+        }
+        &_separator {
+          @apply w-full flex items-center h-8 desktop:h-24;
+
+          &_line {
+            @apply bg-dark-50;
+            height: 1px;
+          }
+          &_iconContainer {
+            @apply flex justify-center items-center;
+            &_icon {
+              @apply h-10;
+            }
+          }
+        }
+        &_expiryDetailsContainer {
+          @apply text-grayLabel text-caption-2 font-bold text-left py-4;
+        }
+        &_swapButton {
+          background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
+          @apply rounded-lg py-3 my-4 flex justify-center items-center cursor-pointer;
+          &_title {
+            @apply text-paragraph-2 text-dark-300 font-bold;
+          }
+          &_icon {
+            @apply pl-4;
+            img {
+              @apply w-6 h-6;
+            }
+          }
+        }
+      }
+      &_footer {
+        @apply h-5 border-t mt-8 border-dark-50;
+      }
+    }
   }
 }
 
@@ -40,7 +194,7 @@
       background: #171c1f;
       border: 1px solid #2a383c;
       border-radius: 16px;
-      @apply flex flex-col p-4 rounded-xl mx-auto mt-2 desktop:mx-0;
+      @apply flex flex-col p-4 rounded-xl mt-2 mx-0;
       &_title {
         color: #83a1a9;
         @apply py-3 pl-4 flex justify-start text-caption-3 font-semibold desktop:text-caption-1 pb-2;

@@ -1,4 +1,4 @@
-import "../Exchange/Exchange.scss";
+import "./ProjectInfo.scss";
 import React, { useEffect, useRef, useState } from "react";
 import { render } from "react-dom";
 import { hideSideNav, showSideNav } from "../../redux/actions/sideNav";
@@ -167,7 +167,7 @@ function BuyScreen({
   }, [ticker?.amountGive]);
   return (
     <div
-      className={`exchangeScreen_rightcontainer ${
+      className={`main-container_rightcontainer ${
         (!ticker || !ticker?.asset || ticker?.asset === "") &&
         "opacity-60 cursor-not-allowed"
       }`}
