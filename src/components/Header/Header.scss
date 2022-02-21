@@ -12,14 +12,14 @@
       @apply bg-dark-200 h-14 mx-6 border-dark-200;
     }
     &_button {
-      @apply rounded-lg flex px-2 py-2 items-center justify-center text-center cursor-pointer w-44 tablet:px-5 tablet:py-3 laptop:px-4 laptop:py-3 desktop:px-4 desktop:py-2;
+      @apply rounded-lg flex px-2 py-2 items-center justify-center text-center cursor-pointer w-44 tablet:px-5 tablet:py-3 laptop:px-4 laptop:py-3 desktop:px-4 desktop:py-2 breakpoint:px-2 breakpoint:py-1;
       background: linear-gradient(180deg, #97d10a -8.65%, #206300 100%);
       &_text {
         @apply text-caption-3 font-bold leading-caption-3 tablet:text-caption-1 tablet:leading-caption-1 desktop:text-caption-2;
       }
     }
     &_logoutbutton {
-      @apply rounded-lg border border-dark-200 bg-dark-200 flex px-3 py-2 tablet:px-5 tablet:py-3 laptop:px-4 laptop:py-2 items-center justify-center text-center w-44 desktop:px-2 desktop:py-2;
+      @apply rounded-lg border border-dark-200 bg-dark-200 flex px-3 py-2 tablet:px-5 tablet:py-3 laptop:px-4 laptop:py-2 items-center justify-center text-center w-44 breakpoint:px-1 breakpoint:py-1 desktop:px-2 desktop:py-2;
       &_text {
         @apply text-caption-3 leading-caption-3 tablet:text-caption-1 tablet:leading-caption-1 desktop:text-caption-1 desktop:leading-caption-1 font-medium pr-2;
       }
