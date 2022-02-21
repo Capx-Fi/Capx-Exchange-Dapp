@@ -164,7 +164,7 @@
     }
   }
   &_header {
-    @apply py-1 mb-3 flex justify-between desktop:pr-14 breakpoint:pr-2;
+    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v breakpoint:w-60v desktop:w-62v;
     &_titlecontainer {
       @apply flex flex-col items-start;
       &_title {
@@ -183,7 +183,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 .react-date-picker {

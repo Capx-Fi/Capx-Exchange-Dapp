@@ -6,6 +6,7 @@ body {
   font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgba(21, 21, 23);
 }
 
 code {
@@ -20,4 +21,3 @@ code {
 /* .ant-table-tbody > tr > td.ant-table-cell-row-hover {
     background: #0c0808 !important;
 } */
-
