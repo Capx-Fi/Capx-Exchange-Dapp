@@ -9,7 +9,7 @@
     @apply absolute -bottom-1 right-0 h-20 desktop:h-24;
   }
   &_innerDiv {
-    @apply mr-16 breakpoint:mr-2 text-left align-middle p-6 desktop:px-4;
+    @apply mr-16 desktop:mr-16 breakpoint:mr-2 text-left align-middle p-6 desktop:px-4;
     &_title {
       @apply text-tradeTitle text-caption-1 leading-caption-2 font-bold pb-2 desktop:text-caption-3;
     }
