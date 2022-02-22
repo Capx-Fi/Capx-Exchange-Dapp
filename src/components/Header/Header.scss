@@ -1,7 +1,7 @@
 .header {
   @apply h-20 top-0 left-0 fixed flex w-full px-8 tablet:px-12 laptop:px-20 desktop:px-24 justify-between items-center bg-dark-400 desktop:h-20;
   &_logo {
-    @apply h-6 tablet:h-8 laptop:h-9;
+    @apply h-6 tablet:h-8 laptop:h-9 breakpoint:h-10;
   }
   &_navbar {
     @apply hidden tablet:flex items-center text-white;
