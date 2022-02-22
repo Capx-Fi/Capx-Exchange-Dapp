@@ -17,7 +17,7 @@
         @apply px-6 py-4 flex flex-row h-16 border-b rounded-t-2xl border-dark-50 w-full;
         background-color: #171c1f;
         &_title {
-          @apply text-paragraph-1 text-primary-green-100 font-bold flex items-center;
+          @apply text-paragraph-1 text-primary-green-100 font-bold flex items-center breakpoint:text-paragraph-2 desktop:text-paragraph-1;
           &_icon {
             @apply h-5 w-5;
           }
@@ -31,7 +31,7 @@
         &_payContainer {
           @apply flex flex-col w-full mb-4 desktop:mb-3;
           &_title {
-            @apply text-caption-2 text-grayLabel mt-5 desktop:mt-3 font-black text-left;
+            @apply text-caption-2 text-grayLabel mt-5 desktop:mt-3 font-black text-left breakpoint:text-caption-3 desktop:text-caption-2;
           }
 
           &_inputContainer {
