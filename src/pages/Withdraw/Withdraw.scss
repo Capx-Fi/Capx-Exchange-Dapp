@@ -17,7 +17,7 @@
         @apply px-6 py-4 flex flex-row h-16 border-b rounded-t-2xl border-dark-50 w-full;
         background-color: #171c1f;
         &_title {
-          @apply text-paragraph-1 text-primary-green-100 font-bold flex items-center;
+          @apply text-paragraph-1 text-primary-green-100 font-bold flex items-center desktop:text-paragraph-1 breakpoint:text-paragraph-2;
           &_icon {
             @apply h-5 w-5;
           }
