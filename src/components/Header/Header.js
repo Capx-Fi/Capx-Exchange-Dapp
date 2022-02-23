@@ -221,9 +221,9 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
         <a href="/">
           <div>
             <img
-              className={`header_logo ${vesting && "flex tablet:hidden "} ${
-                location.pathname === "/" && "breakpoint:h-12"
-              }`}
+              className={`${
+                location.pathname === "/" ? "header_logo" : "header_logoInfo"
+              } ${vesting && "flex tablet:hidden "} `}
               src={CapxLogo}
               alt="capx logo"
             />
