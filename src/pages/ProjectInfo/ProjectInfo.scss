@@ -1,5 +1,5 @@
 .infoHeader {
-  background: #171c1f;
+  background: rgba($color: #171c1f, $alpha: 0.3);
 
   border: 1px solid #2a383c;
   box-sizing: border-box;
@@ -9,22 +9,22 @@
     @apply absolute -bottom-1 right-0 h-20 desktop:h-24;
   }
   &_innerDiv {
-    @apply mr-16 desktop:mr-16 breakpoint:mr-2 text-left align-middle p-6 desktop:px-4;
+    @apply mr-16 desktop:mr-9 breakpoint:mr-4  text-left align-middle p-6 desktop:px-4;
     &_title {
       @apply text-tradeTitle text-caption-1 leading-caption-2 font-bold pb-2 desktop:text-caption-3 breakpoint:text-caption-3;
     }
     &_value {
-      @apply text-white text-subheading font-bold leading-subheading pb-2 desktop:text-paragraph-1 breakpoint:text-paragraph-1;
+      @apply text-white text-subheading font-bold leading-subheading pb-2 desktop:text-paragraph-1 breakpoint:text-paragraph-2;
     }
   }
 }
 .main-container {
   @apply flex mt-16;
   &_left {
-    @apply w-8/12 pr-40 breakpoint:w-60v breakpoint:pr-0 desktop:pr-40 desktop:mr-8 desktop:-ml-8 desktop:w-65v;
+    @apply w-8/12 pr-6 breakpoint:w-60v  desktop:pr-40 desktop:mr-8 desktop:-ml-8 desktop:w-65v;
   }
   &_rightcontainer {
-    @apply w-4/12 pl-4 desktop:w-35v desktop:pr-4 desktop:pl-16 breakpoint:pl-8 breakpoint:pr-6 desktop:-ml-48;
+    @apply w-4/12 pl-4 desktop:w-35v desktop:-mr-10  desktop:pr-4 desktop:pl-16 breakpoint:pl-8 breakpoint:pr-0 desktop:-ml-48;
 
     &_buyContainer {
       @apply border rounded-2xl flex flex-col border-dark-50;
