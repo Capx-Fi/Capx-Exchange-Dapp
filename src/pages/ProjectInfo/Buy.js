@@ -98,8 +98,8 @@ function BuyScreen({
     }
   }, [buyModalStatus]);
 
-  const checkValidBuy = async () => {
-    const checkValidity = await validateBuyAmount(ticker);
+  const checkValidBuy = async (amountGet, amountGive) => {
+    const checkValidity = await validateBuyAmount(ticker, amountGet, amountGive);
     setCheckBuy(checkValidity);
   };
   const initiateSwapApproval = async () => {
@@ -151,7 +151,7 @@ function BuyScreen({
     }, 6000);
   };
   useEffect(() => {
-    checkValidBuy();
+    checkValidBuy(ticker?.amountGet, ticker?.amountGive);
   }, [ticker?.amountGet, ticker?.amountGive]);
   useEffect(() => {
     if (ticker?.amountGive <= 0 || ticker?.amountGet <= 0) {

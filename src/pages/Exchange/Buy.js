@@ -92,8 +92,8 @@ function BuyScreen({
     dispatch(setBuyTicker({ ...nullBuyTicker }));
   };
 
-  const checkValidBuy = async () => {
-    const checkValidity = await validateBuyAmount(ticker);
+  const checkValidBuy = async (amountGet, amountGive) => {
+    const checkValidity = await validateBuyAmount(ticker, amountGet, amountGive);
     console.log("checkValidity", checkValidity);
     setCheckBuy(checkValidity);
   };
@@ -103,12 +103,15 @@ function BuyScreen({
       CONTRACT_ABI_ERC20,
       CHAIN_USDT_CONTRACT_ADDRESS
     );
+    console.log("CheckBuy", checkBuy.stableCoinValue);
+    console.log("ticker", ticker?.balance);
 
     const tokens = new BigNumber(checkBuy.stableCoinValue).minus(
       BigNumber(ticker?.balance).multipliedBy(
         Math.pow(10, ticker?.stableCoinDecimal)
       )
     );
+    console.log("tokens", tokens );
     const tokenDecimal = ticker?.stableCoinDecimal;
     await approveSellTokens(
       vestingTokenContract,
@@ -145,7 +148,7 @@ function BuyScreen({
     }, 6000);
   };
   useEffect(() => {
-    checkValidBuy();
+    checkValidBuy(ticker?.amountGet, ticker?.amountGive);
   }, [ticker?.amountGet, ticker?.amountGive]);
   useEffect(() => {
     if (ticker?.amountGive <= 0 || ticker?.amountGet <= 0) {
