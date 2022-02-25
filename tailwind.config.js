@@ -168,6 +168,7 @@ module.exports = {
         laptop: "1024px",
         breakpoint: "1280px",
         desktop: "1440px",
+        upper: "1920px",
       },
     },
   },
