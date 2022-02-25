@@ -21,17 +21,17 @@ const ToggleSwitch = ({ id }) => {
             }}
           />
           <div
-            className={`flex  border bg-dark-500 border-grayLabel flex-row outerDiv rounded-xl justify-around`}
+            className={`flex  border bg-dark-500 border-grayLabel flex-row outerDiv rounded-xl breakpoint:rounded-xl tablet:rounded-md justify-around`}
           >
             <p
-              className={`p-2  font-bold z-20 ${
+              className={`p-2 breakpoint:p-2 tablet:p-1 font-bold z-20 breakpoint:text-caption-1 tablet:text-caption-3 ${
                 mode === 'buy' ? 'text-black' : 'text-primary-green-500'
               }`}
             >
               BUY
             </p>
             <p
-              className={`p-2  font-bold z-20 ${
+              className={`p-2 breakpoint:p-2 tablet:p-1 font-bold z-20 breakpoint:text-caption-1 tablet:text-caption-3 ${
                 mode === 'sell' ? 'text-black' : 'text-primary-green-500'
               }`}
             >
@@ -43,7 +43,7 @@ const ToggleSwitch = ({ id }) => {
               mode === 'sell'
                 ? 'translate-x-full gradient-bg'
                 : 'gradient-bg'
-            } transform absolute left-1 top-1 innerSwitch rounded-xl transition`}
+            } transform absolute left-1 top-1 innerSwitch rounded-xl breakpoint:rounded-xl tablet:rounded-md transition`}
           ></div>
         </div>
       </label>

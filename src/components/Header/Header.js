@@ -262,12 +262,23 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
               //     />
               //   </svg>
               // </div>
+              <>
+              <div className="tablet:block breakpoint:hidden">
+              <AccountDropdown
+                disconnect={disconnect}
+                accountAddress={`${account.substr(0, 6)}...`}
+              />
+              </div>
+              
+              <div className="tablet:hidden breakpoint:block">
               <AccountDropdown
                 disconnect={disconnect}
                 accountAddress={`${account.substr(0, 6)}...${account.substr(
                   -4
                 )}`}
               />
+              </div>
+              </>
             ) : (
               <ConnectCTA
                 classes="cbutton"
