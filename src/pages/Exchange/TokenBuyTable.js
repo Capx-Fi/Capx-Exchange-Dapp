@@ -78,9 +78,9 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
       : GRAPHAPIURL_MASTER_ETHEREUM;
   useEffect(() => {
     let nullBuyTicker = ticker;
-    if(nullBuyTicker) {
-    Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
-    dispatch(setBuyTicker({ ...nullBuyTicker }));
+    if (nullBuyTicker) {
+      Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+      dispatch(setBuyTicker({ ...nullBuyTicker }));
     }
     fetchListings();
     console.log("refresh", refresh);
@@ -144,7 +144,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
           title="Asset"
           sorter={(a, b) => a.asset - b.asset}
           showSorterTooltip={false}
-          width={"22%"}
+          width={"25%"}
           dataIndex="asset"
           key="asset"
           render={(value, row) => {
