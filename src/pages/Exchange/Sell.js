@@ -118,7 +118,7 @@ function SellScreen({
     dispatch(setSellTicker({ ...ticker, expiryDate: e }));
   };
   const setTime = (e) => {
-    dispatch(setSellTicker({ ...ticker, expiryTime: moment(e, format) }));
+    dispatch(setSellTicker({ ...ticker, expiryTime: moment(e, format).utc() }));
   };
   const setQuantity = (e) => {
     dispatch(setSellTicker({ ...ticker, quantity: e }));
@@ -379,7 +379,7 @@ function SellScreen({
               >
                 <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper w-full'>
                   <TimePicker
-                    defaultValue={moment()}
+                    defaultValue={moment().utc().add(15,"minutes")}
                     allowClear={false}
                     disabled={!ticker}
                     bordered={false}
