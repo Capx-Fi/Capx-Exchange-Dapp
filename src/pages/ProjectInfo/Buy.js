@@ -99,7 +99,11 @@ function BuyScreen({
   }, [buyModalStatus]);
 
   const checkValidBuy = async (amountGet, amountGive) => {
-    const checkValidity = await validateBuyAmount(ticker, amountGet, amountGive);
+    const checkValidity = await validateBuyAmount(
+      ticker,
+      amountGet,
+      amountGive
+    );
     setCheckBuy(checkValidity);
   };
   const initiateSwapApproval = async () => {
@@ -239,7 +243,22 @@ function BuyScreen({
                 }
               }}
               warningText={warningCheck && "You don't have enough balance"}
-              setMaxAmount={setMaxAmount}
+              setMaxAmount={() =>
+                validateBuyAmount(
+                  ticker,
+                  ticker.balance / ticker.price,
+                  ticker.balance
+                ).then((res) => {
+                  setCheckBuy(res);
+                  dispatch(
+                    setProjectBuyTicker({
+                      ...ticker,
+                      amountGive: res["amountGiveStableCoin"],
+                      amountGet: res["amountGetDerivativeValue"],
+                    })
+                  );
+                })
+              }
               isMax={true}
               balance={ticker?.balance}
               value={ticker ? ticker.amountGive : ""}
