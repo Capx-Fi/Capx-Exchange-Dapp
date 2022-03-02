@@ -1,13 +1,13 @@
 .withdrawScreen {
-  @apply w-82v mx-auto mt-16;
+  @apply w-85p tablet:w-full mx-auto mt-16 breakpoint:w-full desktop:w-full desktop:mt-8 desktop:pt-2 desktop:pl-24 breakpoint:pl-2;
   &_maincontainer {
-    @apply flex mt-8;
+    @apply flex mt-4 w-full desktop:mt-0 breakpoint:-mt-4;
   }
   &_leftcontainer {
-    @apply w-8/12 pr-40 desktop:pr-20 -mt-6;
+    @apply tablet:mx-auto tablet:w-full tablet:pr-0 pr-40 breakpoint:w-62v breakpoint:pr-20 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2;
   }
   &_rightcontainer {
-    @apply w-4/12 pl-4;
+    @apply pl-4 desktop:w-30v desktop:pr-12 upper:pr-14 breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
 
     &_buyContainer {
       @apply border rounded-2xl flex flex-col border-dark-50;
@@ -183,6 +183,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }

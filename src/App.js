@@ -22,12 +22,12 @@ function App() {
         <Provider store={store}>
           <div className="relative">
             <Router>
-              <div className="App bg-dark-400 overflow-x-hidden tablet:block hidden">
+              <div className="App bg-dark-400 overflow-x-hidden breakpoint:block hidden">
                 <Switch>
                   <Route path="/" component={MainLayout} />
                 </Switch>
               </div>
-              <div className="bg-dark-400 overflow-x-hidden tablet:hidden block h-full align-middle text-center text-white p-48">
+              <div className="bg-dark-400 overflow-x-hidden breakpoint:hidden block h-full align-middle text-center text-white p-48">
                 <Header />
                 <BreakPoint />
                 <Footer />
