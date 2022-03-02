@@ -3,7 +3,7 @@
   background: #171c1f;
   border-top: 1px solid #2a383c;
   border-radius: 16px;
-  @apply w-66v breakpoint:w-60v desktop:w-62v;
+  @apply tablet:w-full breakpoint:w-60v upper:w-62v desktop:w-60v;
 }
 .sorter-no-tooltip .ant-table-column-sorters:before {
   content: none !important;
