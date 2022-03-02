@@ -117,6 +117,7 @@ module.exports = {
         "28v": "28vw",
         "29v": "29vw",
         "30v": "30vw",
+        "33v": "33vw",
         "35v": "35vw",
         "40v": "40vw",
         "42v": "42vw",
@@ -164,7 +165,7 @@ module.exports = {
         "45v": "45vh",
       },
       screens: {
-        phone:"375px",
+        phone: "375px",
         tablet: "768px",
         laptop: "1024px",
         breakpoint: "1280px",
