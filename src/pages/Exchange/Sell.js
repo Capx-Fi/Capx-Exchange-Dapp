@@ -89,13 +89,13 @@ function SellScreen({
 
   const resetValue = () => {
     let nullSellTicker = ticker;
-    if(nullSellTicker)
-    Object.keys(nullSellTicker).forEach((i) => (nullSellTicker[i] = ""));
+    if (nullSellTicker)
+      Object.keys(nullSellTicker).forEach((i) => (nullSellTicker[i] = ""));
     dispatch(
       setSellTicker({
         ...nullSellTicker,
         expiryDate: new Date(),
-        expiryTime: moment("12:15", format),
+        expiryTime: moment().utc().add(15, "minutes"),
       })
     );
   };
@@ -118,7 +118,7 @@ function SellScreen({
     dispatch(setSellTicker({ ...ticker, expiryDate: e }));
   };
   const setTime = (e) => {
-    dispatch(setSellTicker({ ...ticker, expiryTime: moment(e, format) }));
+    dispatch(setSellTicker({ ...ticker, expiryTime: moment(e, format).utc() }));
   };
   const setQuantity = (e) => {
     dispatch(setSellTicker({ ...ticker, quantity: e }));
@@ -257,7 +257,7 @@ function SellScreen({
               alt="buy icon"
             />
             <div className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
-              SELL {(ticker?.asset !== undefined) && "- " + ticker?.asset}
+              SELL {ticker?.asset !== undefined && "- " + ticker?.asset}
             </div>
           </div>
         </div>
@@ -298,7 +298,7 @@ function SellScreen({
               </div>
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
-                  !ticker
+                  !ticker?.asset || ticker?.asset === ""
                     ? "pointer-events-none ring-dark-50"
                     : "ring-success-color-500 "
                 } `}
@@ -372,14 +372,14 @@ function SellScreen({
               </div>
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
-                  !ticker
+                  !ticker || !ticker?.asset || ticker?.asset === ""
                     ? "pointer-events-none ring-dark-50"
                     : "ring-success-color-500 "
                 } `}
               >
                 <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper w-full">
                   <TimePicker
-                    defaultValue={moment()}
+                    defaultValue={moment().utc().add(15, "minutes")}
                     allowClear={false}
                     disabled={!ticker}
                     bordered={false}
@@ -410,7 +410,8 @@ function SellScreen({
                 : initiateSwapApproval()
             }
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              (!ticker ||
+              (!ticker?.asset ||
+                ticker?.asset === "" ||
                 disabled ||
                 !checkSell?.["amountGiveLegal"] ||
                 !checkSell?.["USDTLegal"]) &&

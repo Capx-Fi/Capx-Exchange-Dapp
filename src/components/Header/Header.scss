@@ -1,7 +1,10 @@
 .header {
-  @apply h-20 top-0 left-0 fixed flex w-full px-8 tablet:px-12 laptop:px-20 desktop:px-24 justify-between items-center bg-dark-400 desktop:h-20;
+  @apply h-20 top-0 left-0 fixed flex w-full px-8 tablet:px-12 laptop:px-20 breakpoint:px-14 desktop:px-16 justify-between items-center bg-dark-400 desktop:h-20;
   &_logo {
-    @apply h-6 tablet:h-8 laptop:h-9;
+    @apply h-6 tablet:h-8 breakpoint:h-14 laptop:h-9;
+  }
+  &_logoInfo {
+    @apply h-6 tablet:h-8 laptop:h-9 breakpoint:h-8;
   }
   &_navbar {
     @apply hidden tablet:flex items-center text-white;
@@ -12,14 +15,14 @@
       @apply bg-dark-200 h-14 mx-6 border-dark-200;
     }
     &_button {
-      @apply rounded-lg flex px-2 py-2 items-center justify-center text-center cursor-pointer w-44 tablet:px-5 tablet:py-3 laptop:px-4 laptop:py-3 desktop:px-4 desktop:py-2;
+      @apply rounded-lg flex px-2 py-2 items-center justify-center text-center cursor-pointer w-44 tablet:px-5 tablet:py-3 laptop:px-4 laptop:py-3 desktop:px-4 desktop:py-2 breakpoint:px-2 breakpoint:py-1;
       background: linear-gradient(180deg, #97d10a -8.65%, #206300 100%);
       &_text {
         @apply text-caption-3 font-bold leading-caption-3 tablet:text-caption-1 tablet:leading-caption-1 desktop:text-caption-2;
       }
     }
     &_logoutbutton {
-      @apply rounded-lg border border-dark-200 bg-dark-200 flex px-3 py-2 tablet:px-5 tablet:py-3 laptop:px-4 laptop:py-2 items-center justify-center text-center w-44 desktop:px-2 desktop:py-2;
+      @apply rounded-lg border border-dark-200 bg-dark-200 flex px-3 py-2 tablet:px-5 tablet:py-3 laptop:px-4 laptop:py-2 items-center justify-center text-center w-44 breakpoint:px-1 breakpoint:py-1 desktop:px-2 desktop:py-2;
       &_text {
         @apply text-caption-3 leading-caption-3 tablet:text-caption-1 tablet:leading-caption-1 desktop:text-caption-1 desktop:leading-caption-1 font-medium pr-2;
       }
