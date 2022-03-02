@@ -80,7 +80,7 @@ export const fetchPortfolio = async (account, wrappedURL) => {
                 assetID: derivative.id,
                 price: null,
                 expiryDate: new Date(),
-                expiryTime: moment("12:15", format),
+                expiryTime: moment().utc().add(15,"minutes"),
                 tokenDecimal: project.projectTokenDecimal,
                 quantity: numOfTokens,
                 unlockDate: displayDate,

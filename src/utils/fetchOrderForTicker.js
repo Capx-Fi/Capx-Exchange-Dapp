@@ -195,6 +195,8 @@ export const fetchOrderForTicker = async (
           amountSent: order.amountSent,
           amountReceived: order.amountReceived,
           fulfillOrderTimestampInSeconds: order.fulfillOrderTimestamp,
+          maxAmountGive: giveTokens.minus(numSent),
+          maxAmountGet: numOfTokens.minus(numReceived),
           fulfillOrderTimestamp: convertDateToString(
             order.fulfillOrderTimestamp
           ),

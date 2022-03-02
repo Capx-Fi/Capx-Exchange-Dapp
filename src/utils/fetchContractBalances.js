@@ -183,7 +183,7 @@ export const fetchContractBalances = async (
           assetID: contractHolding.assetID,
           price: null,
           expiryDate: new Date(),
-          expiryTime: moment("12:15", format),
+          expiryTime: moment().utc().add(15,"minutes"),
           unlockTime: contractHolding.unlockTime,
           tokenDecimal: contractHolding.decimal,
           quantity: contractHolding.actualBalance,
