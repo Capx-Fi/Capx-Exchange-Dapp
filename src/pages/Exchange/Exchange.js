@@ -24,6 +24,7 @@ function ExchangeScreen({ match }) {
   useEffect(() => {
     dispatch(hideSideNav());
   }, []);
+
   const { active, account, chainId } = useWeb3React();
   const [payAmount, setPayAmount] = useState(null);
   const [receiveAmount, setReceiveAmount] = useState(null);
