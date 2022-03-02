@@ -181,7 +181,11 @@ function BuyScreen({
         approveModalStatus={approveModalStatus}
         setApproveModalStatus={setApproveModalStatus}
       />
-      <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus} />
+      <BuyModal 
+        open={buyModalOpen}
+        setOpen={buyModalOpen} 
+        buyModalStatus={buyModalStatus} 
+      />
       <div className="exchangeScreen_rightcontainer_buyContainer">
         <div className="exchangeScreen_rightcontainer_buyContainer_header">
           <div className="exchangeScreen_rightcontainer_buyContainer_header_title">
