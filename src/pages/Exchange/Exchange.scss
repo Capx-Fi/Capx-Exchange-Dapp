@@ -1,13 +1,13 @@
 .exchangeScreen {
-  @apply w-85p mx-auto mt-16 breakpoint:w-full desktop:w-full desktop:mt-8 desktop:pt-2 desktop:pl-24 breakpoint:pl-2;
+  @apply w-85p tablet:w-full mx-auto mt-16 breakpoint:w-full desktop:w-full desktop:mt-8 desktop:pt-2 desktop:pl-24 breakpoint:pl-2;
   &_maincontainer {
     @apply flex mt-4 w-full desktop:mt-0 breakpoint:-mt-4;
   }
   &_leftcontainer {
-    @apply w-full pr-40 breakpoint:w-62v breakpoint:pr-20 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2;
+    @apply tablet:mx-auto tablet:w-full tablet:pr-0 pr-40 breakpoint:w-62v breakpoint:pr-20 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0;
   }
   &_rightcontainer {
-    @apply pl-4 desktop:w-30v desktop:pr-10 breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
+    @apply pl-4 upper:w-30v desktop:w-33v desktop:pr-12 upper:pr-14 breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
 
     &_buyContainer {
       @apply border rounded-2xl flex flex-col border-dark-50;
@@ -164,14 +164,14 @@
     }
   }
   &_header {
-    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v breakpoint:w-60v desktop:w-62v;
+    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v upper:w-62v desktop:w-60v phone:w-full;
     &_titlecontainer {
       @apply flex flex-col items-start;
       &_title {
-        @apply text-subheading font-medium text-white desktop:text-heading-3 breakpoint:text-paragraph-2;
+        @apply text-subheading font-medium text-white desktop:text-heading-3 breakpoint:text-paragraph-2 phone:text-caption-2;
       }
       &_subtitle {
-        @apply text-caption-1 text-grayLabel font-semibold mb-5 desktop:text-caption-1 breakpoint:text-caption-2;
+        @apply text-caption-1 text-grayLabel font-semibold mb-5 desktop:text-caption-1 breakpoint:text-caption-2 phone:text-caption-4;
       }
     }
   }
