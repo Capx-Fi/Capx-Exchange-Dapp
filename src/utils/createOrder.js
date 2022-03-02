@@ -23,8 +23,8 @@ function convert(str) {
 
 function convertToSeconds(str) {
   var date = new Date(str),
-    hours = ("0" + date.getHours()).slice(-2),
-    minutes = ("0" + date.getMinutes()).slice(-2);
+    hours = ("0" + date.getUTCHours()).slice(-2),
+    minutes = ("0" + date.getUTCMinutes()).slice(-2);
   return +hours * 60 * 60 + +minutes * 60;
 }
 export const createOrder = async (
