@@ -95,7 +95,7 @@ function SellScreen({
       setSellTicker({
         ...nullSellTicker,
         expiryDate: new Date(),
-        expiryTime: moment('12:15', format),
+        expiryTime: moment().utc().add(15,"minutes"),
       })
     );
   };
