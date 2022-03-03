@@ -159,7 +159,7 @@ function TokenSellTable({ filter, refresh }) {
   }, [filter]);
 
   function onChange(pagination, filters, sorter, extra) {
-    console.log("params", pagination, filters, sorter, extra);
+    // console.log("params", pagination, filters, sorter, extra);
   }
 
   const dispatch = useDispatch();

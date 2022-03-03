@@ -215,7 +215,7 @@ function BuyScreen({
                     ticker?.maxAmountGet,
                     ticker?.maxAmountGet * ticker?.price
                   ).then((res) => {
-                    console.log("BT", res);
+                    // console.log("BT", res);
                     setCheckBuy(res);
                     dispatch(
                       setProjectBuyTicker({
@@ -253,8 +253,8 @@ function BuyScreen({
                   dispatch(
                     setProjectBuyTicker({
                       ...ticker,
-                      amountGive: res["amountGiveStableCoin"],
-                      amountGet: res["amountGetDerivativeValue"],
+                      amountGet: Math.min(ticker?.balance/ticker?.price, ticker?.maxAmountGet),
+                      amountGive: Math.min(ticker?.balance, ticker?.maxAmountGet * ticker?.price)
                     })
                   );
                 })
