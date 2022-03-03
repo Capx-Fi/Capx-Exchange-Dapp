@@ -255,8 +255,8 @@ function BuyScreen({
                   dispatch(
                     setBuyTicker({
                       ...ticker,
-                      amountGive: res["amountGiveStableCoin"],
-                      amountGet: res["amountGetDerivativeValue"],
+                      amountGet: Math.min(ticker?.balance/ticker?.price, ticker?.maxAmountGet),
+                      amountGive: Math.min(ticker?.balance, ticker?.maxAmountGet * ticker?.price)
                     })
                   );
                 })
