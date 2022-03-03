@@ -80,7 +80,7 @@ export const fetchPortfolio = async (account, wrappedURL) => {
                 assetID: derivative.id,
                 price: null,
                 expiryDate: new Date(),
-                expiryTime: moment("12:15", format),
+                expiryTime: moment().utc().add(15,"minutes"),
                 tokenDecimal: project.projectTokenDecimal,
                 quantity: numOfTokens,
                 unlockDate: displayDate,
@@ -94,7 +94,7 @@ export const fetchPortfolio = async (account, wrappedURL) => {
       .flat();
     userHoldings.sort((a, b) => new Date(a.date) - new Date(b.date));
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
   return userHoldings;
 };

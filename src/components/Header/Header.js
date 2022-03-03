@@ -1,27 +1,27 @@
-import './Header.scss';
-import CapxLogo from '../../assets/CapxExchangeLogo.svg';
-import LogoutIcon from '../../assets/logout.svg';
-import { useSnackbar } from 'notistack';
-import { hexStripZeros } from '@ethersproject/bytes';
-import Web3 from 'web3';
-import { Web3Provider } from '@ethersproject/providers';
+import "./Header.scss";
+import CapxLogo from "../../assets/CapxExchangeLogo.svg";
+import LogoutIcon from "../../assets/logout.svg";
+import { useSnackbar } from "notistack";
+import { hexStripZeros } from "@ethersproject/bytes";
+import Web3 from "web3";
+import { Web3Provider } from "@ethersproject/providers";
 
-import { useMetamask } from '../../metamaskReactHook/index';
+import { useMetamask } from "../../metamaskReactHook/index";
 
-import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core';
-import { injected } from '../../utils/connector';
+import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
+import { injected } from "../../utils/connector";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import NextIcon from '../../assets/next-black.svg';
-import ConnectCTA from '../CTA/ConnectCTA';
-import { hideSideNav } from '../../redux/actions/sideNav';
-import ToggleSwitch from '../ToggleSwitch/ToggleSwitch';
-import { useLocation } from 'react-router-dom';
-import HeaderDropdown from '../HeaderSearch/HeaderDropdown';
-import { fetchAllProjectData } from '../../utils/fetchAllProjectData';
+import NextIcon from "../../assets/next-black.svg";
+import ConnectCTA from "../CTA/ConnectCTA";
+import { hideSideNav } from "../../redux/actions/sideNav";
+import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+import { useLocation } from "react-router-dom";
+import HeaderDropdown from "../HeaderSearch/HeaderDropdown";
+import { fetchAllProjectData } from "../../utils/fetchAllProjectData";
 import {
   BSC_CHAIN_ID,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
@@ -41,9 +41,9 @@ import {
   GRAPHAPIURL_WRAPPED_BSC,
   GRAPHAPIURL_WRAPPED_ETHEREUM,
   WRONG_CHAIN_MESSAGE,
-} from '../../constants/config';
-import DropDown from './DropDown/DropDown';
-import AccountDropdown from './AccountDropdown/AccountDropdown';
+} from "../../constants/config";
+import DropDown from "./DropDown/DropDown";
+import AccountDropdown from "./AccountDropdown/AccountDropdown";
 
 function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   const location = useLocation();
@@ -52,7 +52,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     useWeb3React();
   const { metaState, getChain } = useMetamask();
   const [projectData, setProjectData] = useState([]);
-  const desiredChainId = '4';
+  const desiredChainId = "4";
   const currentChainId = metaState.chain.id?.toString();
   const [dashboardModal, setDashboardModal] = useState(false);
 
@@ -88,7 +88,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
       ? GRAPHAPIURL_MASTER_MATIC
       : GRAPHAPIURL_MASTER_ETHEREUM;
 
-  const [sortBy, setSortBy] = useState('Ethereum');
+  const [sortBy, setSortBy] = useState("Ethereum");
   const handleCloseSelectDashboard = () => {
     setDashboardModal(false);
   };
@@ -98,7 +98,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     } catch (ex) {
       if (ex instanceof UnsupportedChainIdError) {
         enqueueSnackbar(WRONG_CHAIN_MESSAGE, {
-          variant: 'error',
+          variant: "error",
         });
       }
     }
@@ -107,9 +107,9 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     if (active) fetchProjects();
   }, [account, chainId]);
   useEffect(() => {
-    if (chainId === 80001 || chainId === 137) setSortBy('Matic');
-    else if (chainId === 97 || chainId === 56) setSortBy('BSC');
-    else setSortBy('Ethereum');
+    if (chainId === 80001 || chainId === 137) setSortBy("Matic");
+    else if (chainId === 97) setSortBy("BSC");
+    else setSortBy("Ethereum");
   }, [chainId]);
   const fetchProjects = async () => {
     const projects = await fetchAllProjectData(
@@ -121,52 +121,68 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   };
 
   const chainChange = async (chainName) => {
-    if (chainName === 'Ethereum') {
+    if (chainName === "Ethereum") {
       try {
         await web3.currentProvider.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x4' }],
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0x4" }],
         });
       } catch (error) {}
-    } else if (chainName === 'Matic') {
+    } else if (chainName === "Matic") {
       try {
-        // await web3.currentProvider.request({
-        //   method: 'wallet_addEthereumChain',
-        //   params: [
-        //     {
-        //       chainId: '0x13881',
-        //       chainName: 'Polygon Testnet',
-        //       nativeCurrency: {
-        //         name: 'MATIC',
-        //         symbol: 'MATIC',
-        //         decimals: 18,
-        //       },
-        //       rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
-        //       blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
-        //     },
-        //   ],
-        // });
-        await window.ethereum.request({
-          method: "wallet_addEthereumChain",
+        await web3.currentProvider.request({
+          method: 'wallet_addEthereumChain',
           params: [
             {
-              chainId: "0x89",
-              chainName: "Polygon",
+              chainId: '0x13881',
+              chainName: 'Polygon Testnet',
               nativeCurrency: {
-                name: "MATIC",
-                symbol: "MATIC",
+                name: 'MATIC',
+                symbol: 'MATIC',
                 decimals: 18,
               },
-              rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
-              blockExplorerUrls: ["https://polygonscan.com/"],
+              rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
+              blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
             },
           ],
         });
+        // await window.ethereum.request({
+        //   method: "wallet_addEthereumChain",
+        //   params: [
+        //     {
+        //       chainId: "0x89",
+        //       chainName: "Polygon",
+        //       nativeCurrency: {
+        //         name: "MATIC",
+        //         symbol: "MATIC",
+        //         decimals: 18,
+        //       },
+        //       rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
+        //       blockExplorerUrls: ["https://polygonscan.com/"],
+        //     },
+        //   ],
+        // });
       } catch (error) {}
-    } else if (chainName === 'BSC') {
+    } else if (chainName === "BSC") {
       try {
-        // await web3.currentProvider.request({
-        //   method: 'wallet_addEthereumChain',
+        await web3.currentProvider.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: "0x61",
+              chainName: "Binance Smart Chain Test",
+              nativeCurrency: {
+                name: "BNB",
+                symbol: "BNB",
+                decimals: 18,
+              },
+              rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+              blockExplorerUrls: ["https://testnet.bscscan.com/"],
+            },
+          ],
+        });
+        // await window.ethereum.request({
+        //   method: "wallet_addEthereumChain",
         //   params: [
         //     {
         //       chainId: '0x61',
@@ -206,7 +222,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     try {
       deactivate();
     } catch (ex) {
-      console.log(ex);
+      // console.log(ex);
     }
   }
   return (
@@ -214,31 +230,35 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
       <header
         className={`header z-40 ${
           vesting
-            ? 'border-b border-dark-200 tablet:border-none'
-            : 'border-b border-dark-200 '
+            ? "border-b border-dark-200 tablet:border-none"
+            : "border-b border-dark-200 "
         }`}
       >
-        <a href='/'>
+        <a href="/">
           <div>
             <img
-              className={`header_logo ${vesting && 'flex tablet:hidden '}`}
+              className={`${
+                location.pathname === "/" && active
+                  ? "header_logo"
+                  : "header_logoInfo"
+              } ${vesting && "flex tablet:hidden "} `}
               src={CapxLogo}
-              alt='capx logo'
+              alt="capx logo"
             />
           </div>
         </a>
         {active &&
-          (location.pathname.includes('info') ? (
+          (location.pathname.includes("info") ? (
             <HeaderDropdown
               dropdownData={projectData}
-              placeholderText={'Search for Assets or Projects'}
+              placeholderText={"Search for Assets or Projects"}
             />
-          ) : location.pathname === '/exchange' || location.pathname === '/' ? (
+          ) : location.pathname === "/exchange" || location.pathname === "/" ? (
             <ToggleSwitch />
           ) : null)}
         {!hiddenNav && (
-          <div className='header_navbar'>
-            <DropDown sortBy={sortBy} chainChange={chainChange} />
+          <div className="header_navbar">
+            {active && <DropDown sortBy={sortBy} chainChange={chainChange} />}
             {active ? (
               // <div className="ml-4 header_navbar_logoutbutton">
               //   <div className="header_navbar_logoutbutton_text">
@@ -266,14 +286,14 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
               />
             ) : (
               <ConnectCTA
-                classes='cbutton'
-                title='CONNECT'
+                classes="cbutton"
+                title="CONNECT"
                 icon={NextIcon}
                 onClick={connect}
               />
             )}
           </div>
-        )}{' '}
+        )}{" "}
       </header>
     </>
   );

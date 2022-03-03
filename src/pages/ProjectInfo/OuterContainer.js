@@ -1,19 +1,23 @@
-import React from 'react';
-import './ProjectInfo.scss';
+import React from "react";
+import "./ProjectInfo.scss";
 
-import infoIcon from '../../assets/info.svg';
-import './ProjectInfo.scss';
+import infoIcon from "../../assets/info.svg";
 
 function OuterContainer({ icon, content, title }) {
   return (
-    <div className='outerContainer'>
-      <div className='outerContainer_maincontainer'>
-        <div className='outerContainer_maincontainer_body'>
-          <div className='outerContainer_maincontainer_body_title'>
-            <img src={icon} className='mr-2 h-4 desktop:mt-1' alt="project icon" /> {title}
+    <div className="outerContainer">
+      <div className="outerContainer_maincontainer">
+        <div className="outerContainer_maincontainer_body">
+          <div className="outerContainer_maincontainer_body_title">
+            <img
+              src={icon}
+              className="mr-2 h-4 desktop:mt-1"
+              alt="project icon"
+            />{" "}
+            {title}
           </div>
-          <div className='outerContainer_maincontainer_body_innercontainer'>
-            <div className='outerContainer_maincontainer_body_innercontainer_box'>
+          <div className="outerContainer_maincontainer_body_innercontainer">
+            <div className="outerContainer_maincontainer_body_innercontainer_box">
               {content}
             </div>
           </div>

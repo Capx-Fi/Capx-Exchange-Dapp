@@ -38,7 +38,7 @@ const useMetamask = () => {
       throw Error(
         "Web3 Provider is required. You can use either ethers.js or web3.js."
       );
-    console.log(provider, typeof _isMounted.current);
+    // console.log(provider, typeof _isMounted.current);
     if (!_isMounted.current) throw Error("Component is not mounted.");
     if (_isConnectCalled.current) throw Error("Connect method already called.");
     _isConnectCalled.current = true;

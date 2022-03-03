@@ -90,12 +90,12 @@ function SellScreen({
   const resetValue = () => {
     let nullSellTicker = ticker;
     if (nullSellTicker)
-      Object.keys(nullSellTicker).forEach((i) => (nullSellTicker[i] = ''));
+      Object.keys(nullSellTicker).forEach((i) => (nullSellTicker[i] = ""));
     dispatch(
       setSellTicker({
         ...nullSellTicker,
         expiryDate: new Date(),
-        expiryTime: moment('12:15', format),
+        expiryTime: moment().utc().add(15, "minutes"),
       })
     );
   };
@@ -118,7 +118,7 @@ function SellScreen({
     dispatch(setSellTicker({ ...ticker, expiryDate: e }));
   };
   const setTime = (e) => {
-    dispatch(setSellTicker({ ...ticker, expiryTime: moment(e, format) }));
+    dispatch(setSellTicker({ ...ticker, expiryTime: moment(e, format).utc() }));
   };
   const setQuantity = (e) => {
     dispatch(setSellTicker({ ...ticker, quantity: e }));
@@ -136,9 +136,9 @@ function SellScreen({
 
   const checkValidSell = async () => {
     const tokenDecimal = await tokenGetInst.methods.decimals().call();
-    console.log(tokenDecimal, 'Tok Dec');
+    // console.log(tokenDecimal, "Tok Dec");
     const checkValidity = await validateSellAmount(ticker, tokenDecimal);
-    console.log(checkValidity);
+    // console.log(checkValidity);
     setCheckSell(checkValidity);
   };
   const initiateSwapApproval = async () => {
@@ -198,8 +198,8 @@ function SellScreen({
 
   function convertToSeconds(str) {
     var date = new Date(str),
-      hours = ('0' + date.getHours()).slice(-2),
-      minutes = ('0' + date.getMinutes()).slice(-2);
+      hours = ("0" + date.getUTCHours()).slice(-2),
+      minutes = ("0" + date.getUTCMinutes()).slice(-2);
     return +hours * 60 * 60 + +minutes * 60;
   }
 
@@ -256,8 +256,8 @@ function SellScreen({
               src={BuyIcon}
               alt='buy icon'
             />
-            <div className='exchangeScreen_rightcontainer_buyContainer_header_title_text'>
-              SELL {ticker?.asset !== undefined && '- ' + ticker?.asset}
+            <div className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
+              SELL {ticker?.asset !== undefined && "- " + ticker?.asset}
             </div>
           </div>
         </div>
@@ -298,9 +298,9 @@ function SellScreen({
               </div>
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
-                  !ticker?.asset || ticker?.asset === ''
-                    ? 'pointer-events-none ring-dark-50'
-                    : 'ring-success-color-500 '
+                  !ticker?.asset || ticker?.asset === ""
+                    ? "pointer-events-none ring-dark-50"
+                    : "ring-success-color-500 "
                 } `}
               >
                 <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper'>
@@ -372,14 +372,14 @@ function SellScreen({
               </div>
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
-                  !ticker || !ticker?.asset || ticker?.asset === ''
-                    ? 'pointer-events-none ring-dark-50'
-                    : 'ring-success-color-500 '
+                  !ticker || !ticker?.asset || ticker?.asset === ""
+                    ? "pointer-events-none ring-dark-50"
+                    : "ring-success-color-500 "
                 } `}
               >
                 <div className='exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper w-full'>
                   <TimePicker
-                    defaultValue={moment()}
+                    defaultValue={moment().utc().add(15, "minutes")}
                     allowClear={false}
                     disabled={!ticker}
                     bordered={false}
@@ -410,7 +410,8 @@ function SellScreen({
                 : initiateSwapApproval()
             }
             className={`exchangeScreen_rightcontainer_buyContainer_body_swapButton ${
-              (!ticker ||
+              (!ticker?.asset ||
+                ticker?.asset === "" ||
                 disabled ||
                 !checkSell?.['amountGiveLegal'] ||
                 !checkSell?.['USDTLegal']) &&

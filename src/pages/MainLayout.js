@@ -38,7 +38,7 @@ const MainLayout = ({ sideNavState }) => {
           } root_maincontainer`}
         >
           <main>
-            <div className='w-11/12 mx-auto pb-12 bg-dark-400 desktop:w-full  desktop:mb-0'>
+            <div className='w-11/12 mx-auto pb-12 bg-dark-400 desktop:w-full desktop:mb-0'>
               <Switch>
                 <Route exact path='/' component={ExchangeScreen} />
                 <Route exact path='/overview' component={Overview} />

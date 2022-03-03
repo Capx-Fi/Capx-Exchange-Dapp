@@ -1,4 +1,4 @@
-import "../Exchange/Exchange.scss";
+import "./ProjectInfo.scss";
 import React, { useEffect, useRef, useState } from "react";
 import { render } from "react-dom";
 import { hideSideNav, showSideNav } from "../../redux/actions/sideNav";
@@ -7,7 +7,6 @@ import BuyIcon from "../../assets/buy.svg";
 import LockIcon from "../../assets/lock-asset.svg";
 import SwapIcon from "../../assets/swap.svg";
 import NextIcon from "../../assets/next-black.svg";
-import { setBuyTicker } from "../../redux/actions/exchange";
 import { setProjectBuyTicker } from "../../redux/actions/exchange";
 import RefresherInput from "../../components/RefresherInput/RefresherInput";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
@@ -88,19 +87,23 @@ function BuyScreen({
       : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
   const ticker = useSelector((state) => state.exchange.projectBuyTicker);
   const resetValue = () => {
-        let nullBuyTicker = ticker;
-        Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
-        dispatch(setProjectBuyTicker({ ...nullBuyTicker }));
+    let nullBuyTicker = ticker;
+    Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+    dispatch(setProjectBuyTicker({ ...nullBuyTicker }));
   };
 
   useEffect(() => {
-    if (buyModalStatus === 'success') {
+    if (buyModalStatus === "success") {
       resetValue();
     }
   }, [buyModalStatus]);
 
-  const checkValidBuy = async () => {
-    const checkValidity = await validateBuyAmount(ticker);
+  const checkValidBuy = async (amountGet, amountGive) => {
+    const checkValidity = await validateBuyAmount(
+      ticker,
+      amountGet,
+      amountGive
+    );
     setCheckBuy(checkValidity);
   };
   const initiateSwapApproval = async () => {
@@ -152,7 +155,7 @@ function BuyScreen({
     }, 6000);
   };
   useEffect(() => {
-    checkValidBuy();
+    checkValidBuy(ticker?.amountGet, ticker?.amountGive);
   }, [ticker?.amountGet, ticker?.amountGive]);
   useEffect(() => {
     if (ticker?.amountGive <= 0 || ticker?.amountGet <= 0) {
@@ -168,8 +171,9 @@ function BuyScreen({
   }, [ticker?.amountGive]);
   return (
     <div
-      className={`exchangeScreen_rightcontainer ${
-        (!ticker || !ticker?.asset || ticker?.asset === '') && "opacity-60 cursor-not-allowed"
+      className={`main-container_rightcontainer ${
+        (!ticker || !ticker?.asset || ticker?.asset === "") &&
+        "opacity-60 cursor-not-allowed"
       }`}
     >
       <ApproveModal
@@ -199,38 +203,70 @@ function BuyScreen({
             </div>
             <RefresherInput
               ticker={ticker}
-              disabled={!ticker}
+              disabled={!ticker?.asset || ticker?.asset === ""}
               setTicker={(e) => {
                 if (
                   BigNumber(e.target.value)
                     .dividedBy(ticker.price)
                     .isGreaterThan(ticker?.maxAmountGet)
                 ) {
-                  dispatch(
-                    setProjectBuyTicker({
-                      ...ticker,
-                      amountGive: ticker?.maxAmountGet * ticker?.price,
-                      amountGet: ticker?.maxAmountGet,
-                    })
-                  );
+                  validateBuyAmount(
+                    ticker,
+                    ticker?.maxAmountGet,
+                    ticker?.maxAmountGet * ticker?.price
+                  ).then((res) => {
+                    // console.log("BT", res);
+                    setCheckBuy(res);
+                    dispatch(
+                      setProjectBuyTicker({
+                        ...ticker,
+                        amountGet: res["amountGetDerivativeValue"],
+                        amountGive: res["amountGiveStableCoin"],
+                      })
+                    );
+                  });
                 } else {
-                  dispatch(
-                    setProjectBuyTicker({
-                      ...ticker,
-                      amountGive: e.target.value,
-                      amountGet: (e.target.value / ticker.price).toString(),
-                    })
-                  );
+                  validateBuyAmount(
+                    ticker,
+                    e.target.value / ticker.price,
+                    e.target.value
+                  ).then((res) => {
+                    setCheckBuy(res);
+                    dispatch(
+                      setProjectBuyTicker({
+                        ...ticker,
+                        amountGive: res["amountGiveStableCoin"],
+                        amountGet: res["amountGetDerivativeValue"],
+                      })
+                    );
+                  });
                 }
               }}
               warningText={warningCheck && "You don't have enough balance"}
-              setMaxAmount={setMaxAmount}
+              setMaxAmount={() =>
+                validateBuyAmount(
+                  ticker,
+                  ticker.balance / ticker.price,
+                  ticker.balance
+                ).then((res) => {
+                  setCheckBuy(res);
+                  dispatch(
+                    setProjectBuyTicker({
+                      ...ticker,
+                      amountGet: Math.min(ticker?.balance/ticker?.price, ticker?.maxAmountGet),
+                      amountGive: Math.min(ticker?.balance, ticker?.maxAmountGet * ticker?.price)
+                    })
+                  );
+                })
+              }
               isMax={true}
               balance={ticker?.balance}
-              value={ticker && ticker.amountGive}
+              value={ticker ? ticker.amountGive : ""}
             />
           </div>
-          {warningCheck && <WarningCard text={`You don't have enough `+ ticker.GetAsset} />}
+          {warningCheck && (
+            <WarningCard text={`You don't have enough ` + ticker.GetAsset} />
+          )}
           {(!checkBuy?.["stableCoinLegal"] ||
             !checkBuy?.["DerivativeLegal"]) && (
             <WarningCard text={`INVALID INPUT`} />
@@ -253,29 +289,43 @@ function BuyScreen({
             <RefresherInput
               icon={ticker && LockIcon}
               ticker={ticker}
-              disabled={!ticker}
+              disabled={!ticker?.asset || ticker?.asset === ""}
               isMax={false}
               balance={null}
-              value={ticker && ticker.amountGet}
+              value={ticker ? ticker.amountGet : ""}
               setTicker={(e) => {
                 if (
                   BigNumber(e.target.value).isGreaterThan(ticker?.maxAmountGet)
                 ) {
-                  dispatch(
-                    setProjectBuyTicker({
-                      ...ticker,
-                      amountGive: ticker?.maxAmountGet * ticker?.price,
-                      amountGet: ticker?.maxAmountGet,
-                    })
-                  );
+                  validateBuyAmount(
+                    ticker,
+                    ticker?.maxAmountGet,
+                    ticker?.maxAmountGet * ticker?.price
+                  ).then((res) => {
+                    setCheckBuy(res);
+                    dispatch(
+                      setProjectBuyTicker({
+                        ...ticker,
+                        amountGet: res["amountGetDerivativeValue"],
+                        amountGive: res["amountGiveStableCoin"],
+                      })
+                    );
+                  });
                 } else {
-                  dispatch(
-                    setProjectBuyTicker({
-                      ...ticker,
-                      amountGive: e.target.value * ticker?.price,
-                      amountGet: e.target.value,
-                    })
-                  );
+                  validateBuyAmount(
+                    ticker,
+                    e.target.value,
+                    e.target.value * ticker?.price
+                  ).then((res) => {
+                    setCheckBuy(res);
+                    dispatch(
+                      setProjectBuyTicker({
+                        ...ticker,
+                        amountGet: res["amountGetDerivativeValue"],
+                        amountGive: res["amountGiveStableCoin"],
+                      })
+                    );
+                  });
                 }
               }}
             />

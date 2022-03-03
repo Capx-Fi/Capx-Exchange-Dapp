@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { hideSideNav } from '../../redux/actions/sideNav';
-import BuyScreen from './Buy';
-import ProjectDescription from './ProjectDescription';
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { hideSideNav } from "../../redux/actions/sideNav";
+import BuyScreen from "./Buy";
+import ProjectDescription from "./ProjectDescription";
 import { setProjectBuyTicker } from "../../redux/actions/exchange";
 
 import {
@@ -24,20 +24,20 @@ import {
   GRAPHAPIURL_WRAPPED_BSC,
   GRAPHAPIURL_WRAPPED_ETHEREUM,
 } from "../../constants/config";
-import InfoHeader from './InfoHeader';
-import { fetchProjectDetails } from '../../utils/fetchProjectDetails';
-import { useState } from 'react';
-import { fetchOrderForTicker } from '../../utils/fetchOrderForTicker';
-import { useWeb3React } from '@web3-react/core';
-import MetamaskModal from '../../components/Modals/MetamaskModal/MetamaskModal';
-import { useSelector } from 'react-redux';
+import InfoHeader from "./InfoHeader";
+import { fetchProjectDetails } from "../../utils/fetchProjectDetails";
+import { useState } from "react";
+import { fetchOrderForTicker } from "../../utils/fetchOrderForTicker";
+import { useWeb3React } from "@web3-react/core";
+import MetamaskModal from "../../components/Modals/MetamaskModal/MetamaskModal";
+import { useSelector } from "react-redux";
 
 function ProjectInfo({ match }) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(hideSideNav());
   }, []);
-    const ticker = useSelector((state) => state.exchange.projectBuyTicker);
+  const ticker = useSelector((state) => state.exchange.projectBuyTicker);
   const [projectDetails, setProjectDetails] = useState({});
   const [activeOrders, setActiveOrders] = useState([]);
   const [completeOrders, setCompleteOrders] = useState([]);
@@ -47,43 +47,43 @@ function ProjectInfo({ match }) {
   const [refresh, setRefresh] = useState(false);
   const [lastSellingPrice, setLastSellingPrice] = useState(0);
   const [averageSellingPrice, setAverageSellingPrice] = useState(0);
-    const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-      chainId?.toString() === BSC_CHAIN_ID?.toString()
-        ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-        : chainId?.toString() === MATIC_CHAIN_ID.toString()
-        ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-        : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
-    const CHAIN_USDT_CONTRACT_ADDRESS =
-      chainId?.toString() === BSC_CHAIN_ID?.toString()
-        ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-        : chainId?.toString() === MATIC_CHAIN_ID.toString()
-        ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-        : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
-    const exchangeURL =
-      chainId?.toString() === BSC_CHAIN_ID?.toString()
-        ? GRAPHAPIURL_EXCHANGE_BSC
-        : chainId?.toString() === MATIC_CHAIN_ID.toString()
-        ? GRAPHAPIURL_EXCHANGE_MATIC
-        : GRAPHAPIURL_EXCHANGE_ETHEREUM;
-    const wrappedURL =
-      chainId?.toString() === BSC_CHAIN_ID?.toString()
-        ? GRAPHAPIURL_WRAPPED_BSC
-        : chainId?.toString() === MATIC_CHAIN_ID.toString()
-        ? GRAPHAPIURL_WRAPPED_MATIC
-        : GRAPHAPIURL_WRAPPED_ETHEREUM;
-    const masterURL =
-      chainId?.toString() === BSC_CHAIN_ID?.toString()
-        ? GRAPHAPIURL_MASTER_BSC
-        : chainId?.toString() === MATIC_CHAIN_ID.toString()
-        ? GRAPHAPIURL_MASTER_MATIC
-        : GRAPHAPIURL_MASTER_ETHEREUM;
+  const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
+      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+  const CHAIN_USDT_CONTRACT_ADDRESS =
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
+      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+  const exchangeURL =
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
+      ? GRAPHAPIURL_EXCHANGE_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? GRAPHAPIURL_EXCHANGE_MATIC
+      : GRAPHAPIURL_EXCHANGE_ETHEREUM;
+  const wrappedURL =
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
+      ? GRAPHAPIURL_WRAPPED_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? GRAPHAPIURL_WRAPPED_MATIC
+      : GRAPHAPIURL_WRAPPED_ETHEREUM;
+  const masterURL =
+    chainId?.toString() === BSC_CHAIN_ID?.toString()
+      ? GRAPHAPIURL_MASTER_BSC
+      : chainId?.toString() === MATIC_CHAIN_ID.toString()
+      ? GRAPHAPIURL_MASTER_MATIC
+      : GRAPHAPIURL_MASTER_ETHEREUM;
 
   useEffect(() => {
-        let nullBuyTicker = ticker;
-        if (nullBuyTicker) {
-          Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
-          dispatch(setProjectBuyTicker({ ...nullBuyTicker }));
-        }
+    let nullBuyTicker = ticker;
+    if (nullBuyTicker) {
+      Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+      dispatch(setProjectBuyTicker({ ...nullBuyTicker }));
+    }
     getProjectDetails(match.params.ticker);
   }, [match.params.ticker, active, account, chainId, refresh]);
   const getProjectDetails = async () => {
@@ -117,7 +117,7 @@ function ProjectInfo({ match }) {
           style={{
             filter: approveModalOpen || buyModalOpen ? "blur(10000px)" : "none",
           }}
-          className="w-82v mx-auto "
+          className="w-82v breakpoint:w-full  desktop:w-82v mx-auto "
         >
           <div className="main-container">
             <div className="main-container_left">

@@ -14,7 +14,7 @@ function TokenListTable({ activeOrders }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
 
   function onChange(pagination, filters, sorter, extra) {
-    console.log("params", pagination, filters, sorter, extra);
+    // console.log("params", pagination, filters, sorter, extra);
   }
   const dispatch = useDispatch();
   return (

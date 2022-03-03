@@ -164,7 +164,7 @@ function WithdrawTokenTable({ filter, refetch }) {
   }, [filter]);
 
   function onChange(pagination, filters, sorter, extra) {
-    console.log("params", pagination, filters, sorter, extra);
+    // console.log("params", pagination, filters, sorter, extra);
   }
 
   const dispatch = useDispatch();
@@ -197,7 +197,7 @@ function WithdrawTokenTable({ filter, refetch }) {
           dataIndex="asset"
           key="asset"
           render={(value, row) => {
-            // console.log("row", row, CHAIN_USDT_CONTRACT_ADDRESS);
+            // // console.log("row", row, CHAIN_USDT_CONTRACT_ADDRESS);
             return (
               <>
                 {row.assetID === CHAIN_USDT_CONTRACT_ADDRESS.toString() ? (
