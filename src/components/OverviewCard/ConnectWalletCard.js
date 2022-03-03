@@ -25,7 +25,7 @@ function ConnectWalletCard() {
       if (ex instanceof UnsupportedChainIdError) {
         enqueueSnackbar(WRONG_CHAIN_MESSAGE, { variant: "error" });
       }
-      console.log(ex);
+      // console.log(ex);
     }
   }
   return (
