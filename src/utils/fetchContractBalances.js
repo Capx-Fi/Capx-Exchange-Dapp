@@ -50,7 +50,7 @@ export const fetchContractBalances = async (
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
       : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
-  // console.log("-Stable coin-", stableCoin);
+  console.log("-Stable coin-", stableCoin);
 
   // console.log("-chain ID-", chainId);
   const liquidClient = new ApolloClient({
@@ -69,11 +69,11 @@ export const fetchContractBalances = async (
   const getHoldings = `query{
         users (where: {id:"${account.toLowerCase()}"}){
             id
-            lockedBalance (where: { assetID_not: "0x96711f91eb24a3D1dfA3eD308A84380DFD4CC1c7",lockedValue_gt:0}){
+            lockedBalance (where: { assetID_not: "${stableCoin}",lockedValue_gt:0}){
                 assetID
                 lockedValue
             }
-            totalBalance (where: { assetID_not: "0x96711f91eb24a3D1dfA3eD308A84380DFD4CC1c7",totalValue_gt: 0}){
+            totalBalance (where: { assetID_not: "${stableCoin}",totalValue_gt: 0}){
                 assetID
                 totalValue
             }
