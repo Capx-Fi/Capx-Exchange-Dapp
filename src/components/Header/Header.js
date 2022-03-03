@@ -107,9 +107,9 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     if (active) fetchProjects();
   }, [account, chainId]);
   useEffect(() => {
-    if (chainId === 80001 || chainId === 137) setSortBy("Matic");
-    else if (chainId === 97) setSortBy("BSC");
-    else setSortBy("Ethereum");
+    if (chainId === 80001 || chainId === 137) setSortBy('Matic');
+    else if (chainId === 97 || chainId === 56) setSortBy('BSC');
+    else setSortBy('Ethereum');
   }, [chainId]);
   const fetchProjects = async () => {
     const projects = await fetchAllProjectData(
@@ -130,59 +130,43 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
       } catch (error) {}
     } else if (chainName === "Matic") {
       try {
-        await web3.currentProvider.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: '0x13881',
-              chainName: 'Polygon Testnet',
-              nativeCurrency: {
-                name: 'MATIC',
-                symbol: 'MATIC',
-                decimals: 18,
-              },
-              rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
-              blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
-            },
-          ],
-        });
-        // await window.ethereum.request({
-        //   method: "wallet_addEthereumChain",
+        // await web3.currentProvider.request({
+        //   method: 'wallet_addEthereumChain',
         //   params: [
         //     {
-        //       chainId: "0x89",
-        //       chainName: "Polygon",
+        //       chainId: '0x13881',
+        //       chainName: 'Polygon Testnet',
         //       nativeCurrency: {
-        //         name: "MATIC",
-        //         symbol: "MATIC",
+        //         name: 'MATIC',
+        //         symbol: 'MATIC',
         //         decimals: 18,
         //       },
-        //       rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
-        //       blockExplorerUrls: ["https://polygonscan.com/"],
+        //       rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
+        //       blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
         //     },
         //   ],
         // });
-      } catch (error) {}
-    } else if (chainName === "BSC") {
-      try {
-        await web3.currentProvider.request({
+        await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [
             {
-              chainId: "0x61",
-              chainName: "Binance Smart Chain Test",
+              chainId: "0x89",
+              chainName: "Polygon",
               nativeCurrency: {
-                name: "BNB",
-                symbol: "BNB",
+                name: "MATIC",
+                symbol: "MATIC",
                 decimals: 18,
               },
-              rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
-              blockExplorerUrls: ["https://testnet.bscscan.com/"],
+              rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
+              blockExplorerUrls: ["https://polygonscan.com/"],
             },
           ],
         });
-        // await window.ethereum.request({
-        //   method: "wallet_addEthereumChain",
+      } catch (error) {}
+    } else if (chainName === 'BSC') {
+      try {
+        // await web3.currentProvider.request({
+        //   method: 'wallet_addEthereumChain',
         //   params: [
         //     {
         //       chainId: '0x61',
