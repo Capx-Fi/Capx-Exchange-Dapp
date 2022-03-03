@@ -1,7 +1,7 @@
 import BigNumber from "bignumber.js";
 
 export const validateBuyAmount = async (ticker, amountGet, amountGive) => {
-  console.log("INPUT", amountGet, amountGive);
+  // console.log("INPUT", amountGet, amountGive);
   // using Math.pow(10,Number("6") as "6" because USDT decimal
   // THIS TICKER
   // AMOUNT_GIVE ==== STABLE COIN ==== USDT
@@ -21,7 +21,7 @@ export const validateBuyAmount = async (ticker, amountGet, amountGive) => {
   else returnObj["stableCoinLegal"] = false;
 
   let stableCoinLegal = bn_stableCoin.integerValue();
-  console.log("Amount Give Integer Val -- ", stableCoinLegal.toString(10));
+  // console.log("Amount Give Integer Val -- ", stableCoinLegal.toString(10));
 
   // await console.log("Amount Give Integer Val -- ",amountGiveLegal.toString(10));
   returnObj["stableCoinValue"] = stableCoinLegal.toString(10);
@@ -39,7 +39,7 @@ export const validateBuyAmount = async (ticker, amountGet, amountGive) => {
 
   let compareResult = bn_derivativeAmount.comparedTo(new BigNumber(1));
 
-  await console.log("Comparison Result - aG3 ", compareResult);
+  // await console.log("Comparison Result - aG3 ", compareResult);
 
   if (compareResult > -1) returnObj["DerivativeLegal"] = true;
   else returnObj["DerivativeLegal"] = false;
@@ -49,6 +49,6 @@ export const validateBuyAmount = async (ticker, amountGet, amountGive) => {
   returnObj["amountGetDerivativeValue"] = new BigNumber(integerVal)
     .dividedBy(Math.pow(10, ticker?.derivativeDecimal))
     .toString(10);
-  console.log("OUTPUT", returnObj);
+  // console.log("OUTPUT", returnObj);
   return returnObj;
 };
