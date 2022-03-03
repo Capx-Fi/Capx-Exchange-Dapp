@@ -79,7 +79,7 @@ function WithdrawContainer({
       CHAIN_EXCHANGE_CONTRACT_ADDRESS
     );
     let totalTokens = ticker.quantity;
-    console.log("My withdraw - ", ticker);
+    // console.log("My withdraw - ", ticker);
     let totalAmount = checkWithdraw.amountWithdrawValue;
 
     // if(ticker.assetID === "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"){

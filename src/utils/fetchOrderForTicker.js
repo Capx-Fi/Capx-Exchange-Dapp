@@ -164,7 +164,7 @@ export const fetchOrderForTicker = async (
 
         // Hacky Part
 
-        console.log("Order Data :--", order);
+        // console.log("Order Data :--", order);
 
         // Derivative
         let amountBNGive = new BigNumber(order.amountGive);
@@ -182,7 +182,7 @@ export const fetchOrderForTicker = async (
         // Price BN calculation
         let priceBN = priceBNGet.dividedBy(priceBNGive);
 
-        console.log("Price ---", priceBN.toString(10));
+        // console.log("Price ---", priceBN.toString(10));
 
         // Hacky Part
 
@@ -195,6 +195,8 @@ export const fetchOrderForTicker = async (
           amountSent: order.amountSent,
           amountReceived: order.amountReceived,
           fulfillOrderTimestampInSeconds: order.fulfillOrderTimestamp,
+          maxAmountGive: giveTokens.minus(numSent),
+          maxAmountGet: numOfTokens.minus(numReceived),
           fulfillOrderTimestamp: convertDateToString(
             order.fulfillOrderTimestamp
           ),
@@ -220,7 +222,7 @@ export const fetchOrderForTicker = async (
       CHAIN_USDT_CONTRACT_ADDRESS
     );
     const tokenSymbol = await tokenInst.methods.symbol().call();
-    console.log(tokenSymbol, "tokenSymbol");
+    // console.log(tokenSymbol, "tokenSymbol");
     const USDTTokenDecimal = await tokenInst.methods.decimals().call();
     let balance = await exchangeContract.methods
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
@@ -244,11 +246,11 @@ export const fetchOrderForTicker = async (
       return order.expiryTimeInSeconds > Date.now() / 1000;
     });
     const completeOrders = listedTokens.filter((order) => {
-      console.log("Ord val : ", order);
-      console.log(order.quantity.toString(10));
+      // console.log("Ord val : ", order);
+      // console.log(order.quantity.toString(10));
       return order.quantity.toString() === "0";
     });
-    console.log(completeOrders);
+    // console.log(completeOrders);
     // sort completed orders in descending order of date completed
     completeOrders.sort((a, b) => {
       return (

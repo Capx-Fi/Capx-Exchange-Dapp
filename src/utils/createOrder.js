@@ -23,8 +23,8 @@ function convert(str) {
 
 function convertToSeconds(str) {
   var date = new Date(str),
-    hours = ("0" + date.getHours()).slice(-2),
-    minutes = ("0" + date.getMinutes()).slice(-2);
+    hours = ("0" + date.getUTCHours()).slice(-2),
+    minutes = ("0" + date.getUTCMinutes()).slice(-2);
   return +hours * 60 * 60 + +minutes * 60;
 }
 export const createOrder = async (
@@ -47,7 +47,7 @@ export const createOrder = async (
     CHAIN_USDT_CONTRACT_ADDRESS
   );
   const tokenSymbol = await tokenInst.methods.symbol().call();
-  console.log(tokenSymbol, "tokenSymbol");
+  // console.log(tokenSymbol, "tokenSymbol");
   const USDTTokenDecimal = await tokenInst.methods.decimals().call();
   let tokenGive = ticker.assetID;
   let amountGive = totalAmount;

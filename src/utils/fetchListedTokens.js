@@ -124,7 +124,7 @@ export const fetchListedTokens = async (
 
         // Hacky Part
 
-        console.log("Order Data :--", order);
+        // console.log("Order Data :--", order);
 
         // Derivative
         let amountBNGive = new BigNumber(order.amountGive);
@@ -142,7 +142,7 @@ export const fetchListedTokens = async (
         // Price BN calculation
         let priceBN = priceBNGet.dividedBy(priceBNGive);
 
-        console.log("Price ---", priceBN.toString(10));
+        // console.log("Price ---", priceBN.toString(10));
 
         // Hacky Part Ends
 
@@ -176,7 +176,7 @@ export const fetchListedTokens = async (
         };
       })
       .flat();
-          console.log("Listed Tokens before 0 :--", listedTokens);
+          // console.log("Listed Tokens before 0 :--", listedTokens);
 
     listedTokens = listedTokens.filter((token) => token.quantity > 0);
     const exchangeContract = new web3.eth.Contract(
@@ -210,7 +210,7 @@ export const fetchListedTokens = async (
     listedTokens = listedTokens.filter((token) => {
       return token.expiryTimeActual > Date.now() / 1000;
     });
-    console.log("Listed Tokens :--", listedTokens);
+    // console.log("Listed Tokens :--", listedTokens);
   } catch (error) {
     console.log(error);
   }
