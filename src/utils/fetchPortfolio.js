@@ -94,7 +94,7 @@ export const fetchPortfolio = async (account, wrappedURL) => {
       .flat();
     userHoldings.sort((a, b) => new Date(a.date) - new Date(b.date));
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
   return userHoldings;
 };

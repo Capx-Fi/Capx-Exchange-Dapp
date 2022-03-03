@@ -47,7 +47,7 @@ export const createOrder = async (
     CHAIN_USDT_CONTRACT_ADDRESS
   );
   const tokenSymbol = await tokenInst.methods.symbol().call();
-  console.log(tokenSymbol, "tokenSymbol");
+  // console.log(tokenSymbol, "tokenSymbol");
   const USDTTokenDecimal = await tokenInst.methods.decimals().call();
   let tokenGive = ticker.assetID;
   let amountGive = totalAmount;

@@ -136,9 +136,9 @@ function SellScreen({
 
   const checkValidSell = async () => {
     const tokenDecimal = await tokenGetInst.methods.decimals().call();
-    console.log(tokenDecimal, "Tok Dec");
+    // console.log(tokenDecimal, "Tok Dec");
     const checkValidity = await validateSellAmount(ticker, tokenDecimal);
-    console.log(checkValidity);
+    // console.log(checkValidity);
     setCheckSell(checkValidity);
   };
   const initiateSwapApproval = async () => {

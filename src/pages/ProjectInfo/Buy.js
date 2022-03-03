@@ -215,7 +215,7 @@ function BuyScreen({
                     ticker?.maxAmountGet,
                     ticker?.maxAmountGet * ticker?.price
                   ).then((res) => {
-                    console.log("BT", res);
+                    // console.log("BT", res);
                     setCheckBuy(res);
                     dispatch(
                       setProjectBuyTicker({

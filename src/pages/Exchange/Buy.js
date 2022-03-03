@@ -98,7 +98,7 @@ function BuyScreen({
       amountGet,
       amountGive
     );
-    console.log("checkValidity", checkValidity);
+    // console.log("checkValidity", checkValidity);
     setCheckBuy(checkValidity);
   };
   const initiateSwapApproval = async () => {
@@ -107,15 +107,15 @@ function BuyScreen({
       CONTRACT_ABI_ERC20,
       CHAIN_USDT_CONTRACT_ADDRESS
     );
-    console.log("CheckBuy", checkBuy.stableCoinValue);
-    console.log("ticker", ticker?.balance);
+    // console.log("CheckBuy", checkBuy.stableCoinValue);
+    // console.log("ticker", ticker?.balance);
 
     const tokens = new BigNumber(checkBuy.stableCoinValue).minus(
       BigNumber(ticker?.balance).multipliedBy(
         Math.pow(10, ticker?.stableCoinDecimal)
       )
     );
-    console.log("tokens", tokens);
+    // console.log("tokens", tokens);
     const tokenDecimal = ticker?.stableCoinDecimal;
     await approveSellTokens(
       vestingTokenContract,
@@ -166,10 +166,10 @@ function BuyScreen({
       setWarningCheck(false);
     }
   }, [ticker?.amountGive]);
-  console.log("My log : ", ticker);
+  // console.log("My log : ", ticker);
 
   useEffect(() => {
-    console.log("CHECK BUY", checkBuy);
+    // console.log("CHECK BUY", checkBuy);
   }, [checkBuy]);
 
   return (
@@ -316,7 +316,7 @@ function BuyScreen({
                     );
                   });
                 } else {
-                  console.log("e.target.value", e.target.value);
+                  // console.log("e.target.value", e.target.value);
                   validateBuyAmount(
                     ticker,
                     e.target.value,

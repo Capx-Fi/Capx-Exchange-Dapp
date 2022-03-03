@@ -50,9 +50,9 @@ export const fetchContractBalances = async (
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
       : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
-  console.log("-Stable coin-", stableCoin);
+  // console.log("-Stable coin-", stableCoin);
 
-  console.log("-chain ID-", chainId);
+  // console.log("-chain ID-", chainId);
   const liquidClient = new ApolloClient({
     uri: wrappedURL,
     cache: new InMemoryCache(),
@@ -108,7 +108,7 @@ export const fetchContractBalances = async (
       });
       Object.entries(userTotalData).forEach((total) => {
         // Not printing stable coin again
-        console.log(total[1].assetID, stableCoin);
+        // console.log(total[1].assetID, stableCoin);
         if (
           web3.utils.toChecksumAddress(total[1].assetID) ===
           web3.utils.toChecksumAddress(stableCoin)
@@ -125,12 +125,12 @@ export const fetchContractBalances = async (
         ).tokenDecimal;
         xData.assetID = total[1].assetID;
 
-        console.log(
-          assetUnlockTime.derivatives.find(
-            (derivative) => derivative.id === total[1].assetID
-          ),
-          "----"
-        );
+        // console.log(
+        //   assetUnlockTime.derivatives.find(
+        //     (derivative) => derivative.id === total[1].assetID
+        //   ),
+        //   "----"
+        // );
         xData.unlockTime = assetUnlockTime.derivatives.find(
           (derivative) => derivative.id === total[1].assetID
         ).unlockTime;
@@ -149,18 +149,18 @@ export const fetchContractBalances = async (
     });
     userContractHoldings = await Promise.all(
       fetchContractBalances.map(async (contractHolding) => {
-        await console.log("Before issue");
-        await console.log(
-          "Before issue values",
-          contractHolding.assetID,
-          account
-        );
-        await console.log(exchangeContract);
+        // await console.log("Before issue");
+        // await console.log(
+        //   "Before issue values",
+        //   contractHolding.assetID,
+        //   account
+        // );
+        // await console.log(exchangeContract);
 
         let balance = await exchangeContract.methods
           .unlockBalance(contractHolding.assetID, account)
           .call();
-        await console.log("After issue");
+        // await console.log("After issue");
         balance = new BigNumber(balance)
           .dividedBy(Math.pow(10, contractHolding.decimal))
           .toString();
@@ -198,7 +198,7 @@ export const fetchContractBalances = async (
     );
   } catch (error) {
     console.log(error);
-    console.log("Holdings error");
+    // console.log("Holdings error");
   }
   return userContractHoldings;
 };
