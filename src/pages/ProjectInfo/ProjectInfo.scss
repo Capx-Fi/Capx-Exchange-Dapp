@@ -19,7 +19,7 @@
   }
 }
 .main-container {
-  @apply flex mt-16;
+  @apply mt-16;
   &_left {
     @apply tablet:w-full tablet:pr-0 pr-6 breakpoint:w-60v  desktop:pr-40 desktop:mr-8 desktop:-ml-8 desktop:w-65v;
   }

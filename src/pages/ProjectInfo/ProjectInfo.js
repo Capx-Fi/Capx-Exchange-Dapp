@@ -124,7 +124,7 @@ function ProjectInfo({ match }) {
           <div
             className={`main-container ${
               ticker &&
-              ticker.asset !== "" &&
+              ticker?.asset !== "" &&
               "border border-dark-50 rounded-2xl block"
             }`}
           >

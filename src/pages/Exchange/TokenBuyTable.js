@@ -149,7 +149,12 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
           key="asset"
           render={(value, row) => {
             return (
-              <div onClick={() => navigateProject(row.assetID)}>
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigateProject(row.assetID);
+                }}
+              >
                 <p className="text-white hover:text-primary-green-400 cursor-pointer">
                   {value}
                 </p>
