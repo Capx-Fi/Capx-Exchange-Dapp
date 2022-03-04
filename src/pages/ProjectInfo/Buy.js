@@ -253,8 +253,14 @@ function BuyScreen({
                   dispatch(
                     setProjectBuyTicker({
                       ...ticker,
-                      amountGet: Math.min(ticker?.balance/ticker?.price, ticker?.maxAmountGet),
-                      amountGive: Math.min(ticker?.balance, ticker?.maxAmountGet * ticker?.price)
+                      amountGet: Math.min(
+                        ticker?.balance / ticker?.price,
+                        ticker?.maxAmountGet
+                      ),
+                      amountGive: Math.min(
+                        ticker?.balance,
+                        ticker?.maxAmountGet * ticker?.price
+                      ),
                     })
                   );
                 })
@@ -265,7 +271,7 @@ function BuyScreen({
             />
           </div>
           {warningCheck && (
-            <WarningCard text={`You don't have enough ` + ticker.GetAsset} />
+            <WarningCard text={`You don't have enough ` + ticker?.GetAsset} />
           )}
           {(!checkBuy?.["stableCoinLegal"] ||
             !checkBuy?.["DerivativeLegal"]) && (
