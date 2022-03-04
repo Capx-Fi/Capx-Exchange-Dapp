@@ -75,6 +75,7 @@ module.exports = {
         "caption-mid": "13px",
         "caption-3": "12px",
         "caption-4": "9px",
+        "10px":"10px",
         "54px": "54px",
         "58px": "58px",
         "50px": "50px",
@@ -155,6 +156,8 @@ module.exports = {
         "6ov": "62vh",
         "35v": "35vh",
         "45v": "45vh",
+        "50v": "50vh",
+        "55v": "55vh",
       },
       maxHeight: {
         "fit-content": "fit-content",

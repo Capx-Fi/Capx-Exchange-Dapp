@@ -214,7 +214,7 @@ function ExchangeScreen({ match }) {
           </div>
           
           {/* exchange below tablet breakpoint i.e 768px */}
-          <div className="tablet:hidden phone:block">
+          <div className="tablet:hidden phone:block phone:-mt-10 phone:h-100v">
           {!buyTicker && !sellTicker && (
                   <div className="exchangeScreen_header">
                     <div className="exchangeScreen_header_titlecontainer">
