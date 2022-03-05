@@ -1,3 +1,9 @@
 .root_maincontainer{
     height: calc(100vh - 9rem);
 }
+
+@media screen and (min-width:375px) and (max-width:768px) {
+    .root_maincontainer {
+        overflow-y: hidden;
+    }
+}

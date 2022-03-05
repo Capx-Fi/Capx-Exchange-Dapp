@@ -8,6 +8,7 @@ import ScrollableTableInstance from "../../layouts/TableLayout/ScrollableTableIn
 import { ExchangeContractAddress } from "../../constants/config";
 import { useWeb3React } from "@web3-react/core";
 import MobileTableBuy from "../../components/MobileTable/MobileTableBuy";
+import MobileTableSell from "../../components/MobileTable/MobileTableSell";
 
 import crossIcon from "../../assets/close-cyan.svg";
 
@@ -234,7 +235,9 @@ function ExchangeScreen({ match }) {
                     <GlobalSearchBox filter={filter} setFilter={setFilter} />
                   </div>
                 )}
-            <MobileTableBuy />
+                {mode === "buy" ? (
+              <MobileTableBuy />
+            ) : ( <MobileTableSell />)}
           </div>
         </div>
       )}

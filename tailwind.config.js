@@ -158,6 +158,7 @@ module.exports = {
         "45v": "45vh",
         "50v": "50vh",
         "55v": "55vh",
+        "60v": "60vh",
       },
       maxHeight: {
         "fit-content": "fit-content",
