@@ -7,8 +7,6 @@ import BuyIcon from "../../assets/buy.svg";
 import ScrollableTableInstance from "../../layouts/TableLayout/ScrollableTableInstance";
 import { ExchangeContractAddress } from "../../constants/config";
 import { useWeb3React } from "@web3-react/core";
-import MobileTableBuy from "../../components/MobileTable/MobileTableBuy";
-import MobileTableSell from "../../components/MobileTable/MobileTableSell";
 
 import crossIcon from "../../assets/close-cyan.svg";
 
@@ -26,6 +24,7 @@ function ExchangeScreen({ match }) {
   useEffect(() => {
     dispatch(hideSideNav());
   }, []);
+
   const { active, account, chainId } = useWeb3React();
   const [payAmount, setPayAmount] = useState(null);
   const [receiveAmount, setReceiveAmount] = useState(null);
@@ -128,7 +127,7 @@ function ExchangeScreen({ match }) {
           </div>
 
           {/* exchange below breakpoint .i.e 1280*/}
-          <div className="phone:hidden breakpoint:hidden">
+          <div className="breakpoint:hidden">
             <div
               className={`exchangeScreen_maincontainer ${
                 (buyTicker || sellTicker) && "border border-dark-50 rounded-2xl"
@@ -212,32 +211,6 @@ function ExchangeScreen({ match }) {
                 )}
               </div>
             </div>
-          </div>
-          
-          {/* exchange below tablet breakpoint i.e 768px */}
-          <div className="tablet:hidden phone:block phone:-mt-10 phone:h-100v">
-          {!buyTicker && !sellTicker && (
-                  <div className="exchangeScreen_header">
-                    <div className="exchangeScreen_header_titlecontainer">
-                      <p className="exchangeScreen_header_titlecontainer_title">
-                        {mode === "sell"
-                          ? "Your Portfolio"
-                          : filter === "" || filter === undefined
-                          ? "Trending Tokens"
-                          : "Listed Tokens"}
-                      </p>
-                      <p className="exchangeScreen_header_titlecontainer_subtitle text-left">
-                        {mode === "sell"
-                          ? "Sell your tokens on Capx"
-                          : "Buy available tokens listed on Capx"}
-                      </p>
-                    </div>
-                    <GlobalSearchBox filter={filter} setFilter={setFilter} />
-                  </div>
-                )}
-                {mode === "buy" ? (
-              <MobileTableBuy />
-            ) : ( <MobileTableSell />)}
           </div>
         </div>
       )}
