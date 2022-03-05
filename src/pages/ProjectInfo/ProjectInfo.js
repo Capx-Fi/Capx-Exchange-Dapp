@@ -5,6 +5,8 @@ import BuyScreen from "./Buy";
 import ProjectDescription from "./ProjectDescription";
 import { setProjectBuyTicker } from "../../redux/actions/exchange";
 
+import crossIcon from "../../assets/close-cyan.svg";
+
 import {
   BSC_CHAIN_ID,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
@@ -119,27 +121,76 @@ function ProjectInfo({ match }) {
           }}
           className="w-82v breakpoint:w-full  desktop:w-82v mx-auto "
         >
-          <div className="main-container">
-            <div className="main-container_left">
-              <InfoHeader
-                ticker={`${projectDetails?.projectName} (${projectDetails.projectTokenTicker})`}
-                lastSellingPrice={lastSellingPrice}
-                averageSellingPrice={averageSellingPrice}
-              />
-              <ProjectDescription
-                projectDetails={projectDetails}
-                activeOrders={activeOrders}
-                completeOrders={completeOrders}
+          <div
+            className={`main-container ${
+              ticker &&
+              ticker?.asset !== "" &&
+              "border border-dark-50 rounded-2xl block"
+            }`}
+          >
+            <div className="hidden breakpoint:block">
+              <div className="main-container_left">
+                <InfoHeader
+                  ticker={`${projectDetails?.projectName} (${projectDetails.projectTokenTicker})`}
+                  lastSellingPrice={lastSellingPrice}
+                  averageSellingPrice={averageSellingPrice}
+                />
+                <ProjectDescription
+                  projectDetails={projectDetails}
+                  activeOrders={activeOrders}
+                  completeOrders={completeOrders}
+                />
+              </div>
+              <BuyScreen
+                buyModalOpen={buyModalOpen}
+                setBuyModalOpen={setBuyModalOpen}
+                approveModalOpen={approveModalOpen}
+                setApproveModalOpen={setApproveModalOpen}
+                refresh={refresh}
+                setRefresh={setRefresh}
               />
             </div>
-            <BuyScreen
-              buyModalOpen={buyModalOpen}
-              setBuyModalOpen={setBuyModalOpen}
-              approveModalOpen={approveModalOpen}
-              setApproveModalOpen={setApproveModalOpen}
-              refresh={refresh}
-              setRefresh={setRefresh}
-            />
+            {/* project info below breakpoint */}
+            <div className="breakpoint:hidden">
+              <div className="main-container_left w-full">
+                {ticker && ticker.asset !== "" && (
+                  <div className="h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
+                    {ticker && ticker?.asset}
+                    <img
+                      src={crossIcon}
+                      alt="close"
+                      onClick={() => dispatch(setProjectBuyTicker(null))}
+                      className="absolute right-14 top-6 cursor-pointer h-6"
+                    />
+                  </div>
+                )}
+                {!ticker || ticker.asset == "" ? (
+                  <>
+                    <InfoHeader
+                      ticker={`${projectDetails?.projectName} (${projectDetails.projectTokenTicker})`}
+                      lastSellingPrice={lastSellingPrice}
+                      averageSellingPrice={averageSellingPrice}
+                    />
+                    <ProjectDescription
+                      projectDetails={projectDetails}
+                      activeOrders={activeOrders}
+                      completeOrders={completeOrders}
+                    />
+                  </>
+                ) : (
+                  <div className="w-auto  px-14 py-7">
+                    <BuyScreen
+                      buyModalOpen={buyModalOpen}
+                      setBuyModalOpen={setBuyModalOpen}
+                      approveModalOpen={approveModalOpen}
+                      setApproveModalOpen={setApproveModalOpen}
+                      refresh={refresh}
+                      setRefresh={setRefresh}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       )}

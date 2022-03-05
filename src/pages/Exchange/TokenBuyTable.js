@@ -84,7 +84,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
       dispatch(setBuyTicker({ ...nullBuyTicker }));
     }
     fetchListings();
-    console.log("refresh", refresh);
+    // console.log("refresh", refresh);
   }, [account, chainId, refresh]);
   const fetchListings = async () => {
     setLoading(true);
@@ -116,7 +116,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
   }, [filter]);
 
   function onChange(pagination, filters, sorter, extra) {
-    console.log("params", pagination, filters, sorter, extra);
+    // console.log("params", pagination, filters, sorter, extra);
   }
 
   const dispatch = useDispatch();

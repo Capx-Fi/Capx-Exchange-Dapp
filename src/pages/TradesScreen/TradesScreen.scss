@@ -1,8 +1,6 @@
 .tradesScreen {
-  @apply mx-auto w-7/12 desktop:w-10/12 flex flex-col;
-  width: fit-content;
-  max-width: 1100px;
-  min-width: 800px;
+  @apply mx-auto tablet:w-80v w-7/12 desktop:w-10/12 flex flex-col;
+
   &_header {
     @apply px-4 pl-7 py-2 mb-5 mt-16 flex justify-between content-start;
     &_titlecontainer {
@@ -45,13 +43,13 @@
         @apply text-paragraph-1 text-primary-green-100 font-normal flex;
       }
       &_getToken {
-        @apply flex flex-col justify-center items-start px-6 w-40;
+        @apply breakpoint:flex hidden flex-col justify-center items-start px-6 w-40;
       }
       &_swapIcon {
-        @apply flex flex-col justify-center items-start px-6;
+        @apply breakpoint:flex hidden flex-col justify-center items-start px-6;
       }
       &_giveToken {
-        @apply flex flex-col justify-center items-start px-6 w-44;
+        @apply breakpoint:flex hidden flex-col justify-center items-start px-6 w-44;
       }
       &_separator {
         @apply h-full bg-dark-50 w-0.5 mx-12;
@@ -66,6 +64,14 @@
         @apply flex justify-center items-center px-6;
       }
     }
+  }
+}
+
+@media (min-width: 1280px) {
+  .tradesScreen {
+    width: fit-content;
+    max-width: 1100px;
+    min-width: 800px;
   }
 }
 

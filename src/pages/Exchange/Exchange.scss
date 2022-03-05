@@ -4,10 +4,10 @@
     @apply flex mt-4 w-full desktop:mt-0 breakpoint:-mt-4 phone:overflow-hidden;
   }
   &_leftcontainer {
-    @apply tablet:mx-auto tablet:w-full tablet:pr-0 pr-40 breakpoint:w-62v breakpoint:pr-20 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:overflow-hidden;
+    @apply tablet:mx-auto tablet:w-full tablet:pr-0 pr-40 breakpoint:w-62v breakpoint:pr-20 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0;
   }
   &_rightcontainer {
-    @apply pl-4 desktop:w-30v desktop:pr-12 upper:pr-14 breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
+    @apply pl-4 upper:w-30v desktop:w-33v desktop:pr-12 upper:pr-14 breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
 
     &_buyContainer {
       @apply border rounded-2xl flex flex-col border-dark-50;
@@ -164,7 +164,7 @@
     }
   }
   &_header {
-    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v desktop:w-62v phone:w-full;
+    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v upper:w-62v desktop:w-60v phone:w-full;
     &_titlecontainer {
       @apply flex flex-col items-start;
       &_title {

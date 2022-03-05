@@ -29,7 +29,7 @@ function intervalCut(start,end,intervap,data) {
         k.push(retval)
         
     }
-    console.log(k)
+    // console.log(k)
 
 }
 
