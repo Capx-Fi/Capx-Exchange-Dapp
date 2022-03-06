@@ -1,21 +1,20 @@
 .exchangeScreen {
   @apply w-85p tablet:w-full mx-auto mt-16 breakpoint:w-full desktop:w-full desktop:mt-8 desktop:pt-2 desktop:pl-24 breakpoint:pl-2;
   &_maincontainer {
-    @apply flex mt-4 w-full desktop:mt-0 breakpoint:-mt-4 phone:overflow-hidden;
+    @apply flex mt-4 desktop:mt-0 breakpoint:-mt-4 phone:-mt-8;
   }
   &_leftcontainer {
-    @apply tablet:mx-auto tablet:w-full tablet:pr-0 pr-40 breakpoint:w-62v breakpoint:pr-20 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:w-90v phone:pr-0;
+    @apply tablet:mx-auto tablet:w-90v tablet:pr-0 pr-40 breakpoint:w-62v breakpoint:pr-20 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:w-90v;
   }
   &_rightcontainer {
     @apply pl-4 upper:w-30v desktop:w-33v desktop:pr-12 upper:pr-14 breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
-
     &_buyContainer {
       @apply border rounded-2xl flex flex-col border-dark-50;
-      background: linear-gradient(0deg, #19201d 0%, #151618 101.42%),
+      background: linear-gradient(0deg, #19201D 0%, #151618 101.42%),
         rgba(21, 21, 23, 0.2);
       &_header {
         @apply px-6 py-4 flex flex-row h-16 border-b rounded-t-2xl border-dark-50 w-full;
-        background-color: #171c1f;
+        background-color: #171C1F;
         &_title {
           @apply text-paragraph-1 text-primary-green-100 font-bold flex items-center breakpoint:text-paragraph-2 desktop:text-paragraph-1;
           &_icon {
@@ -33,7 +32,6 @@
           &_title {
             @apply text-caption-2 text-grayLabel mt-5 desktop:mt-3 font-black text-left breakpoint:text-caption-3 desktop:text-caption-2;
           }
-
           &_inputContainer {
             @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
             &_lockWrapper {
@@ -58,8 +56,8 @@
                   @apply text-caption-2 font-bold ml-2 cursor-pointer;
                   background: -webkit-linear-gradient(
                     355.38deg,
-                    #3f7ef8 -9.64%,
-                    #3ff8cc 87.34%
+                    #3F7EF8 -9.64%,
+                    #3FF8CC 87.34%
                   );
                   -webkit-background-clip: text;
                   background-clip: text;
@@ -77,7 +75,6 @@
           &_title {
             @apply text-caption-2 text-grayLabel mt-5 font-black text-left;
           }
-
           &_inputContainer {
             @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
             &_lockWrapper {
@@ -110,8 +107,8 @@
                   @apply text-caption-2 font-bold ml-2 cursor-pointer;
                   background: -webkit-linear-gradient(
                     355.38deg,
-                    #3f7ef8 -9.64%,
-                    #3ff8cc 87.34%
+                    #3F7EF8 -9.64%,
+                    #3FF8CC 87.34%
                   );
                   -webkit-background-clip: text;
                   background-clip: text;
@@ -129,7 +126,6 @@
         }
         &_separator {
           @apply w-full flex items-center h-8 desktop:h-24;
-
           &_line {
             @apply bg-dark-50;
             height: 1px;
@@ -145,7 +141,7 @@
           @apply text-grayLabel text-caption-2 font-bold text-left py-4;
         }
         &_swapButton {
-          background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
+          background: linear-gradient(356.23deg, #96CF03 -65.8%, #F1FFF6 89%);
           @apply rounded-lg py-3 my-4 flex justify-center items-center cursor-pointer;
           &_title {
             @apply text-paragraph-2 text-dark-300 font-bold;
@@ -164,7 +160,7 @@
     }
   }
   &_header {
-    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v upper:w-62v desktop:w-60v phone:w-full;
+    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v desktop:w-62v phone:w-full;
     &_titlecontainer {
       @apply flex flex-col items-start;
       &_title {
@@ -181,7 +177,6 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
@@ -217,13 +212,13 @@ input[type="number"] {
 .ant-picker-time-panel-cell {
   @apply text-grayLabel;
   &:hover {
-    background: #2a383c !important;
+    background: #2A383C !important;
   }
 }
 .ant-picker-time-panel-column
   > li.ant-picker-time-panel-cell
   .ant-picker-time-panel-cell-inner:hover {
-  background: #2a383c !important;
+  background: #2A383C !important;
 }
 .ant-picker-time-panel-column
   > li.ant-picker-time-panel-cell-selected
@@ -237,33 +232,31 @@ input[type="number"] {
   .ant-picker-time-panel-cell-inner {
   color: rgba(241, 250, 242, 0.3) !important;
 }
-
 .react-calendar {
   @apply bg-dark-400;
   background-color: rgba(21, 21, 23, 1) !important;
-  border: #0c4555 !important;
+  border: #0C4555 !important;
   &__month-view {
     &__weekdays {
       color: rgba(241, 250, 242, 0.3) !important;
       text-decoration: none !important;
     }
   }
-
   &__navigation {
     @apply bg-dark-300;
     border-radius: 16px !important;
     color: rgba(241, 250, 242, 1) !important;
     & > button {
-      background: #2a383c !important;
+      background: #2A383C !important;
       &:hover {
-        background: #2a383c !important;
+        background: #2A383C !important;
         // border-radius: 16px;
       }
       &:focus {
         outline: none !important;
       }
       &:active {
-        background: #2a383c !important;
+        background: #2A383C !important;
         // border-radius: 16px;
       }
     }
@@ -271,21 +264,27 @@ input[type="number"] {
   &__tile {
     color: rgba(241, 250, 242, 0.8) !important;
     &:hover {
-      background: #2a383c !important;
+      background: #2A383C !important;
       // border-radius: 16px;
     }
     &:disabled {
-      background: #2a383c !important;
+      background: #2A383C !important;
       opacity: 0.2;
       // border-radius: 16px;
     }
     &--now {
-      background: #2a383c !important;
+      background: #2A383C !important;
       // border-radius: 16px;
     }
     &--active {
-      background: #0c4555 !important;
+      background: #0C4555 !important;
       // border-radius: 16px;
     }
   }
 }
+
+
+
+
+
+

@@ -13,7 +13,6 @@ function MobileTableBuy({
   setBalance,
   navigateProject,
 }) {
-  console.log(loading)
   return (
     <>
     <div className="mobileTableBuy h-60v w-85v overflow-y-auto">
@@ -41,7 +40,7 @@ function Button() {
 
 function Column({ token }) {
   return (
-    <div className="_card flex justify-between py-2 px-2 mx-0 border border-dark-50 border-2">
+    <div className="_card flex justify-between py-3 px-4 mx-0 border border-dark-50 border-2">
       <div className="_leftContainer text-left text-white">
         <p className="_assetName bg-dark-300 p-2 rounded-full px-3 border border-2 border-dark-50 text-caption-2 text-center">
           {token.asset}

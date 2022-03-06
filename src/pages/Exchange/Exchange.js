@@ -130,7 +130,7 @@ function ExchangeScreen({ match }) {
           <div className="breakpoint:hidden">
             <div
               className={`exchangeScreen_maincontainer ${
-                (buyTicker || sellTicker) && "border border-dark-50 rounded-2xl"
+                (buyTicker || sellTicker) ? "border border-dark-50 rounded-2xl w-90v mx-auto" : "w-full"
               }`}
             >
               <div className="exchangeScreen_leftcontainer">
