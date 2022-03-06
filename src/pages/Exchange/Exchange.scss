@@ -4,7 +4,7 @@
     @apply flex mt-4 w-full desktop:mt-0 breakpoint:-mt-4 phone:overflow-hidden;
   }
   &_leftcontainer {
-    @apply tablet:mx-auto tablet:w-full tablet:pr-0 pr-40 breakpoint:w-62v breakpoint:pr-20 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0;
+    @apply tablet:mx-auto tablet:w-full tablet:pr-0 pr-40 breakpoint:w-62v breakpoint:pr-20 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:w-90v phone:pr-0;
   }
   &_rightcontainer {
     @apply pl-4 upper:w-30v desktop:w-33v desktop:pr-12 upper:pr-14 breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;

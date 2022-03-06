@@ -15,9 +15,9 @@ const GlobalSearchBox = ({ filter, setFilter }) => {
     >
       {/* search box */}
       <div
-        className={`flex items-center bg-dark-400 rounded-md border ${
+        className={`flex items-center bg-dark-400 rounded-md border phone:h-8 phone:text-10px ${
           value !== '' ? 'border-success-color-400' : 'border-dark-50'
-        } text-gray-600 px-3 py-3 mr-0 w-96 phone:w-36 phone:px-2 phone:py-2 phone:text-caption-3 phone:-mt-2 breakpoint:w-96 breakpoint:px-3 breakpoint:py-2 breakpoint:text-caption-2 breakpoint:-mt-2`}
+        } text-gray-600 px-3 py-3 mr-0 w-96 phone:w-36 phone:px-2 phone:py-2 phone:text-caption-3 phone:-mt-4 breakpoint:w-96 breakpoint:px-3 breakpoint:py-2 breakpoint:text-caption-2 breakpoint:-mt-2`}
       >
         <input
           autoFocus

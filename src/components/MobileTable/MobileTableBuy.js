@@ -13,8 +13,10 @@ function MobileTableBuy({
   setBalance,
   navigateProject,
 }) {
+  console.log(loading)
   return (
-    <div className="mobileTableBuy h-60v overflow-y-auto">
+    <>
+    <div className="mobileTableBuy h-60v w-85v overflow-y-auto">
       <div className="_header py-2 bg-dark-50 rounded-tl-2xl rounded-tr-2xl"></div>
       <div className="_body border border-dark-50 rounded-br-2xl rounded-bl-2xl h-55v overflow-y-auto">
         {tokenList.map((token) => (
@@ -22,6 +24,7 @@ function MobileTableBuy({
         ))}
       </div>
     </div>
+  </>
   );
 }
 
@@ -65,7 +68,7 @@ function Column({ token }) {
       </div>
       <div className="_rightContainer">
         <p className="_assetExpiry text-white font-regular text-10px mt-2 mb-4">
-          {token.expiryTime}
+          {token.expiryTime.substring(0, token.expiryTime.length - 9)}
         </p>
         <Button />
       </div>

@@ -2,6 +2,7 @@ import { Table } from "antd";
 import { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "./TokenListTable.scss";
+import MobileTableSell from "../../components/MobileTable/MobileTableSell";
 
 import dummyDataExchange from "../../layouts/TableLayout/dummyDataExchange.json";
 import SellIcon from "../../assets/sell.svg";
@@ -168,6 +169,7 @@ function TokenSellTable({ filter, refresh }) {
     history.push(`/info/${projectAddress}`);
   };
   return (
+    <>
     <div className="tokenListTableContainer">
       <Table
         dataSource={tokenList}
@@ -229,6 +231,17 @@ function TokenSellTable({ filter, refresh }) {
         />
       </Table>
     </div>
+
+    <div className="tablet:hidden">
+        <MobileTableSell
+          tokenList={tokenList}
+          loading={loading}
+          onChange={onChange}
+          setSellTicker={setSellTicker}
+          navigateProject={navigateProject}
+        />
+    </div>
+  </>
   );
 }
 
