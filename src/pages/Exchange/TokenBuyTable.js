@@ -216,6 +216,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
           onChange={onChange}
           setBuyTicker={setBuyTicker}
           navigateProject={navigateProject}
+          setBalance={setBalance}
         />
       </div>
     </>
