@@ -1,4 +1,3 @@
-import {Col} from "antd";
 import {useDispatch} from "react-redux";
 import WithdrawIcon from "../../assets/WithdrawIcon.svg";
 import {setWithdrawTicker} from "../../redux/actions/withdraw";

@@ -7,10 +7,12 @@ import marketActivity from '../../assets/marketActivity.svg';
 import OuterContainer from './OuterContainer';
 import TokenListTable from './TokenListTable';
 import TokenActivityTable from './TokenActivityTable';
+import MobileMarketActivity from "./MobileMarketActivity";
 
 function ProjectDescription({ projectDetails, completeOrders, activeOrders }) {
   return (
     <>
+    <div className="tablet:block phone:hidden">
       <OuterContainer
         title={'PROJECT DESCRIPTION'}
         icon={infoIcon}
@@ -36,6 +38,11 @@ function ProjectDescription({ projectDetails, completeOrders, activeOrders }) {
         activeOrders={activeOrders}
         content={<TokenListTable activeOrders={activeOrders} />}
       />
+      </div>
+
+      <div className="phone:block tablet:hidden">
+        <MobileMarketActivity />
+      </div>
     </>
   );
 }

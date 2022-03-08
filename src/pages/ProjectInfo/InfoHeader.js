@@ -113,7 +113,7 @@ function InfoHeader({ ticker, lastSellingPrice, averageSellingPrice }) {
             <p className="infoHeader_innerDiv_value">${averageSellingPrice}</p>
           </div>
         </div>
-        <img src={liquidDiamond} className="infoHeader_illustration" />
+        <img src={liquidDiamond} className="infoHeader_illustration" alt="" />
       </div>
     </>
   );
