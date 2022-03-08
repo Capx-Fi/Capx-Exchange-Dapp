@@ -4,17 +4,17 @@
   border: 1px solid #2a383c;
   box-sizing: border-box;
   border-radius: 16px;
-  @apply w-full relative h-28  mb-10 -mr-48 pl-4;
+  @apply w-full relative phone:h-auto tablet:h-28  mb-10 -mr-48 pl-4 phone:pb-10 tablet:pb-0;
   &_illustration {
     @apply absolute -bottom-1 right-0 h-20 desktop:h-24;
   }
   &_innerDiv {
-    @apply mr-16 tablet:mr-3  desktop:mr-4 upper:mr-9 breakpoint:mr-4  text-left align-middle p-6 desktop:px-4;
+    @apply mr-16 phone:mr-0 tablet:mr-3 desktop:mr-4 upper:mr-9 breakpoint:mr-4  text-left align-middle p-6 desktop:px-4;
     &_title {
-      @apply text-tradeTitle uppercase text-caption-1 leading-caption-2 font-bold pb-2 desktop:text-caption-1 breakpoint:text-caption-3 tablet:text-caption-3;
+      @apply text-tradeTitle phone:text-caption-2 uppercase text-caption-1 leading-caption-2 font-bold pb-2 desktop:text-caption-1 breakpoint:text-caption-3 tablet:text-caption-3;
     }
     &_value {
-      @apply text-white text-subheading font-bold leading-subheading pb-2 upper:text-subheading desktop:text-paragraph-1  breakpoint:text-paragraph-1 tablet:text-paragraph-2;
+      @apply text-white phone:text-caption-1   text-subheading font-bold leading-subheading pb-2 upper:text-subheading desktop:text-paragraph-1  breakpoint:text-paragraph-1 tablet:text-paragraph-2;
     }
   }
 }

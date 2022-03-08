@@ -131,7 +131,7 @@ function ExchangeScreen({ match }) {
             <div
               className={`exchangeScreen_maincontainer ${
                 buyTicker || sellTicker
-                  ? "border border-dark-50 rounded-2xl w-90v mx-auto"
+                  ? "border border-dark-50 rounded-2xl w-90v mx-auto breakpoint:border-0"
                   : "w-full"
               }`}
             >

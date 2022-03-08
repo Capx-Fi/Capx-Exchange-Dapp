@@ -194,11 +194,14 @@ function BuyScreen({
               src={BuyIcon}
               alt="buy icon"
             />
-            <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
+            <p className="hidden tablet:flex exchangeScreen_rightcontainer_buyContainer_header_title_text">
               BUY{" "}
-              <span className="hidden tablet:block">
+              <span className="hidden tablet:flex">
                 {ticker ? " - " + ticker?.asset : ""}
               </span>
+            </p>
+            <p className="tablet:hidden exchangeScreen_rightcontainer_buyContainer_header_title_text">
+              BUY{" "}
             </p>
           </div>
         </div>

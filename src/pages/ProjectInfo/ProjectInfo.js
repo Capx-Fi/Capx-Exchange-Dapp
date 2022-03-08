@@ -125,7 +125,7 @@ function ProjectInfo({ match }) {
             className={`main-container ${
               ticker &&
               ticker?.asset !== "" &&
-              "border border-dark-50 rounded-2xl block"
+              "border border-dark-50 rounded-2xl block breakpoint:border-0"
             }`}
           >
             <div className="hidden breakpoint:flex">
