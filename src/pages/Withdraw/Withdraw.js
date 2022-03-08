@@ -66,7 +66,7 @@ function WithdrawScreen({ match }) {
           </div>
 
           {/* exchange below breakpoint .i.e 1280*/}
-          <div className="breakpoint:hidden">
+          <div className="phone:hidden tablet:block breakpoint:hidden">
             <div
               className={`exchangeScreen_maincontainer ${
                 withdrawTicker && "border border-dark-50 rounded-2xl"
@@ -135,6 +135,21 @@ function WithdrawScreen({ match }) {
                     />
                   </div>
                 )}
+
+                {!withdrawTicker && (
+                  <div className="exchangeScreen_header">
+                    <div className="exchangeScreen_header_titlecontainer">
+                      <p className="exchangeScreen_header_titlecontainer_title">
+                        Your Portfolio
+                      </p>
+                      <p className="withdrawScreen_header_titlecontainer_subtitle">
+                        Withdraw your tokens
+                      </p>
+                    </div>
+                    <GlobalSearchBox filter={filter} setFilter={setFilter} />
+                  </div>
+                )}
+
                 {withdrawTicker ? (
                   <div className="w-auto  px-14 py-7">
                     <WithdrawContainer
