@@ -238,6 +238,7 @@ function TokenSellTable({ filter, refresh }) {
           loading={loading}
           onChange={onChange}
           setSellTicker={setSellTicker}
+          setTickerBalance={setTickerBalance}
           navigateProject={navigateProject}
         />
     </div>

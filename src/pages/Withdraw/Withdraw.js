@@ -115,6 +115,44 @@ function WithdrawScreen({ match }) {
               </div>
             </div>
           </div>
+
+          {/* Withdraw breakpoint below 768 i.e mobile screens */}
+          <div className="tablet:hidden">
+          <div
+              className={`exchangeScreen_maincontainer ${
+                withdrawTicker && "border border-dark-50 rounded-2xl"
+              }`}
+            >
+              <div className="exchangeScreen_leftcontainer">
+                {withdrawTicker && (
+                  <div className="h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
+                    {withdrawTicker && withdrawTicker?.asset}
+                    <img
+                      src={crossIcon}
+                      alt="close"
+                      onClick={() => dispatch(setWithdrawTicker(null))}
+                      className="absolute right-14 top-6 cursor-pointer h-6"
+                    />
+                  </div>
+                )}
+                {withdrawTicker ? (
+                  <div className="w-auto  px-14 py-7">
+                    <WithdrawContainer
+                      withdrawModalOpen={withdrawModalOpen}
+                      setWithdrawModalOpen={setWithdrawModalOpen}
+                      refetch={refetch}
+                      setRefetch={setRefetch}
+                      ticker={match.params.ticker}
+                      balance={balance}
+                      setMaxAmount={setMaxAmount}
+                    />
+                  </div>
+                ) : (
+                  <WithdrawTokenTable filter={filter} refetch={refetch} />
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>

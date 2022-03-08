@@ -2,6 +2,7 @@ import { Table } from "antd";
 import { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import "./TokenListTable.scss";
+import MobileWithdraw from "./MobileWithdraw";
 
 import dummyDataExchange from "../../layouts/TableLayout/dummyDataExchange.json";
 import WithdrawIcon from "../../assets/DepositIcon.svg";
@@ -173,6 +174,7 @@ function WithdrawTokenTable({ filter, refetch }) {
     history.push(`/info/${projectAddress}`);
   };
   return (
+    <>
     <div className="tokenListTableContainer">
       <Table
         dataSource={tokenList}
@@ -242,6 +244,13 @@ function WithdrawTokenTable({ filter, refetch }) {
         />
       </Table>
     </div>
+  
+    <div className="tablet:hidden">
+      <MobileWithdraw />
+    </div>
+  
+  
+  </>
   );
 }
 
