@@ -128,7 +128,7 @@ function ProjectInfo({ match }) {
               "border border-dark-50 rounded-2xl block"
             }`}
           >
-            <div className="hidden breakpoint:block">
+            <div className="hidden breakpoint:flex">
               <div className="main-container_left">
                 <InfoHeader
                   ticker={`${projectDetails?.projectName} (${projectDetails.projectTokenTicker})`}

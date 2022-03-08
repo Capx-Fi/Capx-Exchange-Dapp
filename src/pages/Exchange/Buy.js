@@ -195,7 +195,10 @@ function BuyScreen({
               alt="buy icon"
             />
             <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
-              BUY {ticker ? " - " + ticker?.asset : ""}
+              BUY{" "}
+              <span className="hidden tablet:block">
+                {ticker ? " - " + ticker?.asset : ""}
+              </span>
             </p>
           </div>
         </div>
@@ -255,8 +258,14 @@ function BuyScreen({
                   dispatch(
                     setBuyTicker({
                       ...ticker,
-                      amountGet: Math.min(ticker?.balance/ticker?.price, ticker?.maxAmountGet),
-                      amountGive: Math.min(ticker?.balance, ticker?.maxAmountGet * ticker?.price)
+                      amountGet: Math.min(
+                        ticker?.balance / ticker?.price,
+                        ticker?.maxAmountGet
+                      ),
+                      amountGive: Math.min(
+                        ticker?.balance,
+                        ticker?.maxAmountGet * ticker?.price
+                      ),
                     })
                   );
                 })

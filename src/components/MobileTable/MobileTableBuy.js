@@ -17,13 +17,14 @@ function MobileTableBuy({
         <div className="_header py-2 bg-dark-50 rounded-tl-2xl rounded-tr-2xl"></div>
         <div className="_body border border-dark-50 rounded-br-2xl rounded-bl-2xl h-55v overflow-y-auto">
           {loading
-          ? [0, 1, 2, 3, 4].map(() => <LoadingColumn />)
-          : tokenList.map((token) => (
-          <Column
-          token={token}
-          setBuyTicker={setBuyTicker}
-          setBalance={setBalance}
-          />
+            ? [0, 1, 2, 3, 4].map(() => <LoadingColumn />)
+            : tokenList.map((token) => (
+                <Column
+                  token={token}
+                  setBuyTicker={setBuyTicker}
+                  setBalance={setBalance}
+                  navigateProject={navigateProject}
+                />
               ))}
         </div>
       </div>
@@ -77,7 +78,7 @@ function LoadingColumn() {
   );
 }
 
-function Column({ token, setBuyTicker, setBalance }) {
+function Column({ token, setBuyTicker, setBalance, navigateProject }) {
   const dispatch = useDispatch();
   return (
     <div
@@ -88,7 +89,13 @@ function Column({ token, setBuyTicker, setBalance }) {
       }}
     >
       <div className="_leftContainer text-left text-white">
-        <p className="_assetName bg-dark-300 p-2 rounded-full px-3 border-2 border-dark-50 text-caption-2 text-center">
+        <p
+          onClick={(e) => {
+            e.stopPropagation();
+            navigateProject(token.assetID);
+          }}
+          className="_assetName bg-dark-300 p-2 rounded-full px-3 border-2 border-dark-50 text-caption-2 text-center"
+        >
           {token.asset}
         </p>
 
