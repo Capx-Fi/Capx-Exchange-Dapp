@@ -14,7 +14,7 @@ import { fetchContractBalances } from "../../utils/fetchContractBalances";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 import { fetchProjectID } from "../../utils/fetchProjectDetails";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
-import { CONTRACT_ABI_ERC20 } from '../../contracts/SampleERC20';
+import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
 import {
   BSC_CHAIN_ID,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
@@ -46,7 +46,6 @@ BigNumber.config({
   DECIMAL_PLACES: 18,
   EXPONENTIAL_AT: [-18, 36],
 });
-
 
 const { Column } = Table;
 
@@ -94,14 +93,12 @@ function WithdrawTokenTable({ filter, refetch }) {
     CHAIN_EXCHANGE_CONTRACT_ADDRESS
   );
 
-  
-
   useEffect(() => {
-        let nullBuyTicker = ticker;
-        if (nullBuyTicker) {
-          Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
-          dispatch(setWithdrawTicker({ ...nullBuyTicker }));
-        }
+    let nullBuyTicker = ticker;
+    if (nullBuyTicker) {
+      Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+      dispatch(setWithdrawTicker({ ...nullBuyTicker }));
+    }
     fetchPortfolioHoldings();
   }, [account, chainId, refetch]);
   $(".ant-table-row").on("click", function () {
@@ -122,19 +119,19 @@ function WithdrawTokenTable({ filter, refetch }) {
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
       .call();
 
+    const stableCoinContract = new web3.eth.Contract(
+      CONTRACT_ABI_ERC20,
+      CHAIN_USDT_CONTRACT_ADDRESS
+    );
 
-    
-      const stableCoinContract = new web3.eth.Contract(
-        CONTRACT_ABI_ERC20,
-        CHAIN_USDT_CONTRACT_ADDRESS
-      );
+    let stableCoinDecimal = await stableCoinContract.methods.decimals().call();
+    let stableCoinSymbol = await stableCoinContract.methods.symbol().call();
 
-      let stableCoinDecimal = await stableCoinContract.methods.decimals().call();
-      let stableCoinSymbol = await stableCoinContract.methods.symbol().call();
-      
     // HARDCODING FOR USDT MATIC AT THE MOMENT... Need a cleaner fix
 
-    balance = new BigNumber(balance).dividedBy(Math.pow(10, stableCoinDecimal)).toString();
+    balance = new BigNumber(balance)
+      .dividedBy(Math.pow(10, stableCoinDecimal))
+      .toString();
     // make a USDT object and add it to the holdings
     const usdt = {
       asset: stableCoinSymbol,
@@ -175,82 +172,86 @@ function WithdrawTokenTable({ filter, refetch }) {
   };
   return (
     <>
-    <div className="tokenListTableContainer phone:hidden tablet:block">
-      <Table
-        dataSource={tokenList}
-        locale={{ emptyText: loading ? "Loading Tokens..." : "No Token Found" }}
-        pagination={false}
-        scroll={{ y: 500 }}
-        onChange={onChange}
-        onRow={(record) => {
-          return {
-            onClick: (e) => {
-              dispatch(setWithdrawTicker(record));
-              dispatch(setAssetBalance(record.quantity));
-            },
-          };
-        }}
-      >
-        <Column
-          title="Asset"
-          sorter={(a, b) => a.asset - b.asset}
-          showSorterTooltip={false}
-          width={"30%"}
-          dataIndex="asset"
-          key="asset"
-          render={(value, row) => {
-            // // console.log("row", row, CHAIN_USDT_CONTRACT_ADDRESS);
-            return (
-              <>
-                {row.assetID === CHAIN_USDT_CONTRACT_ADDRESS.toString() ? (
-                  <div>
-                    <p className="text-white cursor-pointer">{value}</p>
-                  </div>
-                ) : (
-                  <div onClick={() => navigateProject(row.assetID)}>
-                    <p className="text-white hover:text-primary-green-400 cursor-pointer">
-                      {value}
-                    </p>
-                  </div>
-                )}
-              </>
-            );
+      <div className="tokenListTableContainer phone:hidden tablet:block">
+        <Table
+          dataSource={tokenList}
+          locale={{
+            emptyText: loading ? "Loading Tokens..." : "No Token Found",
           }}
-        />
-        <Column
-          title="Quantity"
-          dataIndex="quantity"
-          key="quantity"
-          render={(value, row) => {
-            return <div>{convertToInternationalCurrencySystem(value)}</div>;
+          pagination={false}
+          scroll={{ y: 500 }}
+          onChange={onChange}
+          onRow={(record) => {
+            return {
+              onClick: (e) => {
+                dispatch(setWithdrawTicker(record));
+                dispatch(setAssetBalance(record.quantity));
+              },
+            };
           }}
-        />
-        <Column title="Unlock Date" dataIndex="unlockDate" key="unlockDate" />
-        <Column
-          title=""
-          dataIndex="asset"
-          key="asset"
-          render={(value, row) => {
-            return (
-              <div className="border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto">
-                <img src={WithdrawIcon} alt="deposit" className="mr-2" />
+        >
+          <Column
+            title="Asset"
+            sorter={(a, b) => a.asset - b.asset}
+            showSorterTooltip={false}
+            width={"30%"}
+            dataIndex="asset"
+            key="asset"
+            render={(value, row) => {
+              // // console.log("row", row, CHAIN_USDT_CONTRACT_ADDRESS);
+              return (
+                <>
+                  {row.assetID === CHAIN_USDT_CONTRACT_ADDRESS.toString() ? (
+                    <div>
+                      <p className="text-white cursor-pointer">{value}</p>
+                    </div>
+                  ) : (
+                    <div onClick={() => navigateProject(row.assetID)}>
+                      <p className="text-white hover:text-primary-green-400 cursor-pointer">
+                        {value}
+                      </p>
+                    </div>
+                  )}
+                </>
+              );
+            }}
+          />
+          <Column
+            title="Quantity"
+            dataIndex="quantity"
+            key="quantity"
+            render={(value, row) => {
+              return <div>{convertToInternationalCurrencySystem(value)}</div>;
+            }}
+          />
+          <Column title="Unlock Date" dataIndex="unlockDate" key="unlockDate" />
+          <Column
+            title=""
+            dataIndex="asset"
+            key="asset"
+            render={(value, row) => {
+              return (
+                <div className="border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto">
+                  <img src={WithdrawIcon} alt="deposit" className="mr-2" />
 
-                <p className="text-success-color-400 uppercase font-bold text-caption-2">
-                  WITHDRAW
-                </p>
-              </div>
-            );
-          }}
+                  <p className="text-success-color-400 uppercase font-bold text-caption-2">
+                    WITHDRAW
+                  </p>
+                </div>
+              );
+            }}
+          />
+        </Table>
+      </div>
+
+      <div className="tablet:hidden">
+        <MobileWithdraw
+          tokenList={tokenList}
+          loading={loading}
+          isUSDT={CHAIN_USDT_CONTRACT_ADDRESS.toString()}
         />
-      </Table>
-    </div>
-  
-    <div className="tablet:hidden">
-      <MobileWithdraw filter={filter} refetch={refetch} />
-    </div>
-  
-  
-  </>
+      </div>
+    </>
   );
 }
 
