@@ -25,6 +25,9 @@ function WithdrawScreen({ match }) {
 
   var withdrawTicker = useSelector((state) => state.withdraw.withdrawTicker);
 
+  const isValid =
+    withdrawTicker?.asset !== undefined && withdrawTicker.asset !== "";
+
   return (
     <>
       {!active ? (
@@ -69,13 +72,13 @@ function WithdrawScreen({ match }) {
           <div className="breakpoint:hidden">
             <div
               className={`exchangeScreen_maincontainer ${
-                withdrawTicker && "border border-dark-50 rounded-2xl"
+                isValid && "border border-dark-50 rounded-2xl"
               }`}
             >
               <div className="exchangeScreen_leftcontainer">
-                {withdrawTicker && (
+                {isValid && (
                   <div className="h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
-                    {withdrawTicker && withdrawTicker?.asset}
+                    {isValid && withdrawTicker?.asset}
                     <img
                       src={crossIcon}
                       alt="close"
@@ -84,7 +87,7 @@ function WithdrawScreen({ match }) {
                     />
                   </div>
                 )}
-                {!withdrawTicker && (
+                {!isValid && (
                   <div className="exchangeScreen_header">
                     <div className="exchangeScreen_header_titlecontainer">
                       <p className="exchangeScreen_header_titlecontainer_title">
@@ -97,7 +100,7 @@ function WithdrawScreen({ match }) {
                     <GlobalSearchBox filter={filter} setFilter={setFilter} />
                   </div>
                 )}
-                {withdrawTicker ? (
+                {isValid ? (
                   <div className="w-auto  px-14 py-7">
                     <WithdrawContainer
                       withdrawModalOpen={withdrawModalOpen}

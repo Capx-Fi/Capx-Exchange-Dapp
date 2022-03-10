@@ -75,7 +75,7 @@
         &_tokenContainer {
           @apply flex flex-col w-full mb-4;
           &_title {
-            @apply text-caption-2 text-grayLabel mt-5 font-black text-left;
+            @apply text-caption-3 breakpoint:text-caption-mid desktop:text-caption-2 text-grayLabel mt-5 font-black text-left;
           }
 
           &_inputContainer {
@@ -168,7 +168,7 @@
     &_titlecontainer {
       @apply flex flex-col items-start;
       &_title {
-        @apply text-subheading font-medium text-white desktop:text-heading-3 breakpoint:text-paragraph-2 phone:text-caption-2;
+        @apply text-subheading font-medium text-white desktop:text-heading-3 breakpoint:text-paragraph-2 tablet:text-caption-1 phone:text-caption-2;
       }
       &_subtitle {
         @apply text-caption-1 text-grayLabel font-semibold mb-5 desktop:text-caption-1 breakpoint:text-caption-2 phone:text-caption-4;

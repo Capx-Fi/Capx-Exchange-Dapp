@@ -42,6 +42,10 @@ function ExchangeScreen({ match }) {
   var buyTicker = useSelector((state) => state.exchange.buyTicker);
   var sellTicker = useSelector((state) => state.exchange.sellTicker);
 
+  const isBuyValid = buyTicker?.asset !== undefined && buyTicker.asset !== "";
+
+  const isSellValid =
+    sellTicker?.asset !== undefined && sellTicker.asset !== "";
   const setAmount = (quantity, price) => {
     setReceiveAmount(quantity);
     setPayAmount(quantity * Number(price));
@@ -130,13 +134,18 @@ function ExchangeScreen({ match }) {
           <div className="breakpoint:hidden">
             <div
               className={`exchangeScreen_maincontainer ${
-                (buyTicker || sellTicker) && "border border-dark-50 rounded-2xl"
+                (isBuyValid || isSellValid) &&
+                "border border-dark-50 rounded-2xl"
               }`}
             >
               <div className="exchangeScreen_leftcontainer">
-                {(buyTicker || sellTicker) && (
+                {(isBuyValid || isSellValid) && (
                   <div className="h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
-                    {buyTicker ? buyTicker?.asset : sellTicker?.asset}
+                    {isBuyValid
+                      ? buyTicker?.asset
+                      : isSellValid
+                      ? sellTicker?.asset
+                      : ""}
                     <img
                       src={crossIcon}
                       alt="close"
@@ -149,7 +158,7 @@ function ExchangeScreen({ match }) {
                     />
                   </div>
                 )}
-                {!buyTicker && !sellTicker && (
+                {!isBuyValid && !isSellValid && (
                   <div className="exchangeScreen_header">
                     <div className="exchangeScreen_header_titlecontainer">
                       <p className="exchangeScreen_header_titlecontainer_title">
@@ -170,7 +179,7 @@ function ExchangeScreen({ match }) {
                 )}
 
                 {mode === "sell" ? (
-                  sellTicker?.asset !== undefined && sellTicker.asset !== "" ? (
+                  isSellValid ? (
                     <div className="w-auto  px-14 py-7">
                       <SellScreen
                         ticker={match.params.ticker}
@@ -185,7 +194,7 @@ function ExchangeScreen({ match }) {
                   ) : (
                     <TokenSellTable filter={filter} refresh={refresh} />
                   )
-                ) : buyTicker ? (
+                ) : isBuyValid ? (
                   <div className="w-auto  px-14 py-7">
                     <BuyScreen
                       ticker={match.params.ticker}
