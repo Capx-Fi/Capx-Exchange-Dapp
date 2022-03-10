@@ -166,12 +166,12 @@
   &_header {
     @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v upper:w-62v desktop:w-60v phone:w-full;
     &_titlecontainer {
-      @apply flex flex-col items-start;
+      @apply flex flex-col items-start tablet:pt-2;
       &_title {
-        @apply text-subheading font-medium text-white desktop:text-heading-3 breakpoint:text-paragraph-2 tablet:text-caption-1 phone:text-caption-2;
+        @apply text-subheading font-medium text-white desktop:text-heading-3 breakpoint:text-paragraph-2 tablet:text-caption-1  phone:text-caption-2;
       }
       &_subtitle {
-        @apply text-caption-1 text-grayLabel font-semibold mb-5 desktop:text-caption-1 breakpoint:text-caption-2 phone:text-caption-4;
+        @apply text-caption-1 text-grayLabel font-semibold mb-5 desktop:text-caption-1 breakpoint:text-caption-2 tablet:text-caption-mid phone:text-caption-4;
       }
     }
   }
