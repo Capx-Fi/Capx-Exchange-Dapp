@@ -130,13 +130,13 @@ function ExchangeScreen({ match }) {
           <div className="breakpoint:hidden">
             <div
               className={`exchangeScreen_maincontainer ${
-                buyTicker || sellTicker
+                false
                   ? "border border-dark-50 rounded-2xl w-90v mx-auto breakpoint:border-0"
                   : "w-full"
               }`}
             >
               <div className="exchangeScreen_leftcontainer">
-                {(buyTicker || sellTicker) && (
+                {false && (
                   <div className="phone:h-16 tablet:h-20 relative w-full rounded-t-xl bg-dark-300 text-white phone:py-4 tablet:py-6 font-black text-paragraph-1">
                     {buyTicker ? buyTicker?.asset : sellTicker?.asset}
                     <img
@@ -188,7 +188,7 @@ function ExchangeScreen({ match }) {
                     <TokenSellTable filter={filter} refresh={refresh} />
                   )
                 ) : buyTicker ? (
-                  <div className="w-auto  phone:p-5 tablet:px-14 tablet:py-7">
+                  <div className="w-auto  phone:p-0 tablet:px-14 tablet:py-7">
                     <BuyScreen
                       ticker={match.params.ticker}
                       payAmount={payAmount}
