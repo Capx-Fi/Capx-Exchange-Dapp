@@ -17,6 +17,7 @@ import TokenSellTable from "./TokenSellTable";
 import TokenBuyTable from "./TokenBuyTable";
 import MetamaskModal from "../../components/Modals/MetamaskModal/MetamaskModal";
 import { setBuyTicker, setSellTicker } from "../../redux/actions/exchange";
+import useWindowSize from "../../utils/windowSize";
 const format = "HH:mm";
 
 function ExchangeScreen({ match }) {
@@ -57,6 +58,7 @@ function ExchangeScreen({ match }) {
     setPayAmount(maxPay);
   };
 
+  const windowWidth = useWindowSize().width;
   return (
     <>
       {!active ? (
@@ -71,7 +73,7 @@ function ExchangeScreen({ match }) {
           }}
           className="exchangeScreen"
         >
-          <div className="hidden breakpoint:block">
+          {windowWidth > 1279 ? (
             <div className="exchangeScreen_maincontainer">
               <div className="exchangeScreen_leftcontainer">
                 <div className="exchangeScreen_header">
@@ -128,10 +130,7 @@ function ExchangeScreen({ match }) {
                 />
               )}
             </div>
-          </div>
-
-          {/* exchange below breakpoint .i.e 1280*/}
-          <div className="breakpoint:hidden">
+          ) : (
             <div
               className={`exchangeScreen_maincontainer ${
                 (isBuyValid || isSellValid) &&
@@ -220,7 +219,7 @@ function ExchangeScreen({ match }) {
                 )}
               </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </>

@@ -11,6 +11,7 @@ import WithdrawContainer from "./WithdrawContainer";
 
 import crossIcon from "../../assets/close-cyan.svg";
 import { setWithdrawTicker } from "../../redux/actions/withdraw";
+import useWindowSize from "../../utils/windowSize";
 
 const format = "HH:mm";
 
@@ -28,6 +29,7 @@ function WithdrawScreen({ match }) {
   const isValid =
     withdrawTicker?.asset !== undefined && withdrawTicker.asset !== "";
 
+  const windowWidth = useWindowSize().width;
   return (
     <>
       {!active ? (
@@ -39,7 +41,7 @@ function WithdrawScreen({ match }) {
           }}
           className="exchangeScreen"
         >
-          <div className="hidden breakpoint:block">
+          {windowWidth > 1279 ? (
             <div className="exchangeScreen_maincontainer">
               <div className="exchangeScreen_leftcontainer">
                 <div className="exchangeScreen_header">
@@ -66,10 +68,7 @@ function WithdrawScreen({ match }) {
                 setMaxAmount={setMaxAmount}
               />
             </div>
-          </div>
-
-          {/* exchange below breakpoint .i.e 1280*/}
-          <div className="breakpoint:hidden">
+          ) : (
             <div
               className={`exchangeScreen_maincontainer ${
                 isValid && "border border-dark-50 rounded-2xl"
@@ -117,7 +116,7 @@ function WithdrawScreen({ match }) {
                 )}
               </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </>

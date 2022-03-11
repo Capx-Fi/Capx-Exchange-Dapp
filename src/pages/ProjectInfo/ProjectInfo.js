@@ -33,6 +33,7 @@ import { fetchOrderForTicker } from "../../utils/fetchOrderForTicker";
 import { useWeb3React } from "@web3-react/core";
 import MetamaskModal from "../../components/Modals/MetamaskModal/MetamaskModal";
 import { useSelector } from "react-redux";
+import useWindowSize from "../../utils/windowSize";
 
 function ProjectInfo({ match }) {
   const dispatch = useDispatch();
@@ -110,6 +111,9 @@ function ProjectInfo({ match }) {
       );
     }
   };
+
+  const windowWidth = useWindowSize().width;
+
   return (
     <>
       {!active ? (
@@ -125,33 +129,34 @@ function ProjectInfo({ match }) {
             className={`main-container ${
               ticker &&
               ticker?.asset !== "" &&
-              "border border-dark-50 rounded-2xl block"
+              "border border-dark-50 rounded-2xl block breakpoint:border-0"
             }`}
           >
-            <div className="hidden breakpoint:block">
-              <div className="main-container_left">
-                <InfoHeader
-                  ticker={`${projectDetails?.projectName} (${projectDetails.projectTokenTicker})`}
-                  lastSellingPrice={lastSellingPrice}
-                  averageSellingPrice={averageSellingPrice}
-                />
-                <ProjectDescription
-                  projectDetails={projectDetails}
-                  activeOrders={activeOrders}
-                  completeOrders={completeOrders}
+            {windowWidth > 1279 ? (
+              <div className="breakpoint:flex">
+                {" "}
+                <div className="main-container_left">
+                  <InfoHeader
+                    ticker={`${projectDetails?.projectName} (${projectDetails.projectTokenTicker})`}
+                    lastSellingPrice={lastSellingPrice}
+                    averageSellingPrice={averageSellingPrice}
+                  />
+                  <ProjectDescription
+                    projectDetails={projectDetails}
+                    activeOrders={activeOrders}
+                    completeOrders={completeOrders}
+                  />
+                </div>
+                <BuyScreen
+                  buyModalOpen={buyModalOpen}
+                  setBuyModalOpen={setBuyModalOpen}
+                  approveModalOpen={approveModalOpen}
+                  setApproveModalOpen={setApproveModalOpen}
+                  refresh={refresh}
+                  setRefresh={setRefresh}
                 />
               </div>
-              <BuyScreen
-                buyModalOpen={buyModalOpen}
-                setBuyModalOpen={setBuyModalOpen}
-                approveModalOpen={approveModalOpen}
-                setApproveModalOpen={setApproveModalOpen}
-                refresh={refresh}
-                setRefresh={setRefresh}
-              />
-            </div>
-            {/* project info below breakpoint */}
-            <div className="breakpoint:hidden">
+            ) : (
               <div className="main-container_left w-full">
                 {ticker && ticker.asset !== "" && (
                   <div className="h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
@@ -190,7 +195,7 @@ function ProjectInfo({ match }) {
                   </div>
                 )}
               </div>
-            </div>
+            )}
           </div>
         </div>
       )}
