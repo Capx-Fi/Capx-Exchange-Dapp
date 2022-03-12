@@ -1,23 +1,23 @@
 .tradesScreen {
-  @apply mx-auto tablet:w-80v w-7/12 desktop:w-10/12 flex flex-col;
+  @apply mx-auto tablet:w-80v w-7/12 desktop:w-10/12 phone:w-full phone:overflow-hidden flex flex-col;
 
   &_header {
-    @apply px-4 pl-7 py-2 mb-5 mt-16 flex justify-between content-start;
+    @apply px-4 pl-7 py-2 mb-5 mt-16 flex justify-between content-start phone:mb-0;
     &_titlecontainer {
       @apply flex flex-col items-start;
       &_title {
-        @apply text-subheading font-medium text-white;
+        @apply text-subheading font-medium text-left text-white phone:text-caption-2;
       }
       &_subtitle {
-        @apply text-caption-1 text-grayLabel font-semibold mb-5;
+        @apply text-caption-1 text-grayLabel font-semibold mb-5 text-left phone:text-10px;
       }
     }
   }
   &_body {
-    @apply px-4 pb-2 w-full overflow-y-auto;
+    @apply px-4 pb-2 w-full overflow-y-auto phone:overflow-scroll phone:overflow-x-hidden;
     height: 520px;
     &::-webkit-scrollbar {
-      @apply w-1.5 bg-dark-200;
+      @apply w-1.5 bg-dark-200 phone:w-0;
     }
     &::-webkit-scrollbar-thumb {
       @apply rounded-md h-16;
@@ -34,13 +34,13 @@
         rgba(18, 28, 32, 0.1) 100%
       );
       &_assetPair {
-        @apply flex flex-col justify-center items-start px-12 w-80;
+        @apply flex flex-col justify-center items-start px-12 w-80 phone:px-0 phone:pl-6;
       }
       &_title {
-        @apply text-caption-2 text-dark-100 font-bold;
+        @apply text-caption-2 text-dark-100 font-bold phone:text-10px;
       }
       &_value {
-        @apply text-paragraph-1 text-primary-green-100 font-normal flex;
+        @apply text-paragraph-1 text-primary-green-100 font-normal flex phone:text-caption-2;
       }
       &_getToken {
         @apply breakpoint:flex hidden flex-col justify-center items-start px-6 w-40;
@@ -55,13 +55,13 @@
         @apply h-full bg-dark-50 w-0.5 mx-12;
       }
       &_status {
-        @apply flex flex-col justify-center items-center px-6;
+        @apply flex flex-col justify-center items-center px-6 phone:px-0;
         &_value {
-          @apply w-28 text-caption-1 text-primary-green-100 bg-opacity-20 font-normal rounded-2xl text-center flex justify-center items-center pb-0.5;
+          @apply w-28 text-caption-1 text-primary-green-100 bg-opacity-20 font-normal rounded-2xl text-center flex justify-center items-center pb-0.5 phone:text-10px phone:w-14 phone:h-6 phone:mt-2;
         }
       }
       &_chevron {
-        @apply flex justify-center items-center px-6;
+        @apply flex justify-center items-center px-6 phone:px-3 phone:mt-2;
       }
     }
   }
@@ -72,6 +72,17 @@
     width: fit-content;
     max-width: 1100px;
     min-width: 800px;
+  }
+}
+
+@media (min-width: 375px) and (max-width:768px) {
+  .tradesScreen {
+    width: fit-content;
+    max-width: 90vw;
+    min-width: 60vw;
+  }
+  ::-webkit-scrollbar{
+    width: 0px;
   }
 }
 
@@ -86,54 +97,54 @@
   border-radius: 0px 0px 16px 16px;
 }
 .accordion_header {
-  @apply px-10 py-4 flex flex-row;
+  @apply px-10 py-4 flex flex-row phone:-ml-4;
   &_title {
-    @apply text-caption-1 text-primary-green-100 font-bold;
+    @apply text-caption-1 text-primary-green-100 font-bold phone:text-caption-3;
   }
 }
 .accordion_separator {
   @apply w-full mt-2 mb-3 border border-dark-50;
 }
 .accordion_body {
-  @apply px-12 py-6 flex flex-row justify-between;
+  @apply px-12 py-6 flex flex-row justify-between phone:flex-col phone:-ml-4;
   &_left {
-    @apply flex flex-col items-start;
+    @apply flex flex-col items-start phone:mb-4;
     &_title {
-      @apply text-caption-2 text-grayLabel font-bold mb-2;
+      @apply text-caption-2 text-grayLabel font-bold mb-2 phone:text-10px;
     }
     &_value {
-      @apply flex flex-col justify-start text-paragraph-2 text-primary-green-100 font-medium;
+      @apply flex flex-col justify-start text-paragraph-2 text-primary-green-100 font-medium phone:flex-row phone:text-caption-2 phone:w-full phone:justify-between phone:pr-4;
       &_get {
         @apply text-left items-start;
         & > span {
-          @apply text-caption-1 text-primary-green-200 opacity-60 font-bold;
+          @apply text-caption-1 text-primary-green-200 opacity-60 font-bold phone:text-caption-2;
         }
       }
       &_give {
         @apply text-left items-start;
         & > span {
-          @apply text-caption-1 text-primary-green-200 opacity-60 font-bold;
+          @apply text-caption-1 text-primary-green-200 opacity-60 font-bold phone:text-caption-2;
         }
       }
     }
   }
   &_right {
-    @apply flex flex-col items-start pr-24;
+    @apply flex flex-col items-start pr-24 phone:pr-0;
     &_title {
-      @apply text-caption-2 text-grayLabel font-bold mb-2;
+      @apply text-caption-2 text-grayLabel font-bold mb-2 phone:text-10px;
     }
     &_value {
-      @apply flex flex-col text-paragraph-2 text-primary-green-100 font-medium;
+      @apply flex flex-col text-paragraph-2 text-primary-green-100 font-bold phone:flex-row phone:text-caption-2 phone:w-full phone:justify-between;
       &_get {
         @apply text-left items-start;
         & > span {
-          @apply text-primary-green-200 opacity-60;
+          @apply text-primary-green-200 opacity-60 phone:text-caption-2;
         }
       }
       &_give {
         @apply text-left items-start;
         & > span {
-          @apply text-primary-green-200 opacity-60;
+          @apply text-primary-green-200 opacity-60 phone:text-caption-2;
         }
       }
     }
@@ -145,7 +156,7 @@
 .accordion_footer {
   @apply relative;
   &_cancel {
-    @apply flex flex-row justify-center items-center w-40 px-1 pb-1 text-caption-2 rounded-2xl text-warning-color-100 font-bold absolute -top-2.5 left-12 cursor-pointer;
+    @apply flex flex-row justify-center items-center w-40 px-1 pb-1 text-caption-2 rounded-2xl text-warning-color-100 font-bold absolute -top-2.5 left-12 cursor-pointer phone:text-caption-3 phone:rounded-md phone:w-36 phone:left-8;
     background: #572b37;
     border: 1px solid rgba(134, 68, 83, 1);
   }
