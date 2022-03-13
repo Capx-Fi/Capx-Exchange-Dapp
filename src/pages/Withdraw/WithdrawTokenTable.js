@@ -248,6 +248,8 @@ function WithdrawTokenTable({ filter, refetch }) {
         <MobileWithdraw
           tokenList={tokenList}
           loading={loading}
+          setWithdrawTicker={setWithdrawTicker}
+          setAssetBalance={setAssetBalance}
           isUSDT={CHAIN_USDT_CONTRACT_ADDRESS.toString()}
         />
       </div>
