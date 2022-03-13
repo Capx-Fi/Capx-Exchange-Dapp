@@ -1,21 +1,21 @@
 .tradesScreen {
-  @apply mx-auto tablet:w-80v w-7/12 desktop:w-10/12 phone:w-full phone:overflow-hidden flex flex-col;
+  @apply mx-auto tablet:w-90v tablet:mx-auto w-7/12 desktop:w-10/12 phone:w-full phone:overflow-hidden flex flex-col;
 
   &_header {
     @apply px-4 pl-7 py-2 mb-5 mt-16 flex justify-between content-start phone:mb-0;
     &_titlecontainer {
       @apply flex flex-col items-start;
       &_title {
-        @apply text-subheading font-medium text-left text-white phone:text-caption-2;
+        @apply text-subheading font-medium text-left text-white phone:text-caption-2 tablet:text-subheading;
       }
       &_subtitle {
-        @apply text-caption-1 text-grayLabel font-semibold mb-5 text-left phone:text-10px;
+        @apply text-caption-1 text-grayLabel font-semibold mb-5 text-left phone:text-10px tablet:text-caption-1;
       }
     }
   }
   &_body {
-    @apply px-4 pb-2 w-full overflow-y-auto phone:overflow-scroll phone:overflow-x-hidden;
-    height: 520px;
+    @apply px-4 pb-2 w-full overflow-y-auto h-60v phone:overflow-scroll phone:overflow-x-hidden tablet:overflow-y-scroll;
+    // height: 520px;
     &::-webkit-scrollbar {
       @apply w-1.5 bg-dark-200 phone:w-0;
     }
@@ -27,7 +27,7 @@
       @apply rounded-md;
     }
     &_assetPairContainer {
-      @apply flex rounded-2xl border border-dark-50 h-24 z-50;
+      @apply flex rounded-2xl border border-dark-50 phone:h-24 z-50 tablet:h-28;
       background: radial-gradient(
         143.33% 143.33% at 82.41% -4.96%,
         rgba(132, 214, 164, 0.1) 0%,
@@ -37,10 +37,10 @@
         @apply flex flex-col justify-center items-start px-12 w-80 phone:px-0 phone:pl-6;
       }
       &_title {
-        @apply text-caption-2 text-dark-100 font-bold phone:text-10px;
+        @apply text-caption-2 text-dark-100 font-bold phone:text-10px tablet:text-caption-3;
       }
       &_value {
-        @apply text-paragraph-1 text-primary-green-100 font-normal flex phone:text-caption-2;
+        @apply text-paragraph-1 text-primary-green-100 font-normal flex phone:text-caption-2 tablet:text-caption-1;
       }
       &_getToken {
         @apply breakpoint:flex hidden flex-col justify-center items-start px-6 w-40;
@@ -55,13 +55,13 @@
         @apply h-full bg-dark-50 w-0.5 mx-12;
       }
       &_status {
-        @apply flex flex-col justify-center items-center px-6 phone:px-0;
+        @apply flex flex-col justify-center items-center px-6 phone:px-0 tablet:px-6 tablet:ml-12;
         &_value {
-          @apply w-28 text-caption-1 text-primary-green-100 bg-opacity-20 font-normal rounded-2xl text-center flex justify-center items-center pb-0.5 phone:text-10px phone:w-14 phone:h-6 phone:mt-2;
+          @apply w-28 text-caption-1 text-primary-green-100 bg-opacity-20 font-normal rounded-2xl text-center flex justify-center items-center pb-0.5 phone:text-10px phone:w-14 phone:h-6 phone:mt-2 tablet:w-28 tablet:text-caption-3 tablet:h-8;
         }
       }
       &_chevron {
-        @apply flex justify-center items-center px-6 phone:px-3 phone:mt-2;
+        @apply flex justify-center items-center px-6 phone:px-3 phone:mt-2 tablet:mt-0;
       }
     }
   }
@@ -99,21 +99,21 @@
 .accordion_header {
   @apply px-10 py-4 flex flex-row phone:-ml-4;
   &_title {
-    @apply text-caption-1 text-primary-green-100 font-bold phone:text-caption-3;
+    @apply text-caption-1 text-primary-green-100 font-bold phone:text-caption-3 tablet:text-caption-2;
   }
 }
 .accordion_separator {
   @apply w-full mt-2 mb-3 border border-dark-50;
 }
 .accordion_body {
-  @apply px-12 py-6 flex flex-row justify-between phone:flex-col phone:-ml-4;
+  @apply px-12 py-6 flex flex-row justify-between phone:flex-col phone:-ml-4 tablet:flex-row;
   &_left {
     @apply flex flex-col items-start phone:mb-4;
     &_title {
-      @apply text-caption-2 text-grayLabel font-bold mb-2 phone:text-10px;
+      @apply text-caption-2 text-grayLabel font-bold mb-2 phone:text-10px tablet:text-caption-2;
     }
     &_value {
-      @apply flex flex-col justify-start text-paragraph-2 text-primary-green-100 font-medium phone:flex-row phone:text-caption-2 phone:w-full phone:justify-between phone:pr-4;
+      @apply flex flex-col justify-start text-paragraph-2 text-primary-green-100 font-medium phone:flex-row phone:text-caption-2 phone:w-full phone:justify-between phone:pr-4 tablet:flex-col tablet:text-paragraph-2;
       &_get {
         @apply text-left items-start;
         & > span {
@@ -129,12 +129,12 @@
     }
   }
   &_right {
-    @apply flex flex-col items-start pr-24 phone:pr-0;
+    @apply flex flex-col items-start pr-24 phone:pr-0 tablet:pr-36;
     &_title {
-      @apply text-caption-2 text-grayLabel font-bold mb-2 phone:text-10px;
+      @apply text-caption-2 text-grayLabel font-bold mb-2 phone:text-10px tablet:text-caption-2;
     }
     &_value {
-      @apply flex flex-col text-paragraph-2 text-primary-green-100 font-bold phone:flex-row phone:text-caption-2 phone:w-full phone:justify-between;
+      @apply flex flex-col text-paragraph-2 text-primary-green-100 font-bold phone:flex-row phone:text-caption-2 phone:w-full phone:justify-between tablet:flex-col tablet:text-paragraph-2;
       &_get {
         @apply text-left items-start;
         & > span {
