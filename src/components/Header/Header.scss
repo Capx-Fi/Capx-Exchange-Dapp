@@ -32,3 +32,7 @@
     }
   }
 }
+
+.mobileMenu {
+  @apply p-5 flex mx-auto justify-center items-center flex-row top-20 left-0 fixed w-full tablet:hidden bg-dark-200 rounded-b-lg;
+}
