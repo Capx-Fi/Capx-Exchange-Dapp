@@ -67,15 +67,15 @@ function Column({
             </div>
             <div className="ml-2">
               <p className="_assetQuantityValue text-caption-2">
-                {convertToInternationalCurrencySystem(token.quanitity)}
+                {convertToInternationalCurrencySystem(token.quantity)}
               </p>
             </div>
           </div>
         </div>
 
         <div className="_rightContainer">
-          <p className="_assetExpiry text-white font-regular text-10px mt-2 mb-4">
-            {token.unlockDate}
+          <p className="_assetExpiry text-white font-regular text-10px mt-2 mb-3">
+            {token.unlockDate ? token.unlockDate : "N/A"}
           </p>
           <Button />
         </div>

@@ -11,6 +11,7 @@ import WithdrawContainer from "./WithdrawContainer";
 
 import crossIcon from "../../assets/close-cyan.svg";
 import { setWithdrawTicker } from "../../redux/actions/withdraw";
+import useWindowSize from "../../utils/windowSize";
 
 const format = "HH:mm";
 
@@ -25,6 +26,10 @@ function WithdrawScreen({ match }) {
 
   var withdrawTicker = useSelector((state) => state.withdraw.withdrawTicker);
 
+  const isValid =
+    withdrawTicker?.asset !== undefined && withdrawTicker.asset !== "";
+
+  const windowWidth = useWindowSize().width;
   return (
     <>
       {!active ? (
@@ -36,7 +41,7 @@ function WithdrawScreen({ match }) {
           }}
           className="exchangeScreen"
         >
-          <div className="hidden breakpoint:block">
+          {windowWidth > 1279 ? (
             <div className="exchangeScreen_maincontainer">
               <div className="exchangeScreen_leftcontainer">
                 <div className="exchangeScreen_header">
@@ -63,19 +68,16 @@ function WithdrawScreen({ match }) {
                 setMaxAmount={setMaxAmount}
               />
             </div>
-          </div>
-
-          {/* exchange below breakpoint .i.e 1280*/}
-          <div className="phone:hidden tablet:block breakpoint:hidden">
+          ) : (
             <div
               className={`exchangeScreen_maincontainer ${
-                withdrawTicker && "border border-dark-50 rounded-2xl"
+                isValid && "border border-dark-50 rounded-2xl"
               }`}
             >
               <div className="exchangeScreen_leftcontainer">
-                {withdrawTicker && (
+                {isValid && (
                   <div className="h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
-                    {withdrawTicker && withdrawTicker?.asset}
+                    {isValid && withdrawTicker?.asset}
                     <img
                       src={crossIcon}
                       alt="close"
@@ -84,7 +86,7 @@ function WithdrawScreen({ match }) {
                     />
                   </div>
                 )}
-                {!withdrawTicker && (
+                {!isValid && (
                   <div className="exchangeScreen_header">
                     <div className="exchangeScreen_header_titlecontainer">
                       <p className="exchangeScreen_header_titlecontainer_title">
@@ -97,7 +99,7 @@ function WithdrawScreen({ match }) {
                     <GlobalSearchBox filter={filter} setFilter={setFilter} />
                   </div>
                 )}
-                {withdrawTicker ? (
+                {isValid ? (
                   <div className="w-auto  px-14 py-7">
                     <WithdrawContainer
                       withdrawModalOpen={withdrawModalOpen}
@@ -114,60 +116,7 @@ function WithdrawScreen({ match }) {
                 )}
               </div>
             </div>
-          </div>
-
-          {/* Withdraw breakpoint below 768 i.e mobile screens */}
-          <div className="tablet:hidden">
-          <div
-              className={`exchangeScreen_maincontainer ${
-                withdrawTicker && "border border-dark-50 rounded-2xl"
-              }`}
-            >
-              <div className="exchangeScreen_leftcontainer">
-                {withdrawTicker && (
-                  <div className="h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
-                    {withdrawTicker && withdrawTicker?.asset}
-                    <img
-                      src={crossIcon}
-                      alt="close"
-                      onClick={() => dispatch(setWithdrawTicker(null))}
-                      className="absolute right-14 top-6 cursor-pointer h-6"
-                    />
-                  </div>
-                )}
-
-                {!withdrawTicker && (
-                  <div className="exchangeScreen_header">
-                    <div className="exchangeScreen_header_titlecontainer">
-                      <p className="exchangeScreen_header_titlecontainer_title">
-                        Your Portfolio
-                      </p>
-                      <p className="withdrawScreen_header_titlecontainer_subtitle">
-                        Withdraw your tokens
-                      </p>
-                    </div>
-                    <GlobalSearchBox filter={filter} setFilter={setFilter} />
-                  </div>
-                )}
-
-                {withdrawTicker ? (
-                  <div className="w-auto  px-14 py-7">
-                    <WithdrawContainer
-                      withdrawModalOpen={withdrawModalOpen}
-                      setWithdrawModalOpen={setWithdrawModalOpen}
-                      refetch={refetch}
-                      setRefetch={setRefetch}
-                      ticker={match.params.ticker}
-                      balance={balance}
-                      setMaxAmount={setMaxAmount}
-                    />
-                  </div>
-                ) : (
-                  <WithdrawTokenTable filter={filter} refetch={refetch} />
-                )}
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       )}
     </>
