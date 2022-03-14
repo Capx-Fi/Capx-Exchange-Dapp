@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 
 import NextIcon from "../../assets/next-black.svg";
+import MenuIcon from "../../assets/hamburger.svg";
 import ConnectCTA from "../CTA/ConnectCTA";
 import { hideSideNav } from "../../redux/actions/sideNav";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
@@ -89,6 +90,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
       : GRAPHAPIURL_MASTER_ETHEREUM;
 
   const [sortBy, setSortBy] = useState("Ethereum");
+  const [showMenu, setShowMenu] = useState(false);
   const handleCloseSelectDashboard = () => {
     setDashboardModal(false);
   };
@@ -131,18 +133,18 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     } else if (chainName === "Matic") {
       try {
         await web3.currentProvider.request({
-          method: 'wallet_addEthereumChain',
+          method: "wallet_addEthereumChain",
           params: [
             {
-              chainId: '0x13881',
-              chainName: 'Polygon Testnet',
+              chainId: "0x13881",
+              chainName: "Polygon Testnet",
               nativeCurrency: {
-                name: 'MATIC',
-                symbol: 'MATIC',
+                name: "MATIC",
+                symbol: "MATIC",
                 decimals: 18,
               },
-              rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
-              blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+              rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
+              blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
             },
           ],
         });
@@ -211,6 +213,15 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   }
   return (
     <>
+      {active && showMenu && (
+        <div className="mobileMenu">
+          <DropDown sortBy={sortBy} chainChange={chainChange} />
+          <AccountDropdown
+            disconnect={disconnect}
+            accountAddress={`${account?.substr(0, 6)}...${account?.substr(-4)}`}
+          />
+        </div>
+      )}
       <header
         className={`header z-40 ${
           vesting
@@ -240,6 +251,11 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
           ) : location.pathname === "/exchange" || location.pathname === "/" ? (
             <ToggleSwitch />
           ) : null)}
+        <img
+          src={MenuIcon}
+          className="tablet:hidden"
+          onClick={() => setShowMenu(!showMenu)}
+        />
         {!hiddenNav && (
           <div className="header_navbar">
             {active && <DropDown sortBy={sortBy} chainChange={chainChange} />}
@@ -263,21 +279,21 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
               //   </svg>
               // </div>
               <>
-              <div className="tablet:block breakpoint:hidden">
-              <AccountDropdown
-                disconnect={disconnect}
-                accountAddress={`${account.substr(0, 6)}...`}
-              />
-              </div>
-              
-              <div className="tablet:hidden breakpoint:block">
-              <AccountDropdown
-                disconnect={disconnect}
-                accountAddress={`${account.substr(0, 6)}...${account.substr(
-                  -4
-                )}`}
-              />
-              </div>
+                <div className="tablet:block breakpoint:hidden">
+                  <AccountDropdown
+                    disconnect={disconnect}
+                    accountAddress={`${account.substr(0, 6)}...`}
+                  />
+                </div>
+
+                <div className="tablet:hidden breakpoint:block">
+                  <AccountDropdown
+                    disconnect={disconnect}
+                    accountAddress={`${account.substr(0, 4)}...${account.substr(
+                      -4
+                    )}`}
+                  />
+                </div>
               </>
             ) : (
               <ConnectCTA
