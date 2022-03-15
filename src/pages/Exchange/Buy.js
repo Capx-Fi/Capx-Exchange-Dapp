@@ -7,13 +7,15 @@ import BuyIcon from "../../assets/buy.svg";
 import LockIcon from "../../assets/lock-asset.svg";
 import SwapIcon from "../../assets/swap.svg";
 import NextIcon from "../../assets/next-black.svg";
-import { setBuyTicker } from "../../redux/actions/exchange";
+import { setBuyTicker, setSellTicker } from "../../redux/actions/exchange";
 import RefresherInput from "../../components/RefresherInput/RefresherInput";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
 import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
 import { approveSellTokens } from "../../utils/approveSellTokens";
 import { fulfillOrder } from "../../utils/fulfillOrder";
 import BigNumber from "bignumber.js";
+
+import crossIcon from "../../assets/close-cyan.svg";
 
 import {
   BSC_CHAIN_ID,
@@ -35,6 +37,7 @@ import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
 // New Import
 
 import { validateBuyAmount } from "../../utils/validateBuyAmount";
+import useWindowSize from "../../utils/windowSize";
 
 BigNumber.config({
   ROUNDING_MODE: 3,
@@ -52,6 +55,7 @@ function BuyScreen({
   setRefresh,
 }) {
   const dispatch = useDispatch();
+  const windowWidth = useWindowSize().width;
 
   const ticker = useSelector((state) => state.exchange.buyTicker);
   useEffect(() => {
@@ -194,15 +198,22 @@ function BuyScreen({
               src={BuyIcon}
               alt="buy icon"
             />
-            <p className="hidden tablet:flex exchangeScreen_rightcontainer_buyContainer_header_title_text">
-              BUY{" "}
-              <span className="hidden tablet:flex">
-                {ticker ? " - " + ticker?.asset : ""}
-              </span>
+
+            <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
+              BUY {ticker ? " - " + ticker?.asset : ""}
             </p>
-            <p className="tablet:hidden exchangeScreen_rightcontainer_buyContainer_header_title_text">
-              BUY{" "}
-            </p>
+            {ticker && ticker?.asset !== "" && windowWidth < 769 && (
+              <img
+                className="exchangeScreen_rightcontainer_buyContainer_header_title_icon ml-4 h-7"
+                src={crossIcon}
+                alt="close"
+                onClick={() =>
+                  ticker
+                    ? dispatch(setBuyTicker(null))
+                    : dispatch(setSellTicker(null))
+                }
+              />
+            )}
           </div>
         </div>
         <div className="exchangeScreen_rightcontainer_buyContainer_body">

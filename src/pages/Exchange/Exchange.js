@@ -134,12 +134,12 @@ function ExchangeScreen({ match }) {
             <div
               className={`exchangeScreen_maincontainer ${
                 (isBuyValid || isSellValid) &&
-                "border border-dark-50 rounded-2xl"
+                "tablet:border tablet:border-dark-50 tablet:rounded-2xl"
               }`}
             >
               <div className="exchangeScreen_leftcontainer">
                 {(isBuyValid || isSellValid) && (
-                  <div className="h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
+                  <div className="hidden tablet:flex h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
                     {isBuyValid
                       ? buyTicker?.asset
                       : isSellValid
@@ -179,7 +179,7 @@ function ExchangeScreen({ match }) {
 
                 {mode === "sell" ? (
                   isSellValid ? (
-                    <div className="w-auto  px-14 py-7">
+                    <div className="w-auto tablet:px-14 tablet:py-7">
                       <SellScreen
                         ticker={match.params.ticker}
                         sellModalOpen={sellModalOpen}
@@ -194,7 +194,7 @@ function ExchangeScreen({ match }) {
                     <TokenSellTable filter={filter} refresh={refresh} />
                   )
                 ) : isBuyValid ? (
-                  <div className="w-auto  px-14 py-7">
+                  <div className="w-auto  tablet:px-14 tablet:py-7">
                     <BuyScreen
                       ticker={match.params.ticker}
                       payAmount={payAmount}
