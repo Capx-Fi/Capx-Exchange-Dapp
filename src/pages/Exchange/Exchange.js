@@ -134,12 +134,12 @@ function ExchangeScreen({ match }) {
             <div
               className={`exchangeScreen_maincontainer ${
                 (isBuyValid || isSellValid) &&
-                "tablet:border tablet:border-dark-50 tablet:rounded-2xl"
+                "tablet:border tablet:border-dark-50 rounded-2xl"
               }`}
             >
               <div className="exchangeScreen_leftcontainer">
                 {(isBuyValid || isSellValid) && (
-                  <div className="hidden tablet:flex h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
+                  <div className="hidden tablet:block h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
                     {isBuyValid
                       ? buyTicker?.asset
                       : isSellValid
