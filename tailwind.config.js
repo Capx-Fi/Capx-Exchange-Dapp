@@ -169,6 +169,7 @@ module.exports = {
         "6ov": "62vh",
         "35v": "35vh",
         "45v": "45vh",
+        "55v": "55vh",
       },
       screens: {
         phone: "375px",

@@ -91,9 +91,9 @@ function InfoHeader({ ticker, lastSellingPrice, averageSellingPrice }) {
                   >
                     <div>
                       <p className="infoHeader_innerDiv_value">
-                        {ticker.length > 12
-                          ? ticker.substring(0, 12).concat("...")
-                          : ticker}
+                        {(ticker.length > 12 && window.screen.width < 768)
+                          ? ticker.substring(0, 18).concat("...")
+                          : (ticker.length > 12) ? ticker.substring(0, 12).concat("...") : ticker}
                       </p>
                     </div>
                   </HtmlTooltip>

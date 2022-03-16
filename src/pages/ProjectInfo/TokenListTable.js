@@ -7,6 +7,7 @@ import DepositIcon from "../../assets/DepositIcon.svg";
 import { useDispatch } from "react-redux";
 import { setProjectBuyTicker } from "../../redux/actions/exchange";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
+import MobileTableBuy from "../../components/MobileTable/MobileTableBuy";
 
 const { Column, ColumnGroup } = Table;
 
@@ -19,6 +20,8 @@ function TokenListTable({ activeOrders }) {
   const dispatch = useDispatch();
   return (
     // <div className="tokenListTableContainer">
+    <>
+    <div className="phone:hidden tablet:flex">
     <Table
       dataSource={activeOrders}
       pagination={false}
@@ -87,6 +90,20 @@ function TokenListTable({ activeOrders }) {
         }}
       />
     </Table>
+    </div>
+
+      <div className="tablet:hidden">
+      {activeOrders && <MobileTableBuy
+          tokenList={activeOrders}
+          loading={false}
+          onChange={onChange}
+          isInfo={true}
+          setBuyTicker={setProjectBuyTicker}
+          navigateProject={() => {console.log("")}}
+          setBalance={() => {console.log("")}}
+        />}
+      </div>
+    </>
   );
 }
 

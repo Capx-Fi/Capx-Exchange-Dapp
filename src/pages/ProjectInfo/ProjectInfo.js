@@ -133,7 +133,7 @@ function ProjectInfo({ match }) {
             }`}
           >
             {windowWidth > 1279 ? (
-              <div className="breakpoint:flex">
+              <div className="phone:hidden breakpoint:flex">
                 {" "}
                 <div className="main-container_left">
                   <InfoHeader
@@ -198,9 +198,9 @@ function ProjectInfo({ match }) {
             )}
           </div>
         </div>
-      )}
-    </>
-  );
-}
+
+  )}
+  </>
+)}
 
 export default ProjectInfo;

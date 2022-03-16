@@ -4,9 +4,9 @@
   border: 1px solid #2a383c;
   box-sizing: border-box;
   border-radius: 16px;
-  @apply w-full relative phone:h-auto tablet:h-28  mb-10 -mr-48 pl-4 phone:pb-10 tablet:pb-0;
+  @apply w-full relative phone:h-auto tablet:h-28  mb-10 -mr-48 pl-4 phone:pb-0 tablet:pb-0;
   &_illustration {
-    @apply absolute -bottom-1 right-0 h-20 desktop:h-24;
+    @apply absolute -bottom-1 right-0 h-20 desktop:h-24 phone:invisible tablet:visible;
   }
   &_innerDiv {
     @apply mr-16 phone:mr-0 tablet:mr-3 desktop:mr-4 upper:mr-9 breakpoint:mr-4  text-left align-middle p-6 desktop:px-4;
@@ -21,7 +21,7 @@
 .main-container {
   @apply mt-16;
   &_left {
-    @apply tablet:w-full tablet:pr-0 pr-6 breakpoint:w-60v  desktop:pr-40 desktop:mr-8 desktop:-ml-8 desktop:w-65v;
+    @apply phone:w-90v tablet:w-full tablet:pr-0 pr-6 breakpoint:w-60v desktop:pr-40 desktop:mr-8 desktop:-ml-8 desktop:w-65v;
   }
   &_rightcontainer {
     @apply w-full tablet:w-full breakpoint:block pl-4 desktop:w-35v desktop:-mr-10  desktop:pr-4 desktop:pl-16 breakpoint:pl-8 breakpoint:pr-0 desktop:-ml-48;
@@ -197,12 +197,12 @@
       @apply flex flex-col p-4 rounded-xl mt-2 mx-0;
       &_title {
         color: #83a1a9;
-        @apply py-3 pl-4 flex justify-start text-caption-3 font-semibold desktop:text-caption-1 pb-2;
+        @apply py-3 pl-4 flex justify-start text-caption-3 font-semibold phone:text-10px tablet:text-caption-2 desktop:text-caption-1 pb-2;
       }
       &_innercontainer {
         @apply bg-dark-400 w-full rounded-xl flex flex-col justify-start;
         &_box {
-          @apply w-full flex flex-col text-left text-white justify-start items-start pb-1;
+          @apply w-full flex flex-col text-left text-white justify-start items-start pb-1 phone:text-10px tablet:text-caption-2 desktop:text-caption-1;
         }
         &_button {
           background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);

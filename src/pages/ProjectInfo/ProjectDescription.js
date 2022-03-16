@@ -8,6 +8,7 @@ import OuterContainer from './OuterContainer';
 import TokenListTable from './TokenListTable';
 import TokenActivityTable from './TokenActivityTable';
 import MobileMarketActivity from "./MobileMarketActivity";
+import MobileBuyTable from '../../components/MobileTable/MobileTableBuy';
 
 function ProjectDescription({ projectDetails, completeOrders, activeOrders }) {
   return (
@@ -41,7 +42,21 @@ function ProjectDescription({ projectDetails, completeOrders, activeOrders }) {
       </div>
 
       <div className="phone:block tablet:hidden">
+      <OuterContainer
+        title={'PROJECT DESCRIPTION'}
+        icon={infoIcon}
+        content={
+          projectDetails?.projectDescription ? (
+            <p className='p-4 max-h-32 w-full overflow-y-scroll'>
+              {projectDetails?.projectDescription}
+            </p>
+          ) : (
+            <div className='h-20 bg-loadingBG text-loadingBG bg-opacity-40 animate-pulse w-full'></div>
+          )
+        }
+      />
         <MobileMarketActivity />
+        <TokenListTable activeOrders={activeOrders} />
       </div>
     </>
   );
