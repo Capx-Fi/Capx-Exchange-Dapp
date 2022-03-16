@@ -134,7 +134,7 @@ function ExchangeScreen({ match }) {
             <div
               className={`exchangeScreen_maincontainer ${
                 (isBuyValid || isSellValid) &&
-                "tablet:border tablet:border-dark-50 rounded-2xl"
+                "tablet:border tablet:border-dark-50 rounded-2xl w-90v mx-auto"
               }`}
             >
               <div className="exchangeScreen_leftcontainer">
