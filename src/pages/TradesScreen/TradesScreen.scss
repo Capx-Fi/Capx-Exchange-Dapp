@@ -6,10 +6,10 @@
     &_titlecontainer {
       @apply flex flex-col items-start phone:w-35v;
       &_title {
-        @apply text-subheading font-medium text-left text-white phone:text-caption-2 tablet:text-subheading;
+        @apply text-subheading font-medium text-left text-white phone:text-caption-2 tablet:text-paragraph-1;
       }
       &_subtitle {
-        @apply text-caption-1 text-grayLabel font-semibold mb-5 text-left phone:text-10px tablet:text-caption-1;
+        @apply text-caption-1 text-grayLabel font-semibold mb-5 text-left phone:text-10px tablet:text-caption-mid;
       }
     }
   }
@@ -27,7 +27,7 @@
       @apply rounded-md;
     }
     &_assetPairContainer {
-      @apply flex rounded-2xl border border-dark-50 phone:h-20 z-50 tablet:h-28;
+      @apply flex rounded-2xl border border-dark-50 phone:h-20 z-50 tablet:h-24;
       background: radial-gradient(
         143.33% 143.33% at 82.41% -4.96%,
         rgba(132, 214, 164, 0.1) 0%,
@@ -75,13 +75,13 @@
   }
 }
 
-@media (min-width: 375px) and (max-width:768px) {
+@media (min-width: 375px) and (max-width: 768px) {
   .tradesScreen {
     width: fit-content;
     max-width: 90vw;
     min-width: 60vw;
   }
-  ::-webkit-scrollbar{
+  ::-webkit-scrollbar {
     width: 0px;
   }
 }

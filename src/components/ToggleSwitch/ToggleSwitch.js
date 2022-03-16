@@ -24,14 +24,14 @@ const ToggleSwitch = ({ id }) => {
             className={`flex  border bg-dark-500 border-grayLabel flex-row outerDiv rounded-xl breakpoint:rounded-xl tablet:rounded-md phone:rounded-md justify-around`}
           >
             <p
-              className={`p-2 breakpoint:p-2 tablet:p-2 font-bold z-20 breakpoint:text-caption-1 tablet:text-caption-3 phone:text-caption-4 phone:p-2 ${
+              className={`buySellPill ${
                 mode === "buy" ? "text-black" : "text-primary-green-500"
               }`}
             >
               BUY
             </p>
             <p
-              className={`p-2 breakpoint:p-2 tablet:p-2 font-bold z-20 breakpoint:text-caption-1 tablet:text-caption-3 phone:text-caption-4 phone:p-2 ${
+              className={`buySellPill ${
                 mode === "sell" ? "text-black" : "text-primary-green-500"
               }`}
             >

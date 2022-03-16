@@ -71,7 +71,7 @@ function WithdrawScreen({ match }) {
           ) : (
             <div
               className={`exchangeScreen_maincontainer ${
-                isValid && "border border-dark-50 rounded-2xl"
+                isValid && "border border-dark-50 rounded-2xl w-90v mx-auto"
               }`}
             >
               <div className="exchangeScreen_leftcontainer">

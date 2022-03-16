@@ -12,6 +12,11 @@
   height: 35px;
 }
 
+.buySellPill {
+  padding: 0.35rem;
+  @apply font-bold z-20 breakpoint:text-caption-1 tablet:text-caption-3 phone:text-caption-4;
+}
+
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .outerDiv {
     height: 32px;
