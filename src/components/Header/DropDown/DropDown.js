@@ -30,7 +30,7 @@ function DropDown({ sortBy, chainChange }) {
       </button>
       {open && (
         <div className="absolute right-0 bg-dark-300 py-2 mt-2 bg-whitedivide-y divide-gray-600 rounded-md shadow-xl w-40">
-          {/* <p
+          <p
             className="option"
             onClick={() => {
               chainChange("Ethereum");
@@ -38,7 +38,7 @@ function DropDown({ sortBy, chainChange }) {
             }}
           >
             Ethereum
-          </p> */}
+          </p>
           <p
             className="option"
             onClick={() => {
