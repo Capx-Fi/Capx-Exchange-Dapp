@@ -45,7 +45,7 @@ function Column({
   return (
     <>
       <div
-        className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-2"
+        className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-b-2"
         onClick={() => {
           dispatch(setWithdrawTicker(token));
           dispatch(setAssetBalance(token.quanitity));
@@ -86,7 +86,7 @@ function Column({
 
 function LoadingColumn() {
   return (
-    <div className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-2">
+    <div className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-b-2">
       <div className="_leftContainer text-left text-white ">
         <p className="_assetName  p-2 w-full text-dark-50 bg-dark-50 animate-pulse rounded-full px-3 border-2 border-dark-50 text-caption-2 text-center">
           ...

@@ -4,19 +4,19 @@
     @apply flex mt-4 desktop:mt-0 breakpoint:-mt-4 phone:-mt-8;
   }
   &_leftcontainer {
-    @apply tablet:mx-auto tablet:w-90v tablet:pr-0 pr-40 breakpoint:w-62v breakpoint:pr-20 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:w-90v;
+    @apply tablet:mx-auto tablet:w-90v tablet:pr-0 pr-40 breakpoint:w-62v breakpoint:mr-4  desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:w-90v;
   }
   &_rightcontainer {
-    @apply pl-4 phone:-ml-4 upper:w-30v phone:pl-0 desktop:w-33v desktop:pr-12 upper:pr-14 breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
+    @apply pl-4 phone:-ml-4 breakpoint:pr-14 upper:w-30v phone:pl-0 desktop:w-33v desktop:pr-16 upper:pr-14 breakpoint:w-33v breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
     &_buyContainer {
-      @apply border rounded-2xl flex flex-col border-dark-50;
+      @apply border rounded-2xl flex flex-col border-dark-50 phone:mx-4 tablet:mx-0;
       background: linear-gradient(0deg, #19201d 0%, #151618 101.42%),
         rgba(21, 21, 23, 0.2);
       &_header {
         @apply px-6 py-4 flex flex-row h-16 border-b rounded-t-2xl border-dark-50 w-full;
         background-color: #171c1f;
         &_title {
-          @apply text-paragraph-2 tablet:text-paragraph-1 text-primary-green-100 font-bold flex items-center breakpoint:text-paragraph-2 desktop:text-paragraph-1;
+          @apply text-paragraph-2 phone:text-caption-2 tablet:text-paragraph-1 text-primary-green-100 font-bold flex items-center breakpoint:text-paragraph-2 desktop:text-paragraph-1;
           &_icon {
             @apply h-5 w-5;
           }
@@ -30,7 +30,7 @@
         &_payContainer {
           @apply flex flex-col w-full mb-4 desktop:mb-3;
           &_title {
-            @apply text-caption-2 text-grayLabel mt-5 desktop:mt-3 font-black text-left breakpoint:text-caption-3 desktop:text-caption-2;
+            @apply text-caption-2 phone:text-caption-3 text-grayLabel mt-5 desktop:mt-3 font-black text-left breakpoint:text-caption-3 desktop:text-caption-2;
           }
           &_inputContainer {
             @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
@@ -138,18 +138,18 @@
           }
         }
         &_expiryDetailsContainer {
-          @apply text-grayLabel text-caption-2 font-bold text-left py-4;
+          @apply text-grayLabel text-caption-2 phone:text-caption-3 tablet:text-caption-2 font-bold text-left py-4;
         }
         &_swapButton {
           background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
-          @apply rounded-lg py-3 my-4 flex justify-center items-center cursor-pointer;
+          @apply rounded-lg py-3 my-4 phone:my-0 tablet:my-4 flex justify-center items-center cursor-pointer;
           &_title {
-            @apply text-paragraph-2 text-dark-300 font-bold;
+            @apply text-paragraph-2 phone:text-caption-3 tablet:text-caption-2 breakpoint:text-paragraph-2 text-dark-300 font-bold;
           }
           &_icon {
             @apply pl-4;
             img {
-              @apply w-6 h-6;
+              @apply w-6 h-6 phone:w-4 phone:h-4 tablet:w-6 tablet:h-6;
             }
           }
         }
@@ -164,10 +164,10 @@
     &_titlecontainer {
       @apply flex flex-col items-start tablet:pt-2;
       &_title {
-        @apply text-subheading font-medium text-white desktop:text-heading-3 breakpoint:text-paragraph-2 tablet:text-caption-1  phone:text-caption-2;
+        @apply text-subheading font-medium text-white desktop:text-heading-3 breakpoint:text-paragraph-2 tablet:text-caption-1 phone:font-normal phone:text-caption-2;
       }
       &_subtitle {
-        @apply text-caption-1 text-grayLabel font-semibold mb-5 desktop:text-caption-1 breakpoint:text-caption-2 tablet:text-caption-mid phone:text-caption-4;
+        @apply text-caption-1 text-grayLabel font-semibold mb-5 desktop:text-caption-1 breakpoint:text-caption-2 tablet:text-caption-mid phone:text-caption-3;
       }
     }
   }

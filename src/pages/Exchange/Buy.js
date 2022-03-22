@@ -202,9 +202,9 @@ function BuyScreen({
             <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
               BUY {ticker ? " - " + ticker?.asset : ""}
             </p>
-            {ticker && ticker?.asset !== "" && windowWidth < 769 && (
+            {ticker && ticker?.asset !== "" && window.screen.width < 768 && (
               <img
-                className="exchangeScreen_rightcontainer_buyContainer_header_title_icon ml-4 h-7"
+                className="absolute right-12 ml-4 h-6"
                 src={crossIcon}
                 alt="close"
                 onClick={() =>

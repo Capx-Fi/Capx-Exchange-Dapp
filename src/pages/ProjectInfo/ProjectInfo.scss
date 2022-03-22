@@ -202,7 +202,7 @@
       &_innercontainer {
         @apply bg-dark-400 w-full rounded-xl flex flex-col justify-start;
         &_box {
-          @apply w-full flex flex-col text-left text-white justify-start items-start pb-1 phone:text-10px tablet:text-caption-2 desktop:text-caption-1;
+          @apply w-full flex flex-col text-left text-white justify-start items-start pb-1 phone:text-caption-3 tablet:text-caption-2 desktop:text-caption-1;
         }
         &_button {
           background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
