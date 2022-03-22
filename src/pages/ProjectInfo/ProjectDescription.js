@@ -10,7 +10,7 @@ import TokenActivityTable from './TokenActivityTable';
 import MobileMarketActivity from "./MobileMarketActivity";
 import MobileBuyTable from '../../components/MobileTable/MobileTableBuy';
 
-function ProjectDescription({ projectDetails, completeOrders, activeOrders }) {
+function ProjectDescription({ projectDetails, completeOrders, activeOrders, loading }) {
   return (
     <>
     <div className="tablet:block phone:hidden">
@@ -56,7 +56,7 @@ function ProjectDescription({ projectDetails, completeOrders, activeOrders }) {
         }
       />
         <MobileMarketActivity />
-        <TokenListTable activeOrders={activeOrders} />
+        <TokenListTable activeOrders={activeOrders} loading={loading} />
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import { render } from "react-dom";
 import { hideSideNav, showSideNav } from "../../redux/actions/sideNav";
 import { useDispatch, useSelector } from "react-redux";
 import BuyIcon from "../../assets/buy.svg";
+import crossIcon from "../../assets/close-cyan.svg";
 import { setSellTicker } from "../../redux/actions/exchange";
 import BigNumber from "bignumber.js";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
@@ -86,6 +87,7 @@ function SellScreen({
   const [disabled, setDisabled] = useState(false);
   const [warningDate, setWarningDate] = useState(false);
   const [checkSell, setCheckSell] = useState({});
+  
 
   const resetValue = () => {
     let nullSellTicker = ticker;
@@ -256,9 +258,17 @@ function SellScreen({
               src={BuyIcon}
               alt="buy icon"
             />
-            <div className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
-              SELL {ticker?.asset !== undefined && "- " + ticker?.asset}
-            </div>
+            <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
+              SELL {ticker?.asset !== undefined && "- " + ticker?.asset} 
+            </p>
+              {ticker && ticker?.asset !== "" && window.screen.width < 769 && (
+              <img
+                className="exchangeScreen_rightcontainer_buyContainer_header_title_icon phone:ml-10 tablet:ml-4 h-7"
+                src={crossIcon}
+                alt="close"
+                onClick={() => dispatch(setSellTicker(null)) }
+              />
+            )}
           </div>
         </div>
         <div className="exchangeScreen_rightcontainer_buyContainer_body">

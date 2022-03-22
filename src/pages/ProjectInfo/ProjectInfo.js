@@ -80,7 +80,7 @@ function ProjectInfo({ match }) {
       : chainId?.toString() === MATIC_CHAIN_ID.toString()
       ? GRAPHAPIURL_MASTER_MATIC
       : GRAPHAPIURL_MASTER_ETHEREUM;
-
+      const [loading, setLoading] = useState(false);
   useEffect(() => {
     let nullBuyTicker = ticker;
     if (nullBuyTicker) {
@@ -90,6 +90,7 @@ function ProjectInfo({ match }) {
     getProjectDetails(match.params.ticker);
   }, [match.params.ticker, active, account, chainId, refresh]);
   const getProjectDetails = async () => {
+    setLoading(true);
     if (active) {
       const _projectDetails = await fetchProjectDetails(
         match.params.ticker,
@@ -109,6 +110,7 @@ function ProjectInfo({ match }) {
         wrappedURL,
         CHAIN_USDT_CONTRACT_ADDRESS
       );
+      setLoading(false);
     }
   };
 
@@ -159,7 +161,7 @@ function ProjectInfo({ match }) {
             ) : (
               <div className="main-container_left w-full">
                 {ticker && ticker.asset !== "" && (
-                  <div className="h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
+                  <div className="h-20 hidden tablet:block relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
                     {ticker && ticker?.asset}
                     <img
                       src={crossIcon}
@@ -180,10 +182,11 @@ function ProjectInfo({ match }) {
                       projectDetails={projectDetails}
                       activeOrders={activeOrders}
                       completeOrders={completeOrders}
+                      loading={loading}
                     />
                   </>
                 ) : (
-                  <div className="w-auto  px-14 py-7">
+                  <div className="w-auto phone:width-full tablet:px-14 tablet:py-7">
                     <BuyScreen
                       buyModalOpen={buyModalOpen}
                       setBuyModalOpen={setBuyModalOpen}

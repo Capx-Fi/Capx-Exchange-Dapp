@@ -11,7 +11,7 @@ import MobileTableBuy from "../../components/MobileTable/MobileTableBuy";
 
 const { Column, ColumnGroup } = Table;
 
-function TokenListTable({ activeOrders }) {
+function TokenListTable({ activeOrders, loading }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
 
   function onChange(pagination, filters, sorter, extra) {
@@ -95,9 +95,9 @@ function TokenListTable({ activeOrders }) {
       <div className="tablet:hidden">
       {activeOrders && <MobileTableBuy
           tokenList={activeOrders}
-          loading={false}
           onChange={onChange}
           isInfo={true}
+          loading={loading}
           setBuyTicker={setProjectBuyTicker}
           navigateProject={() => {console.log("")}}
           setBalance={() => {console.log("")}}

@@ -19,6 +19,7 @@ function MobileMarketActivity() {
 }
 
 function Column() {
+	const token = "$CAPX12.MAT18.SOMETHINGLONG" //TODO Remove these hardcoded values upon passing props
 	const placeHolderQuantity = 2424;
 	const placeHolderPrice = "$1.44";
 	const dispatch = useDispatch();
@@ -32,9 +33,9 @@ function Column() {
 		<div className="_leftContainer text-left text-white">
 			<div className="titleContainer flex justify-between -mr-6">
 				<p className="_assetName pl-2 text-caption-2 text-left">
-				TOKEN
+				{token.length > 12 ? token.slice(0, 12) + "..." : token}
 				</p>
-				<p className="_assetExpiry text-white font-regular text-10px mt-2 mb-4 mr-10">
+				<p className="_assetExpiry text-right text-white font-regular text-10px mt-1 mb-4 mr-10">
 					24/09/2020
 				</p>
 			</div>
