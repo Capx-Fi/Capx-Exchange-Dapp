@@ -1,5 +1,6 @@
 import React from "react";
 import "./WarningCard.scss";
+import InfoHeader from "../../pages/ProjectInfo/InfoHeader";
 
 import WarningIcon from "../../assets/warning-orange.svg";
 import DoubleArrow from "../../assets/redirect.svg";
@@ -12,10 +13,10 @@ function WarningCard({ text, redirect }) {
   return (
     <div className="px-4 py-2 flex items-start text-warning-color-400 warning_gradient flex-row">
       <div>
-        <img src={WarningIcon} className="h-5" />
+        <img src={WarningIcon} className="h-5" alt="warning icon"/>
       </div>
       <div className="text-caption-3 font-semibold px-1 tablet:px-2">
-        {windowWidth < 769 ? "" : text}
+        {windowWidth < 769 ? text.substring(0,14).concat("...") : text}
       </div>
       {/* <div onClick={() => history.push(redirect)}>
         <img src={DoubleArrow} />

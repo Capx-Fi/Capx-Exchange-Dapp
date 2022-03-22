@@ -12,7 +12,7 @@ import useWindowSize from "../../utils/windowSize";
 
 const { Column, ColumnGroup } = Table;
 
-function TokenListTable({ activeOrders }) {
+function TokenListTable({ activeOrders, loading }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
 
   function onChange(pagination, filters, sorter, extra) {
@@ -21,9 +21,8 @@ function TokenListTable({ activeOrders }) {
   const dispatch = useDispatch();
   const windowWidth = useWindowSize().width;
   return (
-    // <div className="tokenListTableContainer">
     <>
-      {windowWidth > 768 ? (
+      <div className="phone:hidden tablet:flex">
         <Table
           dataSource={activeOrders}
           pagination={false}
@@ -90,21 +89,25 @@ function TokenListTable({ activeOrders }) {
             }}
           />
         </Table>
-      ) : (
-        <MobileTableBuy
-          tokenList={activeOrders ? activeOrders : []}
-          loading={false}
-          onChange={onChange}
-          isInfo={true}
-          setBuyTicker={setProjectBuyTicker}
-          navigateProject={() => {
-            console.log("");
-          }}
-          setBalance={() => {
-            console.log("");
-          }}
-        />
-      )}
+      </div>
+
+      <div className="tablet:hidden">
+        {activeOrders && (
+          <MobileTableBuy
+            tokenList={activeOrders}
+            onChange={onChange}
+            isInfo={true}
+            loading={loading}
+            setBuyTicker={setProjectBuyTicker}
+            navigateProject={() => {
+              console.log("");
+            }}
+            setBalance={() => {
+              console.log("");
+            }}
+          />
+        )}
+      </div>
     </>
   );
 }

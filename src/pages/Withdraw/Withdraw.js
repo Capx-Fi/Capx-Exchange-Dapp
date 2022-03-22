@@ -76,7 +76,7 @@ function WithdrawScreen({ match }) {
             >
               <div className="exchangeScreen_leftcontainer">
                 {isValid && (
-                  <div className="h-20 relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
+                  <div className="h-20 phone:hidden tablet:block relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
                     {isValid && withdrawTicker?.asset}
                     <img
                       src={crossIcon}
@@ -100,7 +100,7 @@ function WithdrawScreen({ match }) {
                   </div>
                 )}
                 {isValid ? (
-                  <div className="w-auto  px-14 py-7">
+                  <div className="w-auto phone:w-full phone:p-0 tablet:w-auto tablet:px-14 tablet:py-7">
                     <WithdrawContainer
                       withdrawModalOpen={withdrawModalOpen}
                       setWithdrawModalOpen={setWithdrawModalOpen}

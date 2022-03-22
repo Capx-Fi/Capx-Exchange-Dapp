@@ -166,7 +166,7 @@ module.exports = {
       maxHeight: {
         "fit-content": "fit-content",
         "70v": "70vh",
-        "6ov": "62vh",
+        "6ov": "60vh",
         "35v": "35vh",
         "45v": "45vh",
         "55v": "55vh",

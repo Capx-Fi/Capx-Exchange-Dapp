@@ -42,7 +42,7 @@ function InfoHeader({ ticker, lastSellingPrice, averageSellingPrice }) {
                     <div>
                       <p className="infoHeader_innerDiv_value">
                         {ticker.length > 12
-                          ? ticker.substring(0, 12).concat("...")
+                          ? ticker.substring(0, 12)
                           : ticker}
                       </p>
                     </div>
@@ -62,7 +62,7 @@ function InfoHeader({ ticker, lastSellingPrice, averageSellingPrice }) {
             <p className="infoHeader_innerDiv_value">${averageSellingPrice}</p>
           </div>
         </div>
-        <img src={liquidDiamond} className="infoHeader_illustration" />
+        <img src={liquidDiamond} className="infoHeader_illustration" alt="infoheader illustration diamond"/>
       </div>
 
       <div className="infoHeader tablet:hidden">

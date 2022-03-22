@@ -15,9 +15,9 @@ function MobileTableBuy({
 }) {
   return (
     <>
-      <div className="mobileTableBuy h-fit max-h-55v w-85v overflow-y-hidden">
+      <div className="mobileTableBuy h-fit-content max-h-60v w-85v overflow-y-hidden">
         {(isInfo) ? <div className="_header border border-dark-50 text-left pl-4 py-4 overflow-hidden bg-dark-300 rounded-tl-2xl rounded-tr-2xl text-tradeTitle text-10px flex items-center font-bold tracking-wide"><img src={marketActivity} className="w-3 h-3 mr-1" alt="" />TOKENS WITH $CAPX</div> : <div className="_header py-2 bg-dark-50 rounded-tl-2xl rounded-tr-2xl"></div>}
-        <div className="_body border border-dark-50 rounded-br-2xl rounded-bl-2xl h-55v overflow-y-auto">
+        <div className="_body border border-dark-50 rounded-br-2xl rounded-bl-2xl h-fit-content max-h-55v overflow-y-auto">
           {loading
             ? [0, 1, 2, 3, 4].map(() => <LoadingColumn />)
             : tokenList.map((token) => (
@@ -47,7 +47,7 @@ function Button() {
 
 function LoadingColumn() {
   return (
-    <div className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-2">
+    <div className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-b-2">
       <div className="_leftContainer text-left text-white ">
         <p className="_assetName  p-2 w-full text-dark-50 bg-dark-50 animate-pulse rounded-full px-3 border-2 border-dark-50 text-caption-2 text-center">
           ...
@@ -84,10 +84,10 @@ function Column({ token, setBuyTicker, setBalance, navigateProject }) {
   const dispatch = useDispatch();
   return (
     <div
-      className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-2"
+      className="_card flex justify-between py-3 px-4 mx-0 border-dark-50 border-b-2"
       onClick={() => {
         dispatch(setBuyTicker(token));
-        setBalance(token.balance);
+        setBalance(token?.balance);
       }}
     >
       <div className="_leftContainer text-left text-white">

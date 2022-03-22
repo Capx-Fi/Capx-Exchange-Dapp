@@ -9,6 +9,8 @@ import RefresherInput from "../../components/RefresherInput/RefresherInput";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
 import BigNumber from "bignumber.js";
 import { useSnackbar } from "notistack";
+import crossIcon from "../../assets/close-cyan.svg";
+import WithdrawIcon from "../../assets/DepositIcon.svg";
 
 import {
   BSC_CHAIN_ID,
@@ -129,17 +131,23 @@ function WithdrawContainer({
         withdrawModalStatus={withdrawModalStatus}
         setWithdrawModalStatus={setWithdrawModalStatus}
       />
-      <div className="exchangeScreen_rightcontainer_buyContainer">
+      <div className="exchangeScreen_rightcontainer_buyContainer ml-4">
         <div className="exchangeScreen_rightcontainer_buyContainer_header">
           <div className="exchangeScreen_rightcontainer_buyContainer_header_title">
             <img
               className="exchangeScreen_rightcontainer_buyContainer_header_title_icon"
-              src={BuyIcon}
-              alt="buy icon"
+              src={WithdrawIcon}
+              alt="withdraw icon"
             />
             <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
-              WITHDRAW {ticker ? " - " + ticker.asset : ""}
+              WITHDRAW {ticker ? " - " + ticker.asset : ""} 
             </p>
+            {ticker && ticker?.asset !== "" && window.screen.width < 769 && (<img
+                      src={crossIcon}
+                      alt="close"
+                      onClick={() => dispatch(setWithdrawTicker(null))}
+                      className="absolute right-14 cursor-pointer h-6"
+                    />)}
           </div>
         </div>
         <div className="exchangeScreen_rightcontainer_buyContainer_body">

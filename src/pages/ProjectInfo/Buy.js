@@ -7,12 +7,13 @@ import BuyIcon from "../../assets/buy.svg";
 import LockIcon from "../../assets/lock-asset.svg";
 import SwapIcon from "../../assets/swap.svg";
 import NextIcon from "../../assets/next-black.svg";
-import { setProjectBuyTicker } from "../../redux/actions/exchange";
+import { setBuyTicker, setProjectBuyTicker } from "../../redux/actions/exchange";
 import RefresherInput from "../../components/RefresherInput/RefresherInput";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
 import { approveSellTokens } from "../../utils/approveSellTokens";
 import { fulfillOrder } from "../../utils/fulfillOrder";
 import BigNumber from "bignumber.js";
+import crossIcon from "../../assets/close-cyan.svg";
 
 import {
   BSC_CHAIN_ID,
@@ -44,6 +45,7 @@ import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
 // New Import
 
 import { validateBuyAmount } from "../../utils/validateBuyAmount";
+import useWindowSize from "../../utils/windowSize";
 
 BigNumber.config({
   ROUNDING_MODE: 3,
@@ -194,6 +196,12 @@ function BuyScreen({
             <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
               BUY {ticker ? " - " + ticker.asset : ""}
             </p>
+            {window.screen.width ? <img
+                      src={crossIcon}
+                      alt="close"
+                      onClick={() => dispatch(setProjectBuyTicker(null))}
+                      className="right-10 top-6 cursor-pointer h-6"
+            /> : null}
           </div>
         </div>
         <div className="exchangeScreen_rightcontainer_buyContainer_body">

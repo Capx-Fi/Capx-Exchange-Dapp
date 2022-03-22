@@ -1,5 +1,6 @@
 import "./Header.scss";
 import CapxLogo from "../../assets/CapxExchangeLogo.svg";
+import CapxMobileLogo from "../../assets/CapxLogo.svg";
 import LogoutIcon from "../../assets/logout.svg";
 import { useSnackbar } from "notistack";
 import { hexStripZeros } from "@ethersproject/bytes";
@@ -236,7 +237,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
                 location.pathname === "/" && active
                   ? "header_logo"
                   : "header_logoInfo"
-              } ${vesting && "flex tablet:hidden "} `}
+              } ${vesting && "flex tablet:hidden "}`}
               src={CapxLogo}
               alt="capx logo"
             />
@@ -251,11 +252,12 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
           ) : location.pathname === "/exchange" || location.pathname === "/" ? (
             <ToggleSwitch />
           ) : null)}
-        <img
+        {active ? <img
           src={MenuIcon}
           className="tablet:hidden"
+          alt="menu icon"
           onClick={() => setShowMenu(!showMenu)}
-        />
+        /> : null }
         {!hiddenNav && (
           <div className="header_navbar">
             {active && <DropDown sortBy={sortBy} chainChange={chainChange} />}

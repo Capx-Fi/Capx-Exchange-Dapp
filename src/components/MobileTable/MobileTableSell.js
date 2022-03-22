@@ -10,12 +10,11 @@ function MobileTableSell({
   setBalance,
   navigateProject,
 }) {
-  console.log(loading);
   return (
     <>
-      <div className="mobileTableBuy h-fit-content h-max-60v w-85v overflow-y-auto">
+      <div className="mobileTableBuy h-fit-content max-h-60v w-85v overflow-y-auto">
         <div className="_header py-2 bg-dark-50 rounded-tl-2xl rounded-tr-2xl"></div>
-        <div className="_body border border-dark-50 rounded-br-2xl rounded-bl-2xl h-55v overflow-y-auto">
+        <div className="_body border border-dark-50 rounded-br-2xl rounded-bl-2xl h-fit-content max-h-55v overflow-y-auto">
           {loading ? (
             [0, 1, 2, 3, 4].map(() => <LoadingColumn />)
           ) : tokenList.length > 0 ? (
@@ -24,6 +23,7 @@ function MobileTableSell({
                 token={token}
                 setSellTicker={setSellTicker}
                 setBalance={setBalance}
+                navigateProject={navigateProject}
               />
             ))
           ) : (
@@ -48,7 +48,7 @@ function Button() {
 
 function LoadingColumn() {
   return (
-    <div className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-2">
+    <div className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-b-2">
       <div className="_leftContainer text-left text-white ">
         <p className="_assetName  p-2 w-full text-dark-50 bg-dark-50 animate-pulse rounded-full px-3 border-2 border-dark-50 text-caption-2 text-center">
           ...
@@ -81,18 +81,23 @@ function LoadingColumn() {
   );
 }
 
-function Column({ token, setSellTicker, setBalance }) {
+function Column({ token, setSellTicker, setBalance, navigateProject }) {
   const dispatch = useDispatch();
   return (
     <div
       className="_card flex justify-between py-3 px-4 mx-0 border border-dark-50 border-2"
       onClick={() => {
-        dispatch(setSellTicker(token?.ticker));
-        setBalance = token?.balance;
+        dispatch(setSellTicker(token));
+        dispatch(setBalance(token?.balance));
       }}
     >
       <div className="_leftContainer text-left text-white">
-        <p className="_assetName bg-dark-300 p-2 rounded-full px-3 border border-2 border-dark-50 text-caption-2 text-center">
+        <p
+        onClick={(e) => {
+            e.stopPropagation();
+            navigateProject(token.assetID);
+          }} 
+        className="_assetName bg-dark-300 p-2 rounded-full px-3 border border-2 border-dark-50 text-caption-2 text-center">
           {token.asset}
         </p>
 
