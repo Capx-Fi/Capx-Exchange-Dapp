@@ -263,7 +263,7 @@ function SellScreen({
             </p>
               {ticker && ticker?.asset !== "" && window.screen.width < 769 && (
               <img
-                className="absolute right-12 ml-4 h-6"
+                className="absolute right-8 ml-4 h-6"
                 src={crossIcon}
                 alt="close"
                 onClick={() => dispatch(setSellTicker(null)) }

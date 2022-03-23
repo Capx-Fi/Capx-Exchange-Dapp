@@ -191,8 +191,8 @@ function BuyScreen({
       />
       <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus} />
       <div className="exchangeScreen_rightcontainer_buyContainer">
-        <div className="exchangeScreen_rightcontainer_buyContainer_header">
-          <div className="exchangeScreen_rightcontainer_buyContainer_header_title">
+        <div className="exchangeScreen_rightcontainer_buyContainer_header relative">
+          <div className="exchangeScreen_rightcontainer_buyContainer_header_title ">
             <img
               className="exchangeScreen_rightcontainer_buyContainer_header_title_icon"
               src={BuyIcon}
@@ -204,7 +204,7 @@ function BuyScreen({
             </p>
             {ticker && ticker?.asset !== "" && window.screen.width < 768 && (
               <img
-                className="absolute right-12 ml-4 h-6"
+                className="absolute right-8 h-7"
                 src={crossIcon}
                 alt="close"
                 onClick={() =>

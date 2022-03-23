@@ -60,10 +60,10 @@ function LoadingColumn() {
             <p className="_assetPriceTitle">Price</p>
           </div>
           <div className="ml-2">
-            <p className="_assetQuantityValue text-caption-2 w-16 text-dark-50 bg-dark-50 animate-pulse">
+            <p className="_assetQuantityValue text-caption-3 w-16 text-dark-50 bg-dark-50 animate-pulse">
               ...
             </p>
-            <p className="_assetPriceValue text-caption-2 w-16 text-dark-50 bg-dark-50 animate-pulse">
+            <p className="_assetPriceValue text-caption-3 w-16 text-dark-50 bg-dark-50 animate-pulse">
               ...
             </p>
           </div>
