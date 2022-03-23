@@ -62,7 +62,7 @@ function ProjectDescription({
               )
             }
           />
-          <MobileMarketActivity />
+          <MobileMarketActivity completeOrders={completeOrders} />
           <TokenListTable activeOrders={activeOrders} loading={loading} />
         </>
       )}
