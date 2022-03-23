@@ -4,7 +4,7 @@
     @apply h-6 phone:h-10 tablet:h-12 breakpoint:h-14 laptop:h-9;
   }
   &_logoInfo {
-    @apply h-6 phone:h-8 tablet:h-10 tablet:ml-9 laptop:h-9 breakpoint:h-8;
+    @apply h-6 phone:h-5 tablet:h-10 tablet:ml-9 laptop:h-9 breakpoint:h-8;
   }
   &_navbar {
     @apply hidden tablet:flex items-center text-white;

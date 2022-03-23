@@ -22,7 +22,7 @@ function TokenListTable({ activeOrders, loading }) {
   const windowWidth = useWindowSize().width;
   return (
     <>
-      <div className="phone:hidden tablet:flex">
+      {windowWidth > 768 ? (
         <Table
           dataSource={activeOrders}
           pagination={false}
@@ -89,25 +89,25 @@ function TokenListTable({ activeOrders, loading }) {
             }}
           />
         </Table>
-      </div>
-
-      <div className="tablet:hidden">
-        {activeOrders && (
-          <MobileTableBuy
-            tokenList={activeOrders}
-            onChange={onChange}
-            isInfo={true}
-            loading={loading}
-            setBuyTicker={setProjectBuyTicker}
-            navigateProject={() => {
-              console.log("");
-            }}
-            setBalance={() => {
-              console.log("");
-            }}
-          />
-        )}
-      </div>
+      ) : (
+        <>
+          {activeOrders && (
+            <MobileTableBuy
+              tokenList={activeOrders}
+              onChange={onChange}
+              isInfo={true}
+              loading={loading}
+              setBuyTicker={setProjectBuyTicker}
+              navigateProject={() => {
+                console.log("");
+              }}
+              setBalance={() => {
+                console.log("");
+              }}
+            />
+          )}
+        </>
+      )}
     </>
   );
 }
