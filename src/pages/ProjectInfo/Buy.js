@@ -196,7 +196,7 @@ function BuyScreen({
             <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
               BUY {ticker ? " - " + ticker.asset : ""}
             </p>
-            {window.screen.width ? <img
+            {window.screen.width < 768 ? <img
                       src={crossIcon}
                       alt="close"
                       onClick={() => dispatch(setProjectBuyTicker(null))}

@@ -1,5 +1,5 @@
 .tradesScreen {
-  @apply mx-auto tablet:w-90v tablet:mx-auto w-7/12 desktop:w-10/12 phone:w-full phone:overflow-hidden flex flex-col;
+  @apply mx-auto tablet:w-90v breakpoint:w-full tablet:mx-auto w-7/12 desktop:w-11/12 phone:w-full phone:overflow-hidden flex flex-col;
 
   &_header {
     @apply px-4 pl-7 py-2 mb-5 mt-16 flex justify-between content-start phone:mb-0 phone:mt-4;
@@ -17,7 +17,7 @@
     @apply px-4 pb-2 w-full overflow-y-auto h-60v phone:overflow-scroll phone:overflow-x-hidden tablet:overflow-y-scroll;
     // height: 520px;
     &::-webkit-scrollbar {
-      @apply w-1.5 bg-dark-200 phone:w-0;
+      @apply w-1.5 bg-dark-200 phone:w-0 breakpoint:w-1.5;
     }
     &::-webkit-scrollbar-thumb {
       @apply rounded-md h-16;

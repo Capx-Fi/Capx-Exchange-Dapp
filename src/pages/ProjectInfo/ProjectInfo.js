@@ -125,7 +125,7 @@ function ProjectInfo({ match }) {
           style={{
             filter: approveModalOpen || buyModalOpen ? "blur(10000px)" : "none",
           }}
-          className="w-82v breakpoint:w-full  desktop:w-82v mx-auto "
+          className="w-82v breakpoint:w-90v desktop:w-82v mx-auto "
         >
           <div
             className={`main-container ${
@@ -186,7 +186,7 @@ function ProjectInfo({ match }) {
                     />
                   </>
                 ) : (
-                  <div className="w-auto phone:width-full tablet:px-14 tablet:py-7">
+                  <div className="w-auto phone:w-full tablet:px-14 tablet:py-7">
                     <BuyScreen
                       buyModalOpen={buyModalOpen}
                       setBuyModalOpen={setBuyModalOpen}

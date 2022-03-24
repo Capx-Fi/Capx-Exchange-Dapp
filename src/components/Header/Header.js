@@ -291,7 +291,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
                 <div className="tablet:hidden breakpoint:block">
                   <AccountDropdown
                     disconnect={disconnect}
-                    accountAddress={`${account.substr(0, 4)}...${account.substr(
+                    accountAddress={`${account.substr(0, 6)}...${account.substr(
                       -4
                     )}`}
                   />

@@ -14,17 +14,17 @@
       @apply text-tradeTitle phone:text-10px uppercase text-caption-1 leading-caption-2 font-bold pb-2 desktop:text-caption-1 breakpoint:text-caption-3 tablet:text-caption-3;
     }
     &_value {
-      @apply text-white phone:text-caption-2   text-subheading font-bold leading-subheading pb-2 upper:text-subheading desktop:text-paragraph-1  breakpoint:text-paragraph-1 tablet:text-paragraph-2;
+      @apply text-dark-150 phone:text-caption-2  text-subheading font-bold leading-subheading pb-2 upper:text-subheading desktop:text-paragraph-1  breakpoint:text-paragraph-1 tablet:text-paragraph-2;
     }
   }
 }
 .main-container {
   @apply mt-16 phone:mt-8 tablet:mt-16;
   &_left {
-    @apply phone:w-90v tablet:w-full tablet:pr-0 pr-6 breakpoint:w-60v desktop:pr-40 desktop:mr-8 desktop:-ml-8 desktop:w-65v;
+    @apply phone:w-90v tablet:w-full tablet:pr-0 pr-6 breakpoint:w-full desktop:pr-40 desktop:mr-8 desktop:-ml-8 desktop:w-65v;
   }
   &_rightcontainer {
-    @apply w-full phone:pl-0 tablet:pl-4 tablet:w-full breakpoint:block pl-4 desktop:w-35v desktop:-mr-10  desktop:pr-4 desktop:pl-16 breakpoint:pl-8 breakpoint:pr-0 desktop:-ml-48;
+    @apply w-full phone:pl-0 tablet:pl-4 tablet:w-40v pl-4 desktop:w-35v desktop:-mr-10  desktop:pr-4 desktop:pl-16 breakpoint:pl-8 breakpoint:pr-0 desktop:-ml-48;
 
     &_buyContainer {
       @apply border rounded-2xl flex flex-col border-dark-50;
