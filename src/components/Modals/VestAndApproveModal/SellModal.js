@@ -48,6 +48,11 @@ function SellModal({ open, setOpen, sellModalStatus }) {
     <span className="text-caption-2" style={{color: "#CCCCCC"}}>Please do not reload or refresh the page...</span></p>,
   ]
 
+  const errorMessage = [
+    <p>Oops! We have encountered an error.<br/>
+    <span className="text-caption-2" style={{color: "#CCCCCC"}}> Please try again!</span></p>,
+  ]
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -78,7 +83,7 @@ function SellModal({ open, setOpen, sellModalStatus }) {
               {sellModalStatus === "success"
                 ? "Successfully created the order on exchange"
                 : sellModalStatus === "failure"
-                ? "Oops! We have encountered an error. Please try again!"
+                ? errorMessage
                 : sellMessage}
             </div>
           </div>

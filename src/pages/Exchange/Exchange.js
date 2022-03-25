@@ -91,7 +91,7 @@ function ExchangeScreen({ match }) {
                         : "Buy available tokens listed on Capx"}
                     </p>
                   </div>
-                  <GlobalSearchBox filter={filter} setFilter={setFilter} />
+                  <GlobalSearchBox filter={filter} setFilter={setFilter} mode={mode} />
                 </div>
                 {mode === "sell" ? (
                   <TokenSellTable filter={filter} refresh={refresh} />

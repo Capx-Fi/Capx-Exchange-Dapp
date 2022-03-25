@@ -41,7 +41,7 @@ function Accordion({ trade, cancelOrder }) {
     }
   };
   return (
-    <div className="py-4">
+    <div className="pb-8">
       <div
         onClick={toggleAccordion}
         className="tradesScreen_body_assetPairContainer"

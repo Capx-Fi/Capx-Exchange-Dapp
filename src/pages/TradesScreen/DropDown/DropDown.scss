@@ -1,7 +1,7 @@
 .dropdown-button {
-  @apply flex flex-row w-40 justify-between items-center rounded-xl px-3 py-2 bg-dark-300  border text-grayLabel text-caption-1 font-semibold phone:text-10px phone:w-24 phone:rounded-md tablet:text-caption-2 tablet:w-28 tablet:py-3 tablet:px-4 tablet:mt-2 desktop:w-48;
+  @apply flex flex-row w-40 justify-between items-center rounded-xl px-3 py-2 bg-dark-300  border text-grayLabel text-caption-1 font-semibold phone:text-10px phone:w-32 phone:rounded-md tablet:text-caption-3 breakpoint:text-caption-3 breakpoint:w-36 tablet:w-36 tablet:py-3 tablet:px-4 tablet:mt-2 desktop:w-48;
 }
 
 .option {
-  @apply block px-4 text-left py-2 w-11/12 text-caption-2 text-grayLabel hover:bg-dark-75 hover:text-white;
+  @apply block px-4 text-left py-2 w-11/12 breakpoint:text-caption-3 desktop:text-caption-2 text-grayLabel hover:bg-dark-75 hover:text-white;
 }

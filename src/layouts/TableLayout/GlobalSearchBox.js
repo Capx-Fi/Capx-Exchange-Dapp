@@ -1,12 +1,15 @@
 import { useState } from "react";
+import React from "react";
 import { useAsyncDebounce } from "react-table";
 
-const GlobalSearchBox = ({ filter, setFilter }) => {
+const GlobalSearchBox = ({ filter, setFilter, mode }) => {
   const [value, setValue] = useState(filter);
 
   const onChange = useAsyncDebounce((value) => {
     setFilter(value || undefined);
   }, 300);
+
+  console.log(mode);
 
   return (
     <form

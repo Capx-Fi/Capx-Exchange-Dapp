@@ -48,6 +48,11 @@ function WithdrawModal({ open, setOpen, withdrawModalStatus }) {
     <span className="text-caption-2" style={{color: "#CCCCCC"}}>Please do not reload or refresh the page...</span></p>,
   ]
 
+  const errorMessage = [
+    <p>Oops! We have encountered an error.<br/>
+    <span className="text-caption-2" style={{color: "#CCCCCC"}}> Please try again!</span></p>,
+  ]
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -78,7 +83,7 @@ function WithdrawModal({ open, setOpen, withdrawModalStatus }) {
               {withdrawModalStatus === "success"
                 ? "Withdrawal Successful."
                 : withdrawModalStatus === "failure"
-                ? "Oops! We have encountered an error. Please try again!"
+                ? errorMessage
                 : withdrawMessage}
             </div>
           </div>
