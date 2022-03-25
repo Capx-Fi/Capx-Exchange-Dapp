@@ -43,6 +43,10 @@ function SellModal({ open, setOpen, sellModalStatus }) {
   const [viewNFTID, setviewNFTID] = React.useState("");
   const [viewNFTDet, setviewNFTDet] = React.useState("");
   const classes = useStyles();
+  const sellMessage = [
+    <p>Almost there...creating the order!<br/>
+    <span className="text-caption-2" style={{color: "#CCCCCC"}}>Please do not reload or refresh the page...</span></p>,
+  ]
 
   return (
     <Modal
@@ -58,9 +62,9 @@ function SellModal({ open, setOpen, sellModalStatus }) {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <div className="flex flex-col laptop:flex-row justify-center mx-auto items-center laptop:h-72 pb-8">
+          <div className="flex flex-col laptop:flex-row desktop:flex-col justify-center mx-auto items-center laptop:h-72 pb-8">
             <Lottie
-              className="w-24 tablet:w-32 laptop:w-64"
+              className="w-24 tablet:w-32 laptop:w-64 desktop:w-36"
               loop={true}
               animationData={
                 sellModalStatus === "success"
@@ -70,12 +74,12 @@ function SellModal({ open, setOpen, sellModalStatus }) {
                   : WithdrawingAnimation
               }
             />
-            <div className="text-white text-center laptop:text-left text-paragraph-2 leading-paragraph-2 tablet:text-heading-1 tablet:leading-heading-1 font-semibold w-8/12 laptop:w-6/12">
+            <div className="text-white text-center laptop:text-left text-paragraph-2 leading-paragraph-2 tablet:text-heading-1 tablet:leading-heading-1 desktop:text-subheading desktop:text-center font-semibold w-8/12 laptop:w-6/12 desktop:w-8/12">
               {sellModalStatus === "success"
                 ? "Successfully created the order on exchange"
                 : sellModalStatus === "failure"
                 ? "Oops! We have encountered an error. Please try again!"
-                : "Almost there...creating the order!"}
+                : sellMessage}
             </div>
           </div>
           <hr className="border-dark-200 mt-2 mb-4 h-2"></hr>

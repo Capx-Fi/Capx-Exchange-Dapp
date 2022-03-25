@@ -145,7 +145,24 @@ function TradesScreen() {
                 </div>
               </>
             ) : (
-              <NothingHereTrades />
+              <>
+              <div className="tradesScreen_header">
+                  <div className="tradesScreen_header_titlecontainer">
+                    <p className="tradesScreen_header_titlecontainer_title">
+                      Trades
+                    </p>
+                    <p className="tradesScreen_header_titlecontainer_subtitle">
+                      Discover new derivative assets to trade on Capx{" "}
+                    </p>
+                  </div>
+                  <div className="tradesScreen_header_dropdowncontainer">
+                    <DropDown sortBy={sortBy} setSortBy={setSortBy} />
+                  </div>
+                </div>
+                <div className="tradesScreen_body" style={{overflow: "hidden"}}>
+                <NothingHereTrades />
+                </div>
+              </>
             )}
           </div>
         </>

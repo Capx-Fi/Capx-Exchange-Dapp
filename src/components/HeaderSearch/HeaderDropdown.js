@@ -33,7 +33,7 @@ function HeaderDropdown({
     option: (provided, { isFocused, isSelected }) => ({
       ...provided,
       backgroundColor: isFocused ? "#2A383C" : "#151517",
-      color: "#FFF",
+      color: "#4A6269",
       borderRadius: 7,
     }),
     menuList: (provided, state) => ({
@@ -59,11 +59,11 @@ function HeaderDropdown({
       ...provided,
       padding: 5,
       borderRadius: 30,
-      color: "white",
+      color: "#4A6269",
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: "#F1FAF2",
+      color: "#4A6269",
       alignItems: "start",
       marginLeft: "12px",
       textAlign: "left",
@@ -86,7 +86,7 @@ function HeaderDropdown({
       placeholder={
         placeholderComponent ? placeholderComponent : placeholderText
       }
-      className="w-96 hidden breakpoint:block breakpoint:w-80 desktop:w-96 rounded-lg"
+      className="w-96 hidden breakpoint:block breakpoint:w-80 desktop:w-60 rounded-lg"
       value={selectedValue}
       inputValue={tokenInputValue}
       options={dropdownData}

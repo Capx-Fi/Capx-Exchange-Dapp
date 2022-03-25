@@ -2,9 +2,9 @@
   @apply mx-auto tablet:w-90v breakpoint:w-full tablet:mx-auto w-7/12 desktop:w-11/12 phone:w-full phone:overflow-hidden flex flex-col;
 
   &_header {
-    @apply px-4 pl-7 py-2 mb-5 mt-16 flex justify-between content-start phone:mb-0 phone:mt-4;
+    @apply px-4 pl-7 py-2 mb-5 mt-16 flex justify-between content-start desktop:mt-20 phone:mb-0 phone:mt-4;
     &_titlecontainer {
-      @apply flex flex-col items-start phone:w-35v;
+      @apply flex flex-col items-start desktop:w-55v phone:w-35v;
       &_title {
         @apply text-subheading font-medium text-left text-white phone:text-caption-2 tablet:text-subheading;
       }
@@ -17,7 +17,7 @@
     @apply px-4 pb-2 w-full overflow-y-auto h-60v phone:overflow-scroll phone:overflow-x-hidden tablet:overflow-y-scroll;
     // height: 520px;
     &::-webkit-scrollbar {
-      @apply w-1.5 bg-dark-200 phone:w-0 breakpoint:w-1.5;
+      @apply w-1.5 bg-dark-200 phone:w-0 tablet:w-1.5;
     }
     &::-webkit-scrollbar-thumb {
       @apply rounded-md h-16;

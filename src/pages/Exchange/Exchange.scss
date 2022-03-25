@@ -4,7 +4,7 @@
     @apply flex mt-4 desktop:mt-0 breakpoint:-mt-4 phone:-mt-8;
   }
   &_leftcontainer {
-    @apply tablet:mx-auto tablet:w-90v tablet:pr-0 pr-40 breakpoint:w-90v breakpoint:mr-0 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:w-90v;
+    @apply tablet:mx-auto tablet:w-90v tablet:pr-0 pr-40 breakpoint:w-60v breakpoint:ml-12 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:w-90v;
   }
   &_rightcontainer {
     @apply pl-4 phone:ml-0 phone:mx-4 phone:pl-0 tablet:mr-0 breakpoint:pr-12 upper:w-30v desktop:w-33v desktop:pr-16 upper:pr-14 breakpoint:w-33v breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
@@ -16,7 +16,7 @@
         @apply px-6 py-4 flex flex-row h-16 border-b rounded-t-2xl border-dark-50 w-full;
         background-color: #171c1f;
         &_title {
-          @apply text-paragraph-2 phone:text-caption-2 tablet:text-paragraph-1 text-primary-green-100 font-bold flex items-center breakpoint:text-paragraph-2 desktop:text-paragraph-1;
+          @apply text-paragraph-2 phone:text-caption-1 tablet:text-paragraph-2 text-primary-green-100 font-bold flex items-center breakpoint:text-caption-1 desktop:text-paragraph-2;
           &_icon {
             @apply h-5 w-5;
           }

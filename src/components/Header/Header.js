@@ -247,7 +247,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
           (location.pathname.includes("info") ? (
             <HeaderDropdown
               dropdownData={projectData}
-              placeholderText={"Search for Assets or Projects"}
+              placeholderText={"Search for Assets"}
             />
           ) : location.pathname === "/exchange" || location.pathname === "/" ? (
             <ToggleSwitch />

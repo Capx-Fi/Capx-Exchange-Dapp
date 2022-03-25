@@ -31,7 +31,7 @@
       }
     }
     &_dashboardcontainer {
-      @apply mt-4 px-4 py-4 tablet:pl-16 tablet:pr-12 tablet:-ml-12 laptop:ml-0 tablet:py-3 desktop:py-3 rounded-lg tablet:rounded-xl desktop:rounded-2xl text-white relative w-80v tablet:w-60v laptop:w-50v desktop:w-40v flex items-center justify-between;
+      @apply mt-0 px-4 py-4 tablet:pl-16 tablet:pr-12 tablet:-ml-12 laptop:ml-0 tablet:py-3 desktop:py-3 rounded-lg tablet:rounded-xl desktop:rounded-2xl text-white relative w-80v tablet:w-60v laptop:w-50v desktop:w-full flex items-center justify-between;
       &_text {
         @apply text-caption-3 leading-caption-3 tablet:text-caption-1 tablet:leading-caption-1 laptop:text-paragraph-1 laptop:leading-paragraph-1 desktop:text-paragraph-2 desktop:leading-paragraph-2 text-center tablet:text-left;
       }
