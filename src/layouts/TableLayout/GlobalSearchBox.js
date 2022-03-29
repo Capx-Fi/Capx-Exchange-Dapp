@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { useAsyncDebounce } from "react-table";
+import {useSelector} from "react-redux";
 
-const GlobalSearchBox = ({ filter, setFilter, mode }) => {
+const GlobalSearchBox = ({ filter, setFilter }) => {
   const [value, setValue] = useState(filter);
+  var mode = useSelector((state) => state.exchange.exchangeMode);
 
   const onChange = useAsyncDebounce((value) => {
     setFilter(value || undefined);
   }, 300);
 
-  console.log(mode);
+  useEffect(() => {
+    setFilter("");
+    setValue("");
+  }, [mode, setFilter, setValue]);
 
   return (
     <form

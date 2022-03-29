@@ -71,10 +71,10 @@ function WithdrawScreen({ match }) {
           ) : (
             <div
               className={`exchangeScreen_maincontainer ${
-                isValid && "border border-dark-50 rounded-2xl"
+                isValid && "border border-dark-50 rounded-2xl tablet:w-90v phone:mx-auto"
               }`}
             >
-              <div className="exchangeScreen_leftcontainer">
+              <div className="exchangeScreen_leftcontainer tablet:mx-4">
                 {isValid && (
                   <div className="h-20 phone:hidden tablet:block relative w-full bg-dark-300 text-white py-6 font-black text-paragraph-1">
                     {isValid && withdrawTicker?.asset}

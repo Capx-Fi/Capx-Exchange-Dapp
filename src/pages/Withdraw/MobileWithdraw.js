@@ -16,7 +16,7 @@ function MobileWithdraw({
     <>
       <div className="mobileWithdrawTable h-60v w-85v overflow-y-auto">
         <div className="_header py-2 bg-dark-50 rounded-tl-2xl rounded-tr-2xl"></div>
-        <div className="_body border border-dark-50 rounded-br-2xl rounded-bl-2xl h-55v overflow-y-auto">
+        <div className="_body border border-dark-50 rounded-br-2xl rounded-bl-2xl h-fit-content max-h-55v overflow-y-auto">
           {loading
             ? [0, 1, 2, 3, 4].map(() => <LoadingColumn />)
             : tokenList.map((token) => (

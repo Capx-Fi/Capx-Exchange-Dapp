@@ -2,7 +2,7 @@
   @apply mx-auto overflow-y-hidden tablet:w-90v breakpoint:w-full tablet:mx-auto w-7/12 breakpoint:w-full desktop:w-11/12 phone:w-full phone:overflow-hidden flex flex-col;
 
   &_header {
-    @apply w-full px-6 tablet:px-7 desktop:px-7 pl-7 py-2 mb-5 mt-16 flex justify-between content-start desktop:mt-10 phone:mb-0 phone:mt-6 tablet:mb-6 desktop:mb-4;
+    @apply w-full px-6 tablet:px-7 tablet:pl-6 breakpoint:pl-7 py-2 mb-5 mt-16 flex justify-between content-start desktop:mt-10 phone:mb-0 phone:mt-6 tablet:mb-6 desktop:mb-4;
     &_titlecontainer {
       @apply flex flex-col items-start desktop:w-55v breakpoint:w-66v phone:w-45v;
       &_title {
@@ -14,7 +14,7 @@
     }
   }
   &_body {
-    @apply px-6 pb-2 tablet:w-full breakpoint:w-full desktop:w-73v upper:w-full overflow-y-auto h-fit-content max-h-62v phone:overflow-scroll phone:overflow-x-hidden tablet:overflow-y-auto;
+    @apply px-6 pb-2 tablet:w-full breakpoint:w-full desktop:w-full overflow-y-auto h-fit-content max-h-62v phone:overflow-scroll phone:overflow-x-hidden tablet:overflow-y-auto;
     // height: 520px;
     &::-webkit-scrollbar {
       @apply w-1.5 bg-dark-200 phone:w-0 tablet:w-1.5;
@@ -27,14 +27,14 @@
       @apply rounded-md -mb-14;
     }
     &_assetPairContainer {
-      @apply flex rounded-2xl border border-dark-50 phone:h-20 z-50 tablet:h-28;
+      @apply flex rounded-2xl border border-dark-50 phone:h-20 z-50 tablet:h-28 justify-between;
       background: radial-gradient(
         143.33% 143.33% at 82.41% -4.96%,
         rgba(132, 214, 164, 0.1) 0%,
         rgba(18, 28, 32, 0.1) 100%
       );
       &_assetPair {
-        @apply flex flex-col justify-center items-start px-12 w-80 phone:px-0 phone:pl-3 phone:pr-0 tablet:pl-10;
+        @apply flex flex-col justify-center items-start px-12 w-80 phone:px-0 phone:pl-3 phone:pr-0 tablet:pl-10 desktop:pr-0;
       }
       &_title {
         @apply text-caption-2 text-grayLabel font-bold phone:pb-1 desktop:text-caption-2 breakpoint:text-caption-3 tablet:text-caption-3 phone:text-10px;

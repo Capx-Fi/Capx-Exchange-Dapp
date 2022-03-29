@@ -152,6 +152,17 @@ module.exports = {
         "95p": "95%",
         "85p": "85%",
       },
+      maxWidth: {
+        "fit-content": "fit-content",
+        "100v": "100vw",
+        "90v": "90vw",
+        "70v": "70vw",
+        "6ov": "60vw",
+        "35v": "35vw",
+        "45v": "45vw",
+        "55v": "55vw",
+        "62v": "60vw",
+      },
       height: {
         "fit-content": "fit-content",
         "overview-card": "170px",
