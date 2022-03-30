@@ -164,10 +164,10 @@
     &_titlecontainer {
       @apply flex flex-col items-start phone:pr-2 tablet:pr-0 tablet:pt-2;
       &_title {
-        @apply text-subheading font-medium text-white upper:text-subheading desktop:text-heading-3 breakpoint:text-paragraph-2 tablet:text-caption-1 phone:font-normal phone:text-caption-2;
+        @apply text-subheading font-medium text-white upper:text-subheading desktop:text-subheading breakpoint:text-paragraph-2 tablet:text-caption-1 phone:font-normal phone:text-caption-2;
       }
       &_subtitle {
-        @apply text-caption-1 text-grayLabel font-semibold mb-5 desktop:text-caption-1 breakpoint:text-caption-2 tablet:text-caption-mid phone:text-caption-3;
+        @apply text-caption-1 text-grayLabel font-semibold mb-5 desktop:text-paragraph-2 breakpoint:text-caption-2 tablet:text-caption-mid phone:text-caption-3;
       }
     }
   }
