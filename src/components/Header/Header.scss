@@ -1,5 +1,5 @@
 .header {
-  @apply h-20 top-0 left-0 fixed flex w-full px-8 tablet:px-10 laptop:px-20 breakpoint:px-14 desktop:px-16 justify-between items-center bg-dark-400 desktop:h-20;
+  @apply h-20 top-0 left-0 fixed flex w-full px-8 tablet:px-10 laptop:px-20 breakpoint:px-14 desktop:px-40 justify-between items-center bg-dark-400 desktop:h-20;
   &_logo {
     @apply h-6 phone:h-10 tablet:h-12 breakpoint:h-10 breakpoint:mr-10 desktop:h-12 desktop:mr-8 upper:mr-6;
   }

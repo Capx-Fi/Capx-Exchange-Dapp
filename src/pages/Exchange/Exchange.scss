@@ -1,10 +1,10 @@
 .exchangeScreen {
-  @apply w-85p tablet:w-full mx-auto mt-16 breakpoint:w-full desktop:w-full desktop:mt-8 desktop:pt-2 desktop:pl-24 breakpoint:pl-2;
+  @apply w-85p tablet:w-full mx-auto mt-16 breakpoint:w-full desktop:w-90v desktop:mt-16 desktop:pt-2 desktop:pl-24 breakpoint:pl-2;
   &_maincontainer {
     @apply flex mt-4 desktop:mt-0 breakpoint:-mt-4 phone:-mt-8;
   }
   &_leftcontainer {
-    @apply tablet:mx-auto tablet:w-90v tablet:pr-0 pr-40 breakpoint:w-60v breakpoint:ml-12 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:w-90v;
+    @apply tablet:mx-auto tablet:w-90v tablet:pr-0 pr-40 breakpoint:w-60v breakpoint:ml-12 desktop:pr-40 desktop:-ml-8 desktop:w-55v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:w-90v;
   }
   &_rightcontainer {
     @apply pl-4 phone:ml-0 phone:mx-4 phone:pl-0 tablet:mr-2 breakpoint:pr-16 upper:w-30v desktop:w-33v desktop:pr-16 upper:pr-16  breakpoint:w-33v breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
@@ -160,7 +160,7 @@
     }
   }
   &_header {
-    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v desktop:w-62v phone:w-full;
+    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v desktop:w-50v phone:w-full;
     &_titlecontainer {
       @apply flex flex-col items-start phone:pr-2 tablet:pr-0 tablet:pt-2;
       &_title {
