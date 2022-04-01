@@ -192,7 +192,7 @@ function WithdrawTokenTable({ filter, refetch }) {
         >
           <Column
             title="Asset"
-            sorter={(a, b) => a.asset - b.asset}
+            sorter={(a, b) => a.asset.localeCompare(b.asset)}
             showSorterTooltip={false}
             width={"30%"}
             dataIndex="asset"
@@ -203,7 +203,9 @@ function WithdrawTokenTable({ filter, refetch }) {
                 <>
                   {row.assetID === CHAIN_USDT_CONTRACT_ADDRESS.toString() ? (
                     <div>
-                      <p className="text-white cursor-pointer upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">{value}</p>
+                      <p className="text-white cursor-pointer upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                        {value}
+                      </p>
                     </div>
                   ) : (
                     <div onClick={() => navigateProject(row.assetID)}>
@@ -221,7 +223,11 @@ function WithdrawTokenTable({ filter, refetch }) {
             dataIndex="quantity"
             key="quantity"
             render={(value, row) => {
-              return <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">{convertToInternationalCurrencySystem(value)}</div>;
+              return (
+                <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                  {convertToInternationalCurrencySystem(value)}
+                </div>
+              );
             }}
           />
           <Column title="Unlock Date" dataIndex="unlockDate" key="unlockDate" />

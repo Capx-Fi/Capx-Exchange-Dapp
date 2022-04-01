@@ -39,7 +39,7 @@ function TokenListTable({ activeOrders, loading }) {
         >
           <Column
             title="Asset"
-            sorter={(a, b) => a.asset - b.asset}
+            sorter={(a, b) => a.asset.localeCompare(b.asset)}
             showSorterTooltip={false}
             width={"22%"}
             dataIndex="asset"

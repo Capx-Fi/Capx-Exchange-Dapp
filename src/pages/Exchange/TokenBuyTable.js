@@ -134,7 +134,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
             locale={{
               emptyText: loading ? "Loading Tokens..." : "No Token Found",
             }}
-            scroll={{ y: 480 }}
+            scroll={{ y: 430 }}
             onChange={onChange}
             onRow={(record) => {
               return {
@@ -147,7 +147,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
           >
             <Column
               title="Asset"
-              sorter={(a, b) => a.asset - b.asset}
+              sorter={(a, b) => a.asset.localeCompare(b.asset)}
               showSorterTooltip={false}
               width={"25%"}
               dataIndex="asset"
