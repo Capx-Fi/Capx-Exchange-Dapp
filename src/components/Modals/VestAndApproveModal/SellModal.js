@@ -45,12 +45,12 @@ function SellModal({ open, setOpen, sellModalStatus }) {
   const classes = useStyles();
   const sellMessage = [
     <p>Almost there...creating the order!<br/>
-    <span className="text-caption-2" style={{color: "#CCCCCC"}}>Please do not reload or refresh the page...</span></p>,
+    <span className="text-caption-2 phone:text-10px tablet:text-caption-3 breakpoint:text-caption-3 desktop:text-caption-2" style={{color: "#CCCCCC"}}>Please do not reload or refresh the page...</span></p>,
   ]
 
   const errorMessage = [
     <p>Oops! We have encountered an error.<br/>
-    <span className="text-caption-2" style={{color: "#CCCCCC"}}> Please try again!</span></p>,
+    <span className="text-caption-2 phone:text-10px tablet:text-caption-3 breakpoint:text-caption-2" style={{color: "#CCCCCC"}}> Please try again!</span></p>,
   ]
 
   return (
@@ -67,9 +67,9 @@ function SellModal({ open, setOpen, sellModalStatus }) {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <div className="flex flex-col laptop:flex-row desktop:flex-col justify-center mx-auto items-center laptop:h-72 pb-8">
+          <div className="flex flex-col justify-center mx-auto items-center laptop:h-72 pb-8">
             <Lottie
-              className="w-24 tablet:w-32 laptop:w-64 desktop:w-36"
+              className="w-24 tablet:w-32 breakpoint:w-36 desktop:w-48"
               loop={true}
               animationData={
                 sellModalStatus === "success"
@@ -79,7 +79,7 @@ function SellModal({ open, setOpen, sellModalStatus }) {
                   : WithdrawingAnimation
               }
             />
-            <div className="text-white text-center laptop:text-left text-paragraph-2 leading-paragraph-2 tablet:text-heading-1 tablet:leading-heading-1 desktop:text-subheading desktop:text-center font-semibold w-8/12 laptop:w-6/12 desktop:w-8/12">
+            <div className="text-white text-center leading-paragraph-2 phone:text-caption-2 tablet:text-caption-1 tablet:leading-heading-1 desktop:text-paragraph-1 tablet:text-center breakpoint:text-paragraph-2 font-semibold w-8/12 laptop:w-6/12 desktop:w-8/12">
               {sellModalStatus === "success"
                 ? "Successfully created the order on exchange"
                 : sellModalStatus === "failure"

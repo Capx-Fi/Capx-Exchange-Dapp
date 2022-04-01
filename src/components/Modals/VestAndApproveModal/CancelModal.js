@@ -55,12 +55,12 @@ function CancelModal({
 
   const cancelMessage = [
     <p>The order is being cancelled!<br/>
-    <span className="text-caption-2" style={{color: "#CCCCCC"}}>Please do not reload or refresh the page.</span></p>,
+    <span className="text-caption-2 phone:text-10px tablet:text-caption-3 breakpoint:text-caption-2" style={{color: "#CCCCCC"}}>Please do not reload or refresh the page.</span></p>,
   ]
 
   const errorMessage = [
     <p>Oops! We have encountered an error.<br/>
-    <span className="text-caption-2" style={{color: "#CCCCCC"}}> Please try again!</span></p>,
+    <span className="text-caption-2 phone:text-10px tablet:text-caption-3 breakpoint:text-caption-2" style={{color: "#CCCCCC"}}> Please try again!</span></p>,
   ]
 
   const handleOpen = (index, items) => {
@@ -87,7 +87,7 @@ function CancelModal({
         <div className={classes.paper}>
           <div className="flex flex-col justify-center mx-auto items-center laptop:h-72 pb-8 mt-8">
             <Lottie
-              className="w-24 tablet:w-32 laptop:w-56 "
+              className="w-24 tablet:w-32 breakpoint:w-36 desktop:w-48"
               loop={true}
               animationData={
                 cancelModalStatus === "success"
@@ -97,7 +97,7 @@ function CancelModal({
                   : ApproveToChain
               }
             />
-            <div className="text-white text-center laptop:text-left text-paragraph-2 leading-paragraph-2 tablet:text-heading-1 tablet:leading-heading-1 breakpoint:text-subheading breakpoint:text-center font-semibold w-8/12 laptop:w-6/12 desktop:w-8/12">
+            <div className="text-white text-center leading-paragraph-2 phone:text-caption-2 tablet:text-caption-1 tablet:leading-heading-1 desktop:text-paragraph-1 tablet:text-center breakpoint:text-paragraph-2 font-semibold w-8/12 laptop:w-6/12 desktop:w-8/12">
               {cancelModalStatus === "success"
                 ? "Order has been successfully cancelled."
                 : cancelModalStatus === "failure"

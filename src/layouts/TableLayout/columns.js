@@ -112,7 +112,7 @@ export const HOLDINGS_COLUMNS = [
     accessor: 'withdraw_id',
     Cell: ({ value, row }) => {
       return (
-        <div className='flex flex-row justify-start border-l-2 cursor-pointer border-dark-50 desktop:pl-8 desktop:'>
+        <div className={`flex flex-row justify-start border-l-2 cursor-pointer border-dark-50 desktop:pl-8`}>
           <img src={WithdrawIcon} alt='deposit' className='mr-2' />
           <Link to='/withdraw'>
           <p className='text-warning-color-400 uppercase font-bold text-caption-3'>

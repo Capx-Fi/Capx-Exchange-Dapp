@@ -131,7 +131,7 @@ function WithdrawContainer({
         withdrawModalStatus={withdrawModalStatus}
         setWithdrawModalStatus={setWithdrawModalStatus}
       />
-      <div className="exchangeScreen_rightcontainer_buyContainer -mr-4">
+      <div className="exchangeScreen_rightcontainer_buyContainer phone:-mr-4 tablet:mr-0">
         <div className="exchangeScreen_rightcontainer_buyContainer_header">
           <div className="exchangeScreen_rightcontainer_buyContainer_header_title">
             <img
