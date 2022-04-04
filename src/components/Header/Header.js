@@ -92,59 +92,43 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
       } catch (error) {}
     } else if (chainName === "Matic") {
       try {
-        await web3.currentProvider.request({
+        // await web3.currentProvider.request({
+        //   method: 'wallet_addEthereumChain',
+        //   params: [
+        //     {
+        //       chainId: '0x13881',
+        //       chainName: 'Polygon Testnet',
+        //       nativeCurrency: {
+        //         name: 'MATIC',
+        //         symbol: 'MATIC',
+        //         decimals: 18,
+        //       },
+        //       rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
+        //       blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+        //     },
+        //   ],
+        // });
+        await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [
             {
-              chainId: "0x13881",
-              chainName: "Polygon Testnet",
+              chainId: "0x89",
+              chainName: "Polygon",
               nativeCurrency: {
                 name: "MATIC",
                 symbol: "MATIC",
                 decimals: 18,
               },
-              rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
-              blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+              rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
+              blockExplorerUrls: ["https://polygonscan.com/"],
             },
           ],
         });
-        // await window.ethereum.request({
-        //   method: "wallet_addEthereumChain",
-        //   params: [
-        //     {
-        //       chainId: "0x89",
-        //       chainName: "Polygon",
-        //       nativeCurrency: {
-        //         name: "MATIC",
-        //         symbol: "MATIC",
-        //         decimals: 18,
-        //       },
-        //       rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
-        //       blockExplorerUrls: ["https://polygonscan.com/"],
-        //     },
-        //   ],
-        // });
       } catch (error) {}
-    } else if (chainName === "BSC") {
+    } else if (chainName === 'BSC') {
       try {
-        await web3.currentProvider.request({
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainId: "0x61",
-              chainName: "Binance Smart Chain Test",
-              nativeCurrency: {
-                name: "BNB",
-                symbol: "BNB",
-                decimals: 18,
-              },
-              rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
-              blockExplorerUrls: ["https://testnet.bscscan.com/"],
-            },
-          ],
-        });
-        // await window.ethereum.request({
-        //   method: "wallet_addEthereumChain",
+        // await web3.currentProvider.request({
+        //   method: 'wallet_addEthereumChain',
         //   params: [
         //     {
         //       chainId: '0x61',
@@ -180,38 +164,38 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
       }
     } else if (chainName === "Avalanche") {
       try {
-        await web3.currentProvider.request({
+//         await web3.currentProvider.request({
+//           method: "wallet_addEthereumChain",
+//           params: [
+//             {
+//               chainId: "0xA869",
+//               chainName: "Avalanche Fuji",
+//               nativeCurrency: {
+//                 name: "AVAX",
+//                 symbol: "AVAX",
+//                 decimals: 18,
+//               },
+//               rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
+//               blockExplorerUrls: ["https://testnet.snowtrace.io/"],
+//             },
+//           ],
+//         });
+        await window.ethereum.request({
           method: "wallet_addEthereumChain",
           params: [
             {
-              chainId: "0xA869",
-              chainName: "Avalanche Fuji",
+              chainId: "0xA86A",
+              chainName: "Avalanche",
               nativeCurrency: {
                 name: "AVAX",
                 symbol: "AVAX",
                 decimals: 18,
               },
-              rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
-              blockExplorerUrls: ["https://testnet.snowtrace.io/"],
+              rpcUrls: ["https://api.avax.network/ext/bc/C/rpc"],
+              blockExplorerUrls: ["https://snowtrace.io/"],
             },
           ],
         });
-        // await window.ethereum.request({
-        //   method: "wallet_addEthereumChain",
-        //   params: [
-        //     {
-        //       chainId: "0xA86A",
-        //       chainName: "Avalanche",
-        //       nativeCurrency: {
-        //         name: "AVAX",
-        //         symbol: "AVAX",
-        //         decimals: 18,
-        //       },
-        //       rpcUrls: ["https://api.avax.network/ext/bc/C/rpc"],
-        //       blockExplorerUrls: ["https://snowtrace.io/"],
-        //     },
-        //   ],
-        // });
       } catch (error) {
         console.log(error);
       }
