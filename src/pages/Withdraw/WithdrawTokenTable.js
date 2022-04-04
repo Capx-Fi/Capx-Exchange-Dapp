@@ -232,7 +232,18 @@ function WithdrawTokenTable({ filter, refetch }) {
               );
             }}
           />
-          <Column title="Unlock Date" dataIndex="unlockDate" key="unlockDate" />
+          <Column 
+          title="Unlock Date" 
+          dataIndex="unlockDate" 
+          key="unlockDate"
+          render={(value, row) => {
+            console.log(row);
+            return (
+              <>
+                <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">{row.unlockDate}</div>
+              </>
+            )
+          }} />
           <Column
             title=""
             dataIndex="asset"

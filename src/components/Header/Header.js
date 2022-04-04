@@ -236,8 +236,6 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
               className={`${
                 location.pathname === "/" && active
                   ? "header_logo"
-                  : location.pathname === "/trades" && active 
-                  ? "header_logoInfo mr-10"
                   : "header_logoInfo"
               } ${vesting && "flex tablet:hidden "}`}
               src={CapxLogo}
