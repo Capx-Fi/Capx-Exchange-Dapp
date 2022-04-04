@@ -1,26 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { render } from 'react-dom';
-import { hideSideNav, showSideNav } from '../../redux/actions/sideNav';
-import { useDispatch, useSelector } from 'react-redux';
-import BuyIcon from '../../assets/buy.svg';
-import { setSellTicker } from '../../redux/actions/exchange';
-import BigNumber from 'bignumber.js';
-import { EXCHANGE_ABI } from '../../contracts/ExchangeContract';
-import { CONTRACT_ABI_ERC20 } from '../../contracts/SampleERC20';
+import React, { useEffect, useRef, useState } from "react";
+import { render } from "react-dom";
+import { hideSideNav, showSideNav } from "../../redux/actions/sideNav";
+import { useDispatch, useSelector } from "react-redux";
+import BuyIcon from "../../assets/buy.svg";
+import crossIcon from "../../assets/close-cyan.svg";
+import { setSellTicker } from "../../redux/actions/exchange";
+import BigNumber from "bignumber.js";
+import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
+import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
 
-import { approveSellTokens } from '../../utils/approveSellTokens';
-import { createOrder } from '../../utils/createOrder';
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  MATIC_CHAIN_ID,
-} from '../../constants/config';
-import Web3 from 'web3';
+import { approveSellTokens } from "../../utils/approveSellTokens";
+import { createOrder } from "../../utils/createOrder";
+import Web3 from "web3";
+
 
 import LockIcon from '../../assets/lock-asset.svg';
 import NextIcon from '../../assets/next-black.svg';
@@ -37,8 +29,12 @@ import SellModal from '../../components/Modals/VestAndApproveModal/SellModal';
 
 // New Import Helper function
 
-import { validateSellAmount } from '../../utils/validateSellAmount';
-const format = 'HH:mm';
+import { validateSellAmount } from "../../utils/validateSellAmount";
+import {
+  getExchangeContractAddress,
+  getUsdtContractAddress,
+} from "../../constants/getChainConfig";
+const format = "HH:mm";
 const currentDate = new Date();
 BigNumber.config({
   ROUNDING_MODE: 3,
@@ -61,17 +57,9 @@ function SellScreen({
   const web3 = new Web3(Web3.givenProvider);
   const { active, account, chainId } = useWeb3React();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+    chainId && getExchangeContractAddress(chainId);
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+    chainId && getUsdtContractAddress(chainId);
   const tokenGetInst = new web3.eth.Contract(
     CONTRACT_ABI_ERC20,
     CHAIN_USDT_CONTRACT_ADDRESS
@@ -106,9 +94,9 @@ function SellScreen({
     }
   }, [sellModalStatus]);
 
-  useEffect(() => {
-    resetValue();
-  }, [account]);
+  // useEffect(() => {
+  //   resetValue();
+  // }, [account]);
 
   const setAmount = (e) => {
     dispatch(setSellTicker({ ...ticker, price: e }));
@@ -256,9 +244,17 @@ function SellScreen({
               src={BuyIcon}
               alt='buy icon'
             />
-            <div className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
+            <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
               SELL {ticker?.asset !== undefined && "- " + ticker?.asset}
-            </div>
+            </p>
+            {ticker && ticker?.asset !== "" && window.screen.width < 769 && (
+              <img
+                className="absolute right-8 ml-4 h-6"
+                src={crossIcon}
+                alt="close"
+                onClick={() => dispatch(setSellTicker(null))}
+              />
+            )}
           </div>
         </div>
         <div className='exchangeScreen_rightcontainer_buyContainer_body'>

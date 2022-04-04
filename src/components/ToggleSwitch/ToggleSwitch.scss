@@ -11,3 +11,25 @@
   width: 119px;
   height: 35px;
 }
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .outerDiv {
+    height: 32px;
+    width: 142px;
+  }
+  .innerSwitch {
+    width: 66px;
+    height: 24px;
+  }
+}
+
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .outerDiv {
+    height: 32px;
+    width: 102px;
+  }
+  .innerSwitch {
+    width: 47px;
+    height: 24px;
+  }
+}

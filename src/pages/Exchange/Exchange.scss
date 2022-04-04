@@ -1,23 +1,22 @@
 .exchangeScreen {
   @apply w-85p tablet:w-full mx-auto mt-16 breakpoint:w-full desktop:w-full desktop:mt-8 desktop:pt-2 desktop:pl-24 breakpoint:pl-2;
   &_maincontainer {
-    @apply flex mt-4 w-full desktop:mt-0 breakpoint:-mt-4;
+    @apply flex mt-4 desktop:mt-0 breakpoint:-mt-4 phone:-mt-8;
   }
   &_leftcontainer {
-    @apply tablet:mx-auto tablet:w-full tablet:pr-0 pr-40 breakpoint:w-62v breakpoint:pr-20 desktop:pr-40 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0;
+    @apply tablet:mx-auto tablet:w-90v tablet:pr-0 pr-40 breakpoint:w-60v breakpoint:ml-12 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:w-90v;
   }
   &_rightcontainer {
-    @apply pl-4 upper:w-30v desktop:w-33v desktop:pr-12 upper:pr-14 breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
-
+    @apply pl-4 phone:ml-0 phone:mx-4 phone:pl-0 tablet:mr-2 breakpoint:pr-16 upper:w-30v desktop:w-33v desktop:pr-16 upper:pr-16 breakpoint:-mr-3 desktop:mr-0 desktop:ml-4 breakpoint:w-33v breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
     &_buyContainer {
-      @apply border rounded-2xl flex flex-col border-dark-50;
+      @apply border rounded-2xl flex flex-col border-dark-50 relative;
       background: linear-gradient(0deg, #19201d 0%, #151618 101.42%),
         rgba(21, 21, 23, 0.2);
       &_header {
         @apply px-6 py-4 flex flex-row h-16 border-b rounded-t-2xl border-dark-50 w-full;
         background-color: #171c1f;
         &_title {
-          @apply text-paragraph-1 text-primary-green-100 font-bold flex items-center breakpoint:text-paragraph-2 desktop:text-paragraph-1;
+          @apply text-paragraph-2 phone:text-caption-1 tablet:text-paragraph-2 text-primary-green-100 font-bold flex items-center breakpoint:text-caption-1 desktop:text-paragraph-2 upper:text-paragraph-1;
           &_icon {
             @apply h-5 w-5;
           }
@@ -27,13 +26,12 @@
         }
       }
       &_body {
-        @apply mt-4 px-6;
+        @apply tablet:mt-4 phone:mt-0 px-6;
         &_payContainer {
-          @apply flex flex-col w-full mb-4 desktop:mb-3;
+          @apply flex flex-col w-full mb-4 phone:-mt-2 tablet:mt-0 desktop:mb-3;
           &_title {
-            @apply text-caption-2 text-grayLabel mt-5 desktop:mt-3 font-black text-left breakpoint:text-caption-3 desktop:text-caption-2;
+            @apply text-caption-2 phone:text-caption-3 text-grayLabel mt-5 desktop:mt-3 font-black text-left breakpoint:text-caption-3 desktop:text-caption-2;
           }
-
           &_inputContainer {
             @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
             &_lockWrapper {
@@ -52,7 +50,7 @@
               &_main {
                 @apply flex flex-row justify-between text-left items-center px-4;
                 &_text {
-                  @apply text-caption-2 text-grayLabel font-bold;
+                  @apply text-caption-2 phone:text-10px tablet:text-caption-3 breakpoint:text-caption-2 text-grayLabel font-bold;
                 }
                 &_max {
                   @apply text-caption-2 font-bold ml-2 cursor-pointer;
@@ -73,11 +71,10 @@
           }
         }
         &_tokenContainer {
-          @apply flex flex-col w-full mb-4;
+          @apply flex flex-col w-full mb-4 phone:-mt-0 tablet:mt-0;
           &_title {
-            @apply text-caption-2 text-grayLabel mt-5 font-black text-left;
+            @apply text-caption-3 breakpoint:text-caption-mid desktop:text-caption-2 text-grayLabel mt-5 font-black text-left;
           }
-
           &_inputContainer {
             @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
             &_lockWrapper {
@@ -129,7 +126,6 @@
         }
         &_separator {
           @apply w-full flex items-center h-8 desktop:h-24;
-
           &_line {
             @apply bg-dark-50;
             height: 1px;
@@ -142,18 +138,18 @@
           }
         }
         &_expiryDetailsContainer {
-          @apply text-grayLabel text-caption-2 font-bold text-left py-4;
+          @apply text-grayLabel text-caption-2 phone:text-caption-3 tablet:text-caption-2 font-bold text-left py-4;
         }
         &_swapButton {
           background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
-          @apply rounded-lg py-3 my-4 flex justify-center items-center cursor-pointer;
+          @apply rounded-lg py-3 my-4 phone:my-0 tablet:my-4 flex justify-center items-center cursor-pointer;
           &_title {
-            @apply text-paragraph-2 text-dark-300 font-bold;
+            @apply text-paragraph-2 desktop:text-caption-2 upper:text-caption-1 breakpoint:text-caption-3 phone:text-caption-3 tablet:text-caption-2 breakpoint:text-caption-1 text-dark-300 font-bold;
           }
           &_icon {
             @apply pl-4;
             img {
-              @apply w-6 h-6;
+              @apply w-6 h-6 phone:w-4 phone:h-4 tablet:w-6 tablet:h-6;
             }
           }
         }
@@ -164,14 +160,14 @@
     }
   }
   &_header {
-    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v upper:w-62v desktop:w-60v phone:w-full;
+    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v desktop:w-62v phone:w-full;
     &_titlecontainer {
-      @apply flex flex-col items-start;
+      @apply flex flex-col items-start phone:pr-2 tablet:pr-0 tablet:pt-2;
       &_title {
-        @apply text-subheading font-medium text-white desktop:text-heading-3 breakpoint:text-paragraph-2 phone:text-caption-2;
+        @apply text-subheading font-medium text-white upper:text-subheading desktop:text-paragraph-2 breakpoint:text-paragraph-2 tablet:text-caption-1 phone:font-normal phone:text-caption-2;
       }
       &_subtitle {
-        @apply text-caption-1 text-grayLabel font-semibold mb-5 desktop:text-caption-1 breakpoint:text-caption-2 phone:text-caption-4;
+        @apply text-caption-1 text-grayLabel font-semibold mb-5 upper:text-paragraph-2 desktop:text-caption-2 breakpoint:text-caption-2 tablet:text-caption-mid phone:text-caption-3;
       }
     }
   }
@@ -181,7 +177,6 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
@@ -237,7 +232,6 @@ input[type="number"] {
   .ant-picker-time-panel-cell-inner {
   color: rgba(241, 250, 242, 0.3) !important;
 }
-
 .react-calendar {
   @apply bg-dark-400;
   background-color: rgba(21, 21, 23, 1) !important;
@@ -248,7 +242,6 @@ input[type="number"] {
       text-decoration: none !important;
     }
   }
-
   &__navigation {
     @apply bg-dark-300;
     border-radius: 16px !important;

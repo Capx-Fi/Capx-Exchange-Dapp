@@ -15,26 +15,14 @@ import { setBuyTicker } from "../../redux/actions/exchange";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 import { fetchProjectID } from "../../utils/fetchProjectDetails";
 import { useHistory } from "react-router-dom";
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  MATIC_CHAIN_ID,
-  GRAPHAPIURL_EXCHANGE_BSC,
-  GRAPHAPIURL_EXCHANGE_MATIC,
-  GRAPHAPIURL_EXCHANGE_ETHEREUM,
-  GRAPHAPIURL_MASTER_BSC,
-  GRAPHAPIURL_MASTER_MATIC,
-  GRAPHAPIURL_MASTER_ETHEREUM,
-  GRAPHAPIURL_WRAPPED_MATIC,
-  GRAPHAPIURL_WRAPPED_BSC,
-  GRAPHAPIURL_WRAPPED_ETHEREUM,
-} from "../../constants/config";
+
 import { useSelector } from "react-redux";
+import MobileTableBuy from "../../components/MobileTable/MobileTableBuy";
+import {
+  getExchangeURL,
+  getUsdtContractAddress,
+  getWrappedURL,
+} from "../../constants/getChainConfig";
 
 const { Column, ColumnGroup } = Table;
 
@@ -46,41 +34,17 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
 
   const { active, account, chainId } = useWeb3React();
   let history = useHistory();
-  const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
-  const exchangeURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_EXCHANGE_MATIC
-      : GRAPHAPIURL_EXCHANGE_ETHEREUM;
-  const wrappedURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_WRAPPED_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_WRAPPED_MATIC
-      : GRAPHAPIURL_WRAPPED_ETHEREUM;
-  const masterURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_MASTER_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_MASTER_MATIC
-      : GRAPHAPIURL_MASTER_ETHEREUM;
+    chainId && getUsdtContractAddress(chainId);
+  const exchangeURL = chainId && getExchangeURL(chainId);
+  const wrappedURL = chainId && getWrappedURL(chainId);
+
   useEffect(() => {
     let nullBuyTicker = ticker;
-    if(nullBuyTicker) {
-    Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
-    dispatch(setBuyTicker({ ...nullBuyTicker }));
+    if (nullBuyTicker) {
+      Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
+      dispatch(setBuyTicker({ ...nullBuyTicker }));
     }
     fetchListings();
     // console.log("refresh", refresh);
@@ -124,81 +88,117 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
     history.push(`/info/${projectAddress}`);
   };
   return (
-    <div className="tokenListTableContainer">
-      <Table
-        dataSource={tokenList}
-        pagination={false}
-        locale={{ emptyText: loading ? "Loading Tokens..." : "No Token Found" }}
-        scroll={{ y: 480 }}
-        onChange={onChange}
-        onRow={(record) => {
-          return {
-            onClick: (e) => {
-              dispatch(setBuyTicker(record));
-              setBalance(record.balance);
-            },
-          };
-        }}
-      >
-        <Column
-          title="Asset"
-          sorter={(a, b) => a.asset - b.asset}
-          showSorterTooltip={false}
-          width={"22%"}
-          dataIndex="asset"
-          key="asset"
-          render={(value, row) => {
-            return (
-              <div onClick={() => navigateProject(row.assetID)}>
-                <p className="text-white hover:text-primary-green-400 cursor-pointer">
-                  {value}
-                </p>
-              </div>
-            );
-          }}
+    <>
+      <div className="tokenListTableContainer">
+        <div>
+          <Table
+            dataSource={tokenList}
+            pagination={false}
+            locale={{
+              emptyText: loading ? "Loading Tokens..." : "No Token Found",
+            }}
+            scroll={{ y: 430 }}
+            onChange={onChange}
+            onRow={(record) => {
+              return {
+                onClick: (e) => {
+                  dispatch(setBuyTicker(record));
+                  setBalance(record.balance);
+                },
+              };
+            }}
+          >
+            <Column
+              title="Asset"
+              sorter={(a, b) => a.asset.localeCompare(b.asset)}
+              showSorterTooltip={false}
+              width={"25%"}
+              dataIndex="asset"
+              key="asset"
+              render={(value, row) => {
+                return (
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigateProject(row.assetID);
+                    }}
+                  >
+                    <p className="text-white hover:text-primary-green-400 cursor-pointer upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                      {value}
+                    </p>
+                  </div>
+                );
+              }}
+            />
+            <Column
+              title="Price (USDT)"
+              dataIndex="price"
+              key="price"
+              render={(value, row) => {
+                return (
+                  <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                    {new Intl.NumberFormat("en-IN", {
+                      style: "currency",
+                      currency: "USD",
+                      maximumSignificantDigits: 6,
+                    }).format(Number(value))}
+                  </div>
+                );
+              }}
+            />
+            <Column
+              title="Quantity"
+              dataIndex="quantity"
+              key="quantity"
+              render={(value, row) => {
+                return (
+                  <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                    {convertToInternationalCurrencySystem(value)}
+                  </div>
+                );
+              }}
+            />
+            <Column
+              title="Expiry Time"
+              dataIndex="expiryTime"
+              key="expiryTime"
+              render={(value, row) => {
+                return (
+                  <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                    {row.expiryTime}
+                  </div>
+                );
+              }}
+            />
+            <Column
+              title=""
+              dataIndex="asset"
+              key="asset"
+              render={(value, row) => {
+                return (
+                  <div className="border cursor-pointer border-grayLabel py-2 rounded-lg flex flex-row justify-center w-fit-content px-3 mx-auto">
+                    <img src={DepositIcon} alt="deposit" className="mr-2" />
+                    <p className="text-success-color-400 uppercase font-bold text-caption-2 upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                      BUY
+                    </p>
+                  </div>
+                );
+              }}
+            />
+          </Table>
+        </div>
+      </div>
+      <div className="tablet:hidden">
+        <MobileTableBuy
+          tokenList={tokenList}
+          loading={loading}
+          onChange={onChange}
+          setBuyTicker={setBuyTicker}
+          navigateProject={navigateProject}
+          setBalance={setBalance}
         />
-        <Column
-          title="Price (USDT)"
-          dataIndex="price"
-          key="price"
-          render={(value, row) => {
-            return (
-              <div>
-                {new Intl.NumberFormat("en-IN", {
-                  style: "currency",
-                  currency: "USD",
-                  maximumSignificantDigits: 6,
-                }).format(Number(value))}
-              </div>
-            );
-          }}
-        />
-        <Column
-          title="Quantity"
-          dataIndex="quantity"
-          key="quantity"
-          render={(value, row) => {
-            return <div>{convertToInternationalCurrencySystem(value)}</div>;
-          }}
-        />
-        <Column title="Expiry Time" dataIndex="expiryTime" key="expiryTime" />
-        <Column
-          title=""
-          dataIndex="asset"
-          key="asset"
-          render={(value, row) => {
-            return (
-              <div className="border cursor-pointer border-grayLabel py-2 rounded-lg flex flex-row justify-center w-fit-content px-3 mx-auto">
-                <img src={DepositIcon} alt="deposit" className="mr-2" />
-                <p className="text-success-color-400 uppercase font-bold text-caption-2">
-                  BUY
-                </p>
-              </div>
-            );
-          }}
-        />
-      </Table>
-    </div>
+      </div>
+    </>
   );
 }
 

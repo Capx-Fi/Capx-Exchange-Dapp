@@ -10,15 +10,9 @@ import TokenLink from "../../assets/token-link.svg";
 import { hideSideNav } from "../../redux/actions/sideNav";
 import useWindowSize from "../../utils/windowSize";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
-import {
-  BSC_CHAIN_ID,
-  ETHEREUM_CHAIN_ID,
-  MATIC_CHAIN_ID,
-  EXPLORER_BSC,
-  EXPLORER_MATIC,
-  EXPLORER_ETHEREUM
-} from "../../constants/config";
-import { useWeb3React } from '@web3-react/core';
+
+import { useWeb3React } from "@web3-react/core";
+import { getExplorerURL } from "../../constants/getChainConfig";
 
 const { Column, ColumnGroup } = Table;
 
@@ -26,14 +20,7 @@ function TokenActivityTable({ completeOrders }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
   const { active, account, chainId } = useWeb3React();
 
-  const EXPLORER_URL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? EXPLORER_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? EXPLORER_MATIC
-      : EXPLORER_ETHEREUM;
-  
-
+  const EXPLORER_URL = chainId && getExplorerURL(chainId);
 
   function onChange(pagination, filters, sorter, extra) {
     // console.log("params", pagination, filters, sorter, extra);
@@ -48,7 +35,7 @@ function TokenActivityTable({ completeOrders }) {
     >
       <Column
         title="Asset"
-        sorter={(a, b) => a.asset - b.asset}
+        sorter={(a, b) => a.asset.localeCompare(b.asset)}
         showSorterTooltip={false}
         width={"28%"}
         dataIndex="asset"
@@ -57,7 +44,12 @@ function TokenActivityTable({ completeOrders }) {
           return (
             <div className="flex flex-row items-center mx-auto">
               {value}
-              <a target="_blank" rel="noreferrer" href={`${EXPLORER_URL}${row.assetID}`} className="ml-2">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={`${EXPLORER_URL}${row.assetID}`}
+                className="ml-2"
+              >
                 <img src={TokenLink} alt="deposit" />
               </a>
             </div>

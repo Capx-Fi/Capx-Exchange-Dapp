@@ -61,6 +61,22 @@ function ApproveModal({
     setOpen(false);
   };
 
+  // Variable for styling do not refresh message under a span
+  const approveMessage = [
+    <p>The tokens are being approved!<br/>
+    <span className="text-caption-2 phone:text-10px tablet:text-caption-3 breakpoint:text-caption-2" style={{color: "#CCCCCC"}}>Please do not reload or refresh the page.</span></p>,
+  ]
+
+  const errorMessage = [
+    <p>Oops! We have encountered an error.<br/>
+    <span className="text-caption-2 phone:text-10px tablet:text-caption-3 breakpoint:text-caption-2" style={{color: "#CCCCCC"}}> Please try again!</span></p>,
+  ]
+
+  const approvedMessage = [
+    <p>Approval successful!<br/>
+    <span className="text-caption-2 phone:text-10px tablet:text-caption-3 breakpoint:text-caption-2" style={{color: "#CCCCCC"}}>You can now swap your tokens.</span></p>,
+  ]
+
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -75,9 +91,9 @@ function ApproveModal({
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <div className="flex flex-col laptop:flex-row justify-center mx-auto items-center laptop:h-72 pb-8 mt-8">
+          <div className="flex flex-col laptop:flex-row breakpoint:flex-col justify-center mx-auto items-center laptop:h-72 pb-8 mt-8">
             <Lottie
-              className="w-24 tablet:w-32 laptop:w-56 "
+              className="w-24 tablet:w-32 breakpoint:w-36 desktop:w-48"
               loop={true}
               animationData={
                 approveModalStatus === "success"
@@ -87,12 +103,12 @@ function ApproveModal({
                   : ApproveToChain
               }
             />
-            <div className="text-white text-center font-bold tablet:font-semibold laptop:text-left text-paragraph-2 leading-paragraph-2 tablet:text-heading-2 tablet:leading-heading-2 laptop:text-heading-1 laptop:leading-heading-1 w-8/12 laptop:w-6/12">
+            <div className="text-white text-center leading-paragraph-2 phone:text-caption-2 tablet:text-caption-1 tablet:leading-heading-1 desktop:text-paragraph-1 tablet:text-center breakpoint:text-paragraph-2 font-semibold w-8/12 laptop:w-6/12 desktop:w-8/12">
               {approveModalStatus === "success"
-                ? "Approval successful! You can now swap your tokens."
+                ? approvedMessage
                 : approveModalStatus === "failure"
-                ? "Oops! We have encountered an error. Please try again!"
-                : "The tokens are being approved!"}
+                ? errorMessage
+                : approveMessage}
             </div>
           </div>
           <hr className="border-dark-200 mt-2 h-2"></hr>

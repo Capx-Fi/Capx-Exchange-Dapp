@@ -12,14 +12,16 @@ function NothingHereTrades() {
     <article className='nothinghere'>
       <section className='nothinghere_maincontainer'>
         <div className='nothinghere_maincontainer_herocontainer'>
+        <figure>
           <img
-            className='nothinghere_maincontainer_herocontainer_notfounfillustration'
+            className='nothinghere_maincontainer_herocontainer_notfoundillustration'
             src={NothingHereIcon}
             alt='Nothing Here Illustration'
           />
-          <div className='nothinghere_maincontainer_herocontainer_subtitle'>
+          <figcaption className='nothinghere_maincontainer_herocontainer_subtitle'>
             No Trades Found
-          </div>
+          </figcaption>
+        </figure>
           {/* <DeskCTA
             onClick={() => history.push('/')}
             title='Add Tardes'
