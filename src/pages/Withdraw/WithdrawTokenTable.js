@@ -237,7 +237,6 @@ function WithdrawTokenTable({ filter, refetch }) {
           dataIndex="unlockDate" 
           key="unlockDate"
           render={(value, row) => {
-            console.log(row);
             return (
               <>
                 <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">{row.unlockDate}</div>
@@ -251,7 +250,7 @@ function WithdrawTokenTable({ filter, refetch }) {
             render={(value, row) => {
               // console.log(row)
               return (
-                <div className={`border ${row.quantity === "0" ? "cursor-not-allowed" : "cursor-pointer"} border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2`}>
+                <div className={`border ${row.quantity === "0" ? "cursor-not-allowed bg-dark-250" : "cursor-pointer"} border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2`}>
                   <img src={WithdrawIcon} alt="deposit" className="mr-2" />
 
                   <p className={` ${row.quantity === "0" ? "text-success-color-500" : "text-success-color-400"}  uppercase font-bold text-caption-2 upper:text-caption-1`}>

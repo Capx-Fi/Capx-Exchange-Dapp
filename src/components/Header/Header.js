@@ -237,7 +237,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
                 location.pathname === "/" && active
                   ? "header_logo"
                   : "header_logoInfo"
-              } ${vesting && "flex tablet:hidden "}`}
+              } ${vesting && "breakpoint:flex tablet:hidden "}`}
               src={CapxLogo}
               alt="capx logo"
             />
