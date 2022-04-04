@@ -8,11 +8,10 @@ import threedot from "../../assets/threedot.svg";
 import tradeInfo from "../../assets/tradeInfo.svg";
 import cross from "../../assets/cross.svg";
 
-
-function Accordion({trade, cancelOrder}) {
+function Accordion({ trade, cancelOrder }) {
   const [setActive, setActiveState] = useState("");
   const [setHeight, setHeightState] = useState("0px");
-const [setDisplay, setDisplayState] = useState("displayBorder");
+  const [setDisplay, setDisplayState] = useState("displayBorder");
 
   const content = useRef(null);
 
@@ -21,11 +20,11 @@ const [setDisplay, setDisplayState] = useState("displayBorder");
     setHeightState(
       setActive === "active" ? "0px" : `${content.current.scrollHeight}px`
     );
-        setDisplayState(
-          setActive === "active" ? "displayBorder" : "accordion__content"
-        );
+    setDisplayState(
+      setActive === "active" ? "displayBorder" : "accordion__content"
+    );
   }
-  const getStatusColor=(status)=>{
+  const getStatusColor = (status) => {
     switch (status) {
       case "Completed":
         return "bg-primary-green-300";
@@ -40,9 +39,9 @@ const [setDisplay, setDisplayState] = useState("displayBorder");
       default:
         return "";
     }
-  }
+  };
   return (
-    <div className="py-4">
+    <div className="pb-8">
       <div
         onClick={toggleAccordion}
         className="tradesScreen_body_assetPairContainer"
@@ -54,7 +53,7 @@ const [setDisplay, setDisplayState] = useState("displayBorder");
             {trade?.tokenGiveTicker}
           </div>
         </div>
-        <div className="tradesScreen_body_assetPairContainer_giveToken">
+        <div className="tradesScreen_body_assetPairContainer_giveToken ">
           <p className="tradesScreen_body_assetPairContainer_title">
             {trade?.tokenGiveTicker}
           </p>
@@ -62,10 +61,10 @@ const [setDisplay, setDisplayState] = useState("displayBorder");
             {trade?.amountGiveDisplay}
           </div>
         </div>
-        <div className="tradesScreen_body_assetPairContainer_swapIcon">
+        <div className="tradesScreen_body_assetPairContainer_swapIcon ">
           <img className="" src={swapIcon} alt="swap icon" />
         </div>
-        <div className="tradesScreen_body_assetPairContainer_getToken">
+        <div className="tradesScreen_body_assetPairContainer_getToken ">
           <p className="tradesScreen_body_assetPairContainer_title">
             {trade?.tokenGetTicker}
           </p>
@@ -128,7 +127,10 @@ const [setDisplay, setDisplayState] = useState("displayBorder");
         </div>
         <div className="accordion_footer">
           {trade?.status === 3 || trade?.status === 0 ? (
-            <div onClick={()=>cancelOrder(trade.id)} className="accordion_footer_cancel">
+            <div
+              onClick={() => cancelOrder(trade.id)}
+              className="accordion_footer_cancel"
+            >
               CANCEL TRADE{" "}
               <img className="w-5 ml-2" src={cross} alt="cross icon" />
             </div>

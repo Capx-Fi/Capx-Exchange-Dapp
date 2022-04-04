@@ -1,5 +1,6 @@
 import "./Header.scss";
 import CapxLogo from "../../assets/CapxExchangeLogo.svg";
+import CapxMobileLogo from "../../assets/CapxLogo.svg";
 import LogoutIcon from "../../assets/logout.svg";
 import { useSnackbar } from "notistack";
 import { hexStripZeros } from "@ethersproject/bytes";
@@ -16,34 +17,22 @@ import { connect } from "react-redux";
 import { useEffect, useState } from "react";
 
 import NextIcon from "../../assets/next-black.svg";
+import MenuIcon from "../../assets/hamburger.svg";
 import ConnectCTA from "../CTA/ConnectCTA";
 import { hideSideNav } from "../../redux/actions/sideNav";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { useLocation } from "react-router-dom";
 import HeaderDropdown from "../HeaderSearch/HeaderDropdown";
 import { fetchAllProjectData } from "../../utils/fetchAllProjectData";
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  MATIC_CHAIN_ID,
-  GRAPHAPIURL_EXCHANGE_BSC,
-  GRAPHAPIURL_EXCHANGE_MATIC,
-  GRAPHAPIURL_EXCHANGE_ETHEREUM,
-  GRAPHAPIURL_MASTER_BSC,
-  GRAPHAPIURL_MASTER_MATIC,
-  GRAPHAPIURL_MASTER_ETHEREUM,
-  GRAPHAPIURL_WRAPPED_MATIC,
-  GRAPHAPIURL_WRAPPED_BSC,
-  GRAPHAPIURL_WRAPPED_ETHEREUM,
-  WRONG_CHAIN_MESSAGE,
-} from "../../constants/config";
+import { WRONG_CHAIN_MESSAGE } from "../../constants/config";
 import DropDown from "./DropDown/DropDown";
 import AccountDropdown from "./AccountDropdown/AccountDropdown";
+import {
+  getExchangeURL,
+  getMasterURL,
+  getSortBy,
+  getWrappedURL,
+} from "../../constants/getChainConfig";
 
 function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   const location = useLocation();
@@ -57,38 +46,13 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   const [dashboardModal, setDashboardModal] = useState(false);
 
   const web3 = new Web3(Web3.givenProvider);
-  const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
-  const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
-  const exchangeURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_EXCHANGE_MATIC
-      : GRAPHAPIURL_EXCHANGE_ETHEREUM;
-  const wrappedURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_WRAPPED_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_WRAPPED_MATIC
-      : GRAPHAPIURL_WRAPPED_ETHEREUM;
-  const masterURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_MASTER_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_MASTER_MATIC
-      : GRAPHAPIURL_MASTER_ETHEREUM;
+
+  const exchangeURL = chainId && getExchangeURL(chainId);
+  const wrappedURL = chainId && getWrappedURL(chainId);
+  const masterURL = chainId && getMasterURL(chainId);
 
   const [sortBy, setSortBy] = useState("Ethereum");
+  const [showMenu, setShowMenu] = useState(false);
   const handleCloseSelectDashboard = () => {
     setDashboardModal(false);
   };
@@ -107,9 +71,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     if (active) fetchProjects();
   }, [account, chainId]);
   useEffect(() => {
-    if (chainId === 80001 || chainId === 137) setSortBy('Matic');
-    else if (chainId === 97 || chainId === 56) setSortBy('BSC');
-    else setSortBy('Ethereum');
+    setSortBy(chainId && getSortBy(chainId));
   }, [chainId]);
   const fetchProjects = async () => {
     const projects = await fetchAllProjectData(
@@ -200,6 +162,43 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
       } catch (error) {
         console.log(error);
       }
+    } else if (chainName === "Avalanche") {
+      try {
+//         await web3.currentProvider.request({
+//           method: "wallet_addEthereumChain",
+//           params: [
+//             {
+//               chainId: "0xA869",
+//               chainName: "Avalanche Fuji",
+//               nativeCurrency: {
+//                 name: "AVAX",
+//                 symbol: "AVAX",
+//                 decimals: 18,
+//               },
+//               rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
+//               blockExplorerUrls: ["https://testnet.snowtrace.io/"],
+//             },
+//           ],
+//         });
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: "0xA86A",
+              chainName: "Avalanche",
+              nativeCurrency: {
+                name: "AVAX",
+                symbol: "AVAX",
+                decimals: 18,
+              },
+              rpcUrls: ["https://api.avax.network/ext/bc/C/rpc"],
+              blockExplorerUrls: ["https://snowtrace.io/"],
+            },
+          ],
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   async function disconnect() {
@@ -211,6 +210,15 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   }
   return (
     <>
+      {active && showMenu && (
+        <div className="mobileMenu">
+          <DropDown sortBy={sortBy} chainChange={chainChange} />
+          <AccountDropdown
+            disconnect={disconnect}
+            accountAddress={`${account?.substr(0, 6)}...${account?.substr(-4)}`}
+          />
+        </div>
+      )}
       <header
         className={`header z-40 ${
           vesting
@@ -225,7 +233,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
                 location.pathname === "/" && active
                   ? "header_logo"
                   : "header_logoInfo"
-              } ${vesting && "flex tablet:hidden "} `}
+              } ${vesting && "breakpoint:flex tablet:hidden "}`}
               src={CapxLogo}
               alt="capx logo"
             />
@@ -235,11 +243,19 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
           (location.pathname.includes("info") ? (
             <HeaderDropdown
               dropdownData={projectData}
-              placeholderText={"Search for Assets or Projects"}
+              placeholderText={"Search for Assets"}
             />
           ) : location.pathname === "/exchange" || location.pathname === "/" ? (
             <ToggleSwitch />
           ) : null)}
+        {active ? (
+          <img
+            src={MenuIcon}
+            className="tablet:hidden"
+            alt="menu icon"
+            onClick={() => setShowMenu(!showMenu)}
+          />
+        ) : null}
         {!hiddenNav && (
           <div className="header_navbar">
             {active && <DropDown sortBy={sortBy} chainChange={chainChange} />}
@@ -262,12 +278,23 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
               //     />
               //   </svg>
               // </div>
-              <AccountDropdown
-                disconnect={disconnect}
-                accountAddress={`${account.substr(0, 6)}...${account.substr(
-                  -4
-                )}`}
-              />
+              <>
+                <div className="tablet:block breakpoint:hidden">
+                  <AccountDropdown
+                    disconnect={disconnect}
+                    accountAddress={`${account.substr(0, 6)}...`}
+                  />
+                </div>
+
+                <div className="tablet:hidden breakpoint:block">
+                  <AccountDropdown
+                    disconnect={disconnect}
+                    accountAddress={`${account.substr(0, 6)}...${account.substr(
+                      -4
+                    )}`}
+                  />
+                </div>
+              </>
             ) : (
               <ConnectCTA
                 classes="cbutton"

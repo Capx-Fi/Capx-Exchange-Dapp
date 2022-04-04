@@ -1,5 +1,5 @@
 .metamaskmodalscreen {
-  @apply h-full bg-dark-400 flex pt-32;
+  @apply h-full bg-dark-400 flex tablet:pt-32 phone:pt-0;
 
   &_maincontainer {
     @apply flex justify-center laptop:items-center m-auto mt-32 tablet:mt-48 laptop:mt-auto;

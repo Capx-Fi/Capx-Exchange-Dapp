@@ -3,13 +3,8 @@ import BigNumber from "bignumber.js";
 import Web3 from "web3";
 import { EXCHANGE_ABI } from "../contracts/ExchangeContract";
 import { CONTRACT_ABI_ERC20 } from "../contracts/SampleERC20";
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  MATIC_CHAIN_ID,
-} from "../constants/config";
+
+import { getExchangeContractAddress } from "../constants/getChainConfig";
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
@@ -109,11 +104,7 @@ export const fetchOrderForTicker = async (
   const web3 = new Web3(Web3.givenProvider);
   const exchangeContract = new web3.eth.Contract(
     EXCHANGE_ABI,
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM
+    chainId && getExchangeContractAddress(chainId)
   );
   let derivativeIDs = await fetchDerivativeIDs(projectID, wrappedURL);
   derivativeIDs = derivativeIDs.map((s) => `"${s}"`).join(", ");

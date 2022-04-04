@@ -1,5 +1,5 @@
 import React from "react";
-import CapxLogo from "../assets/CapxLogo.svg";
+import CapxLogo from "../assets/CapxExchangeLogo.svg";
 
 function LoadingScreen() {
   return (
@@ -7,7 +7,7 @@ function LoadingScreen() {
       <img
         alt="logo"
         src={CapxLogo}
-        className="animate-pulse w-auto align-middle justify-center m-auto "
+        className="animate-pulse phone:w-40v breakpoint:w-20v h-auto align-middle justify-center m-auto"
       />
     </div>
   );

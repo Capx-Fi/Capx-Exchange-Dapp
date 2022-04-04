@@ -7,7 +7,7 @@ import BuyIcon from "../../assets/buy.svg";
 import LockIcon from "../../assets/lock-asset.svg";
 import SwapIcon from "../../assets/swap.svg";
 import NextIcon from "../../assets/next-black.svg";
-import { setBuyTicker } from "../../redux/actions/exchange";
+import { setBuyTicker, setSellTicker } from "../../redux/actions/exchange";
 import RefresherInput from "../../components/RefresherInput/RefresherInput";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
 import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
@@ -15,16 +15,8 @@ import { approveSellTokens } from "../../utils/approveSellTokens";
 import { fulfillOrder } from "../../utils/fulfillOrder";
 import BigNumber from "bignumber.js";
 
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  MATIC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-} from "../../constants/config";
+import crossIcon from "../../assets/close-cyan.svg";
+
 import { useWeb3React } from "@web3-react/core";
 
 import Web3 from "web3";
@@ -35,6 +27,11 @@ import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
 // New Import
 
 import { validateBuyAmount } from "../../utils/validateBuyAmount";
+import useWindowSize from "../../utils/windowSize";
+import {
+  getExchangeContractAddress,
+  getUsdtContractAddress,
+} from "../../constants/getChainConfig";
 
 BigNumber.config({
   ROUNDING_MODE: 3,
@@ -52,6 +49,7 @@ function BuyScreen({
   setRefresh,
 }) {
   const dispatch = useDispatch();
+  const windowWidth = useWindowSize().width;
 
   const ticker = useSelector((state) => state.exchange.buyTicker);
   useEffect(() => {
@@ -62,17 +60,9 @@ function BuyScreen({
   const { active, account, chainId } = useWeb3React();
 
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+    chainId && getExchangeContractAddress(chainId);
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+    chainId && getUsdtContractAddress(chainId);
   const tokenGetInst = new web3.eth.Contract(
     CONTRACT_ABI_ERC20,
     CHAIN_USDT_CONTRACT_ADDRESS
@@ -187,16 +177,29 @@ function BuyScreen({
       />
       <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus} />
       <div className="exchangeScreen_rightcontainer_buyContainer">
-        <div className="exchangeScreen_rightcontainer_buyContainer_header">
-          <div className="exchangeScreen_rightcontainer_buyContainer_header_title">
+        <div className="exchangeScreen_rightcontainer_buyContainer_header relative">
+          <div className="exchangeScreen_rightcontainer_buyContainer_header_title ">
             <img
               className="exchangeScreen_rightcontainer_buyContainer_header_title_icon"
               src={BuyIcon}
               alt="buy icon"
             />
+
             <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
               BUY {ticker ? " - " + ticker?.asset : ""}
             </p>
+            {ticker && ticker?.asset !== "" && window.screen.width < 768 && (
+              <img
+                className="absolute right-8 h-7"
+                src={crossIcon}
+                alt="close"
+                onClick={() =>
+                  ticker
+                    ? dispatch(setBuyTicker(null))
+                    : dispatch(setSellTicker(null))
+                }
+              />
+            )}
           </div>
         </div>
         <div className="exchangeScreen_rightcontainer_buyContainer_body">
@@ -255,8 +258,14 @@ function BuyScreen({
                   dispatch(
                     setBuyTicker({
                       ...ticker,
-                      amountGet: Math.min(ticker?.balance/ticker?.price, ticker?.maxAmountGet),
-                      amountGive: Math.min(ticker?.balance, ticker?.maxAmountGet * ticker?.price)
+                      amountGet: Math.min(
+                        ticker?.balance / ticker?.price,
+                        ticker?.maxAmountGet
+                      ),
+                      amountGive: Math.min(
+                        ticker?.balance,
+                        ticker?.maxAmountGet * ticker?.price
+                      ),
                     })
                   );
                 })

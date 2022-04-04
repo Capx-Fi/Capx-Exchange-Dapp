@@ -8,14 +8,8 @@ import BigNumber from "bignumber.js";
 import Web3 from "web3";
 import { EXCHANGE_ABI } from "../contracts/ExchangeContract";
 import { CONTRACT_ABI_ERC20 } from "../contracts/SampleERC20";
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  EXCHANGE_CONTRACT_ADDRESS,
-  MATIC_CHAIN_ID,
-} from "../constants/config";
+
+import { getExchangeContractAddress } from "../constants/getChainConfig";
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 19,
@@ -176,16 +170,12 @@ export const fetchListedTokens = async (
         };
       })
       .flat();
-          // console.log("Listed Tokens before 0 :--", listedTokens);
+    // console.log("Listed Tokens before 0 :--", listedTokens);
 
     listedTokens = listedTokens.filter((token) => token.quantity > 0);
     const exchangeContract = new web3.eth.Contract(
       EXCHANGE_ABI,
-      chainId?.toString() === BSC_CHAIN_ID?.toString()
-        ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-        : chainId?.toString() === MATIC_CHAIN_ID.toString()
-        ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-        : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM
+      chainId && getExchangeContractAddress(chainId)
     );
     let balance = await exchangeContract.methods
       .unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
