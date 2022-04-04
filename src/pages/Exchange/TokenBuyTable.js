@@ -15,27 +15,14 @@ import { setBuyTicker } from "../../redux/actions/exchange";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 import { fetchProjectID } from "../../utils/fetchProjectDetails";
 import { useHistory } from "react-router-dom";
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  MATIC_CHAIN_ID,
-  GRAPHAPIURL_EXCHANGE_BSC,
-  GRAPHAPIURL_EXCHANGE_MATIC,
-  GRAPHAPIURL_EXCHANGE_ETHEREUM,
-  GRAPHAPIURL_MASTER_BSC,
-  GRAPHAPIURL_MASTER_MATIC,
-  GRAPHAPIURL_MASTER_ETHEREUM,
-  GRAPHAPIURL_WRAPPED_MATIC,
-  GRAPHAPIURL_WRAPPED_BSC,
-  GRAPHAPIURL_WRAPPED_ETHEREUM,
-} from "../../constants/config";
+
 import { useSelector } from "react-redux";
 import MobileTableBuy from "../../components/MobileTable/MobileTableBuy";
+import {
+  getExchangeURL,
+  getUsdtContractAddress,
+  getWrappedURL,
+} from "../../constants/getChainConfig";
 
 const { Column, ColumnGroup } = Table;
 
@@ -47,36 +34,12 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
 
   const { active, account, chainId } = useWeb3React();
   let history = useHistory();
-  const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
-  const exchangeURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_EXCHANGE_MATIC
-      : GRAPHAPIURL_EXCHANGE_ETHEREUM;
-  const wrappedURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_WRAPPED_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_WRAPPED_MATIC
-      : GRAPHAPIURL_WRAPPED_ETHEREUM;
-  const masterURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_MASTER_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_MASTER_MATIC
-      : GRAPHAPIURL_MASTER_ETHEREUM;
+    chainId && getUsdtContractAddress(chainId);
+  const exchangeURL = chainId && getExchangeURL(chainId);
+  const wrappedURL = chainId && getWrappedURL(chainId);
+
   useEffect(() => {
     let nullBuyTicker = ticker;
     if (nullBuyTicker) {
@@ -188,7 +151,11 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
               dataIndex="quantity"
               key="quantity"
               render={(value, row) => {
-                return <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">{convertToInternationalCurrencySystem(value)}</div>;
+                return (
+                  <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                    {convertToInternationalCurrencySystem(value)}
+                  </div>
+                );
               }}
             />
             <Column

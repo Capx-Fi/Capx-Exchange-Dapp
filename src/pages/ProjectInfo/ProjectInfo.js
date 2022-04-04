@@ -6,26 +6,6 @@ import ProjectDescription from "./ProjectDescription";
 import { setProjectBuyTicker } from "../../redux/actions/exchange";
 
 import crossIcon from "../../assets/close-cyan.svg";
-
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  MATIC_CHAIN_ID,
-  GRAPHAPIURL_EXCHANGE_BSC,
-  GRAPHAPIURL_EXCHANGE_MATIC,
-  GRAPHAPIURL_EXCHANGE_ETHEREUM,
-  GRAPHAPIURL_MASTER_BSC,
-  GRAPHAPIURL_MASTER_MATIC,
-  GRAPHAPIURL_MASTER_ETHEREUM,
-  GRAPHAPIURL_WRAPPED_MATIC,
-  GRAPHAPIURL_WRAPPED_BSC,
-  GRAPHAPIURL_WRAPPED_ETHEREUM,
-} from "../../constants/config";
 import InfoHeader from "./InfoHeader";
 import { fetchProjectDetails } from "../../utils/fetchProjectDetails";
 import { useState } from "react";
@@ -34,6 +14,13 @@ import { useWeb3React } from "@web3-react/core";
 import MetamaskModal from "../../components/Modals/MetamaskModal/MetamaskModal";
 import { useSelector } from "react-redux";
 import useWindowSize from "../../utils/windowSize";
+import {
+  getExchangeContractAddress,
+  getExchangeURL,
+  getMasterURL,
+  getUsdtContractAddress,
+  getWrappedURL,
+} from "../../constants/getChainConfig";
 
 function ProjectInfo({ match }) {
   const dispatch = useDispatch();
@@ -51,36 +38,13 @@ function ProjectInfo({ match }) {
   const [lastSellingPrice, setLastSellingPrice] = useState(0);
   const [averageSellingPrice, setAverageSellingPrice] = useState(0);
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+    chainId && getExchangeContractAddress(chainId);
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
-  const exchangeURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_EXCHANGE_MATIC
-      : GRAPHAPIURL_EXCHANGE_ETHEREUM;
-  const wrappedURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_WRAPPED_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_WRAPPED_MATIC
-      : GRAPHAPIURL_WRAPPED_ETHEREUM;
-  const masterURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_MASTER_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_MASTER_MATIC
-      : GRAPHAPIURL_MASTER_ETHEREUM;
-      const [loading, setLoading] = useState(false);
+    chainId && getUsdtContractAddress(chainId);
+  const exchangeURL = chainId && getExchangeURL(chainId);
+  const wrappedURL = chainId && getWrappedURL(chainId);
+  const masterURL = chainId && getMasterURL(chainId);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     let nullBuyTicker = ticker;
     if (nullBuyTicker) {
@@ -201,9 +165,9 @@ function ProjectInfo({ match }) {
             )}
           </div>
         </div>
-
-  )}
-  </>
-)}
+      )}
+    </>
+  );
+}
 
 export default ProjectInfo;

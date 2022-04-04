@@ -3,18 +3,12 @@ import BigNumber from "bignumber.js";
 import Web3 from "web3";
 
 import { EXCHANGE_ABI } from "../contracts/ExchangeContract";
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  EXCHANGE_CONTRACT_ADDRESS,
-  MATIC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-} from "../constants/config";
+
 import moment from "moment";
+import {
+  getExchangeContractAddress,
+  getUsdtContractAddress,
+} from "../constants/getChainConfig";
 const format = "HH:mm";
 const web3 = new Web3(Web3.givenProvider);
 BigNumber.config({
@@ -36,20 +30,11 @@ export const fetchContractBalances = async (
   });
   const exchangeContract = new web3.eth.Contract(
     EXCHANGE_ABI,
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM
+    chainId && getExchangeContractAddress(chainId)
   );
 
   // Getting stable coin
-  const stableCoin =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+  const stableCoin = chainId && getUsdtContractAddress(chainId);
   console.log("-Stable coin-", stableCoin);
 
   // console.log("-chain ID-", chainId);
@@ -183,7 +168,7 @@ export const fetchContractBalances = async (
           assetID: contractHolding.assetID,
           price: null,
           expiryDate: new Date(),
-          expiryTime: moment().utc().add(15,"minutes"),
+          expiryTime: moment().utc().add(15, "minutes"),
           unlockTime: contractHolding.unlockTime,
           tokenDecimal: contractHolding.decimal,
           quantity: contractHolding.actualBalance,

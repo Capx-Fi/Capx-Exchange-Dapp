@@ -7,7 +7,10 @@ import BuyIcon from "../../assets/buy.svg";
 import LockIcon from "../../assets/lock-asset.svg";
 import SwapIcon from "../../assets/swap.svg";
 import NextIcon from "../../assets/next-black.svg";
-import { setBuyTicker, setProjectBuyTicker } from "../../redux/actions/exchange";
+import {
+  setBuyTicker,
+  setProjectBuyTicker,
+} from "../../redux/actions/exchange";
 import RefresherInput from "../../components/RefresherInput/RefresherInput";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
 import { approveSellTokens } from "../../utils/approveSellTokens";
@@ -15,25 +18,6 @@ import { fulfillOrder } from "../../utils/fulfillOrder";
 import BigNumber from "bignumber.js";
 import crossIcon from "../../assets/close-cyan.svg";
 
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  MATIC_CHAIN_ID,
-  GRAPHAPIURL_EXCHANGE_BSC,
-  GRAPHAPIURL_EXCHANGE_MATIC,
-  GRAPHAPIURL_EXCHANGE_ETHEREUM,
-  GRAPHAPIURL_MASTER_BSC,
-  GRAPHAPIURL_MASTER_MATIC,
-  GRAPHAPIURL_MASTER_ETHEREUM,
-  GRAPHAPIURL_WRAPPED_MATIC,
-  GRAPHAPIURL_WRAPPED_BSC,
-  GRAPHAPIURL_WRAPPED_ETHEREUM,
-} from "../../constants/config";
 import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
 import { useWeb3React } from "@web3-react/core";
 
@@ -46,6 +30,10 @@ import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
 
 import { validateBuyAmount } from "../../utils/validateBuyAmount";
 import useWindowSize from "../../utils/windowSize";
+import {
+  getExchangeContractAddress,
+  getUsdtContractAddress,
+} from "../../constants/getChainConfig";
 
 BigNumber.config({
   ROUNDING_MODE: 3,
@@ -76,17 +64,9 @@ function BuyScreen({
   const [checkBuy, setCheckBuy] = useState({});
 
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+    chainId && getExchangeContractAddress(chainId);
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+    chainId && getUsdtContractAddress(chainId);
   const ticker = useSelector((state) => state.exchange.projectBuyTicker);
   const resetValue = () => {
     let nullBuyTicker = ticker;
@@ -196,12 +176,14 @@ function BuyScreen({
             <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
               BUY {ticker ? " - " + ticker.asset : ""}
             </p>
-            {window.screen.width < 768 ? <img
-                      src={crossIcon}
-                      alt="close"
-                      onClick={() => dispatch(setProjectBuyTicker(null))}
-                      className="right-10 top-6 cursor-pointer h-6"
-            /> : null}
+            {window.screen.width < 768 ? (
+              <img
+                src={crossIcon}
+                alt="close"
+                onClick={() => dispatch(setProjectBuyTicker(null))}
+                className="right-10 top-6 cursor-pointer h-6"
+              />
+            ) : null}
           </div>
         </div>
         <div className="exchangeScreen_rightcontainer_buyContainer_body">
