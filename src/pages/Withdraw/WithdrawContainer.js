@@ -12,17 +12,6 @@ import { useSnackbar } from "notistack";
 import crossIcon from "../../assets/close-cyan.svg";
 import WithdrawIcon from "../../assets/DepositIcon.svg";
 
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  MATIC_CHAIN_ID,
-  USDT_CONTRACT_ADDRESS,
-  GRAPHAPIURL_EXCHANGE_BSC,
-  GRAPHAPIURL_EXCHANGE_MATIC,
-  GRAPHAPIURL_EXCHANGE_ETHEREUM,
-} from "../../constants/config";
 import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
 import { useWeb3React } from "@web3-react/core";
 
@@ -36,6 +25,7 @@ import WithdrawModal from "../../components/Modals/VestAndApproveModal/WithdrawM
 // New Import
 
 import { validateWithdrawAmount } from "../../utils/validateWithdrawAmount";
+import { getExchangeContractAddress } from "../../constants/getChainConfig";
 
 function WithdrawContainer({
   withdrawModalOpen,
@@ -50,11 +40,7 @@ function WithdrawContainer({
   const web3 = new Web3(Web3.givenProvider);
   const { active, account, chainId } = useWeb3React();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+    chainId && getExchangeContractAddress(chainId);
   const [withdrawModalStatus, setWithdrawModalStatus] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -122,7 +108,8 @@ function WithdrawContainer({
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
-        (!ticker || !ticker?.asset || ticker?.asset === '') && "opacity-60 cursor-not-allowed"
+        (!ticker || !ticker?.asset || ticker?.asset === "") &&
+        "opacity-60 cursor-not-allowed"
       }`}
     >
       <WithdrawModal
@@ -140,14 +127,16 @@ function WithdrawContainer({
               alt="withdraw icon"
             />
             <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
-              WITHDRAW {ticker ? " - " + ticker.asset : ""} 
+              WITHDRAW {ticker ? " - " + ticker.asset : ""}
             </p>
-            {ticker && ticker?.asset !== "" && window.screen.width < 768 && (<img
-                      src={crossIcon}
-                      alt="close"
-                      onClick={() => dispatch(setWithdrawTicker(null))}
-                      className="absolute right-8 cursor-pointer h-6"
-                    />)}
+            {ticker && ticker?.asset !== "" && window.screen.width < 768 && (
+              <img
+                src={crossIcon}
+                alt="close"
+                onClick={() => dispatch(setWithdrawTicker(null))}
+                className="absolute right-8 cursor-pointer h-6"
+              />
+            )}
           </div>
         </div>
         <div className="exchangeScreen_rightcontainer_buyContainer_body">

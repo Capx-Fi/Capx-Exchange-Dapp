@@ -15,32 +15,20 @@ import { convertToInternationalCurrencySystem } from "../../utils/convertToInter
 import { fetchProjectID } from "../../utils/fetchProjectDetails";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
 import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  MATIC_CHAIN_ID,
-  GRAPHAPIURL_EXCHANGE_BSC,
-  GRAPHAPIURL_EXCHANGE_MATIC,
-  GRAPHAPIURL_EXCHANGE_ETHEREUM,
-  GRAPHAPIURL_MASTER_BSC,
-  GRAPHAPIURL_MASTER_MATIC,
-  GRAPHAPIURL_MASTER_ETHEREUM,
-  GRAPHAPIURL_WRAPPED_MATIC,
-  GRAPHAPIURL_WRAPPED_BSC,
-  GRAPHAPIURL_WRAPPED_ETHEREUM,
-  USDT_CONTRACT_ADDRESS,
-} from "../../constants/config";
+
 import {
   setAssetBalance,
   setWithdrawTicker,
 } from "../../redux/actions/withdraw";
 import BigNumber from "bignumber.js";
 import Web3 from "web3";
+import {
+  getExchangeContractAddress,
+  getExchangeURL,
+  getMasterURL,
+  getUsdtContractAddress,
+  getWrappedURL,
+} from "../../constants/getChainConfig";
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
@@ -55,35 +43,12 @@ function WithdrawTokenTable({ filter, refetch }) {
   const ticker = useSelector((state) => state.withdraw.withdrawTicker);
   const { active, account, chainId } = useWeb3React();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+    chainId && getExchangeContractAddress(chainId);
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
-  const exchangeURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_EXCHANGE_MATIC
-      : GRAPHAPIURL_EXCHANGE_ETHEREUM;
-  const wrappedURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_WRAPPED_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_WRAPPED_MATIC
-      : GRAPHAPIURL_WRAPPED_ETHEREUM;
-  const masterURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_MASTER_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_MASTER_MATIC
-      : GRAPHAPIURL_MASTER_ETHEREUM;
+    chainId && getUsdtContractAddress(chainId);
+  const exchangeURL = chainId && getExchangeURL(chainId);
+  const wrappedURL = chainId && getWrappedURL(chainId);
+  const masterURL = chainId && getMasterURL(chainId);
   const [loading, setLoading] = useState(false);
   let history = useHistory();
   const web3 = new Web3(Web3.givenProvider);
@@ -185,12 +150,11 @@ function WithdrawTokenTable({ filter, refetch }) {
             return {
               onClick: (e) => {
                 record.quantity !== "0" &&
-                dispatch(setWithdrawTicker(record)) &&
-                dispatch(setAssetBalance(record.quantity))
-              }
-              }
-            }
-          }
+                  dispatch(setWithdrawTicker(record)) &&
+                  dispatch(setAssetBalance(record.quantity));
+              },
+            };
+          }}
         >
           <Column
             title="Asset"
@@ -232,17 +196,20 @@ function WithdrawTokenTable({ filter, refetch }) {
               );
             }}
           />
-          <Column 
-          title="Unlock Date" 
-          dataIndex="unlockDate" 
-          key="unlockDate"
-          render={(value, row) => {
-            return (
-              <>
-                <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">{row.unlockDate}</div>
-              </>
-            )
-          }} />
+          <Column
+            title="Unlock Date"
+            dataIndex="unlockDate"
+            key="unlockDate"
+            render={(value, row) => {
+              return (
+                <>
+                  <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                    {row.unlockDate}
+                  </div>
+                </>
+              );
+            }}
+          />
           <Column
             title=""
             dataIndex="asset"
@@ -250,10 +217,22 @@ function WithdrawTokenTable({ filter, refetch }) {
             render={(value, row) => {
               // console.log(row)
               return (
-                <div className={`border ${row.quantity === "0" ? "cursor-not-allowed bg-dark-250" : "cursor-pointer"} border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2`}>
+                <div
+                  className={`border ${
+                    row.quantity === "0"
+                      ? "cursor-not-allowed bg-dark-250"
+                      : "cursor-pointer"
+                  } border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2`}
+                >
                   <img src={WithdrawIcon} alt="deposit" className="mr-2" />
 
-                  <p className={` ${row.quantity === "0" ? "text-success-color-500" : "text-success-color-400"}  uppercase font-bold text-caption-2 upper:text-caption-1`}>
+                  <p
+                    className={` ${
+                      row.quantity === "0"
+                        ? "text-success-color-500"
+                        : "text-success-color-400"
+                    }  uppercase font-bold text-caption-2 upper:text-caption-1`}
+                  >
                     WITHDRAW
                   </p>
                 </div>

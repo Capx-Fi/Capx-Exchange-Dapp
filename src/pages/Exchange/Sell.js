@@ -11,16 +11,6 @@ import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
 
 import { approveSellTokens } from "../../utils/approveSellTokens";
 import { createOrder } from "../../utils/createOrder";
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  MATIC_CHAIN_ID,
-} from "../../constants/config";
 import Web3 from "web3";
 
 import LockIcon from "../../assets/lock-asset.svg";
@@ -39,6 +29,10 @@ import SellModal from "../../components/Modals/VestAndApproveModal/SellModal";
 // New Import Helper function
 
 import { validateSellAmount } from "../../utils/validateSellAmount";
+import {
+  getExchangeContractAddress,
+  getUsdtContractAddress,
+} from "../../constants/getChainConfig";
 const format = "HH:mm";
 const currentDate = new Date();
 BigNumber.config({
@@ -62,17 +56,9 @@ function SellScreen({
   const web3 = new Web3(Web3.givenProvider);
   const { active, account, chainId } = useWeb3React();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+    chainId && getExchangeContractAddress(chainId);
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+    chainId && getUsdtContractAddress(chainId);
   const tokenGetInst = new web3.eth.Contract(
     CONTRACT_ABI_ERC20,
     CHAIN_USDT_CONTRACT_ADDRESS
@@ -87,7 +73,6 @@ function SellScreen({
   const [disabled, setDisabled] = useState(false);
   const [warningDate, setWarningDate] = useState(false);
   const [checkSell, setCheckSell] = useState({});
-  
 
   const resetValue = () => {
     let nullSellTicker = ticker;
@@ -259,14 +244,14 @@ function SellScreen({
               alt="buy icon"
             />
             <p className="exchangeScreen_rightcontainer_buyContainer_header_title_text">
-              SELL {ticker?.asset !== undefined && "- " + ticker?.asset} 
+              SELL {ticker?.asset !== undefined && "- " + ticker?.asset}
             </p>
-              {ticker && ticker?.asset !== "" && window.screen.width < 769 && (
+            {ticker && ticker?.asset !== "" && window.screen.width < 769 && (
               <img
                 className="absolute right-8 ml-4 h-6"
                 src={crossIcon}
                 alt="close"
-                onClick={() => dispatch(setSellTicker(null)) }
+                onClick={() => dispatch(setSellTicker(null))}
               />
             )}
           </div>

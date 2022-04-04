@@ -24,28 +24,15 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { useLocation } from "react-router-dom";
 import HeaderDropdown from "../HeaderSearch/HeaderDropdown";
 import { fetchAllProjectData } from "../../utils/fetchAllProjectData";
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  MATIC_CHAIN_ID,
-  GRAPHAPIURL_EXCHANGE_BSC,
-  GRAPHAPIURL_EXCHANGE_MATIC,
-  GRAPHAPIURL_EXCHANGE_ETHEREUM,
-  GRAPHAPIURL_MASTER_BSC,
-  GRAPHAPIURL_MASTER_MATIC,
-  GRAPHAPIURL_MASTER_ETHEREUM,
-  GRAPHAPIURL_WRAPPED_MATIC,
-  GRAPHAPIURL_WRAPPED_BSC,
-  GRAPHAPIURL_WRAPPED_ETHEREUM,
-  WRONG_CHAIN_MESSAGE,
-} from "../../constants/config";
+import { WRONG_CHAIN_MESSAGE } from "../../constants/config";
 import DropDown from "./DropDown/DropDown";
 import AccountDropdown from "./AccountDropdown/AccountDropdown";
+import {
+  getExchangeURL,
+  getMasterURL,
+  getSortBy,
+  getWrappedURL,
+} from "../../constants/getChainConfig";
 
 function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   const location = useLocation();
@@ -59,36 +46,10 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   const [dashboardModal, setDashboardModal] = useState(false);
 
   const web3 = new Web3(Web3.givenProvider);
-  const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
-  const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
-  const exchangeURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_EXCHANGE_MATIC
-      : GRAPHAPIURL_EXCHANGE_ETHEREUM;
-  const wrappedURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_WRAPPED_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_WRAPPED_MATIC
-      : GRAPHAPIURL_WRAPPED_ETHEREUM;
-  const masterURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_MASTER_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_MASTER_MATIC
-      : GRAPHAPIURL_MASTER_ETHEREUM;
+
+  const exchangeURL = chainId && getExchangeURL(chainId);
+  const wrappedURL = chainId && getWrappedURL(chainId);
+  const masterURL = chainId && getMasterURL(chainId);
 
   const [sortBy, setSortBy] = useState("Ethereum");
   const [showMenu, setShowMenu] = useState(false);
@@ -110,9 +71,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     if (active) fetchProjects();
   }, [account, chainId]);
   useEffect(() => {
-    if (chainId === 80001 || chainId === 137) setSortBy("Matic");
-    else if (chainId === 97) setSortBy("BSC");
-    else setSortBy("Ethereum");
+    setSortBy(getSortBy(chainId));
   }, [chainId]);
   const fetchProjects = async () => {
     const projects = await fetchAllProjectData(
@@ -252,12 +211,14 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
           ) : location.pathname === "/exchange" || location.pathname === "/" ? (
             <ToggleSwitch />
           ) : null)}
-        {active ? <img
-          src={MenuIcon}
-          className="tablet:hidden"
-          alt="menu icon"
-          onClick={() => setShowMenu(!showMenu)}
-        /> : null }
+        {active ? (
+          <img
+            src={MenuIcon}
+            className="tablet:hidden"
+            alt="menu icon"
+            onClick={() => setShowMenu(!showMenu)}
+          />
+        ) : null}
         {!hiddenNav && (
           <div className="header_navbar">
             {active && <DropDown sortBy={sortBy} chainChange={chainChange} />}

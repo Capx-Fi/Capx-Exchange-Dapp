@@ -12,25 +12,7 @@ import $ from "jquery";
 import useWindowSize from "../../utils/windowSize";
 import { fetchPortfolio } from "../../utils/fetchPortfolio";
 import { useWeb3React } from "@web3-react/core";
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  MATIC_CHAIN_ID,
-  GRAPHAPIURL_EXCHANGE_BSC,
-  GRAPHAPIURL_EXCHANGE_MATIC,
-  GRAPHAPIURL_EXCHANGE_ETHEREUM,
-  GRAPHAPIURL_MASTER_BSC,
-  GRAPHAPIURL_MASTER_MATIC,
-  GRAPHAPIURL_MASTER_ETHEREUM,
-  GRAPHAPIURL_WRAPPED_MATIC,
-  GRAPHAPIURL_WRAPPED_BSC,
-  GRAPHAPIURL_WRAPPED_ETHEREUM,
-} from "../../constants/config";
+
 import { useDispatch } from "react-redux";
 import { setSellTicker, setTickerBalance } from "../../redux/actions/exchange";
 import { fetchContractBalances } from "../../utils/fetchContractBalances";
@@ -39,6 +21,7 @@ import { fetchProjectID } from "../../utils/fetchProjectDetails";
 import BigNumber from "bignumber.js";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { getExchangeURL, getWrappedURL } from "../../constants/getChainConfig";
 const format = "HH:mm";
 BigNumber.config({
   ROUNDING_MODE: 3,
@@ -53,36 +36,10 @@ function TokenSellTable({ filter, refresh }) {
   const [portfolioHoldings, setPortfolioHoldings] = useState([]);
   const { active, account, chainId } = useWeb3React();
   const ticker = useSelector((state) => state.exchange.sellTicker);
-  const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
-  const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
-  const exchangeURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_EXCHANGE_MATIC
-      : GRAPHAPIURL_EXCHANGE_ETHEREUM;
-  const wrappedURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_WRAPPED_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_WRAPPED_MATIC
-      : GRAPHAPIURL_WRAPPED_ETHEREUM;
-  const masterURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_MASTER_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_MASTER_MATIC
-      : GRAPHAPIURL_MASTER_ETHEREUM;
+
+  const exchangeURL = chainId && getExchangeURL(chainId);
+  const wrappedURL = chainId && getWrappedURL(chainId);
+
   const [loading, setLoading] = useState(false);
   let history = useHistory();
 
@@ -211,18 +168,25 @@ function TokenSellTable({ filter, refresh }) {
             dataIndex="quantity"
             key="quantity"
             render={(value, row) => {
-              return <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">{convertToInternationalCurrencySystem(value)}</div>;
+              return (
+                <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                  {convertToInternationalCurrencySystem(value)}
+                </div>
+              );
             }}
           />
-          <Column 
-          title="Unlock Date" 
-          dataIndex="unlockDate" 
-          key="unlockDate"
-          render={
-            (value, row) => {
-            return(<div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">{row.unlockDate}</div>)
-            }
-          } />
+          <Column
+            title="Unlock Date"
+            dataIndex="unlockDate"
+            key="unlockDate"
+            render={(value, row) => {
+              return (
+                <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                  {row.unlockDate}
+                </div>
+              );
+            }}
+          />
           <Column
             title=""
             dataIndex="asset"
