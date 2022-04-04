@@ -160,7 +160,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
                       navigateProject(row.assetID);
                     }}
                   >
-                    <p className="text-white hover:text-primary-green-400 cursor-pointer upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                    <p className="text-white hover:text-primary-green-400 cursor-pointer upper:text-paragraph-2 tablet:text-caption-2">
                       {value}
                     </p>
                   </div>
@@ -173,7 +173,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
               key="price"
               render={(value, row) => {
                 return (
-                  <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                  <div className="upper:text-paragraph-2 tablet:text-caption-2">
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
@@ -188,7 +188,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
               dataIndex="quantity"
               key="quantity"
               render={(value, row) => {
-                return <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">{convertToInternationalCurrencySystem(value)}</div>;
+                return <div className="upper:text-paragraph-2 tablet:text-caption-2">{convertToInternationalCurrencySystem(value)}</div>;
               }}
             />
             <Column
@@ -197,7 +197,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
               key="expiryTime"
               render={(value, row) => {
                 return (
-                  <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                  <div className="upper:text-paragraph-2 tablet:text-caption-2">
                     {row.expiryTime}
                   </div>
                 );
@@ -211,7 +211,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
                 return (
                   <div className="border cursor-pointer border-grayLabel py-2 rounded-lg flex flex-row justify-center w-fit-content px-3 mx-auto">
                     <img src={DepositIcon} alt="deposit" className="mr-2" />
-                    <p className="text-success-color-400 uppercase font-bold text-caption-2 upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                    <p className="text-success-color-400 uppercase font-bold text-caption-2 upper:text-paragraph-2 tablet:text-caption-2">
                       BUY
                     </p>
                   </div>
