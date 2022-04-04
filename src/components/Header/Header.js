@@ -71,7 +71,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     if (active) fetchProjects();
   }, [account, chainId]);
   useEffect(() => {
-    setSortBy(getSortBy(chainId));
+    setSortBy(chainId && getSortBy(chainId));
   }, [chainId]);
   const fetchProjects = async () => {
     const projects = await fetchAllProjectData(
@@ -156,6 +156,43 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
         //       },
         //       rpcUrls: ["https://bsc-dataseed.binance.org/"],
         //       blockExplorerUrls: ["https://bscscan.com/"],
+        //     },
+        //   ],
+        // });
+      } catch (error) {
+        console.log(error);
+      }
+    } else if (chainName === "Avalanche") {
+      try {
+        await web3.currentProvider.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: "0xA869",
+              chainName: "Avalanche Fuji",
+              nativeCurrency: {
+                name: "AVAX",
+                symbol: "AVAX",
+                decimals: 18,
+              },
+              rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
+              blockExplorerUrls: ["https://testnet.snowtrace.io/"],
+            },
+          ],
+        });
+        // await window.ethereum.request({
+        //   method: "wallet_addEthereumChain",
+        //   params: [
+        //     {
+        //       chainId: "0xA86A",
+        //       chainName: "Avalanche",
+        //       nativeCurrency: {
+        //         name: "AVAX",
+        //         symbol: "AVAX",
+        //         decimals: 18,
+        //       },
+        //       rpcUrls: ["https://api.avax.network/ext/bc/C/rpc"],
+        //       blockExplorerUrls: ["https://snowtrace.io/"],
         //     },
         //   ],
         // });
