@@ -41,7 +41,7 @@
               }
             }
             &_input {
-              @apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 px-2;
+              @apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 px-1;
               &:focus {
                 @apply outline-none;
               }

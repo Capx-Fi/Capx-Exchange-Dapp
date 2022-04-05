@@ -303,7 +303,7 @@ function SellScreen({
                     className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_input"
                     type="number"
                     placeholder="0"
-                    value={ticker ? ticker?.price : ""}
+                    value={ticker ? ticker?.price : 0}
                     onChange={(e) => setAmount(e.target.value)}
                     warningText={ticker?.price <= 0 && "PRICE CANNOT BE ZERO"}
                   />

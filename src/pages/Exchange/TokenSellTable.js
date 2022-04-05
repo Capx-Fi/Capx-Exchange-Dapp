@@ -53,6 +53,7 @@ function TokenSellTable({ filter, refresh }) {
           ...nullSellTicker,
           expiryDate: new Date(),
           expiryTime: moment().utc().add(15, "minutes"),
+          price: 0,
         })
       );
     }
