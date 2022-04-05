@@ -57,6 +57,15 @@ function DropDown({ sortBy, chainChange }) {
           >
             BSC
           </p>
+          <p
+            className="option"
+            onClick={() => {
+              chainChange("Avalanche");
+              setOpen(false);
+            }}
+          >
+            Avalanche
+          </p>
         </div>
       )}
     </div>

@@ -18,16 +18,6 @@ import BigNumber from "bignumber.js";
 
 import crossIcon from "../../assets/close-cyan.svg";
 
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  MATIC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-} from "../../constants/config";
 import { useWeb3React } from "@web3-react/core";
 
 import Web3 from "web3";
@@ -39,6 +29,10 @@ import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
 
 import { validateBuyAmount } from "../../utils/validateBuyAmount";
 import useWindowSize from "../../utils/windowSize";
+import {
+  getExchangeContractAddress,
+  getUsdtContractAddress,
+} from "../../constants/getChainConfig";
 
 BigNumber.config({
   ROUNDING_MODE: 3,
@@ -68,17 +62,9 @@ function BuyScreen({
   const { active, account, chainId } = useWeb3React();
 
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+    chainId && getExchangeContractAddress(chainId);
   const CHAIN_USDT_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
-      : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
+    chainId && getUsdtContractAddress(chainId);
   const tokenGetInst = new web3.eth.Contract(
     CONTRACT_ABI_ERC20,
     CHAIN_USDT_CONTRACT_ADDRESS

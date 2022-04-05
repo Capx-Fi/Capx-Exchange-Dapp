@@ -8,42 +8,24 @@ import MetamaskModal from "../../components/Modals/MetamaskModal/MetamaskModal";
 import { fetchTrades } from "../../utils/fetchTrades";
 import { cancelOrder } from "../../utils/cancelOrder";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
-import {
-  BSC_CHAIN_ID,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
-  CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
-  CONTRACT_ADDRESS_CAPX_USDT_BSC,
-  CONTRACT_ADDRESS_CAPX_USDT_MATIC,
-  CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
-  MATIC_CHAIN_ID,
-  GRAPHAPIURL_EXCHANGE_BSC,
-  GRAPHAPIURL_EXCHANGE_MATIC,
-  GRAPHAPIURL_EXCHANGE_ETHEREUM,
-  ETHEREUM_CHAIN_ID,
-  USDT_CONTRACT_ADDRESS,
-} from "../../constants/config";
+
 import Web3 from "web3";
 import ApproveModal from "../../components/Modals/VestAndApproveModal/ApproveModal";
 import CancelModal from "../../components/Modals/VestAndApproveModal/CancelModal";
 import NothingHereTrades from "../../containers/NothingHere/NothingHereInvestorDa";
+import {
+  getExchangeContractAddress,
+  getExchangeURL,
+} from "../../constants/getChainConfig";
 
 function TradesScreen() {
   const { active, account, chainId } = useWeb3React();
   const web3 = new Web3(Web3.givenProvider);
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
-      : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
+    chainId && getExchangeContractAddress(chainId);
 
-  const exchangeURL =
-    chainId?.toString() === BSC_CHAIN_ID?.toString()
-      ? GRAPHAPIURL_EXCHANGE_BSC
-      : chainId?.toString() === MATIC_CHAIN_ID.toString()
-      ? GRAPHAPIURL_EXCHANGE_MATIC
-      : GRAPHAPIURL_EXCHANGE_ETHEREUM;
+  const exchangeURL = chainId && getExchangeURL(chainId);
+
   const [sortBy, setSortBy] = useState("Sort By");
   const [tradesData, setTradesData] = useState(null);
   const content = useRef(null);
@@ -52,12 +34,12 @@ function TradesScreen() {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    if(tradesData) {
-    if (sortBy === 5) {
-      setTradesData(resetTrade);
-    } else {
-      setTradesData(resetTrade.filter((trade) => trade.status === sortBy));
-    }
+    if (tradesData) {
+      if (sortBy === 5) {
+        setTradesData(resetTrade);
+      } else {
+        setTradesData(resetTrade.filter((trade) => trade.status === sortBy));
+      }
     }
   }, [sortBy]);
   useEffect(() => {
@@ -92,16 +74,11 @@ function TradesScreen() {
         <MetamaskModal />
       ) : tradesData === null ? (
         <>
-          <div
-            className="tradesScreen"
-          >
+          <div className="tradesScreen">
             <div className="tradesScreen_header">
               <div className="tradesScreen_header_titlecontainer">
-                <p className="tradesScreen_header_titlecontainer_title asset_loading">
-                  
-                </p>
-                <p className="tradesScreen_header_titlecontainer_subtitle asset_loading">
-                </p>
+                <p className="tradesScreen_header_titlecontainer_title asset_loading"></p>
+                <p className="tradesScreen_header_titlecontainer_subtitle asset_loading"></p>
               </div>
             </div>
           </div>
@@ -146,7 +123,7 @@ function TradesScreen() {
               </>
             ) : (
               <>
-              <div className="tradesScreen_header">
+                <div className="tradesScreen_header">
                   <div className="tradesScreen_header_titlecontainer">
                     <p className="tradesScreen_header_titlecontainer_title">
                       Trades
@@ -159,8 +136,11 @@ function TradesScreen() {
                     <DropDown sortBy={sortBy} setSortBy={setSortBy} />
                   </div>
                 </div>
-                <div className="tradesScreen_body" style={{overflow: "hidden"}}>
-                <NothingHereTrades />
+                <div
+                  className="tradesScreen_body"
+                  style={{ overflow: "hidden" }}
+                >
+                  <NothingHereTrades />
                 </div>
               </>
             )}
