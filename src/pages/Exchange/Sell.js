@@ -217,6 +217,8 @@ function SellScreen({
     }
   }, [ticker?.price, ticker?.quantity, totalExpiryTime, balance]);
 
+  console.log(ticker, "ticker-sell");
+
   return (
     <div
       className={`exchangeScreen_rightcontainer ${
@@ -263,7 +265,7 @@ function SellScreen({
             </div>
             <RefresherInput
               ticker={ticker}
-              disabled={!ticker?.asset || ticker?.asset === ""}
+              disabled={!ticker?.asset || ticker?.asset === "" || tokenApproval}
               balance={balance}
               isMax={true}
               setMaxAmount={() => {
@@ -293,7 +295,7 @@ function SellScreen({
               </div>
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
-                  !ticker?.asset || ticker?.asset === ""
+                  !ticker?.asset || ticker?.asset === "" || tokenApproval
                     ? "pointer-events-none ring-dark-50"
                     : "ring-success-color-500 "
                 } `}
@@ -303,7 +305,7 @@ function SellScreen({
                     className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_input"
                     type="number"
                     placeholder="0"
-                    value={ticker ? ticker?.price : 0}
+                    value={ticker?.price ? ticker?.price : ""}
                     onChange={(e) => setAmount(e.target.value)}
                     warningText={ticker?.price <= 0 && "PRICE CANNOT BE ZERO"}
                   />
@@ -333,14 +335,20 @@ function SellScreen({
               </div>
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
-                  !ticker || !ticker?.asset || ticker?.asset === ""
+                  !ticker ||
+                  !ticker?.asset ||
+                  ticker?.asset === "" ||
+                  tokenApproval
                     ? "pointer-events-none ring-dark-50"
                     : "ring-success-color-500 "
                 } `}
               >
                 <div
                   className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper w-full ${
-                    !ticker || !ticker?.asset || ticker?.asset === ""
+                    !ticker ||
+                    !ticker?.asset ||
+                    ticker?.asset === "" ||
+                    tokenApproval
                       ? "pointer-events-none ring-dark-50"
                       : "ring-success-color-500 "
                   } `}
@@ -367,7 +375,10 @@ function SellScreen({
               </div>
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
-                  !ticker || !ticker?.asset || ticker?.asset === ""
+                  !ticker ||
+                  !ticker?.asset ||
+                  ticker?.asset === "" ||
+                  tokenApproval
                     ? "pointer-events-none ring-dark-50"
                     : "ring-success-color-500 "
                 } `}

@@ -209,7 +209,7 @@ function BuyScreen({
             </div>
             <RefresherInput
               ticker={ticker}
-              disabled={!ticker?.asset || ticker?.asset === ""}
+              disabled={!ticker?.asset || ticker?.asset === "" || tokenApproval}
               setTicker={(e) => {
                 if (
                   BigNumber(e.target.value)
@@ -302,7 +302,7 @@ function BuyScreen({
             <RefresherInput
               icon={ticker && LockIcon}
               ticker={ticker}
-              disabled={!ticker?.asset || ticker?.asset === ""}
+              disabled={!ticker?.asset || ticker?.asset === "" || tokenApproval}
               isMax={false}
               balance={null}
               value={ticker ? ticker.amountGet : ""}

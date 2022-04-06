@@ -4,11 +4,11 @@
     &_lockWrapper {
       @apply flex justify-center w-full items-center px-4;
       &_icon {
-        @apply h-5 w-5;
+        @apply h-5 w-5 mr-1;
       }
     }
     &_input {
-      @apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 px-2;
+      @apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 px-0;
       &:focus {
         @apply outline-none;
       }
