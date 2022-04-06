@@ -15,6 +15,7 @@ import { approveSellTokens } from "../../utils/approveSellTokens";
 import { fulfillOrder } from "../../utils/fulfillOrder";
 import BigNumber from "bignumber.js";
 
+
 import crossIcon from "../../assets/close-cyan.svg";
 
 import { useWeb3React } from "@web3-react/core";
@@ -50,6 +51,7 @@ function BuyScreen({
 }) {
   const dispatch = useDispatch();
   const windowWidth = useWindowSize().width;
+  var mode = useSelector((state) => state.exchange.exchangeMode);
 
   const ticker = useSelector((state) => state.exchange.buyTicker);
   useEffect(() => {
@@ -278,11 +280,12 @@ function BuyScreen({
           {warningCheck && (
             <WarningCard
               text={`Not enough balance on DEX! Approve the difference amount to fulfill your order.`}
+              mode={mode}
             />
           )}
           {(!checkBuy?.["stableCoinLegal"] ||
             !checkBuy?.["DerivativeLegal"]) && (
-            <WarningCard text={`INVALID INPUT`} />
+            <WarningCard text={`INVALID INPUT`}  />
           )}
           <div className="exchangeScreen_rightcontainer_buyContainer_body_separator">
             <div className="exchangeScreen_rightcontainer_buyContainer_body_separator_line w-7/12"></div>

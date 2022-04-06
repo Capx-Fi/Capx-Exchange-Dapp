@@ -1,10 +1,10 @@
 .header {
   @apply h-20 top-0 left-0 fixed flex w-full px-8 tablet:px-10 laptop:px-20 breakpoint:px-14 desktop:px-16 justify-between items-center bg-dark-400 desktop:h-20;
   &_logo {
-    @apply h-6 phone:h-10 tablet:h-12 breakpoint:h-10 breakpoint:mr-10 desktop:h-12 desktop:mr-0 upper:mr-6;
+    @apply h-6 tablet:h-7 upper:h-10 breakpoint:w-auto desktop:h-8 breakpoint:h-8;
   }
   &_logoInfo {
-    @apply h-6 phone:h-5 phone:mr-2 tablet:-ml-1 tablet:h-8 tablet:ml-9 breakpoint:h-7 breakpoint:ml-0 desktop:h-8 desktop:mr-0 upper:h-9;
+    @apply h-6 tablet:h-7 upper:h-10 desktop:h-8 breakpoint:h-8 breakpoint:w-auto;
   }
   &_navbar {
     @apply hidden tablet:flex items-center text-white;
@@ -36,3 +36,10 @@
 .mobileMenu {
   @apply p-5 flex mx-auto justify-center items-center flex-row top-20 left-0 fixed w-full tablet:hidden bg-dark-300 rounded-b-lg opacity-100 z-50;
 }
+
+// &_logo {
+//   @apply h-6 phone:h-10 tablet:h-12 breakpoint:h-10 breakpoint:mr-10 desktop:h-12 desktop:mr-0 upper:mr-6;
+// }
+// &_logoInfo {
+//   @apply h-6 phone:h-5 phone:mr-2 tablet:-ml-1 tablet:h-8 tablet:ml-9 breakpoint:h-7 breakpoint:ml-0 desktop:h-8 desktop:mr-0 upper:h-9;
+// }

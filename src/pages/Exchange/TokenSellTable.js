@@ -157,7 +157,7 @@ function TokenSellTable({ filter, refresh }) {
             render={(value, row) => {
               return (
                 <div onClick={() => navigateProject(row.assetID)}>
-                  <p className="text-white hover:text-primary-green-400 cursor-pointer upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                  <p className="text-white hover:text-primary-green-400 cursor-pointer upper:text-paragraph-2 tablet:text-caption-2">
                     {value}
                   </p>
                 </div>
@@ -194,10 +194,10 @@ function TokenSellTable({ filter, refresh }) {
             key="asset"
             render={(value, row) => {
               return (
-                <div className="border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                <div className="border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto upper:text-paragraph-2 tablet:text-caption-2">
                   <img src={SellIcon} alt="deposit" className="mr-2" />
 
-                  <p className="text-error-color-400 uppercase font-bold text-caption-2 upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                  <p className="text-error-color-400 uppercase font-bold text-caption-2 upper:text-paragraph-2 tablet:text-caption-2">
                     SELL
                   </p>
                 </div>

@@ -7,7 +7,7 @@ const ToggleSwitch = ({ id }) => {
   const dispatch = useDispatch();
   var mode = useSelector((state) => state.exchange.exchangeMode);
   return (
-    <div className="flex items-center justify-center w-full">
+    <div className="flex items-center justify-center w-fit-content">
       <label htmlFor={`${id}`} className="flex items-center cursor-pointer">
         <div className="relative">
           <input
