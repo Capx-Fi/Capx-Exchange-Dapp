@@ -27,7 +27,7 @@ function MobileTableSell({
               />
             ))
           ) : (
-            <div className="text-white mt-10"> No Tokens Found</div>
+            <div className="text-white mt-10 mb-10"> No Tokens Found</div>
           )}
         </div>
       </div>
@@ -93,11 +93,12 @@ function Column({ token, setSellTicker, setBalance, navigateProject }) {
     >
       <div className="_leftContainer text-left text-white">
         <p
-        onClick={(e) => {
+          onClick={(e) => {
             e.stopPropagation();
             navigateProject(token.assetID);
-          }} 
-        className="_assetName bg-dark-300 p-2 rounded-full px-3 border border-2 border-dark-50 text-caption-2 text-center">
+          }}
+          className="_assetName bg-dark-300 p-2 rounded-full px-3 border border-2 border-dark-50 text-caption-2 text-center"
+        >
           {token.asset}
         </p>
 

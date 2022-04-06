@@ -16,18 +16,29 @@ function MobileTableBuy({
   return (
     <>
       <div className="mobileTableBuy h-fit-content max-h-60v w-85v overflow-y-hidden">
-        {(isInfo) ? <div className="_header border border-dark-50 text-left pl-4 py-4 overflow-hidden bg-dark-300 rounded-tl-2xl rounded-tr-2xl text-tradeTitle text-10px flex items-center font-bold tracking-wide"><img src={marketActivity} className="w-3 h-3 mr-1" alt="" />TOKENS WITH $CAPX</div> : <div className="_header py-2 bg-dark-50 rounded-tl-2xl rounded-tr-2xl"></div>}
+        {isInfo ? (
+          <div className="_header border border-dark-50 text-left pl-4 py-4 overflow-hidden bg-dark-300 rounded-tl-2xl rounded-tr-2xl text-tradeTitle text-10px flex items-center font-bold tracking-wide">
+            <img src={marketActivity} className="w-3 h-3 mr-1" alt="" />
+            TOKENS WITH $CAPX
+          </div>
+        ) : (
+          <div className="_header py-2 bg-dark-50 rounded-tl-2xl rounded-tr-2xl"></div>
+        )}
         <div className="_body border border-dark-50 rounded-br-2xl rounded-bl-2xl h-fit-content max-h-55v overflow-y-auto">
-          {loading
-            ? [0, 1, 2, 3, 4].map(() => <LoadingColumn />)
-            : tokenList.map((token) => (
-                <Column
-                  token={token}
-                  setBuyTicker={setBuyTicker}
-                  setBalance={setBalance}
-                  navigateProject={navigateProject}
-                />
-              ))}
+          {loading ? (
+            [0, 1, 2, 3, 4].map(() => <LoadingColumn />)
+          ) : tokenList.length > 0 ? (
+            tokenList.map((token) => (
+              <Column
+                token={token}
+                setBuyTicker={setBuyTicker}
+                setBalance={setBalance}
+                navigateProject={navigateProject}
+              />
+            ))
+          ) : (
+            <div className="text-white mt-10 mb-10"> No Tokens Found</div>
+          )}
         </div>
       </div>
     </>
