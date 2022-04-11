@@ -38,12 +38,12 @@ function Column({ order }) {
         // dispatch(setAssetBalance(record.quantity)); // For mapping data
       }}
     >
-      <div className="_leftContainer text-left text-white">
+      <div className="_leftContainer text-left text-white w-full">
         <div className="titleContainer flex justify-between -mr-6">
-          <p className="_assetName pl-2 text-caption-2 text-left">
+          <p className="_assetName pl-2 text-caption-2 text-left block">
             {token.length > 12 ? token.slice(0, 12) + "..." : token}
           </p>
-          <p className="_assetExpiry text-right text-white font-regular text-10px mt-1 mb-4 mr-10">
+          <p className="_assetExpiry text-right text-white font-regular text-10px mt-1 mb-4 mr-6 block">
             {order.fulfillOrderTimestamp}
           </p>
         </div>
