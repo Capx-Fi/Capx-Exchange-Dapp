@@ -228,9 +228,14 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     <>
       {active && showMenu && (
         <div className="mobileMenu">
-          <DropDown sortBy={sortBy} chainChange={chainChange} />
+          <DropDown
+            sortBy={sortBy}
+            setShowMenu={setShowMenu}
+            chainChange={chainChange}
+          />
           <AccountDropdown
             disconnect={disconnect}
+            setShowMenu={setShowMenu}
             accountAddress={`${account?.substr(0, 6)}...${account?.substr(-4)}`}
           />
         </div>
