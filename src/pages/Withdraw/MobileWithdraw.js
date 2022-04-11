@@ -53,12 +53,12 @@ function Column({
       >
         <div className="_leftContainer text-left text-white">
           <p
-            className="_assetName bg-dark-300 p-2 rounded-full px-3 border-2 border-dark-50 text-caption-2 text-center"
+            className="_assetName max-w-30 bg-dark-300 p-2 rounded-full px-3 border-2 border-dark-50 text-caption-2 text-center"
             onClick={() =>
               isUSDT ? console.log("USDT") : navigateProject(token.assetID)
             }
           >
-            {token.asset}
+            {token.asset.length > 8 ? token.asset.slice(0, 8)+"..." : token.asset}
           </p>
 
           <div className="_detailsContainer flex flex-row ml-2 my-2 items-center">

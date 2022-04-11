@@ -79,7 +79,7 @@ function BuyModal({ open, setOpen, buyModalStatus }) {
                   : BuyingToChain
               }
             />
-            <div className="text-white text-center leading-paragraph-2 phone:text-caption-2 tablet:text-caption-1 tablet:leading-heading-1 desktop:text-paragraph-1 tablet:text-center breakpoint:text-paragraph-2 font-semibold w-8/12 laptop:w-6/12 desktop:w-8/12">
+            <div className="text-white text-center phone:text-caption-2 tablet:text-caption-1 tablet:leading-heading-1 desktop:text-paragraph-1 tablet:text-center breakpoint:text-paragraph-2 font-semibold w-8/12 phone:w-10/12 tablet:w-8/12 laptop:w-6/12 desktop:w-8/12">
               {buyModalStatus === "success"
                 ? "Tokens successfully bought!"
                 : buyModalStatus === "failure"

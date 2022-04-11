@@ -21,7 +21,7 @@ function MobileTableBuy({
         {isInfo ? (
           <div className="_header border border-dark-50 text-left pl-4 py-4 overflow-hidden bg-dark-300 rounded-tl-2xl rounded-tr-2xl text-tradeTitle text-10px flex items-center font-bold tracking-wide">
             <img src={marketActivity} className="w-3 h-3 mr-1" alt="" />
-            TOKENS WITH ${projectDetails?.projectName.toUpperCase()}
+            TOKENS WITH ${projectDetails?.projectName?.toUpperCase()}
           </div>
         ) : (
           <div className="_header py-2 bg-dark-50 rounded-tl-2xl rounded-tr-2xl"></div>

@@ -41,7 +41,7 @@ function ProjectDescription({
             content={<TokenActivityTable completeOrders={completeOrders} />}
           />
           <OuterContainer
-            title={`TOKENS WITH \$${(projectDetails?.projectName).toUpperCase()}`}
+            title={`TOKENS WITH \$${(projectDetails?.projectName)?.toUpperCase()}`}
             icon={marketActivity}
             activeOrders={activeOrders}
             content={<TokenListTable activeOrders={activeOrders} />}
