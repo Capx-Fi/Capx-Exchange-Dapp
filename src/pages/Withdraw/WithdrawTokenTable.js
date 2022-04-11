@@ -139,7 +139,7 @@ function WithdrawTokenTable({ filter, refetch }) {
     <>
       <div className="tokenListTableContainer phone:hidden tablet:block">
         <Table
-          dataSource={tokenList}
+          dataSource={loading ? [] : tokenList}
           locale={{
             emptyText: loading ? "Loading Tokens..." : "No Token Found",
           }}

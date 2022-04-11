@@ -49,7 +49,9 @@ function TradesScreen() {
     }
   }, [account, chainId]);
   const fetchTradeData = async (account) => {
+    setLoading(true);
     const orderList = await fetchTrades(account, exchangeURL);
+    setLoading(false);
     setTradesData(orderList);
     setResetTrade(orderList);
   };

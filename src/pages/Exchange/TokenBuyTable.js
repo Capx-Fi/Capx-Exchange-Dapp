@@ -92,7 +92,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
       <div className="tokenListTableContainer">
         <div>
           <Table
-            dataSource={tokenList}
+            dataSource={loading ? [] : tokenList}
             pagination={false}
             locale={{
               emptyText: loading ? "Loading Tokens..." : "No Token Found",

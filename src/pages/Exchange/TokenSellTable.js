@@ -130,7 +130,7 @@ function TokenSellTable({ filter, refresh }) {
     <>
       <div className="tokenListTableContainer">
         <Table
-          dataSource={tokenList}
+          dataSource={loading ? [] : tokenList}
           locale={{
             emptyText: loading ? "Loading Tokens..." : "No Token Found",
           }}

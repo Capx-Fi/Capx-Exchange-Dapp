@@ -27,7 +27,7 @@
         }
       }
       &_notfoundillustration {
-        @apply breakpoint:w-35v phone:w-55v;
+        @apply desktop:w-28v breakpoint:w-35v phone:w-55v;
       }
     }
     &_dashboardcontainer {
