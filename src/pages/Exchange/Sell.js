@@ -296,8 +296,8 @@ function SellScreen({
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
                   !ticker?.asset || ticker?.asset === "" || tokenApproval
-                    ? "pointer-events-none ring-dark-50"
-                    : "ring-success-color-500 "
+                    ? "pointer-events-none ring-success-color-500 opacity-50"
+                    : "ring-success-color-500"
                 } `}
               >
                 <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper">

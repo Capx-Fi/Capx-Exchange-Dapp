@@ -286,6 +286,12 @@ function BuyScreen({
               mode={mode}
             />
           )}
+          {warningCheck && tokenApproval && (
+            <WarningCard
+              text={`Tokens Approved! Please swap your tokens.`}
+              mode={mode}
+            />
+          )}
           {(!checkBuy?.["stableCoinLegal"] ||
             !checkBuy?.["DerivativeLegal"]) && (
             <WarningCard text={`INVALID INPUT`} />

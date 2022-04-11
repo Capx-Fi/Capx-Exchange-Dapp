@@ -2,10 +2,11 @@ import "./MobileTableBuy.scss";
 import DepositIcon from "../../assets/DepositIcon.svg";
 import marketActivity from "../../assets/marketActivity.svg";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function MobileTableBuy({
   tokenList,
+  projectDetails,
   loading,
   onChange,
   setBuyTicker,
@@ -13,13 +14,14 @@ function MobileTableBuy({
   navigateProject,
   isInfo,
 }) {
+  const ticker = useSelector((state) => state.exchange.projectBuyTicker);
   return (
     <>
       <div className="mobileTableBuy h-fit-content max-h-60v w-85v overflow-y-hidden">
         {isInfo ? (
           <div className="_header border border-dark-50 text-left pl-4 py-4 overflow-hidden bg-dark-300 rounded-tl-2xl rounded-tr-2xl text-tradeTitle text-10px flex items-center font-bold tracking-wide">
             <img src={marketActivity} className="w-3 h-3 mr-1" alt="" />
-            TOKENS WITH $CAPX
+            TOKENS WITH ${projectDetails?.projectName.toUpperCase()}
           </div>
         ) : (
           <div className="_header py-2 bg-dark-50 rounded-tl-2xl rounded-tr-2xl"></div>

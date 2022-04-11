@@ -12,7 +12,7 @@ import useWindowSize from "../../utils/windowSize";
 
 const { Column, ColumnGroup } = Table;
 
-function TokenListTable({ activeOrders, loading }) {
+function TokenListTable({ activeOrders, loading, projectDetails }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
 
   function onChange(pagination, filters, sorter, extra) {
@@ -93,6 +93,7 @@ function TokenListTable({ activeOrders, loading }) {
         <>
           {activeOrders && (
             <MobileTableBuy
+              projectDetails={projectDetails}
               tokenList={activeOrders}
               onChange={onChange}
               isInfo={true}

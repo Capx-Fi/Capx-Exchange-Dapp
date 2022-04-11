@@ -41,7 +41,7 @@ function ProjectDescription({
             content={<TokenActivityTable completeOrders={completeOrders} />}
           />
           <OuterContainer
-            title={"TOKENS WITH $CAPX"}
+            title={`TOKENS WITH \$${(projectDetails?.projectName).toUpperCase()}`}
             icon={marketActivity}
             activeOrders={activeOrders}
             content={<TokenListTable activeOrders={activeOrders} />}
@@ -62,8 +62,17 @@ function ProjectDescription({
               )
             }
           />
-          <MobileMarketActivity completeOrders={completeOrders} />
-          <TokenListTable activeOrders={activeOrders} loading={loading} />
+          
+          <MobileMarketActivity
+          completeOrders={completeOrders}
+          />
+          
+          <TokenListTable
+          projectDetails={projectDetails}
+          activeOrders={activeOrders} 
+          loading={loading} 
+          />
+
         </>
       )}
     </>
