@@ -7,7 +7,7 @@
     @apply tablet:mx-auto tablet:w-90v tablet:pr-0 pr-40 breakpoint:w-60v breakpoint:ml-12 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:w-90v;
   }
   &_rightcontainer {
-    @apply pl-4 phone:ml-0 phone:mx-4 phone:pl-0 tablet:mr-2 breakpoint:pr-16 upper:w-30v desktop:w-33v desktop:pr-16 upper:pr-16 breakpoint:-mr-3 desktop:mr-0 desktop:ml-4 breakpoint:w-33v breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
+    @apply pl-4 phone:ml-0 phone:mx-4 phone:pl-0 tablet:mr-2 breakpoint:pr-16 upper:w-30v desktop:w-33v desktop:pr-16 upper:pr-16 breakpoint:-mr-3 desktop:mr-0 desktop:ml-4 breakpoint:w-30v breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
     &_buyContainer {
       @apply border rounded-2xl flex flex-col border-dark-50 relative;
       background: linear-gradient(0deg, #19201d 0%, #151618 101.42%),
