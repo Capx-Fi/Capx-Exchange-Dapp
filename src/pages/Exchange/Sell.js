@@ -307,7 +307,7 @@ function SellScreen({
                     placeholder="0"
                     value={ticker?.price ? ticker?.price : ""}
                     onChange={(e) => setAmount(e.target.value)}
-                    warningText={ticker?.price <= 0 && "PRICE CANNOT BE ZERO"}
+                    warningText={ticker?.price < 0 && "PRICE CANNOT BE ZERO"}
                   />
                 </div>
               </div>
@@ -326,7 +326,13 @@ function SellScreen({
               />
             </div>
           </div>
-          {ticker?.price <= 0 && <WarningCard text={"PRICE CANNOT BE ZERO"} />}
+          {ticker?.price <= 0 && (
+            <WarningCard
+              text={`PRICE CANNOT BE ${
+                parseInt(ticker?.price) < 0 ? "NEGATIVE" : "ZERO"
+              }`}
+            />
+          )}
 
           <div className="exchangeScreen_rightcontainer_buyContainer_body_splitContainer">
             <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer">
