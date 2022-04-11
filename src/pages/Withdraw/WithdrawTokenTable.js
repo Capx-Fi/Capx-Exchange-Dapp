@@ -144,7 +144,7 @@ function WithdrawTokenTable({ filter, refetch }) {
             emptyText: loading ? "Loading Tokens..." : "No Token Found",
           }}
           pagination={false}
-          scroll={{ y: 500 }}
+          scroll={{ y: 430 }}
           onChange={onChange}
           onRow={(record) => {
             return {
