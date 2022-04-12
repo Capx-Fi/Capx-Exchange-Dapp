@@ -65,6 +65,7 @@ function ProjectDescription({
           
           <MobileMarketActivity
           completeOrders={completeOrders}
+          loading={loading}
           />
           
           <TokenListTable

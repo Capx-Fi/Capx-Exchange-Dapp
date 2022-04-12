@@ -150,7 +150,7 @@ function ProjectInfo({ match }) {
                     />
                   </>
                 ) : (
-                  <div className="w-auto phone:w-full tablet:px-14 tablet:py-7">
+                  <div className="w-auto phone:w-full tablet:px-14 tablet:py-7 phone:mb-10">
                     <BuyScreen
                       buyModalOpen={buyModalOpen}
                       setBuyModalOpen={setBuyModalOpen}
