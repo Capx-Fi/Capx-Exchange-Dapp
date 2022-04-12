@@ -56,8 +56,8 @@ function LoadingColumn() {
 
         <div className="_detailsContainer flex ml-2 my-2 items-center">
           <div className="text-caption-3 text-tradeTitle pr-2">
-            <p className="_assetQuantityTitle">Quantity</p>
-            <p className="_assetPriceTitle">Price</p>
+            <p className="_assetQuantityTitle uppercase font-bold">Quantity</p>
+            <p className="_assetPriceTitle uppercase font-bold">Price</p>
           </div>
           <div className="ml-2">
             <p className="_assetQuantityValue text-caption-3 w-16 text-dark-50 bg-dark-50 animate-pulse">
@@ -104,8 +104,8 @@ function Column({ token, setSellTicker, setBalance, navigateProject }) {
 
         <div className="_detailsContainer flex ml-2 my-2 items-center">
           <div className="text-caption-3 text-tradeTitle pr-2">
-            <p className="_assetQuantityTitle">Quantity</p>
-            <p className="_assetPriceTitle">Price</p>
+            <p className="_assetQuantityTitle uppercase font-bold">Quantity</p>
+            <p className="_assetPriceTitle uppercase font-bold">Price</p>
           </div>
           <div className="ml-2">
             <p className="_assetQuantityValue font-bold tracking-tighter text-caption-2">
