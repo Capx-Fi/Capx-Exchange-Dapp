@@ -37,7 +37,7 @@ function MobileTableSell({
 
 function Button() {
   return (
-    <div className="border cursor-pointer border-grayLabel my-1 py-2 rounded-lg flex flex-row items-center justify-center w-fit-content px-4 mx-auto">
+    <div className="border cursor-pointer border-grayLabel my-1 py-2 rounded-lg flex flex-row items-center justify-center w-fit-content px-4 ml-auto">
       <img src={SellIcon} alt="deposit" className="mr-2" />
       <p className="text-error-color-400 uppercase font-bold text-caption-2">
         SELL
@@ -83,6 +83,7 @@ function LoadingColumn() {
 
 function Column({ token, setSellTicker, setBalance, navigateProject }) {
   const dispatch = useDispatch();
+  console.log(token.expiryTime)
   return (
     <div
       className="_card flex justify-between py-3 px-4 mx-0 border border-dark-50 border-2 font-bold"
@@ -121,8 +122,10 @@ function Column({ token, setSellTicker, setBalance, navigateProject }) {
           </div>
         </div>
       </div>
-      <div className="_rightContainer block mt-8">
-        {/* <p className="_assetExpiry text-white font-regular text-10px mt-2 mb-4">{token?.expiryTime?.substring(0, token?.expiryTime?.length - 9)}</p> */}
+      <div className="_rightContainer ">
+      <p className="_assetExpiry tracking-wider uppercase font-bold text-right text-white text-10px mt-2 mb-4">
+        {token?.unlockDate}
+      </p>
         <Button />
       </div>
     </div>
