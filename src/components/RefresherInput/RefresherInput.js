@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import WarningCard from '../WarningCard/WarningCard';
+import { Tooltip, withStyles } from "@material-ui/core";
 
 import './RefresherInput.scss';
 
@@ -17,6 +18,17 @@ function RefresherInput({
   warningRedirect,
   type,
 }) {
+  const HtmlTooltip = withStyles((theme) => ({
+    tooltip: {
+      background: "#2A383C",
+      color: "#F1FAF2",
+      maxWidth: 800,
+      fontSize: theme.typography.pxToRem(12),
+      borderRadius: "4px",
+      zIndex: 100,
+    },
+  }))(Tooltip);
+  console.log(balance)
   return (
     <>
       <div
@@ -64,7 +76,29 @@ function RefresherInput({
             </div>
             <div className='refresherInput_inputContainer_balanceContainer_value'>
               {' '}
-              {balance}
+              {balance?.length > 10 ? (
+              <HtmlTooltip
+              arrow
+              placement="bottom-center"
+              title={
+              <React.Fragment className="flex justify-between">
+                <span className="flex justify-between items-center font-bold pr-2">
+                  {balance ? balance : '0'}
+                </span>
+              </React.Fragment>
+              }
+              >
+              <div>
+              {balance?.length > 10 
+              ? balance.substring(0, 10) + '...' 
+              : balance}
+              </div>
+              </HtmlTooltip>
+              ) : (
+                <p>
+                {balance}
+                </p>
+              )}
             </div>
           </div>
         )}
