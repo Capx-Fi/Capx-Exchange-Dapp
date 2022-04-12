@@ -21,7 +21,7 @@ const ToggleSwitch = ({ id }) => {
             }}
           />
           <div
-            className={`flex  border bg-dark-500 border-grayLabel flex-row outerDiv rounded-xl breakpoint:rounded-xl tablet:rounded-md phone:rounded-md justify-around`}
+            className={`flex  border bg-dark-500 border-grayLabel flex-row outerDiv rounded-xl breakpoint:rounded-xl tablet:rounded-md phone:rounded-xl justify-around`}
           >
             <p
               className={`p-2 breakpoint:p-2 tablet:p-1 font-bold z-20 breakpoint:text-caption-1 tablet:text-caption-3 phone:text-caption-4 phone:p-2 ${

@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import WithdrawIcon from "../../assets/WithdrawIcon.svg";
+import BuyIcon from "../../assets/buy.svg";
 import { setWithdrawTicker } from "../../redux/actions/withdraw";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 
@@ -120,7 +120,8 @@ function LoadingColumn() {
 function Button() {
   return (
     <div className="border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto">
-      <img src={WithdrawIcon} alt="deposit" className="mr-2" />
+      <img src={BuyIcon} alt="deposit" className="mr-2 w-4" />
+
       <p className="text-success-color-400 uppercase font-bold text-caption-2">
         WITHDRAW
       </p>

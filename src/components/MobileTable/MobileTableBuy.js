@@ -49,7 +49,7 @@ function MobileTableBuy({
 
 function Button() {
   return (
-    <div className="border cursor-pointer border-grayLabel my-1 py-2 rounded-lg flex flex-row items-center justify-center w-fit-content px-4 mx-auto">
+    <div className="border cursor-pointer border-grayLabel my-1 py-2 rounded-lg flex flex-row items-center justify-center w-fit-content px-4 ml-auto">
       <img src={DepositIcon} alt="deposit" className="mr-2" />
       <p className="text-success-color-400 uppercase font-bold text-caption-2">
         BUY
@@ -97,7 +97,7 @@ function Column({ token, setBuyTicker, setBalance, navigateProject }) {
   const dispatch = useDispatch();
   return (
     <div
-      className="_card flex justify-between py-3 px-4 mx-0 border-dark-50 border-b-2"
+      className="_card flex justify-between py-3 px-4 mx-0 border-dark-50 border-b-2 font-bold uppercase"
       onClick={() => {
         dispatch(setBuyTicker(token));
         setBalance(token?.balance);

@@ -185,7 +185,7 @@ module.exports = {
         "62v": "60vh",
       },
       screens: {
-        phone: "375px",
+        phone: "320px",
         tablet: "768px",
         laptop: "1024px",
         breakpoint: "1280px",

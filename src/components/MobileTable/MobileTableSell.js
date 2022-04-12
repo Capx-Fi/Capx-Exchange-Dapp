@@ -85,7 +85,7 @@ function Column({ token, setSellTicker, setBalance, navigateProject }) {
   const dispatch = useDispatch();
   return (
     <div
-      className="_card flex justify-between py-3 px-4 mx-0 border border-dark-50 border-2"
+      className="_card flex justify-between py-3 px-4 mx-0 border border-dark-50 border-2 font-bold"
       onClick={() => {
         dispatch(setSellTicker(token));
         dispatch(setBalance(token?.balance));
@@ -121,7 +121,7 @@ function Column({ token, setSellTicker, setBalance, navigateProject }) {
           </div>
         </div>
       </div>
-      <div className="_rightContainer">
+      <div className="_rightContainer block mt-8">
         {/* <p className="_assetExpiry text-white font-regular text-10px mt-2 mb-4">{token?.expiryTime?.substring(0, token?.expiryTime?.length - 9)}</p> */}
         <Button />
       </div>
