@@ -15,8 +15,8 @@ function MobileWithdraw({
   return (
     <>
       <div className="mobileWithdrawTable h-60v w-85v overflow-y-auto">
-        <div className="_header py-2 bg-dark-50 rounded-tl-2xl rounded-tr-2xl"></div>
-        <div className="_body border border-dark-50 rounded-br-2xl rounded-bl-2xl h-fit-content max-h-55v overflow-y-auto">
+        <div className="_header py-2 bg-dark-50 rounded-tl-md rounded-tr-md"></div>
+        <div className="_body border border-dark-50 rounded-br-md rounded-bl-md h-fit-content max-h-55v overflow-y-auto">
           {loading
             ? [0, 1, 2, 3, 4].map(() => <LoadingColumn />)
             : tokenList.map((token) => (
@@ -45,7 +45,7 @@ function Column({
   return (
     <>
       <div
-        className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-b-2"
+        className="_card flex justify-between py-3 px-4 mx-0 border-dark-50 border-b-2"
         onClick={() => {
           dispatch(setWithdrawTicker(token));
           dispatch(setAssetBalance(token.quanitity));
@@ -53,12 +53,14 @@ function Column({
       >
         <div className="_leftContainer text-left text-white">
           <p
-            className="_assetName max-w-30 bg-dark-300 p-2 rounded-full px-3 border-2 border-dark-50 text-caption-2 text-center"
+            className="_assetName font-bold uppercase tracking-wider max-w-30 bg-dark-300 p-2 rounded-lg px-3 border border-dark-50 text-caption-2 text-center"
             onClick={() =>
               isUSDT ? console.log("USDT") : navigateProject(token.assetID)
             }
           >
-            {token.asset.length > 8 ? token.asset.slice(0, 8)+"..." : token.asset}
+            {token.asset.length > 8
+              ? token.asset.slice(0, 8) + "..."
+              : token.asset}
           </p>
 
           <div className="_detailsContainer flex flex-row ml-2 my-2 items-center">
@@ -66,7 +68,7 @@ function Column({
               <p className="_assetQuantityTitle">Quantity</p>
             </div>
             <div className="ml-2">
-              <p className="_assetQuantityValue text-caption-2">
+              <p className="_assetQuantityValue font-bold tracking-tighter text-caption-2">
                 {convertToInternationalCurrencySystem(token.quantity)}
               </p>
             </div>
@@ -74,7 +76,7 @@ function Column({
         </div>
 
         <div className="_rightContainer">
-          <p className="_assetExpiry text-white font-regular text-10px mt-2 mb-3">
+          <p className="_assetExpiry tracking-wider font-bold uppercase text-right text-white font-regular text-10px mt-2 mb-3">
             {token.unlockDate ? token.unlockDate : "N/A"}
           </p>
           <Button />
@@ -88,7 +90,7 @@ function LoadingColumn() {
   return (
     <div className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-b-2">
       <div className="_leftContainer text-left text-white ">
-        <p className="_assetName  p-2 w-full text-dark-50 bg-dark-50 animate-pulse rounded-full px-3 border-2 border-dark-50 text-caption-2 text-center">
+        <p className="_assetName  p-2 w-full text-dark-50 bg-dark-50 animate-pulse rounded-lg px-3 border border-dark-50 text-caption-2 text-center">
           ...
         </p>
 
@@ -119,7 +121,6 @@ function Button() {
   return (
     <div className="border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto">
       <img src={WithdrawIcon} alt="deposit" className="mr-2" />
-
       <p className="text-success-color-400 uppercase font-bold text-caption-2">
         WITHDRAW
       </p>

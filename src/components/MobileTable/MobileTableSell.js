@@ -13,8 +13,8 @@ function MobileTableSell({
   return (
     <>
       <div className="mobileTableBuy h-fit-content max-h-60v w-85v overflow-y-auto">
-        <div className="_header py-2 bg-dark-50 rounded-tl-2xl rounded-tr-2xl"></div>
-        <div className="_body border border-dark-50 rounded-br-2xl rounded-bl-2xl h-fit-content max-h-55v overflow-y-auto">
+        <div className="_header py-2 bg-dark-50 rounded-tl-md rounded-tr-md"></div>
+        <div className="_body border border-dark-50 rounded-br-md rounded-bl-md h-fit-content max-h-55v overflow-y-auto">
           {loading ? (
             [0, 1, 2, 3, 4].map(() => <LoadingColumn />)
           ) : tokenList.length > 0 ? (
@@ -50,7 +50,7 @@ function LoadingColumn() {
   return (
     <div className="_card flex justify-between py-3 px-4 mx-0  border-dark-50 border-b-2">
       <div className="_leftContainer text-left text-white ">
-        <p className="_assetName  p-2 w-full text-dark-50 bg-dark-50 animate-pulse rounded-full px-3 border-2 border-dark-50 text-caption-2 text-center">
+        <p className="_assetName  p-2 w-full text-dark-50 bg-dark-50 animate-pulse rounded-lg px-3 border border-dark-50 text-caption-2 text-center">
           ...
         </p>
 
@@ -97,7 +97,7 @@ function Column({ token, setSellTicker, setBalance, navigateProject }) {
             e.stopPropagation();
             navigateProject(token.assetID);
           }}
-          className="_assetName bg-dark-300 p-2 rounded-full px-3 border border-2 border-dark-50 text-caption-2 text-center"
+          className="_assetName font-bold uppercase tracking-wider bg-dark-300 p-2 rounded-lg px-3 border border-dark-50 text-caption-2 text-center"
         >
           {token.asset}
         </p>
@@ -108,10 +108,10 @@ function Column({ token, setSellTicker, setBalance, navigateProject }) {
             <p className="_assetPriceTitle">Price</p>
           </div>
           <div className="ml-2">
-            <p className="_assetQuantityValue text-caption-2">
+            <p className="_assetQuantityValue font-bold tracking-tighter text-caption-2">
               {convertToInternationalCurrencySystem(token?.quantity)}
             </p>
-            <p className="_assetPriceValue text-caption-2">
+            <p className="_assetPriceValue font-bold tracking-tighter text-caption-2">
               {new Intl.NumberFormat("en-IN", {
                 style: "currency",
                 currency: "USD",
