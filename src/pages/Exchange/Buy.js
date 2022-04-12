@@ -290,6 +290,7 @@ function BuyScreen({
             <WarningCard
               text={`Tokens Approved! Please swap your tokens.`}
               mode={mode}
+              isApproved={true}
             />
           )}
           {(!checkBuy?.["stableCoinLegal"] ||

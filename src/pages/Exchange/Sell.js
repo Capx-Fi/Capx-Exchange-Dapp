@@ -4,7 +4,7 @@ import { hideSideNav, showSideNav } from "../../redux/actions/sideNav";
 import { useDispatch, useSelector } from "react-redux";
 import BuyIcon from "../../assets/buy.svg";
 import crossIcon from "../../assets/close-cyan.svg";
-import { setSellTicker } from "../../redux/actions/exchange";
+import { setSellTicker, setTickerBalance } from "../../redux/actions/exchange";
 import BigNumber from "bignumber.js";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
 import { CONTRACT_ABI_ERC20 } from "../../contracts/SampleERC20";
@@ -112,6 +112,7 @@ function SellScreen({
   };
   const setSellNull = () => {
     dispatch(setSellTicker(null));
+    dispatch(setTickerBalance(0));
   };
   const checkQuantityUpdate = (value) => {
     const { price, quantity } = ticker;
