@@ -57,7 +57,6 @@ function LoadingColumn() {
         <div className="_detailsContainer flex ml-2 my-2 items-center">
           <div className="text-caption-3 text-tradeTitle pr-2">
             <p className="_assetQuantityTitle uppercase font-bold">Quantity</p>
-            <p className="_assetPriceTitle uppercase font-bold">Price</p>
           </div>
           <div className="ml-2">
             <p className="_assetQuantityValue text-caption-3 w-16 text-dark-50 bg-dark-50 animate-pulse">
@@ -89,7 +88,7 @@ function Column({ token, setSellTicker, setBalance, navigateProject }) {
       className="_card flex justify-between py-3 px-4 mx-0 border border-dark-50 border-2 font-bold"
       onClick={() => {
         dispatch(setSellTicker(token));
-        dispatch(setBalance(token?.balance));
+        dispatch(setBalance(token?.maxQuantity));
       }}
     >
       <div className="_leftContainer text-left text-white">
@@ -106,18 +105,10 @@ function Column({ token, setSellTicker, setBalance, navigateProject }) {
         <div className="_detailsContainer flex ml-2 my-2 items-center">
           <div className="text-caption-3 text-tradeTitle pr-2">
             <p className="_assetQuantityTitle uppercase font-bold">Quantity</p>
-            <p className="_assetPriceTitle uppercase font-bold">Price</p>
           </div>
           <div className="ml-2">
             <p className="_assetQuantityValue font-bold tracking-tighter text-caption-2">
               {convertToInternationalCurrencySystem(token?.quantity)}
-            </p>
-            <p className="_assetPriceValue font-bold tracking-tighter text-caption-2">
-              {new Intl.NumberFormat("en-IN", {
-                style: "currency",
-                currency: "USD",
-                maximumSignificantDigits: 6,
-              }).format(Number(token?.price))}
             </p>
           </div>
         </div>
