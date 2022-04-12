@@ -30,7 +30,7 @@ export function convertToInternationalCurrencySystem(labelValue) {
     ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(3) + "M"
     : // Three Zeroes for Thousands
     Math.abs(Number(labelValue)) >= 1.0e3
-    ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(1) + "K"
+    ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(2) + "K"
     : // In decimal value.
     Math.abs(Number(labelValue)) <= 1.0e-3
     ? Number(labelValue)
