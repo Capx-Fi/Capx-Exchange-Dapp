@@ -95,7 +95,7 @@ function ProjectInfo({ match }) {
             className={`main-container ${
               ticker &&
               ticker?.asset !== "" &&
-              "border border-dark-50 rounded-2xl block breakpoint:border-0"
+              "border border-dark-50 rounded-2xl block phone:border-0"
             }`}
           >
             {windowWidth > 1279 ? (
