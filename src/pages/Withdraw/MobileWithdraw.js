@@ -53,7 +53,7 @@ function Column({
       >
         <div className="_leftContainer text-left text-white">
           <p
-            className="_assetName font-bold uppercase tracking-wider max-w-30 bg-dark-300 p-2 rounded-lg px-3 border border-dark-50 text-caption-2 text-center"
+            className="_assetName font-bold uppercase tracking-wider w-fit-content max-w-30 bg-dark-300 p-2 rounded-lg px-3 border border-dark-50 text-caption-2 text-center"
             onClick={() =>
               isUSDT ? console.log("USDT") : navigateProject(token.assetID)
             }

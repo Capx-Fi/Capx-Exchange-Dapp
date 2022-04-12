@@ -98,7 +98,7 @@ function Column({ token, setSellTicker, setBalance, navigateProject }) {
             e.stopPropagation();
             navigateProject(token.assetID);
           }}
-          className="_assetName font-bold uppercase tracking-wider bg-dark-300 p-2 rounded-lg px-3 border border-dark-50 text-caption-2 text-center"
+          className="_assetName font-bold uppercase tracking-wider w-fit-content max-w-30 bg-dark-300 p-2 rounded-lg px-3 border border-dark-50 text-caption-2 text-center"
         >
           {token.asset}
         </p>
