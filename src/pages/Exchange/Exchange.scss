@@ -162,7 +162,7 @@
   &_header {
     @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v desktop:w-62v phone:w-full;
     &_titlecontainer {
-      @apply flex flex-col items-start phone:pr-2 tablet:pr-0 tablet:pt-2;
+      @apply flex flex-col items-start phone:pr-8 tablet:pr-0 tablet:pt-2;
       &_title {
         @apply text-subheading font-medium text-white upper:text-subheading desktop:text-paragraph-2 breakpoint:text-paragraph-2 tablet:text-caption-1 phone:font-normal phone:text-caption-2;
       }

@@ -27,7 +27,7 @@
       @apply rounded-md -mb-14;
     }
     &_assetPairContainer {
-      @apply flex rounded-2xl border border-dark-50 phone:h-20 z-50 tablet:h-28 justify-between;
+      @apply flex rounded-2xl border border-dark-50 phone:h-20 phone:pt-3 phone:pb-5 z-50 tablet:h-28 justify-between;
       background: radial-gradient(
         143.33% 143.33% at 82.41% -4.96%,
         rgba(132, 214, 164, 0.1) 0%,
@@ -37,7 +37,7 @@
         @apply flex flex-col justify-center items-start px-12 w-80 phone:px-0 phone:pl-3 phone:pr-0 tablet:pl-10 desktop:pr-0;
       }
       &_title {
-        @apply text-caption-2 text-grayLabel font-bold phone:pb-1 desktop:text-caption-2 breakpoint:text-caption-3 tablet:text-caption-3 phone:text-10px;
+        @apply text-caption-2 text-grayLabel font-bold phone:pb-1 desktop:text-caption-2 breakpoint:text-caption-3 tablet:text-caption-3 phone:text-10px phone:uppercase tablet:capitalize;
       }
       &_value {
         @apply text-paragraph-1 text-primary-green-100 font-normal flex upper:text-paragraph-1 desktop:text-caption-1 tablet:text-caption-2 phone:text-caption-3;
@@ -55,13 +55,13 @@
         @apply h-full bg-dark-50 w-0.5 mx-12 phone:px-0 phone:mx-0 phone:mr-4 tablet:mx-12;
       }
       &_status {
-        @apply flex flex-col justify-center items-center px-6 phone:px-0 tablet:px-6 tablet:ml-12;
+        @apply flex flex-col justify-center items-center px-6 phone:p-0 tablet:px-6 tablet:ml-12;
         &_value {
           @apply w-28 text-caption-1 text-primary-green-100 bg-opacity-20 font-normal rounded-2xl text-center flex justify-center items-center pb-0.5 upper:text-caption-1 desktop:text-caption-2 breakpoint:text-caption-3 phone:mr-4 phone:text-10px phone:w-20 phone:h-6 phone:mt-2 tablet:w-28 tablet:text-caption-3 tablet:h-8;
         }
       }
       &_chevron {
-        @apply flex justify-center items-center px-6 phone:px-2 phone:mt-2 tablet:mt-0 tablet:px-6;
+        @apply flex justify-center items-center px-6 phone:pl-0 phone:pr-4 phone:mt-2 tablet:mt-0 tablet:px-6;
       }
     }
   }
