@@ -181,7 +181,7 @@ function BuyScreen({
                 src={crossIcon}
                 alt="close"
                 onClick={() => dispatch(setProjectBuyTicker(null))}
-                className="right-10 top-6 cursor-pointer h-6"
+                className="absolute right-8 h-7"
               />
             ) : null}
           </div>

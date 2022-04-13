@@ -78,7 +78,7 @@
           &_inputContainer {
             @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
             &_lockWrapper {
-              @apply flex justify-center items-center px-4;
+              @apply flex justify-center items-center pr-4 pl-2;
               &_icon {
                 @apply h-5 w-5;
               }
