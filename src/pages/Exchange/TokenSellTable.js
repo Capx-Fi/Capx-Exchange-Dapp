@@ -126,8 +126,10 @@ function TokenSellTable({ filter, refresh }) {
     const projectAddress = await fetchProjectID(address, wrappedURL);
     history.push(`/info/${projectAddress}`);
   };
+  const windowWidth = useWindowSize().width;
   return (
-    <>
+    <div>
+    {windowWidth > 767 ? (
       <div className="tokenListTableContainer">
         <Table
           dataSource={loading ? [] : tokenList}
@@ -205,9 +207,8 @@ function TokenSellTable({ filter, refresh }) {
             }}
           />
         </Table>
-      </div>
-
-      <div className="tablet:hidden">
+      </div> ) : (
+      <div>
         <MobileTableSell
           tokenList={tokenList}
           loading={loading}
@@ -216,8 +217,8 @@ function TokenSellTable({ filter, refresh }) {
           setBalance={setTickerBalance}
           navigateProject={navigateProject}
         />
-      </div>
-    </>
+      </div> )}
+    </div>
   );
 }
 

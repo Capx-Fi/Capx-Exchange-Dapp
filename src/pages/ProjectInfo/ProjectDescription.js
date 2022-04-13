@@ -19,7 +19,7 @@ function ProjectDescription({
   const windowWidth = useWindowSize().width;
   return (
     <>
-      {windowWidth > 768 ? (
+      {windowWidth > 767 ? (
         <>
           <OuterContainer
             title={"PROJECT DESCRIPTION"}

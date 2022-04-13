@@ -21,7 +21,7 @@ function WarningCard({ text, redirect, mode, isApproved }) {
         ) : (<img src={infoIcon} className="phone:h-5 breakpoint:h-5 upper:h-6" alt="info icon"/>)}
       </div>
       <div className="text-caption-3 upper:text-caption-2 text-left breakpoint:ml-2 font-semibold px-1 tablet:px-2">
-        {windowWidth < 769 ? text.substring(0,14).concat("...") : text}
+        {windowWidth < 768 ? text.substring(0,14).concat("...") : text}
       </div>
       {/* <div onClick={() => history.push(redirect)}>
         <img src={DoubleArrow} />
@@ -35,7 +35,7 @@ function WarningCard({ text, redirect, mode, isApproved }) {
         ) : (<img src={WarningIcon} className="phone:h-5 breakpoint:h-5 upper:h-6" alt="warning icon"/>)}
       </div>
       <div className="text-caption-3 upper:text-caption-2 text-left breakpoint:ml-2 font-semibold px-1 tablet:px-2">
-        {windowWidth < 769 ? text.substring(0,14).concat("...") : text}
+        {windowWidth < 768 ? text.substring(0,14).concat("...") : text}
       </div>
       {/* <div onClick={() => history.push(redirect)}>
         <img src={DoubleArrow} />

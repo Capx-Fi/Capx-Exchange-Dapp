@@ -22,7 +22,7 @@ function TokenListTable({ activeOrders, loading, projectDetails }) {
   const windowWidth = useWindowSize().width;
   return (
     <>
-      {windowWidth > 768 ? (
+      {windowWidth > 767 ? (
         <Table
           dataSource={activeOrders}
           pagination={false}

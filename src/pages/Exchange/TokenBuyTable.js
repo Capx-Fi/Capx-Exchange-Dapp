@@ -87,8 +87,10 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
     const projectAddress = await fetchProjectID(address, wrappedURL);
     history.push(`/info/${projectAddress}`);
   };
+  const windowWidth = useWindowSize().width;
   return (
-    <>
+    <div>
+    {windowWidth > 767 ? (
       <div className="tokenListTableContainer">
         <div>
           <Table
@@ -187,8 +189,8 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
             />
           </Table>
         </div>
-      </div>
-      <div className="tablet:hidden">
+      </div> ) : (
+      <div>
         <MobileTableBuy
           tokenList={tokenList}
           loading={loading}
@@ -198,7 +200,8 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
           setBalance={setBalance}
         />
       </div>
-    </>
+      )}
+    </div>
   );
 }
 
