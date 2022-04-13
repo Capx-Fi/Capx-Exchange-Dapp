@@ -14,7 +14,7 @@
         @apply text-heading-2 leading-heading-2 tablet:text-display-1 tablet:leading-display-1 font-bold laptop:text-display-2 laptop:leading-display-2 desktop:text-display-1 desktop:leading-display-1 desktop:font-semibold w-10/12 tablet:w-11/12 text-center tablet:text-left;
       }
       &_subtitle {
-        @apply py-6 desktop:pt-4 desktop:pb-8 text-caption-2 leading-caption-2 tablet:text-subheading tablet:leading-subheading laptop:text-paragraph-2 laptop:leading-paragraph-2 desktop:text-paragraph-1 desktop:leading-paragraph-1 tablet:text-caption-3 phone:text-10px text-center font-medium;
+        @apply py-6 desktop:pt-4 desktop:pb-8 text-caption-2 leading-caption-2 tablet:text-subheading tablet:leading-subheading laptop:text-paragraph-2 laptop:leading-paragraph-2 desktop:text-paragraph-1 desktop:leading-paragraph-1 tablet:text-caption-3 phone:text-caption-2 text-center font-medium;
       }
       &_button {
         @apply rounded-xl flex px-3 py-2 tablet:px-5 tablet:py-3 tablet:mb-16 laptop:mb-0 laptop:px-6 laptop:py-5 items-center justify-center text-center w-fit-content cursor-pointer;
