@@ -138,7 +138,7 @@
           }
         }
         &_expiryDetailsContainer {
-          @apply text-grayLabel text-caption-2 phone:text-caption-3 tablet:text-caption-2 font-bold text-left py-4;
+          @apply text-tradeTitle text-caption-2 phone:text-caption-3 tablet:text-caption-2 font-bold text-left py-4;
         }
         &_swapButton {
           background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
@@ -181,8 +181,10 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+
 .react-date-picker {
-  @apply h-14 w-full border-none text-grayLabel;
+  @apply h-14 w-full border-none text-white;
   &__calendar {
     border-radius: 16px !important;
   }
@@ -193,7 +195,7 @@ input[type="number"] {
     @apply pl-2;
     text-align: left !important;
     & > input {
-      @apply text-grayLabel;
+      @apply text-white;
       &:focus {
         outline: none !important;
       }
@@ -201,8 +203,8 @@ input[type="number"] {
   }
 }
 .ant-picker-input > input {
-  @apply w-full border-none text-grayLabel;
-  color: rgba(74, 98, 105, 1) !important;
+  @apply w-full border-none text-white;
+  color: #fff !important;
 }
 .ant-picker-panel-container {
   @apply bg-dark-400;
@@ -210,7 +212,7 @@ input[type="number"] {
   color: rgba(241, 250, 242, 0.3) !important;
 }
 .ant-picker-time-panel-cell {
-  @apply text-grayLabel;
+  @apply text-white;
   &:hover {
     background: #2a383c !important;
   }
