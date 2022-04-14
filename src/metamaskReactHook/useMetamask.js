@@ -1,3 +1,4 @@
+import detectEthereumProvider from "@metamask/detect-provider";
 import { useContext, useEffect, useRef } from "react";
 import { MetaStateContext } from "./store";
 
@@ -25,7 +26,7 @@ const useMetamask = () => {
   const { state, dispatch } = useContext(MetaStateContext);
   const _isMounted = useRef(true);
   const _isConnectCalled = useRef(false);
-  const provider = window.ethereum;
+  const provider = detectEthereumProvider();
   useEffect(() => {
     return () => {
       _isMounted.current = false;
