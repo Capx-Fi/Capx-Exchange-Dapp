@@ -15,7 +15,22 @@ function MetamaskModal() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const { error } = useWeb3React();
-  const isMetamask = window.ethereum && window.ethereum.isMetaMask;
+  const isMetamask = () => {if(window.ethereum && window.ethereum.isMetaMask) return true; else {window.addEventListener('ethereum#initialized', () => {return true}, {once: true, timeout: 2500}); return false}};
+  // if(window.ethereum) {
+  //   handleEthereum()
+  //   } else {
+  //     window.addEventListener('ethereum#initialized', handleEthereum, {
+  //       once: true,
+  //     });
+    
+  //     // If the event is not dispatched by the end of the timeout,
+  //     // the user probably doesn't have MetaMask installed.
+  //     setTimeout(handleEthereum, 3000); // 3 seconds
+  //   }
+  
+  //   function handleEthereum() {
+  //     return(window.ethereum && window.ethereum.isMetaMask);
+  //   }
   const unsupportedChainIdError =
     error && error instanceof UnsupportedChainIdError;
   async function connect() {
