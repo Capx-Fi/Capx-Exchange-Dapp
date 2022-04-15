@@ -3,6 +3,7 @@ import { time } from "highcharts";
 import moment from "moment";
 import { CONTRACT_ABI_ERC20 } from "../contracts/SampleERC20";
 import Web3 from "web3";
+import useWindowSize from "./windowSize";
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
@@ -32,11 +33,13 @@ export const createOrder = async (
   account,
   ticker,
   checkSell,
+  sellModalStatus,
   setSellModalStatus,
   setSellModalOpen,
   CHAIN_USDT_CONTRACT_ADDRESS,
   setSellNull
 ) => {
+  // const windowWidth = useWindowSize.width();
   setSellModalOpen(true);
   let totalAmount = new BigNumber(ticker.quantity).multipliedBy(
     Math.pow(10, ticker.tokenDecimal)

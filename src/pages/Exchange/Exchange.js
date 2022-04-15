@@ -18,6 +18,9 @@ import TokenBuyTable from "./TokenBuyTable";
 import MetamaskModal from "../../components/Modals/MetamaskModal/MetamaskModal";
 import { setBuyTicker, setSellTicker } from "../../redux/actions/exchange";
 import useWindowSize from "../../utils/windowSize";
+import ApproveModal from "../../components/Modals/VestAndApproveModal/ApproveModal";
+import SellModal from "../../components/Modals/VestAndApproveModal/SellModal";
+import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
 const format = "HH:mm";
 
 function ExchangeScreen({ match }) {
@@ -37,6 +40,9 @@ function ExchangeScreen({ match }) {
   const [approveModalOpen, setApproveModalOpen] = useState(false);
   const [sellModalOpen, setSellModalOpen] = useState(false);
   const [buyModalOpen, setBuyModalOpen] = useState(false);
+  const [approveModalStatus, setApproveModalStatus] = useState("");
+  const [sellModalStatus, setSellModalStatus] = useState("");
+  const [buyModalStatus, setBuyModalStatus] = useState("");
   const [refresh, setRefresh] = useState(false);
 
   var mode = useSelector((state) => state.exchange.exchangeMode);
@@ -59,8 +65,23 @@ function ExchangeScreen({ match }) {
   };
 
   const windowWidth = useWindowSize().width;
+  const updateSellModalStatus = (status) => {
+    setSellModalStatus(status);
+    }  
   return (
     <>
+      <ApproveModal
+        open={approveModalOpen}
+        setOpen={setApproveModalOpen}
+        approveModalStatus={approveModalStatus}
+        setApproveModalStatus={setApproveModalStatus}
+      />
+      <SellModal
+        open={sellModalOpen}
+        setOpen={sellModalOpen}
+        sellModalStatus={sellModalStatus}
+      />
+      <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus} />
       {!active ? (
         <MetamaskModal />
       ) : (
@@ -110,6 +131,10 @@ function ExchangeScreen({ match }) {
                   setSellModalOpen={setSellModalOpen}
                   approveModalOpen={approveModalOpen}
                   setApproveModalOpen={setApproveModalOpen}
+                  setApproveModalStatus={setApproveModalStatus}
+                  setSellModalStatus={setSellModalStatus}
+                  sellModalStatus={sellModalStatus}
+                  approveModalStatus={approveModalStatus}
                   refresh={refresh}
                   setRefresh={setRefresh}
                 />
@@ -125,6 +150,10 @@ function ExchangeScreen({ match }) {
                   setBuyModalOpen={setBuyModalOpen}
                   approveModalOpen={approveModalOpen}
                   setApproveModalOpen={setApproveModalOpen}
+                  setApproveModalStatus={setApproveModalStatus}
+                  setBuyModalStatus={setBuyModalStatus}
+                  buyModalStatus={buyModalStatus}
+                  approveModalStatus={approveModalStatus}
                   refresh={refresh}
                   setRefresh={setRefresh}
                 />
@@ -186,6 +215,11 @@ function ExchangeScreen({ match }) {
                         setSellModalOpen={setSellModalOpen}
                         approveModalOpen={approveModalOpen}
                         setApproveModalOpen={setApproveModalOpen}
+                        setApproveModalStatus={setApproveModalStatus}
+                        setSellModalStatus={setSellModalStatus}
+                        sellModalStatus={sellModalStatus}
+                        approveModalStatus={approveModalStatus}
+                        updateSellModalStatus={updateSellModalStatus}
                         refresh={refresh}
                         setRefresh={setRefresh}
                       />
@@ -206,6 +240,10 @@ function ExchangeScreen({ match }) {
                       setBuyModalOpen={setBuyModalOpen}
                       approveModalOpen={approveModalOpen}
                       setApproveModalOpen={setApproveModalOpen}
+                      setApproveModalStatus={setApproveModalStatus}
+                      setBuyModalStatus={setBuyModalStatus}
+                      buyModalStatus={buyModalStatus}
+                      approveModalStatus={approveModalStatus}
                       refresh={refresh}
                       setRefresh={setRefresh}
                     />

@@ -33,6 +33,8 @@ import {
   getExchangeContractAddress,
   getUsdtContractAddress,
 } from "../../constants/getChainConfig";
+import SelectInput from "@material-ui/core/Select/SelectInput";
+import useWindowSize from "../../utils/windowSize";
 const format = "HH:mm";
 const currentDate = new Date();
 BigNumber.config({
@@ -45,6 +47,10 @@ function SellScreen({
   setSellModalOpen,
   approveModalOpen,
   setApproveModalOpen,
+  setApproveModalStatus,
+  setSellModalStatus,
+  approveModalStatus,
+  sellModalStatus,
   refresh,
   setRefresh,
 }) {
@@ -64,12 +70,11 @@ function SellScreen({
     CHAIN_USDT_CONTRACT_ADDRESS
   );
 
+
   const ticker = useSelector((state) => state.exchange.sellTicker);
   const balance = useSelector((state) => state.exchange.tickerBalance);
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [approveModalStatus, setApproveModalStatus] = useState("");
-  const [sellModalStatus, setSellModalStatus] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [warningDate, setWarningDate] = useState(false);
   const [checkSell, setCheckSell] = useState({});
@@ -97,6 +102,8 @@ function SellScreen({
   //   resetValue();
   // }, [account]);
 
+  const windowWidth = useWindowSize().width;
+
   const setAmount = (e) => {
     dispatch(setSellTicker({ ...ticker, price: e }));
   };
@@ -111,9 +118,11 @@ function SellScreen({
     dispatch(setSellTicker({ ...ticker, quantity: e }));
   };
   const setSellNull = () => {
-    dispatch(setSellTicker(null));
-    dispatch(setTickerBalance(0));
-  };
+      dispatch(setTickerBalance(0));
+      dispatch(setSellTicker(null))
+  }
+
+
   const checkQuantityUpdate = (value) => {
     const { price, quantity } = ticker;
     // let targetValue = new BigNumber(value).toFixed(6);
@@ -162,6 +171,7 @@ function SellScreen({
       account,
       ticker,
       checkSell,
+      sellModalStatus,
       setSellModalStatus,
       setSellModalOpen,
       CHAIN_USDT_CONTRACT_ADDRESS,
@@ -218,16 +228,11 @@ function SellScreen({
     }
   }, [ticker?.price, ticker?.quantity, totalExpiryTime, balance]);
 
-  console.log(ticker, "ticker-sell");
+  // console.log(ticker, "ticker-sell");
 
   return (
-    <div
-      className={`exchangeScreen_rightcontainer ${
-        (!ticker || !ticker?.asset || ticker?.asset === "") &&
-        "opacity-60 cursor-not-allowed"
-      }`}
-    >
-      <ApproveModal
+  <>
+    <ApproveModal
         open={approveModalOpen}
         setOpen={setApproveModalOpen}
         approveModalStatus={approveModalStatus}
@@ -238,6 +243,13 @@ function SellScreen({
         setOpen={sellModalOpen}
         sellModalStatus={sellModalStatus}
       />
+    <div
+      className={`exchangeScreen_rightcontainer ${
+        (!ticker || !ticker?.asset || ticker?.asset === "") &&
+        "opacity-60 cursor-not-allowed"
+      }`}
+    >
+      
       <div className="exchangeScreen_rightcontainer_buyContainer">
         <div className="exchangeScreen_rightcontainer_buyContainer_header">
           <div className="exchangeScreen_rightcontainer_buyContainer_header_title">
@@ -297,8 +309,10 @@ function SellScreen({
               <div
                 className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
                   !ticker?.asset || ticker?.asset === "" || tokenApproval
-                    ? "pointer-events-none ring-dark-50 opacity-50"
-                    : "ring-success-color-500"
+                    ? (tokenApproval
+                    ? "pointer-events-none ring-success-color-500 opacity-50"
+                    : "pointer-events-none ring-dark-50 opacity-50")
+                    : "ring-success-color-500 opacity-500"
                 } `}
               >
                 <div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper">
@@ -445,6 +459,7 @@ function SellScreen({
         <div className="exchangeScreen_rightcontainer_buyContainer_footer"></div>
       </div>
     </div>
+  </>
   );
 }
 

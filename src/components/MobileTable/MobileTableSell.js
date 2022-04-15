@@ -82,7 +82,6 @@ function LoadingColumn() {
 
 function Column({ token, setSellTicker, setBalance, navigateProject }) {
   const dispatch = useDispatch();
-  console.log(token.expiryTime)
   return (
     <div
       className="_card flex justify-between py-3 px-4 mx-0 border border-dark-50 border-2 font-bold"

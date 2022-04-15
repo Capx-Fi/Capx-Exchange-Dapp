@@ -49,7 +49,6 @@ function BuyScreen({
   setRefresh,
 }) {
   const dispatch = useDispatch();
-  const windowWidth = useWindowSize().width;
   var mode = useSelector((state) => state.exchange.exchangeMode);
 
   const ticker = useSelector((state) => state.exchange.buyTicker);
@@ -164,19 +163,21 @@ function BuyScreen({
   }, [checkBuy]);
 
   return (
+    <>
+        {/* <ApproveModal
+            open={approveModalOpen}
+            setOpen={setApproveModalOpen}
+            approveModalStatus={approveModalStatus}
+            setApproveModalStatus={setApproveModalStatus}
+      /> */}
+    <BuyModal open={buyModalOpen} setOpen={setBuyModalOpen} />
     <div
       className={`exchangeScreen_rightcontainer ${
         (!ticker?.asset || ticker?.asset === "") &&
         "opacity-60 cursor-not-allowed"
       }`}
     >
-      <ApproveModal
-        open={approveModalOpen}
-        setOpen={setApproveModalOpen}
-        approveModalStatus={approveModalStatus}
-        setApproveModalStatus={setApproveModalStatus}
-      />
-      <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus} />
+
       <div className="exchangeScreen_rightcontainer_buyContainer">
         <div className="exchangeScreen_rightcontainer_buyContainer_header relative">
           <div className="exchangeScreen_rightcontainer_buyContainer_header_title ">
@@ -403,6 +404,7 @@ function BuyScreen({
         <div className="exchangeScreen_rightcontainer_buyContainer_footer"></div>
       </div>
     </div>
+    </>
   );
 }
 

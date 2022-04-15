@@ -29,6 +29,7 @@ import {
   getUsdtContractAddress,
   getWrappedURL,
 } from "../../constants/getChainConfig";
+import useWindowSize from "../../utils/windowSize";
 BigNumber.config({
   ROUNDING_MODE: 3,
   DECIMAL_PLACES: 18,
@@ -130,6 +131,8 @@ function WithdrawTokenTable({ filter, refetch }) {
     // console.log("params", pagination, filters, sorter, extra);
   }
 
+  const windowWidth = useWindowSize.width();
+
   const dispatch = useDispatch();
   const navigateProject = async (address) => {
     const projectAddress = await fetchProjectID(address, wrappedURL, masterURL);
@@ -137,6 +140,7 @@ function WithdrawTokenTable({ filter, refetch }) {
   };
   return (
     <>
+    {windowWidth > 768 ? (
       <div className="tokenListTableContainer phone:hidden tablet:block">
         <Table
           dataSource={loading ? [] : tokenList}
@@ -241,8 +245,7 @@ function WithdrawTokenTable({ filter, refetch }) {
           />
         </Table>
       </div>
-
-      <div className="tablet:hidden">
+    ) : (
         <MobileWithdraw
           tokenList={tokenList}
           loading={loading}
@@ -250,7 +253,7 @@ function WithdrawTokenTable({ filter, refetch }) {
           setAssetBalance={setAssetBalance}
           isUSDT={CHAIN_USDT_CONTRACT_ADDRESS.toString()}
         />
-      </div>
+    )}
     </>
   );
 }
