@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-function BuyModal({ open, setOpen, buyModalStatus }) {
+function BuyModal({ open, buyModalStatus }) {
   const [viewNFTID, setviewNFTID] = React.useState("");
   const [viewNFTDet, setviewNFTDet] = React.useState("");
   const classes = useStyles();

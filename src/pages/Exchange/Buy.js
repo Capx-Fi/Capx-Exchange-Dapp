@@ -44,6 +44,10 @@ function BuyScreen({
   approveModalOpen,
   setApproveModalOpen,
   buyModalOpen,
+  buyModalStatus,
+  setBuyModalStatus,
+  approveModalStatus,
+  setApproveModalStatus,
   setBuyModalOpen,
   refresh,
   setRefresh,
@@ -70,8 +74,6 @@ function BuyScreen({
 
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [approveModalStatus, setApproveModalStatus] = useState("");
-  const [buyModalStatus, setBuyModalStatus] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [warningCheck, setWarningCheck] = useState(false);
   const [checkBuy, setCheckBuy] = useState({});
@@ -133,6 +135,7 @@ function BuyScreen({
       totalAmount,
       setBuyModalStatus,
       setBuyModalOpen,
+      buyModalStatus,
       setTokenApproval,
       resetValue
     );
@@ -169,8 +172,8 @@ function BuyScreen({
             setOpen={setApproveModalOpen}
             approveModalStatus={approveModalStatus}
             setApproveModalStatus={setApproveModalStatus}
-      /> */}
-    <BuyModal open={buyModalOpen} setOpen={setBuyModalOpen} />
+      />
+    <BuyModal open={buyModalOpen} setOpen={setBuyModalOpen} buyModalStatus={buyModalStatus} /> */}
     <div
       className={`exchangeScreen_rightcontainer ${
         (!ticker?.asset || ticker?.asset === "") &&
