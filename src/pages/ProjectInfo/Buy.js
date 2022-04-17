@@ -46,6 +46,10 @@ function BuyScreen({
   setApproveModalOpen,
   buyModalOpen,
   setBuyModalOpen,
+  setApproveModalStatus,
+  ApproveModalStatus,
+  buyModalStatus,
+  setBuyModalStatus,
   refresh,
   setRefresh,
 }) {
@@ -57,8 +61,6 @@ function BuyScreen({
   const { active, account, chainId } = useWeb3React();
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [approveModalStatus, setApproveModalStatus] = useState("");
-  const [buyModalStatus, setBuyModalStatus] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [warningCheck, setWarningCheck] = useState(false);
   const [checkBuy, setCheckBuy] = useState({});
@@ -128,6 +130,7 @@ function BuyScreen({
       totalAmount,
       setBuyModalStatus,
       setBuyModalOpen,
+      buyModalStatus,
       setTokenApproval,
       resetValue
     );
@@ -158,13 +161,13 @@ function BuyScreen({
         "opacity-60 cursor-not-allowed"
       }`}
     >
-      <ApproveModal
+      {/* <ApproveModal
         open={approveModalOpen}
         setOpen={setApproveModalOpen}
         approveModalStatus={approveModalStatus}
         setApproveModalStatus={setApproveModalStatus}
       />
-      <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus} />
+      <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus} /> */}
       <div className="exchangeScreen_rightcontainer_buyContainer">
         <div className="exchangeScreen_rightcontainer_buyContainer_header">
           <div className="exchangeScreen_rightcontainer_buyContainer_header_title">

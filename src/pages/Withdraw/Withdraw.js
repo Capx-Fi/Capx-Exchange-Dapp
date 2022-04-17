@@ -12,6 +12,7 @@ import WithdrawContainer from "./WithdrawContainer";
 import crossIcon from "../../assets/close-cyan.svg";
 import { setWithdrawTicker } from "../../redux/actions/withdraw";
 import useWindowSize from "../../utils/windowSize";
+import WithdrawModal from "../../components/Modals/VestAndApproveModal/WithdrawModal";
 
 const format = "HH:mm";
 
@@ -22,6 +23,7 @@ function WithdrawScreen({ match }) {
   const [balance, setBalance] = useState(0);
   const [filter, setFilter] = useState("");
   const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
+  const [withdrawModalStatus, setWithdrawModalStatus] = useState("");
   const [refetch, setRefetch] = useState(false);
 
   var withdrawTicker = useSelector((state) => state.withdraw.withdrawTicker);
@@ -32,6 +34,12 @@ function WithdrawScreen({ match }) {
   const windowWidth = useWindowSize().width;
   return (
     <>
+    <WithdrawModal
+        open={withdrawModalOpen}
+        setOpen={setWithdrawModalOpen}
+        withdrawModalStatus={withdrawModalStatus}
+        setWithdrawModalStatus={setWithdrawModalStatus}
+      />
       {!active ? (
         <MetamaskModal />
       ) : (
@@ -104,6 +112,8 @@ function WithdrawScreen({ match }) {
                     <WithdrawContainer
                       withdrawModalOpen={withdrawModalOpen}
                       setWithdrawModalOpen={setWithdrawModalOpen}
+                      withdrawModalStatus={withdrawModalStatus}
+                      setWithdrawModalStatus={setWithdrawModalStatus}
                       refetch={refetch}
                       setRefetch={setRefetch}
                       ticker={match.params.ticker}

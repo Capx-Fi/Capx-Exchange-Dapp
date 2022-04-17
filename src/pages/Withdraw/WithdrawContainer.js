@@ -30,6 +30,8 @@ import { getExchangeContractAddress } from "../../constants/getChainConfig";
 function WithdrawContainer({
   withdrawModalOpen,
   setWithdrawModalOpen,
+  withdrawModalStatus,
+  setWithdrawModalStatus,
   refetch,
   setRefetch,
 }) {
@@ -41,7 +43,6 @@ function WithdrawContainer({
   const { active, account, chainId } = useWeb3React();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
     chainId && getExchangeContractAddress(chainId);
-  const [withdrawModalStatus, setWithdrawModalStatus] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [checkWithdraw, setCheckWithdraw] = useState({});
@@ -112,12 +113,6 @@ function WithdrawContainer({
         "opacity-60 cursor-not-allowed"
       }`}
     >
-      <WithdrawModal
-        open={withdrawModalOpen}
-        setOpen={setWithdrawModalOpen}
-        withdrawModalStatus={withdrawModalStatus}
-        setWithdrawModalStatus={setWithdrawModalStatus}
-      />
       <div className="exchangeScreen_rightcontainer_buyContainer phone:-mr-4 tablet:mr-0">
         <div className="exchangeScreen_rightcontainer_buyContainer_header">
           <div className="exchangeScreen_rightcontainer_buyContainer_header_title">
