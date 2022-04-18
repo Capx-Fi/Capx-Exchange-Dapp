@@ -87,12 +87,14 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
     const projectAddress = await fetchProjectID(address, wrappedURL);
     history.push(`/info/${projectAddress}`);
   };
+  const windowWidth = useWindowSize().width;
   return (
-    <>
+    <div>
+    {windowWidth > 767 ? (
       <div className="tokenListTableContainer">
         <div>
           <Table
-            dataSource={tokenList}
+            dataSource={loading ? [] : tokenList}
             pagination={false}
             locale={{
               emptyText: loading ? "Loading Tokens..." : "No Token Found",
@@ -123,7 +125,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
                       navigateProject(row.assetID);
                     }}
                   >
-                    <p className="text-white hover:text-primary-green-400 cursor-pointer upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                    <p className="text-white hover:text-primary-green-400 cursor-pointer upper:text-paragraph-2 tablet:text-caption-2">
                       {value}
                     </p>
                   </div>
@@ -136,7 +138,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
               key="price"
               render={(value, row) => {
                 return (
-                  <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                  <div className="upper:text-paragraph-2 tablet:text-caption-2">
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
@@ -164,7 +166,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
               key="expiryTime"
               render={(value, row) => {
                 return (
-                  <div className="upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                  <div className="upper:text-paragraph-2 tablet:text-caption-2">
                     {row.expiryTime}
                   </div>
                 );
@@ -178,7 +180,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
                 return (
                   <div className="border cursor-pointer border-grayLabel py-2 rounded-lg flex flex-row justify-center w-fit-content px-3 mx-auto">
                     <img src={DepositIcon} alt="deposit" className="mr-2" />
-                    <p className="text-success-color-400 uppercase font-bold text-caption-2 upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                    <p className="text-success-color-400 uppercase font-bold text-caption-2 upper:text-paragraph-2 tablet:text-caption-2">
                       BUY
                     </p>
                   </div>
@@ -187,8 +189,8 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
             />
           </Table>
         </div>
-      </div>
-      <div className="tablet:hidden">
+      </div> ) : (
+      <div>
         <MobileTableBuy
           tokenList={tokenList}
           loading={loading}
@@ -198,7 +200,8 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
           setBalance={setBalance}
         />
       </div>
-    </>
+      )}
+    </div>
   );
 }
 

@@ -21,6 +21,8 @@ import {
   getUsdtContractAddress,
   getWrappedURL,
 } from "../../constants/getChainConfig";
+import ApproveModal from "../../components/Modals/VestAndApproveModal/ApproveModal";
+import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
 
 function ProjectInfo({ match }) {
   const dispatch = useDispatch();
@@ -34,6 +36,8 @@ function ProjectInfo({ match }) {
   const { active, account, chainId } = useWeb3React();
   const [approveModalOpen, setApproveModalOpen] = useState(false);
   const [buyModalOpen, setBuyModalOpen] = useState(false);
+  const [approveModalStatus, setApproveModalStatus] = useState("");
+  const [buyModalStatus, setBuyModalStatus] = useState("");
   const [refresh, setRefresh] = useState(false);
   const [lastSellingPrice, setLastSellingPrice] = useState(0);
   const [averageSellingPrice, setAverageSellingPrice] = useState(0);
@@ -82,6 +86,14 @@ function ProjectInfo({ match }) {
 
   return (
     <>
+    <ApproveModal
+        open={approveModalOpen}
+        setOpen={setApproveModalOpen}
+        approveModalStatus={approveModalStatus}
+        setApproveModalStatus={setApproveModalStatus}
+      />
+    <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus} />
+
       {!active ? (
         <MetamaskModal />
       ) : (
@@ -95,7 +107,7 @@ function ProjectInfo({ match }) {
             className={`main-container ${
               ticker &&
               ticker?.asset !== "" &&
-              "border border-dark-50 rounded-2xl block breakpoint:border-0"
+              "border border-dark-50 rounded-2xl block phone:border-0"
             }`}
           >
             {windowWidth > 1279 ? (
@@ -118,6 +130,9 @@ function ProjectInfo({ match }) {
                   setBuyModalOpen={setBuyModalOpen}
                   approveModalOpen={approveModalOpen}
                   setApproveModalOpen={setApproveModalOpen}
+                  setApproveModalStatus={setApproveModalStatus}
+                  buyModalStatus={buyModalStatus}
+                  setBuyModalStatus={setBuyModalStatus}
                   refresh={refresh}
                   setRefresh={setRefresh}
                 />
@@ -150,12 +165,15 @@ function ProjectInfo({ match }) {
                     />
                   </>
                 ) : (
-                  <div className="w-auto phone:w-full tablet:px-14 tablet:py-7">
+                  <div className="w-auto phone:w-full tablet:px-14 tablet:py-7 phone:mb-10">
                     <BuyScreen
                       buyModalOpen={buyModalOpen}
                       setBuyModalOpen={setBuyModalOpen}
                       approveModalOpen={approveModalOpen}
                       setApproveModalOpen={setApproveModalOpen}
+                      setApproveModalStatus={setApproveModalStatus}
+                      buyModalStatus={buyModalStatus}
+                      setBuyModalStatus={setBuyModalStatus}
                       refresh={refresh}
                       setRefresh={setRefresh}
                     />

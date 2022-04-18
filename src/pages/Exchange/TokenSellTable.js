@@ -53,6 +53,7 @@ function TokenSellTable({ filter, refresh }) {
           ...nullSellTicker,
           expiryDate: new Date(),
           expiryTime: moment().utc().add(15, "minutes"),
+          price: 0,
         })
       );
     }
@@ -125,11 +126,13 @@ function TokenSellTable({ filter, refresh }) {
     const projectAddress = await fetchProjectID(address, wrappedURL);
     history.push(`/info/${projectAddress}`);
   };
+  const windowWidth = useWindowSize().width;
   return (
-    <>
+    <div>
+    {windowWidth > 767 ? (
       <div className="tokenListTableContainer">
         <Table
-          dataSource={tokenList}
+          dataSource={loading ? [] : tokenList}
           locale={{
             emptyText: loading ? "Loading Tokens..." : "No Token Found",
           }}
@@ -156,7 +159,7 @@ function TokenSellTable({ filter, refresh }) {
             render={(value, row) => {
               return (
                 <div onClick={() => navigateProject(row.assetID)}>
-                  <p className="text-white hover:text-primary-green-400 cursor-pointer upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                  <p className="text-white hover:text-primary-green-400 cursor-pointer upper:text-paragraph-2 tablet:text-caption-2">
                     {value}
                   </p>
                 </div>
@@ -193,10 +196,10 @@ function TokenSellTable({ filter, refresh }) {
             key="asset"
             render={(value, row) => {
               return (
-                <div className="border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                <div className="border cursor-pointer border-grayLabel px-3 py-2 rounded-lg flex flex-row justify-center w-fit-content mx-auto upper:text-paragraph-2 tablet:text-caption-2">
                   <img src={SellIcon} alt="deposit" className="mr-2" />
 
-                  <p className="text-error-color-400 uppercase font-bold text-caption-2 upper:text-paragraph-2 desktop:text-caption-1 tablet:text-caption-2">
+                  <p className="text-error-color-400 uppercase font-bold text-caption-2 upper:text-paragraph-2 tablet:text-caption-2">
                     SELL
                   </p>
                 </div>
@@ -204,9 +207,8 @@ function TokenSellTable({ filter, refresh }) {
             }}
           />
         </Table>
-      </div>
-
-      <div className="tablet:hidden">
+      </div> ) : (
+      <div>
         <MobileTableSell
           tokenList={tokenList}
           loading={loading}
@@ -215,8 +217,8 @@ function TokenSellTable({ filter, refresh }) {
           setBalance={setTickerBalance}
           navigateProject={navigateProject}
         />
-      </div>
-    </>
+      </div> )}
+    </div>
   );
 }
 

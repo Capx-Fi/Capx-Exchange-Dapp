@@ -25,6 +25,7 @@ function HeaderDropdown({
       boxShadow: state.isFocused ? 0 : 0,
       borderRadius: 12,
       borderColor: state.isFocused ? "#97D10A" : "#4A6269",
+      marginRight: "1rem",
       borderWidth: 1,
       "&:hover": {
         borderColor: state.isFocused ? "#97D10A" : "#4A6269",
@@ -86,7 +87,7 @@ function HeaderDropdown({
       placeholder={
         placeholderComponent ? placeholderComponent : placeholderText
       }
-      className="w-96 hidden breakpoint:block breakpoint:w-80 desktop:w-60 rounded-lg"
+      className="w-96 hidden breakpoint:block breakpoint:w-19v rounded-lg desktop:ml-4"
       value={selectedValue}
       inputValue={tokenInputValue}
       options={dropdownData}

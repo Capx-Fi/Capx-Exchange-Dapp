@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./DropDown.scss";
 import Web3 from "web3";
 
-function DropDown({ sortBy, chainChange }) {
+function DropDown({ sortBy, chainChange, setShowMenu }) {
   const [open, setOpen] = useState(false);
   const web3 = new Web3(Web3.givenProvider);
 
@@ -44,6 +44,7 @@ function DropDown({ sortBy, chainChange }) {
             onClick={() => {
               chainChange("Matic");
               setOpen(false);
+              setShowMenu && setShowMenu(false);
             }}
           >
             Matic
@@ -53,6 +54,7 @@ function DropDown({ sortBy, chainChange }) {
             onClick={() => {
               chainChange("BSC");
               setOpen(false);
+              setShowMenu && setShowMenu(false);
             }}
           >
             BSC
@@ -62,6 +64,7 @@ function DropDown({ sortBy, chainChange }) {
             onClick={() => {
               chainChange("Avalanche");
               setOpen(false);
+              setShowMenu && setShowMenu(false);
             }}
           >
             Avalanche

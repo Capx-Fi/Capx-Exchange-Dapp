@@ -25,16 +25,16 @@ export const withdrawToken = async (
       .send({ from: account });
     if (result) {
       setWithdrawModalStatus("success");
-      enqueueSnackbar("Transaction Successful", { variant: "success" });
+      // enqueueSnackbar("Transaction Successful", { variant: "success" });
       resetValue();
     } else {
       setWithdrawModalStatus("failure");
-      enqueueSnackbar("Sorry transaction failed", { variant: "error" });
+      // enqueueSnackbar("Sorry transaction failed", { variant: "error" });
       setButtonDisabled(false);
     }
   } catch (err) {
     setWithdrawModalStatus("failure");
-    enqueueSnackbar(err.message, { variant: "error" });
+    // enqueueSnackbar(err.message, { variant: "error" });
     setButtonDisabled(false);
   }
   setTimeout(() => {

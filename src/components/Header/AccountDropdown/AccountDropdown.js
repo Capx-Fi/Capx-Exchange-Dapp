@@ -3,8 +3,7 @@ import "./DropDown.scss";
 import Web3 from "web3";
 import { useHistory } from "react-router-dom";
 
-
-function AccountDropdown({ accountAddress, disconnect }) {
+function AccountDropdown({ accountAddress, disconnect, setShowMenu }) {
   const [open, setOpen] = useState(false);
   const web3 = new Web3(Web3.givenProvider);
   const history = useHistory();
@@ -38,6 +37,7 @@ function AccountDropdown({ accountAddress, disconnect }) {
             onClick={() => {
               history.push("/withdraw");
               setOpen(false);
+              setShowMenu && setShowMenu(false);
             }}
           >
             Withdraw
@@ -47,6 +47,7 @@ function AccountDropdown({ accountAddress, disconnect }) {
             onClick={() => {
               history.push("/trades");
               setOpen(false);
+              setShowMenu && setShowMenu(false);
             }}
           >
             Trades
@@ -56,6 +57,7 @@ function AccountDropdown({ accountAddress, disconnect }) {
             onClick={() => {
               disconnect();
               setOpen(false);
+              setShowMenu && setShowMenu(false);
             }}
           >
             Logout
