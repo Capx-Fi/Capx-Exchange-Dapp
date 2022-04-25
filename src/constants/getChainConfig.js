@@ -4,26 +4,33 @@ import {
   CONTRACT_ADDRESS_CAPX_EXCHANGE_AVALANCHE,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_BSC,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM,
+  CONTRACT_ADDRESS_CAPX_EXCHANGE_FANTOM,
   CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC,
   CONTRACT_ADDRESS_CAPX_USDT_AVALANCHE,
   CONTRACT_ADDRESS_CAPX_USDT_BSC,
   CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM,
+  CONTRACT_ADDRESS_CAPX_USDT_FANTOM,
   CONTRACT_ADDRESS_CAPX_USDT_MATIC,
   EXPLORER_AVALANCHE,
   EXPLORER_BSC,
   EXPLORER_ETHEREUM,
+  EXPLORER_FANTOM,
   EXPLORER_MATIC,
+  FANTOM_CHAIN_ID,
   GRAPHAPIURL_EXCHANGE_AVALANCHE,
   GRAPHAPIURL_EXCHANGE_BSC,
   GRAPHAPIURL_EXCHANGE_ETHEREUM,
+  GRAPHAPIURL_EXCHANGE_FANTOM,
   GRAPHAPIURL_EXCHANGE_MATIC,
   GRAPHAPIURL_MASTER_AVALANCHE,
   GRAPHAPIURL_MASTER_BSC,
   GRAPHAPIURL_MASTER_ETHEREUM,
+  GRAPHAPIURL_MASTER_FANTOM,
   GRAPHAPIURL_MASTER_MATIC,
   GRAPHAPIURL_WRAPPED_AVALANCHE,
   GRAPHAPIURL_WRAPPED_BSC,
   GRAPHAPIURL_WRAPPED_ETHEREUM,
+  GRAPHAPIURL_WRAPPED_FANTOM,
   GRAPHAPIURL_WRAPPED_MATIC,
   MATIC_CHAIN_ID,
 } from "./config";
@@ -37,6 +44,8 @@ export const getExchangeURL = (chainId) => {
       ? GRAPHAPIURL_EXCHANGE_MATIC
       : chainId?.toString() === AVALANCHE_CHAIN_ID.toString()
       ? GRAPHAPIURL_EXCHANGE_AVALANCHE
+      : chainId?.toString() === FANTOM_CHAIN_ID.toString()
+      ? GRAPHAPIURL_EXCHANGE_FANTOM
       : GRAPHAPIURL_EXCHANGE_ETHEREUM;
   return exchangeURL;
 };
@@ -50,6 +59,8 @@ export const getWrappedURL = (chainId) => {
       ? GRAPHAPIURL_WRAPPED_MATIC
       : chainId?.toString() === AVALANCHE_CHAIN_ID.toString()
       ? GRAPHAPIURL_WRAPPED_AVALANCHE
+      : chainId?.toString() === FANTOM_CHAIN_ID.toString()
+      ? GRAPHAPIURL_WRAPPED_FANTOM
       : GRAPHAPIURL_WRAPPED_ETHEREUM;
   return wrappedURL;
 };
@@ -63,6 +74,8 @@ export const getExchangeContractAddress = (chainId) => {
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_MATIC
       : chainId?.toString() === AVALANCHE_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_EXCHANGE_AVALANCHE
+      : chainId?.toString() === FANTOM_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_EXCHANGE_FANTOM
       : CONTRACT_ADDRESS_CAPX_EXCHANGE_ETHEREUM;
   return exchangeContractAddress;
 };
@@ -76,6 +89,8 @@ export const getUsdtContractAddress = (chainId) => {
       ? CONTRACT_ADDRESS_CAPX_USDT_MATIC
       : chainId?.toString() === AVALANCHE_CHAIN_ID.toString()
       ? CONTRACT_ADDRESS_CAPX_USDT_AVALANCHE
+      : chainId?.toString() === FANTOM_CHAIN_ID.toString()
+      ? CONTRACT_ADDRESS_CAPX_USDT_FANTOM
       : CONTRACT_ADDRESS_CAPX_USDT_ETHEREUM;
   return usdtContractAddress;
 };
@@ -89,6 +104,8 @@ export const getMasterURL = (chainId) => {
       ? GRAPHAPIURL_MASTER_MATIC
       : chainId?.toString() === AVALANCHE_CHAIN_ID.toString()
       ? GRAPHAPIURL_MASTER_AVALANCHE
+      : chainId?.toString() === FANTOM_CHAIN_ID.toString()
+      ? GRAPHAPIURL_MASTER_FANTOM
       : GRAPHAPIURL_MASTER_ETHEREUM;
   return masterURL;
 };
@@ -102,6 +119,8 @@ export const getExplorerURL = (chainId) => {
       ? EXPLORER_MATIC
       : chainId?.toString() === AVALANCHE_CHAIN_ID.toString()
       ? EXPLORER_AVALANCHE
+      : chainId?.toString() === FANTOM_CHAIN_ID.toString()
+      ? EXPLORER_FANTOM
       : EXPLORER_ETHEREUM;
   return explorerURL;
 };
@@ -114,6 +133,8 @@ export const getSortBy = (chainId) => {
       ? "Matic"
       : chainId?.toString() === AVALANCHE_CHAIN_ID.toString()
       ? "Avalanche"
+      : chainId?.toString() === FANTOM_CHAIN_ID.toString()
+      ? "Fantom"
       : "Ethereum";
   return sortBy;
 };
