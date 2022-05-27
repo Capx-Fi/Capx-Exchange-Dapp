@@ -103,7 +103,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
                 symbol: "MATIC",
                 decimals: 18,
               },
-              rpcUrls: ["https://matic-mumbai.chainstacklabs.com"],
+              rpcUrls: ["https://rpc-mumbai.matic.today"],
               blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
             },
           ],
