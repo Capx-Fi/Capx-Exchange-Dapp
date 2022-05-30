@@ -30,7 +30,7 @@ function DropDown({ sortBy, chainChange, setShowMenu }) {
 								: avalancheLogo
 						}
 						alt="chain-logo"
-						className="tablet:w-3 tablet:h-3 breakpoint:w-4 breakpoint:h-4 mr-2"
+						className="w-4 h-4 tablet:w-3 tablet:h-3 breakpoint:w-4 breakpoint:h-4 mr-2"
 					/>
 					{sortBy === "matic" ? "Matic" : sortBy}
 				</span>

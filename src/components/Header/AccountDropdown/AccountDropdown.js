@@ -3,12 +3,14 @@ import "./DropDown.scss";
 import Web3 from "web3";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import useWindowSize from "../../../utils/windowSize";
 
 function AccountDropdown({ accountAddress, disconnect, setShowMenu }) {
 	const [open, setOpen] = useState(false);
 	const web3 = new Web3(Web3.givenProvider);
 	const history = useHistory();
 	let location = useLocation();
+	const windowWidth = useWindowSize().width;
 
 	return (
 		<div className="relative ml-4">
@@ -33,7 +35,7 @@ function AccountDropdown({ accountAddress, disconnect, setShowMenu }) {
 				</svg>
 			</button>
 			{open && (
-				<div className="absolute right-0 bg-dark-300 py-2 mt-2 bg-whitedivide-y divide-gray-600 rounded-md shadow-xl w-40">
+				<div className="absolute right-0 bg-dark-300 py-2 mt-2 bg-whitedivide-y divide-gray-600 rounded-md shadow-xl w-44 breakpoint:w-36 desktop:w-44 tablet:w-32">
 					{location.pathname.includes("/withdraw") ? (
 						<>
 							<p
@@ -44,7 +46,9 @@ function AccountDropdown({ accountAddress, disconnect, setShowMenu }) {
 									setShowMenu && setShowMenu(false);
 								}}
 							>
-								Exchange
+								{windowWidth > 727 && windowWidth < 1279
+									? "Market"
+									: "Buy/Sell Market"}
 							</p>
 							<p
 								className="option"
@@ -54,7 +58,9 @@ function AccountDropdown({ accountAddress, disconnect, setShowMenu }) {
 									setShowMenu && setShowMenu(false);
 								}}
 							>
-								Trades
+								{windowWidth > 727 && windowWidth < 1279
+									? "Trades"
+									: "Your Trades"}
 							</p>
 						</>
 					) : location.pathname.includes("/trades") ? (
@@ -67,7 +73,9 @@ function AccountDropdown({ accountAddress, disconnect, setShowMenu }) {
 									setShowMenu && setShowMenu(false);
 								}}
 							>
-								Exchange
+								{windowWidth > 727 && windowWidth < 1279
+									? "Market"
+									: "Buy/Sell Market"}
 							</p>
 							<p
 								className="option"
@@ -77,7 +85,9 @@ function AccountDropdown({ accountAddress, disconnect, setShowMenu }) {
 									setShowMenu && setShowMenu(false);
 								}}
 							>
-								Withdraw
+								{windowWidth > 727 && windowWidth < 1279
+									? "Withdraw"
+									: "Withdraw Tokens"}
 							</p>
 						</>
 					) : (
@@ -90,7 +100,9 @@ function AccountDropdown({ accountAddress, disconnect, setShowMenu }) {
 									setShowMenu && setShowMenu(false);
 								}}
 							>
-								Withdraw
+								{windowWidth > 727 && windowWidth < 1279
+									? "Withdraw"
+									: "Withdraw Tokens"}
 							</p>
 							<p
 								className="option"
@@ -100,7 +112,9 @@ function AccountDropdown({ accountAddress, disconnect, setShowMenu }) {
 									setShowMenu && setShowMenu(false);
 								}}
 							>
-								Trades
+								{windowWidth > 727 && windowWidth < 1279
+									? "Trades"
+									: "Your Trades"}
 							</p>
 						</>
 					)}
