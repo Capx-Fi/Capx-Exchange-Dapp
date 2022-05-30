@@ -1,7 +1,7 @@
 .header-dropdown-button {
-  @apply flex flex-row w-40 justify-between items-center rounded-xl px-3 py-2 bg-dark-300  border text-grayLabel text-caption-1 font-semibold breakpoint:text-caption-2 breakpoint:w-32 tablet:w-20 tablet:text-caption-3;
+	@apply flex flex-row w-40 justify-between items-center rounded-xl px-3 py-2 bg-dark-300  border text-grayLabel text-caption-1 font-semibold desktop:w-40 breakpoint:text-caption-2 breakpoint:w-36 tablet:w-28 tablet:text-caption-4;
 }
 
 .option {
-  @apply block px-4 text-left py-2 w-11/12 text-caption-2 text-grayLabel hover:bg-dark-75 hover:text-white;
+	@apply flex flex-row px-4 text-left py-2 w-11/12 text-caption-2 text-grayLabel hover:bg-dark-75 hover:text-white;
 }
