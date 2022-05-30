@@ -34,51 +34,75 @@ function AccountDropdown({ accountAddress, disconnect, setShowMenu }) {
 			</button>
 			{open && (
 				<div className="absolute right-0 bg-dark-300 py-2 mt-2 bg-whitedivide-y divide-gray-600 rounded-md shadow-xl w-40">
-					{!location.pathname.includes("/withdraw") ? (
-						<p
-							className="option"
-							onClick={() => {
-								history.push("/withdraw");
-								setOpen(false);
-								setShowMenu && setShowMenu(false);
-							}}
-						>
-							Withdraw
-						</p>
+					{location.pathname.includes("/withdraw") ? (
+						<>
+							<p
+								className="option"
+								onClick={() => {
+									history.push("/");
+									setOpen(false);
+									setShowMenu && setShowMenu(false);
+								}}
+							>
+								Exchange
+							</p>
+							<p
+								className="option"
+								onClick={() => {
+									history.push("/trades");
+									setOpen(false);
+									setShowMenu && setShowMenu(false);
+								}}
+							>
+								Trades
+							</p>
+						</>
+					) : location.pathname.includes("/trades") ? (
+						<>
+							<p
+								className="option"
+								onClick={() => {
+									history.push("/");
+									setOpen(false);
+									setShowMenu && setShowMenu(false);
+								}}
+							>
+								Exchange
+							</p>
+							<p
+								className="option"
+								onClick={() => {
+									history.push("/withdraw");
+									setOpen(false);
+									setShowMenu && setShowMenu(false);
+								}}
+							>
+								Withdraw
+							</p>
+						</>
 					) : (
-						<p
-							className="option"
-							onClick={() => {
-								history.push("/");
-								setOpen(false);
-								setShowMenu && setShowMenu(false);
-							}}
-						>
-							Exchange
-						</p>
-					)}
-					{!location.pathname.includes("/trades") ? (
-						<p
-							className="option"
-							onClick={() => {
-								history.push("/trades");
-								setOpen(false);
-								setShowMenu && setShowMenu(false);
-							}}
-						>
-							Trades
-						</p>
-					) : (
-						<p
-							className="option"
-							onClick={() => {
-								history.push("/");
-								setOpen(false);
-								setShowMenu && setShowMenu(false);
-							}}
-						>
-							Exchange
-						</p>
+						<>
+							<p
+								className="option"
+								onClick={() => {
+									history.push("/withdraw");
+									setOpen(false);
+									setShowMenu && setShowMenu(false);
+								}}
+							>
+								Withdraw
+							</p>
+							<p
+								className="option"
+								onClick={() => {
+									history.push("/trades");
+									setOpen(false);
+									setShowMenu && setShowMenu(false);
+								}}
+							>
+								Trades
+							</p>
+						</>
 					)}
 					<p
 						className="option"
