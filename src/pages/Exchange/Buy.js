@@ -44,12 +44,16 @@ function BuyScreen({
   approveModalOpen,
   setApproveModalOpen,
   buyModalOpen,
+  buyModalStatus,
+  setBuyModalStatus,
+  approveModalStatus,
+  setApproveModalStatus,
   setBuyModalOpen,
   refresh,
   setRefresh,
 }) {
   const dispatch = useDispatch();
-  const windowWidth = useWindowSize().width;
+  var mode = useSelector((state) => state.exchange.exchangeMode);
 
   const ticker = useSelector((state) => state.exchange.buyTicker);
   useEffect(() => {
@@ -70,8 +74,6 @@ function BuyScreen({
 
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [approveModalStatus, setApproveModalStatus] = useState("");
-  const [buyModalStatus, setBuyModalStatus] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [warningCheck, setWarningCheck] = useState(false);
   const [checkBuy, setCheckBuy] = useState({});
@@ -133,6 +135,7 @@ function BuyScreen({
       totalAmount,
       setBuyModalStatus,
       setBuyModalOpen,
+      buyModalStatus,
       setTokenApproval,
       resetValue
     );
@@ -163,19 +166,21 @@ function BuyScreen({
   }, [checkBuy]);
 
   return (
+    <>
+        {/* <ApproveModal
+            open={approveModalOpen}
+            setOpen={setApproveModalOpen}
+            approveModalStatus={approveModalStatus}
+            setApproveModalStatus={setApproveModalStatus}
+      />
+    <BuyModal open={buyModalOpen} setOpen={setBuyModalOpen} buyModalStatus={buyModalStatus} /> */}
     <div
       className={`exchangeScreen_rightcontainer ${
         (!ticker?.asset || ticker?.asset === "") &&
         "opacity-60 cursor-not-allowed"
       }`}
     >
-      <ApproveModal
-        open={approveModalOpen}
-        setOpen={setApproveModalOpen}
-        approveModalStatus={approveModalStatus}
-        setApproveModalStatus={setApproveModalStatus}
-      />
-      <BuyModal open={buyModalOpen} buyModalStatus={buyModalStatus} />
+
       <div className="exchangeScreen_rightcontainer_buyContainer">
         <div className="exchangeScreen_rightcontainer_buyContainer_header relative">
           <div className="exchangeScreen_rightcontainer_buyContainer_header_title ">
@@ -209,7 +214,7 @@ function BuyScreen({
             </div>
             <RefresherInput
               ticker={ticker}
-              disabled={!ticker?.asset || ticker?.asset === ""}
+              disabled={!ticker?.asset || ticker?.asset === "" || tokenApproval}
               setTicker={(e) => {
                 if (
                   BigNumber(e.target.value)
@@ -247,7 +252,11 @@ function BuyScreen({
                   });
                 }
               }}
-              warningText={warningCheck && "You don't have enough balance"}
+              warningText={
+                warningCheck &&
+                !tokenApproval &&
+                "You don't have enough balance"
+              }
               setMaxAmount={() =>
                 validateBuyAmount(
                   ticker,
@@ -275,9 +284,17 @@ function BuyScreen({
               value={ticker ? ticker.amountGive : ""}
             />
           </div>
-          {warningCheck && (
+          {warningCheck && !tokenApproval && (
             <WarningCard
               text={`Not enough balance on DEX! Approve the difference amount to fulfill your order.`}
+              mode={mode}
+            />
+          )}
+          {warningCheck && tokenApproval && (
+            <WarningCard
+              text={`Tokens Approved! Please swap your tokens.`}
+              mode={mode}
+              isApproved={true}
             />
           )}
           {(!checkBuy?.["stableCoinLegal"] ||
@@ -302,7 +319,7 @@ function BuyScreen({
             <RefresherInput
               icon={ticker && LockIcon}
               ticker={ticker}
-              disabled={!ticker?.asset || ticker?.asset === ""}
+              disabled={!ticker?.asset || ticker?.asset === "" || tokenApproval}
               isMax={false}
               balance={null}
               value={ticker ? ticker.amountGet : ""}
@@ -390,6 +407,7 @@ function BuyScreen({
         <div className="exchangeScreen_rightcontainer_buyContainer_footer"></div>
       </div>
     </div>
+    </>
   );
 }
 

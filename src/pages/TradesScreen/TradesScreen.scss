@@ -1,167 +1,167 @@
 .tradesScreen {
-  @apply mx-auto overflow-y-hidden tablet:w-90v breakpoint:w-full tablet:mx-auto w-7/12 breakpoint:w-full desktop:w-11/12 phone:w-full phone:overflow-hidden flex flex-col;
+	@apply mx-auto overflow-y-hidden tablet:w-90v breakpoint:w-full tablet:mx-auto w-7/12 breakpoint:w-full desktop:w-11/12 phone:w-full phone:overflow-hidden flex flex-col;
 
-  &_header {
-    @apply w-full px-6 tablet:px-7 tablet:pl-6 breakpoint:pl-7 py-2 mb-5 mt-16 flex justify-between content-start desktop:mt-10 phone:mb-0 phone:mt-6 tablet:mb-6 desktop:mb-4;
-    &_titlecontainer {
-      @apply flex flex-col items-start desktop:w-55v breakpoint:w-66v phone:w-45v;
-      &_title {
-        @apply text-subheading font-medium text-left text-white upper:text-subheading desktop:text-heading-3 breakpoint:text-paragraph-2 tablet:text-paragraph-1 phone:text-caption-2;
-      }
-      &_subtitle {
-        @apply text-caption-1 text-grayLabel font-semibold mb-5 text-left upper:text-paragraph-2 desktop:text-caption-1 breakpoint:text-caption-3 tablet:text-caption-2 phone:text-caption-3;
-      }
-    }
-  }
-  &_body {
-    @apply px-6 pb-2 tablet:w-full breakpoint:w-full desktop:w-full overflow-y-auto h-fit-content max-h-62v phone:overflow-scroll phone:overflow-x-hidden tablet:overflow-y-auto;
-    // height: 520px;
-    &::-webkit-scrollbar {
-      @apply w-1.5 bg-dark-200 phone:w-0 tablet:w-1.5;
-    }
-    &::-webkit-scrollbar-thumb {
-      @apply rounded-md h-16;
-      background: linear-gradient(0deg, #2d884c -33.65%, #87dfa5 100%);
-    }
-    &::-webkit-scrollbar-track {
-      @apply rounded-md -mb-14;
-    }
-    &_assetPairContainer {
-      @apply flex rounded-2xl border border-dark-50 phone:h-20 z-50 tablet:h-28 justify-between;
-      background: radial-gradient(
-        143.33% 143.33% at 82.41% -4.96%,
-        rgba(132, 214, 164, 0.1) 0%,
-        rgba(18, 28, 32, 0.1) 100%
-      );
-      &_assetPair {
-        @apply flex flex-col justify-center items-start px-12 w-80 phone:px-0 phone:pl-3 phone:pr-0 tablet:pl-10 desktop:pr-0;
-      }
-      &_title {
-        @apply text-caption-2 text-grayLabel font-bold phone:pb-1 desktop:text-caption-2 breakpoint:text-caption-3 tablet:text-caption-3 phone:text-10px;
-      }
-      &_value {
-        @apply text-paragraph-1 text-primary-green-100 font-normal flex upper:text-paragraph-1 desktop:text-caption-1 tablet:text-caption-2 phone:text-caption-3;
-      }
-      &_getToken {
-        @apply breakpoint:flex hidden flex-col justify-center items-start px-6 w-40;
-      }
-      &_swapIcon {
-        @apply breakpoint:flex hidden flex-col justify-center items-start px-6;
-      }
-      &_giveToken {
-        @apply breakpoint:flex hidden flex-col justify-center items-start px-6 w-44;
-      }
-      &_separator {
-        @apply h-full bg-dark-50 w-0.5 mx-12 phone:px-0 phone:mx-0 phone:mr-4 tablet:mx-12;
-      }
-      &_status {
-        @apply flex flex-col justify-center items-center px-6 phone:px-0 tablet:px-6 tablet:ml-12;
-        &_value {
-          @apply w-28 text-caption-1 text-primary-green-100 bg-opacity-20 font-normal rounded-2xl text-center flex justify-center items-center pb-0.5 upper:text-caption-1 desktop:text-caption-2 breakpoint:text-caption-3 phone:mr-4 phone:text-10px phone:w-20 phone:h-6 phone:mt-2 tablet:w-28 tablet:text-caption-3 tablet:h-8;
-        }
-      }
-      &_chevron {
-        @apply flex justify-center items-center px-6 phone:px-2 phone:mt-2 tablet:mt-0 tablet:px-6;
-      }
-    }
-  }
+	&_header {
+		@apply w-full px-6 tablet:px-7 tablet:pl-6 breakpoint:pl-7 py-2 mb-5 mt-16 flex justify-between content-start desktop:mt-10 phone:mb-0 phone:mt-6 tablet:mb-6 desktop:mb-4;
+		&_titlecontainer {
+			@apply flex flex-col items-start desktop:w-55v breakpoint:w-66v phone:w-45v;
+			&_title {
+				@apply text-subheading font-medium text-left text-white upper:text-subheading desktop:text-heading-3 breakpoint:text-paragraph-2 tablet:text-paragraph-1 phone:text-caption-2;
+			}
+			&_subtitle {
+				@apply text-caption-1 text-grayLabel font-semibold mb-5 text-left upper:text-paragraph-2 desktop:text-caption-1 breakpoint:text-caption-3 tablet:text-caption-2 phone:text-caption-3;
+			}
+		}
+	}
+	&_body {
+		@apply px-6 pb-2 tablet:w-full breakpoint:w-full desktop:w-full overflow-y-auto h-fit-content max-h-62v phone:overflow-scroll phone:overflow-x-hidden tablet:overflow-y-auto;
+		// height: 520px;
+		&::-webkit-scrollbar {
+			@apply w-1.5 bg-dark-200 phone:w-0 tablet:w-1.5;
+		}
+		&::-webkit-scrollbar-thumb {
+			@apply rounded-md h-16;
+			background: linear-gradient(0deg, #2d884c -33.65%, #87dfa5 100%);
+		}
+		&::-webkit-scrollbar-track {
+			@apply rounded-md -mb-14;
+		}
+		&_assetPairContainer {
+			@apply flex rounded-2xl border border-dark-50 phone:h-20 phone:pt-3 phone:pb-5 z-50 tablet:h-28 justify-between;
+			background: radial-gradient(
+				143.33% 143.33% at 82.41% -4.96%,
+				rgba(132, 214, 164, 0.1) 0%,
+				rgba(18, 28, 32, 0.1) 100%
+			);
+			&_assetPair {
+				@apply flex flex-col justify-center items-start px-12 w-80 phone:px-0 phone:pl-3 phone:pr-0 tablet:pl-10 desktop:pr-0;
+			}
+			&_title {
+				@apply text-caption-2 text-grayLabel font-bold phone:pb-1 desktop:text-caption-2 breakpoint:text-caption-3 tablet:text-caption-3 phone:text-10px phone:uppercase tablet:capitalize;
+			}
+			&_value {
+				@apply text-paragraph-1 text-primary-green-100 font-normal flex upper:text-paragraph-1 desktop:text-caption-1 tablet:text-caption-2 phone:text-caption-3;
+			}
+			&_getToken {
+				@apply breakpoint:flex hidden flex-col justify-center items-start px-6 w-40;
+			}
+			&_swapIcon {
+				@apply breakpoint:flex hidden flex-col justify-center items-start px-6;
+			}
+			&_giveToken {
+				@apply breakpoint:flex hidden flex-col justify-center items-start px-6 w-44;
+			}
+			&_separator {
+				@apply h-full bg-dark-50 w-0.5 mx-12 phone:px-0 phone:mx-0 phone:mr-4 tablet:mx-12;
+			}
+			&_status {
+				@apply flex flex-col justify-center items-center px-6 phone:p-0 tablet:px-6 tablet:ml-12;
+				&_value {
+					@apply w-28 text-caption-1 text-primary-green-100 bg-opacity-20 font-normal rounded-2xl text-center flex justify-center items-center pb-0.5 upper:text-caption-1 desktop:text-caption-2 breakpoint:text-caption-3 phone:mr-4 phone:text-10px phone:w-20 phone:h-6 phone:mt-2 tablet:w-28 tablet:text-caption-3 tablet:h-8;
+				}
+			}
+			&_chevron {
+				@apply flex justify-center items-center px-6 phone:pl-0 phone:pr-4 phone:mt-2 tablet:mt-0 tablet:px-6;
+			}
+		}
+	}
 }
 
 @media (min-width: 1280px) {
-  .tradesScreen {
-    width: fit-content;
-    max-width: 1100px;
-    min-width: 800px;
-  }
+	.tradesScreen {
+		width: fit-content;
+		max-width: 1100px;
+		min-width: 800px;
+	}
 }
 
-@media (min-width: 375px) and (max-width:768px) {
-  .tradesScreen {
-    width: fit-content;
-    max-width: 90vw;
-    min-width: 60vw;
-  }
-  ::-webkit-scrollbar{
-    width: 0px;
-  }
+@media (min-width: 375px) and (max-width: 768px) {
+	.tradesScreen {
+		width: fit-content;
+		max-width: 90vw;
+		min-width: 60vw;
+	}
+	::-webkit-scrollbar {
+		width: 0px;
+	}
 }
 
 .accordion__content {
-  z-index: 1;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-  background: #171c1f;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  border-radius: 0px 0px 16px 16px;
+	z-index: 1;
+	overflow: hidden;
+	transition: max-height 0.3s ease;
+	background: #171c1f;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+	border-radius: 0px 0px 16px 16px;
 }
 .accordion_header {
-  @apply px-10 py-4 flex flex-row phone:-ml-4 tablet:pl-12;
-  &_title {
-    @apply text-caption-1 text-primary-green-100 font-bold upper:text-caption-1 desktop:text-caption-2 breakpoint:text-caption-1 tablet:text-caption-3 phone:text-caption-3;
-  }
+	@apply px-10 py-4 flex flex-row phone:-ml-4 tablet:pl-12;
+	&_title {
+		@apply text-caption-1 text-primary-green-100 font-bold upper:text-caption-1 desktop:text-caption-2 breakpoint:text-caption-1 tablet:text-caption-3 phone:text-caption-3;
+	}
 }
 .accordion_separator {
-  @apply w-full mt-2 mb-3 border border-dark-50;
+	@apply w-full mt-2 mb-3 border border-dark-50;
 }
 .accordion_body {
-  @apply px-12 py-6 flex flex-row justify-between phone:flex-col phone:-ml-2 phone:px-8 tablet:pl-12 tablet:flex-row;
-  &_left {
-    @apply flex flex-col items-start phone:mb-4 phone:pr-0;
-    &_title {
-      @apply text-caption-2 text-grayLabel font-bold mb-2 desktop:text-caption-2 breakpoint:text-caption-2 phone:text-caption-3 tablet:text-caption-2;
-    }
-    &_value {
-      @apply flex flex-col justify-start text-paragraph-2 text-primary-green-100 font-medium upper:text-paragraph-2 phone:flex-row phone:text-caption-2 phone:w-full phone:justify-between phone:pr-4 tablet:flex-col tablet:text-caption-1 tablet:w-full;
-      &_get {
-        @apply text-left items-start;
-        & > span {
-          @apply text-primary-green-200 opacity-60 font-bold;
-        }
-      }
-      &_give {
-        @apply text-left items-start;
-        & > span {
-          @apply text-primary-green-200 opacity-60 font-bold;
-        }
-      }
-    }
-  }
-  &_right {
-    @apply flex flex-col items-start pr-24 phone:pr-0 tablet:pr-24;
-    &_title {
-      @apply text-caption-2 text-grayLabel font-bold mb-2 desktop:text-caption-2 phone:text-caption-3 tablet:text-caption-2;
-    }
-    &_value {
-      @apply flex flex-col text-paragraph-2 text-primary-green-100 font-bold upper:text-paragraph-2 phone:flex-row phone:text-caption-2 phone:w-full phone:justify-between tablet:flex-col tablet:text-caption-1;
-      &_get {
-        @apply text-left items-start;
-        & > span {
-          @apply text-primary-green-200 opacity-60;
-        }
-      }
-      &_give {
-        @apply text-left items-start;
-        & > span {
-          @apply text-primary-green-200 opacity-60;
-        }
-      }
-    }
-  }
+	@apply px-12 py-6 flex flex-row justify-between phone:flex-col phone:-ml-2 phone:px-8 tablet:pl-12 tablet:flex-row;
+	&_left {
+		@apply flex flex-col items-start phone:mb-4 phone:pr-0;
+		&_title {
+			@apply text-caption-2 text-grayLabel font-bold mb-2 desktop:text-caption-2 breakpoint:text-caption-2 phone:text-caption-3 tablet:text-caption-2;
+		}
+		&_value {
+			@apply flex flex-col justify-start text-paragraph-2 text-primary-green-100 font-medium upper:text-paragraph-2 phone:flex-row phone:text-caption-2 phone:w-full phone:justify-between phone:pr-4 tablet:flex-col tablet:text-caption-1 tablet:w-full;
+			&_get {
+				@apply text-left items-start;
+				& > span {
+					@apply text-primary-green-200 opacity-60 font-bold;
+				}
+			}
+			&_give {
+				@apply text-left items-start;
+				& > span {
+					@apply text-primary-green-200 opacity-60 font-bold;
+				}
+			}
+		}
+	}
+	&_right {
+		@apply flex flex-col items-start pr-24 phone:pr-0 tablet:pr-24;
+		&_title {
+			@apply text-caption-2 text-grayLabel font-bold mb-2 desktop:text-caption-2 phone:text-caption-3 tablet:text-caption-2;
+		}
+		&_value {
+			@apply flex flex-col text-paragraph-2 text-primary-green-100 font-bold upper:text-paragraph-2 phone:flex-row phone:text-caption-2 phone:w-full phone:justify-between tablet:flex-col tablet:text-caption-1;
+			&_get {
+				@apply text-left items-start;
+				& > span {
+					@apply text-primary-green-200 opacity-60;
+				}
+			}
+			&_give {
+				@apply text-left items-start;
+				& > span {
+					@apply text-primary-green-200 opacity-60;
+				}
+			}
+		}
+	}
 }
 .accordion_sepend {
-  @apply w-full mt-3 mb-8 border border-dark-50 desktop:mb-12;
+	@apply w-full mt-3 mb-8 border border-dark-50 desktop:mb-12;
 }
 .accordion_footer {
-  @apply relative;
-  &_cancel {
-    @apply flex justify-center items-center w-40 px-1 phone:py-0.5 tablet:py-1 text-caption-2 rounded-2xl text-warning-color-100 font-bold absolute -top-3 left-12 cursor-pointer upper:w-48 desktop:w-40 desktop:text-caption-2 phone:text-caption-3 phone:rounded-md phone:w-36 phone:left-6;
-    background: #572b37;
-    border: 1px solid rgba(134, 68, 83, 1);
-  }
+	@apply relative;
+	&_cancel {
+		@apply flex justify-center items-center w-40 px-1 phone:py-0.5 tablet:py-1 text-caption-2 rounded-2xl text-warning-color-100 font-bold absolute -top-3 left-12 cursor-pointer upper:w-48 desktop:w-40 desktop:text-caption-2 phone:text-caption-3 phone:rounded-md phone:w-36 phone:left-6;
+		background: #572b37;
+		border: 1px solid rgba(134, 68, 83, 1);
+	}
 }
 
 .asset_loading {
-  @apply h-4 w-auto animate-pulse bg-dark-100;
+	@apply h-4 w-auto animate-pulse bg-dark-100;
 }

@@ -7,6 +7,7 @@ export const fulfillOrder = async (
   totalAmount,
   setBuyModalStatus,
   setBuyModalOpen,
+  buyModalStatus,
   setTokenApproval,
   resetValue
 ) => {

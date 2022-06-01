@@ -139,12 +139,12 @@ function WithdrawTokenTable({ filter, refetch }) {
     <>
       <div className="tokenListTableContainer phone:hidden tablet:block">
         <Table
-          dataSource={tokenList}
+          dataSource={loading ? [] : tokenList}
           locale={{
             emptyText: loading ? "Loading Tokens..." : "No Token Found",
           }}
           pagination={false}
-          scroll={{ y: 500 }}
+          scroll={{ y: 430 }}
           onChange={onChange}
           onRow={(record) => {
             return {
