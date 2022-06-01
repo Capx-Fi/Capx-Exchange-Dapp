@@ -87,7 +87,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
 			try {
 				await web3.currentProvider.request({
 					method: "wallet_switchEthereumChain",
-					params: [{ chainId: "0x4" }],
+					params: [{ chainId: "0x1" }],
 				});
 			} catch (error) {}
 		} else if (chainName === "Matic") {
@@ -96,8 +96,8 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
 					method: "wallet_addEthereumChain",
 					params: [
 						{
-							chainId: "0x13881",
-							chainName: "Polygon Testnet",
+							chainId: "0x89",
+							chainName: "Polygon",
 							nativeCurrency: {
 								name: "MATIC",
 								symbol: "MATIC",
@@ -131,8 +131,8 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
 					method: "wallet_addEthereumChain",
 					params: [
 						{
-							chainId: "0x61",
-							chainName: "Binance Smart Chain Test",
+							chainId: "0x38",
+							chainName: "Binance Smart Chain",
 							nativeCurrency: {
 								name: "BNB",
 								symbol: "BNB",
@@ -184,8 +184,8 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
 					method: "wallet_addEthereumChain",
 					params: [
 						{
-							chainId: "0xA869",
-							chainName: "Avalanche Fuji",
+							chainId: "0xA86A",
+							chainName: "Avalanche C-Chain",
 							nativeCurrency: {
 								name: "AVAX",
 								symbol: "AVAX",
