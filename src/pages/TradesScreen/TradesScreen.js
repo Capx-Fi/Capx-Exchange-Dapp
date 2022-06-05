@@ -18,10 +18,10 @@ import {
 	getExchangeContractAddress,
 	getExchangeURL,
 } from "../../constants/getChainConfig";
+import WalletModal from "../../components/WalletModal/WalletModal";
 
 function TradesScreen() {
-	const { active, account, chainId } = useWeb3React();
-	const web3 = new Web3(Web3.givenProvider);
+	const { active, account, chainId, connector } = useWeb3React();
 	const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
 		chainId && getExchangeContractAddress(chainId);
 
@@ -34,6 +34,22 @@ function TradesScreen() {
 	const [cancelModalStatus, setCancelModalStatus] = useState("");
 	const [cancelModalOpen, setCancelModalOpen] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [modalMode, setModalMode] = useState(0);
+	const [web3, setWeb3] = useState(null);
+
+	const setupProvider = async () => {
+		let result = await connector?.getProvider().then((res) => {
+			return res;
+		});
+		return result;
+	};
+
+	useEffect(() => {
+		setupProvider().then((res) => {
+			setWeb3(new Web3(res));
+		});
+	}, [active, chainId]);
+
 	useEffect(() => {
 		if (tradesData) {
 			if (sortBy === 5) {
@@ -65,10 +81,9 @@ function TradesScreen() {
 		setResetTrade(orderList);
 	};
 	const tryCancelOrder = async (orderId) => {
-		const exchangeContract = new web3.eth.Contract(
-			EXCHANGE_ABI,
-			CHAIN_EXCHANGE_CONTRACT_ADDRESS
-		);
+		const exchangeContract =
+			web3 &&
+			new web3.eth.Contract(EXCHANGE_ABI, CHAIN_EXCHANGE_CONTRACT_ADDRESS);
 		const order = await cancelOrder(
 			exchangeContract,
 			account,
@@ -84,7 +99,7 @@ function TradesScreen() {
 	return (
 		<>
 			{!active ? (
-				<MetamaskModal />
+				<WalletModal modalMode={modalMode} setModalMode={setModalMode} />
 			) : tradesData === null ? (
 				<>
 					<div className="tradesScreen">

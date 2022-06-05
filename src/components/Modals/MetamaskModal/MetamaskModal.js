@@ -4,6 +4,7 @@ import Footer from "../../Footer/Footer";
 import { Link } from "react-router-dom";
 import FirefoxIllustration from "../../../assets/FirefoxIllustration.png";
 import MetamaskIcon from "../../../assets/MetamaskIcon.svg";
+import NextIcon from "../../../assets/next-black.svg";
 import { injected } from "../../../utils/connector";
 import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 import { useSnackbar } from "notistack";
@@ -28,7 +29,7 @@ function MetamaskModal({ setModalMode }) {
 				<div className="metamaskmodalscreen_maincontainer_herocontainer">
 					<div className="metamaskmodalscreen_maincontainer_herocontainer_title">
 						{t("please_connect_metamask")}
-						<br /> {t("please_connect_metamask_2")}
+						<br /> {"Wallet to Proceed"}
 					</div>
 					<div
 						className="metamaskmodalscreen_maincontainer_herocontainer_button"
@@ -36,14 +37,14 @@ function MetamaskModal({ setModalMode }) {
 							setModalMode(1);
 						}}
 					>
+						<div className="metamaskmodalscreen_maincontainer_herocontainer_button_text">
+							{t("Connect Wallet")}
+						</div>
 						<img
 							className="metamaskmodalscreen_maincontainer_herocontainer_button_icon"
-							src={MetamaskIcon}
-							alt="Metamask Icon"
+							src={NextIcon}
+							alt="Next Icon"
 						/>
-						<div className="metamaskmodalscreen_maincontainer_herocontainer_button_text">
-							{t("connect_metamask")}
-						</div>
 					</div>
 					<img
 						className="metamaskmodalscreen_maincontainer_herocontainer_firefoxillustration"

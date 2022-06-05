@@ -72,7 +72,7 @@ const Landing = ({ setModalMode }) => {
 						alt="close icon"
 					/>
 					<div className="title phone:text-heading-3 phone:leading-1 tablet:text-heading-2 screen:text-heading-2 screen:leading-lh-64 desktop:text-40px desktop:leading-lh-64 twok:text-50px twok:leading-lh-54 tablet:leading-title-1 font-semibold w-10/12 text-left">
-						{"Connect your wallet"}
+						{"Connect Your Wallet"}
 					</div>
 					<div className="tablet:text-paragraph-2 text-left desktop:mt-2 desktop:text-paragraph-1 desktop:leading-subheading twok:text-subheading twok:leading-subheading text-greylabel2">
 						{"Connect with one of our available wallet providers"}

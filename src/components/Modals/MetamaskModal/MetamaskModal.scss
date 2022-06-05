@@ -1,40 +1,41 @@
 .metamaskmodalscreen {
-  @apply h-full bg-dark-400 flex tablet:pt-32 phone:pt-0;
+	@apply h-full bg-dark-400 flex tablet:pt-32 phone:pt-0;
 
-  &_maincontainer {
-    @apply flex justify-center laptop:items-center m-auto mt-32 tablet:mt-48 laptop:mt-auto;
-    &_herocontainer {
-      @apply px-5 py-8 rounded-lg bg-opacity-70 desktop:rounded-4xl text-white relative w-70v desktop:pt-16 desktop:w-55v desktop:h-45v breakpoint:w-55v breakpoint:h-45v breakpoint:pt-10 laptop:w-72v tablet:w-75v tablet:rounded-2xl tablet:pl-16 tablet:pr-12 tablet:py-16 flex flex-col items-start;
-      background: linear-gradient(
-        270.08deg,
-        rgba(132, 214, 164, 0.3) 0.02%,
-        rgba(18, 28, 32, 0.3) 117.26%
-      );
+	&_maincontainer {
+		@apply flex justify-center laptop:items-center m-auto mt-32 tablet:mt-48 laptop:mt-auto;
+		&_herocontainer {
+			@apply px-5 py-8 rounded-lg bg-opacity-70 desktop:rounded-4xl text-white relative w-70v desktop:pt-16 desktop:w-55v desktop:h-45v breakpoint:w-55v breakpoint:h-45v breakpoint:pt-10 laptop:w-72v tablet:w-75v tablet:rounded-2xl tablet:pl-16 tablet:pr-12 tablet:py-16 flex flex-col items-start;
+			background: linear-gradient(
+				270.08deg,
+				rgba(132, 214, 164, 0.3) 0.02%,
+				rgba(18, 28, 32, 0.3) 117.26%
+			);
 
-      &_cname {
-        @apply flex rounded-lg object-contain w-fit-content bg-opacity-70  px-3 mb-4 py-2.5 text-caption-4 tablet:text-caption-2 leading-caption-4 tablet:leading-caption-2;
-        background: linear-gradient(
-          270.08deg,
-          rgba(132, 214, 164, 0.3) 0.02%,
-          rgba(18, 28, 32, 0.3) 117.26%
-        );
-        border-radius: 16px;
-      }
-      &_title {
-        @apply text-paragraph-2 leading-paragraph-2 tablet:text-heading-1 tablet:leading-heading-1 font-semibold laptop:mt-4 laptop:text-heading-1 laptop:leading-lh-54 desktop:text-heading-1 desktop:leading-heading-1 desktop:font-semibold breakpoint:text-heading-2 w-11/12 text-left;
-      }
-      &_button {
-        @apply rounded-xl justify-center items-center flex px-3 py-2 laptop:px-5 laptop:py-3 bg-primary-green-100 my-4 z-10 tablet:my-10 mb-28 tablet:mb-24 laptop:mb-24 laptop:my-10 w-48 tablet:w-72 desktop:w-20v breakpoint:w-64 cursor-pointer;
-        &_icon {
-          @apply w-5 tablet:w-9 laptop:w-12 mr-2;
-        }
-        &_text {
-          @apply text-dark-400 font-bold desktop:text-paragraph-2 breakpoint:text-caption-1 tablet:text-caption-1 text-caption-2;
-        }
-      }
-      &_firefoxillustration {
-        @apply flex w-44 tablet:w-72 breakpoint:w-64 absolute -bottom-12 -right-8 tablet:-bottom-10 tablet:-right-16 laptop:-right-20;
-      }
-    }
-  }
+			&_cname {
+				@apply flex rounded-lg object-contain w-fit-content bg-opacity-70  px-3 mb-4 py-2.5 text-caption-4 tablet:text-caption-2 leading-caption-4 tablet:leading-caption-2;
+				background: linear-gradient(
+					270.08deg,
+					rgba(132, 214, 164, 0.3) 0.02%,
+					rgba(18, 28, 32, 0.3) 117.26%
+				);
+				border-radius: 16px;
+			}
+			&_title {
+				@apply text-paragraph-2 leading-paragraph-2 tablet:text-heading-1 tablet:leading-heading-1 font-semibold laptop:mt-4 laptop:text-heading-1 laptop:leading-lh-54 desktop:text-heading-1 desktop:leading-heading-1 desktop:font-semibold breakpoint:text-heading-2 w-11/12 text-left;
+			}
+			&_button {
+				@apply rounded-xl justify-center items-center flex px-3 py-2 laptop:px-5 laptop:py-3 bg-primary-green-100 my-4 z-10 tablet:my-10 mb-28 tablet:mb-24 laptop:mb-24 laptop:my-10 w-48 tablet:w-72 desktop:w-20v breakpoint:w-64 cursor-pointer;
+				background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
+				&_icon {
+					@apply w-5 tablet:w-9 laptop:w-12 ml-4;
+				}
+				&_text {
+					@apply text-dark-400 font-bold desktop:text-paragraph-2 breakpoint:text-caption-1 tablet:text-caption-1 text-caption-2;
+				}
+			}
+			&_firefoxillustration {
+				@apply flex w-44 tablet:w-72 breakpoint:w-64 absolute -bottom-12 -right-8 tablet:-bottom-10 tablet:-right-16 laptop:-right-20;
+			}
+		}
+	}
 }
