@@ -69,14 +69,17 @@ function ProjectInfo({ match }) {
 		});
 	}, [active, chainId]);
 
+	console.log(web3);
+	console.log(web3?.currentProvider);
 	useEffect(() => {
 		let nullBuyTicker = ticker;
 		if (nullBuyTicker) {
 			Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
 			dispatch(setProjectBuyTicker({ ...nullBuyTicker }));
 		}
-		getProjectDetails(match.params.ticker);
-	}, [match.params.ticker, active, account, chainId, refresh]);
+		web3?.currentProvider && getProjectDetails(match.params.ticker);
+	}, [match.params.ticker, active, account, chainId, refresh, web3]);
+
 	const getProjectDetails = async () => {
 		setLoading(true);
 		if (active) {
@@ -86,21 +89,19 @@ function ProjectInfo({ match }) {
 			);
 
 			setProjectDetails(_projectDetails);
-			const _activeOrders =
-				web3 &&
-				(await fetchOrderForTicker(
-					_projectDetails.id,
-					setActiveOrders,
-					setCompleteOrders,
-					account,
-					chainId,
-					setLastSellingPrice,
-					setAverageSellingPrice,
-					exchangeURL,
-					wrappedURL,
-					CHAIN_USDT_CONTRACT_ADDRESS,
-					web3
-				));
+			const _activeOrders = await fetchOrderForTicker(
+				_projectDetails.id,
+				setActiveOrders,
+				setCompleteOrders,
+				account,
+				chainId,
+				setLastSellingPrice,
+				setAverageSellingPrice,
+				exchangeURL,
+				wrappedURL,
+				CHAIN_USDT_CONTRACT_ADDRESS,
+				web3
+			);
 			setLoading(false);
 		}
 	};
