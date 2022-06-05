@@ -92,7 +92,7 @@ function WithdrawTokenTable({ filter, refetch }) {
 			wrappedURL,
 			chainId
 		);
-		let balance = await exchangeContract.methods
+		let balance = await exchangeContract?.methods
 			.unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
 			.call();
 
@@ -100,8 +100,8 @@ function WithdrawTokenTable({ filter, refetch }) {
 			web3 &&
 			new web3.eth.Contract(CONTRACT_ABI_ERC20, CHAIN_USDT_CONTRACT_ADDRESS);
 
-		let stableCoinDecimal = await stableCoinContract.methods.decimals().call();
-		let stableCoinSymbol = await stableCoinContract.methods.symbol().call();
+		let stableCoinDecimal = await stableCoinContract?.methods.decimals().call();
+		let stableCoinSymbol = await stableCoinContract?.methods.symbol().call();
 
 		// HARDCODING FOR USDT MATIC AT THE MOMENT... Need a cleaner fix
 

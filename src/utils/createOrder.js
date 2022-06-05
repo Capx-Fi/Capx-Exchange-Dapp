@@ -48,9 +48,9 @@ export const createOrder = async (
 	const tokenInst =
 		web3 &&
 		new web3.eth.Contract(CONTRACT_ABI_ERC20, CHAIN_USDT_CONTRACT_ADDRESS);
-	const tokenSymbol = await tokenInst.methods.symbol().call();
+	const tokenSymbol = await tokenInst?.methods.symbol().call();
 	// console.log(tokenSymbol, "tokenSymbol");
-	const USDTTokenDecimal = await tokenInst.methods.decimals().call();
+	const USDTTokenDecimal = await tokenInst?.methods.decimals().call();
 	let tokenGive = ticker.assetID;
 	let amountGive = totalAmount;
 	let tokenGet = CHAIN_USDT_CONTRACT_ADDRESS;
@@ -66,7 +66,7 @@ export const createOrder = async (
 	let direction = true;
 	let result = null;
 	try {
-		result = await exchangeContract.methods
+		result = await exchangeContract?.methods
 			.createOrder(
 				tokenGive,
 				checkSell.amountGiveValue.toString(),

@@ -144,7 +144,7 @@ export const fetchContractBalances = async (
 				// );
 				// await console.log(exchangeContract);
 
-				let balance = await exchangeContract.methods
+				let balance = await exchangeContract?.methods
 					.unlockBalance(contractHolding.assetID, account)
 					.call();
 				// await console.log("After issue");

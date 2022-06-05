@@ -213,10 +213,10 @@ export const fetchOrderForTicker = async (
 		const tokenInst =
 			web3 &&
 			new web3.eth.Contract(CONTRACT_ABI_ERC20, CHAIN_USDT_CONTRACT_ADDRESS);
-		const tokenSymbol = await tokenInst.methods.symbol().call();
+		const tokenSymbol = await tokenInst?.methods.symbol().call();
 		// console.log(tokenSymbol, "tokenSymbol");
-		const USDTTokenDecimal = await tokenInst.methods.decimals().call();
-		let balance = await exchangeContract.methods
+		const USDTTokenDecimal = await tokenInst?.methods.decimals().call();
+		let balance = await exchangeContract?.methods
 			.unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
 			.call();
 		balance = new BigNumber(balance)

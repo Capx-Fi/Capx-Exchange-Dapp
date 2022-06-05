@@ -176,14 +176,14 @@ export const fetchListedTokens = async (
 			EXCHANGE_ABI,
 			chainId && getExchangeContractAddress(chainId)
 		);
-		let balance = await exchangeContract.methods
+		let balance = await exchangeContract?.methods
 			.unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
 			.call();
 		const tokenInst = new web3.eth.Contract(
 			CONTRACT_ABI_ERC20,
 			CHAIN_USDT_CONTRACT_ADDRESS
 		);
-		const USDTTokenDecimal = await tokenInst.methods.decimals().call();
+		const USDTTokenDecimal = await tokenInst?.methods.decimals().call();
 
 		balance = new BigNumber(balance)
 			.dividedBy(Math.pow(10, USDTTokenDecimal))

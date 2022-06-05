@@ -1,44 +1,44 @@
 import BigNumber from "bignumber.js";
 BigNumber.config({
-  ROUNDING_MODE: 3,
-  DECIMAL_PLACES: 18,
-  EXPONENTIAL_AT: [-18, 36],
+	ROUNDING_MODE: 3,
+	DECIMAL_PLACES: 18,
+	EXPONENTIAL_AT: [-18, 36],
 });
 export const withdrawToken = async (
-  exchangeContract,
-  account,
-  assetID,
-  totalAmount,
-  setWithdrawModalOpen,
-  setWithdrawModalStatus,
-  setButtonDisabled,
-  enqueueSnackbar,
-  resetValue
+	exchangeContract,
+	account,
+	assetID,
+	totalAmount,
+	setWithdrawModalOpen,
+	setWithdrawModalStatus,
+	setButtonDisabled,
+	enqueueSnackbar,
+	resetValue
 ) => {
-  setWithdrawModalOpen(true);
+	setWithdrawModalOpen(true);
 
-  let result = null;
+	let result = null;
 
-  try {
-    result = await exchangeContract.methods
-      .withdrawToken(assetID, totalAmount)
-      .send({ from: account });
-    if (result) {
-      setWithdrawModalStatus("success");
-      // enqueueSnackbar("Transaction Successful", { variant: "success" });
-      resetValue();
-    } else {
-      setWithdrawModalStatus("failure");
-      // enqueueSnackbar("Sorry transaction failed", { variant: "error" });
-      setButtonDisabled(false);
-    }
-  } catch (err) {
-    setWithdrawModalStatus("failure");
-    // enqueueSnackbar(err.message, { variant: "error" });
-    setButtonDisabled(false);
-  }
-  setTimeout(() => {
-    setWithdrawModalOpen(false);
-    setWithdrawModalStatus("");
-  }, 2500);
+	try {
+		result = await exchangeContract?.methods
+			.withdrawToken(assetID, totalAmount)
+			.send({ from: account });
+		if (result) {
+			setWithdrawModalStatus("success");
+			// enqueueSnackbar("Transaction Successful", { variant: "success" });
+			resetValue();
+		} else {
+			setWithdrawModalStatus("failure");
+			// enqueueSnackbar("Sorry transaction failed", { variant: "error" });
+			setButtonDisabled(false);
+		}
+	} catch (err) {
+		setWithdrawModalStatus("failure");
+		// enqueueSnackbar(err.message, { variant: "error" });
+		setButtonDisabled(false);
+	}
+	setTimeout(() => {
+		setWithdrawModalOpen(false);
+		setWithdrawModalStatus("");
+	}, 2500);
 };
