@@ -64,7 +64,7 @@ function TradesScreen() {
 		setLoading(false);
 	}, 3500);
 
-	console.log(sortBy);
+	// console.log(sortBy);
 
 	useEffect(() => {
 		if (account) {
@@ -94,7 +94,7 @@ function TradesScreen() {
 		fetchTradeData(account);
 	};
 
-	console.log(loading);
+	// console.log(loading);
 
 	return (
 		<>
@@ -196,7 +196,7 @@ function TradesScreen() {
 										className="-mt-40 phone:-mt-40 tablet:-mt-36 tablet:mr-8 breakpoint:-mt-4 desktop:-mt-28 block z-50 breakpoint:ml-12 text-tradeTitle underline cursor-pointer"
 										onClick={() => setSortBy(5)}
 									>
-										{console.log(sortBy)}Reset Filters
+										Reset Filters
 									</span>
 								) : null}
 							</>

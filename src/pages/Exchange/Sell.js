@@ -75,7 +75,7 @@ function SellScreen({
 		});
 	}, [active, chainId]);
 
-	web3 && console.log(web3);
+	// web3 && console.log(web3);
 
 	const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
 		chainId && getExchangeContractAddress(chainId);

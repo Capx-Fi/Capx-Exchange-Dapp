@@ -69,8 +69,8 @@ function ProjectInfo({ match }) {
 		});
 	}, [active, chainId]);
 
-	console.log(web3);
-	console.log(web3?.currentProvider);
+	// console.log(web3);
+	// console.log(web3?.currentProvider);
 	useEffect(() => {
 		let nullBuyTicker = ticker;
 		if (nullBuyTicker) {

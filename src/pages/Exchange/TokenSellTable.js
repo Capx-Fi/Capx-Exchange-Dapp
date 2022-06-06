@@ -158,7 +158,7 @@ function TokenSellTable({ filter, refresh }) {
 						onRow={(record) => {
 							return {
 								onClick: (e) => {
-									console.log("sell", record);
+									// console.log("sell", record);
 									dispatch(setSellTicker(record));
 									dispatch(setTickerBalance(record.maxQuantity));
 								},
