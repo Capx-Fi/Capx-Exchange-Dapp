@@ -59,10 +59,10 @@ const Landing = ({ setModalMode }) => {
 	}
 
 	return (
-		<article className="h-full bg-dark-400 flex choose_screen overflow-hidden m-auto">
+		<article className="h-full bg-dark-400 flex choose_screen overflow-hidden m-auto phone:mt-20 tablet:-mt-10 breakpoint:mt-10">
 			<Header hiddenNav />
 			<div className="justify-center items-center m-auto breakpoint:mt-20 desktop:mt-20 tablet:mt-48 laptop:mt-auto overflow-hidden">
-				<div className="herocontainer overflow-hidden phone:w-90v phone:mt-12 screen:mt-0 tablet:w-75v phone:px-8 phone:py-6 screen:px-16 screen:py-10 desktop:px-20 desktop:py-14 rounded-3xl bg-opacity-70 text-white relative screen:w-65v desktop:w-60v flex flex-col items-start">
+				<div className="herocontainer overflow-hidden phone:w-90v phone:mt-12 screen:mt-0 tablet:w-75v phone:px-8 phone:py-6 screen:px-16 screen:py-10 desktop:px-20 desktop:py-14 rounded-2xl bg-opacity-70 text-white relative screen:w-65v desktop:w-60v flex flex-col items-start">
 					<img
 						src={CrossIcon}
 						className="absolute cursor-pointer phone:top-8 phone:right-5 phone:w-5 phone:h-5 breakpoint:top-10 breakpoint:right-10 tablet:w-10 tablet:h-10"
@@ -88,10 +88,10 @@ const Landing = ({ setModalMode }) => {
 								<img
 									src={MetamaskIcon}
 									alt="Metamask Icon"
-									className="inline-block phone:w-10 phone:h-10 desktop:w-12 ml-3 mr-12"
+									className="inline-block phone:w-10 phone:h-10 desktop:w-16 desktop:h-16 ml-3 tablet:mr-12 phone:mr-6"
 								/>
 							</div>
-							<div className="text-white desktop:text-captions-1 twok:text-subheading desktop-captions-1 twok:leading-subheading desktop:font-semibold">
+							<div className="text-white desktop:text-paragraph-2 breakpoint:text-caption-1 twok:text-subheading desktop-captions-1 twok:leading-subheading font-semibold">
 								{"Metamask"}
 							</div>
 						</div>
@@ -105,10 +105,10 @@ const Landing = ({ setModalMode }) => {
 								<img
 									src={WalletConnectIcon}
 									alt="WalletConnect Icon"
-									className="inline-block phone:w-10 phone:h-10 desktop:w-12 ml-3 mr-12"
+									className="inline-block phone:w-10 phone:h-10 desktop:w-16 desktop:h-16 ml-3 tablet:mr-12 phone:mr-6"
 								/>
 							</div>
-							<div className="text-white desktop:text-captions-1 twok:text-subheading desktop-captions-1 twok:leading-subheading desktop:font-semibold">
+							<div className="text-white desktop:text-paragraph-2 breakpoint:text-caption-1 twok:text-subheading desktop-captions-1 twok:leading-subheading font-semibold">
 								{"WalletConnect"}
 							</div>
 						</div>

@@ -250,16 +250,21 @@ export const fetchOrderForTicker = async (
 			);
 		});
 
-		let average_price = 0;
-		let total_quantity = 0;
-		let total_price = 0;
-		let last_price = 0;
+		let average_price = new BigNumber(0);
+		let total_quantity = new BigNumber(0);
+		let total_price = new BigNumber(0);
+		let last_price = new BigNumber(0);
+
 		if (completeOrders?.length > 0) {
 			completeOrders.forEach((order) => {
-				total_quantity += order.completedQuantity;
-				total_price += order.price * order.completedQuantity;
+				// console.log(order.completedQuantity);
+				total_quantity = total_quantity.plus(order.completedQuantity);
+				total_price = total_price.plus(
+					order.price.multipliedBy(order.completedQuantity)
+				);
 			});
-			average_price = total_price / total_quantity;
+			average_price = total_price.dividedBy(total_quantity);
+			// console.log(total_quantity);
 
 			last_price = completeOrders[0].price;
 			average_price = parseFloat(average_price).toFixed(2);

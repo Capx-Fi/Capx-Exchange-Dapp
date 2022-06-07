@@ -89,19 +89,21 @@ function ProjectInfo({ match }) {
 			);
 
 			setProjectDetails(_projectDetails);
-			const _activeOrders = await fetchOrderForTicker(
-				_projectDetails.id,
-				setActiveOrders,
-				setCompleteOrders,
-				account,
-				chainId,
-				setLastSellingPrice,
-				setAverageSellingPrice,
-				exchangeURL,
-				wrappedURL,
-				CHAIN_USDT_CONTRACT_ADDRESS,
-				web3
-			);
+			const _activeOrders =
+				web3?.currentProvider &&
+				(await fetchOrderForTicker(
+					_projectDetails.id,
+					setActiveOrders,
+					setCompleteOrders,
+					account,
+					chainId,
+					setLastSellingPrice,
+					setAverageSellingPrice,
+					exchangeURL,
+					wrappedURL,
+					CHAIN_USDT_CONTRACT_ADDRESS,
+					web3
+				));
 			setLoading(false);
 		}
 	};
@@ -141,7 +143,9 @@ function ProjectInfo({ match }) {
 									<InfoHeader
 										ticker={`${projectDetails?.projectName} (${projectDetails.projectTokenTicker})`}
 										lastSellingPrice={lastSellingPrice}
-										averageSellingPrice={averageSellingPrice}
+										averageSellingPrice={`${
+											web3?.currentProvider ? averageSellingPrice : 0
+										}`}
 									/>
 									<ProjectDescription
 										projectDetails={projectDetails}

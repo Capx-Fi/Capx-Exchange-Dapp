@@ -20,9 +20,11 @@ export const approveSellTokens = async (
 	let approvedAmount = null;
 
 	try {
-		approvedAmount = await vestingTokenContract?.methods
-			.allowance(account, EXCHANGE_CONTRACT_ADDRESS)
-			.call();
+		approvedAmount =
+			vestingTokenContract &&
+			(await vestingTokenContract?.methods
+				.allowance(account, EXCHANGE_CONTRACT_ADDRESS)
+				.call());
 	} catch (err) {
 		setApproveModalStatus("failure");
 		// enqueueSnackbar("Token Approval Failed!", { variant: "error" });

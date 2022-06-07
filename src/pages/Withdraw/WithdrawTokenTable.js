@@ -76,8 +76,8 @@ function WithdrawTokenTable({ filter, refetch }) {
 			Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
 			dispatch(setWithdrawTicker({ ...nullBuyTicker }));
 		}
-		fetchPortfolioHoldings();
-	}, [account, chainId, refetch]);
+		web3?.currentProvider && fetchPortfolioHoldings();
+	}, [account, chainId, refetch, web3]);
 	$(".ant-table-row").on("click", function () {
 		var selected = $(this).hasClass("highlight");
 		$(".ant-table-row").removeClass("highlight");
@@ -86,12 +86,14 @@ function WithdrawTokenTable({ filter, refetch }) {
 
 	const fetchPortfolioHoldings = async () => {
 		setLoading(true);
-		const holdings = await fetchContractBalances(
-			account.toString(),
-			exchangeURL,
-			wrappedURL,
-			chainId
-		);
+		const holdings =
+			web3?.currentProvider &&
+			(await fetchContractBalances(
+				account.toString(),
+				exchangeURL,
+				wrappedURL,
+				chainId
+			));
 		let balance = await exchangeContract?.methods
 			.unlockBalance(CHAIN_USDT_CONTRACT_ADDRESS, account)
 			.call();

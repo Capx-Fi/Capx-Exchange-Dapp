@@ -97,8 +97,8 @@ export const fetchContractBalances = async (
 				// Not printing stable coin again
 				// console.log(total[1].assetID, stableCoin);
 				if (
-					web3.utils.toChecksumAddress(total[1].assetID) ===
-					web3.utils.toChecksumAddress(stableCoin)
+					web3?.utils.toChecksumAddress(total[1].assetID) ===
+					web3?.utils.toChecksumAddress(stableCoin)
 				) {
 					return;
 				}
