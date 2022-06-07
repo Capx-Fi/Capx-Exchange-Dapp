@@ -37,7 +37,7 @@ export const fetchContractBalances = async (
 
 	// Getting stable coin
 	const stableCoin = chainId && getUsdtContractAddress(chainId);
-	console.log("-Stable coin-", stableCoin);
+	// console.log("-Stable coin-", stableCoin);
 
 	// console.log("-chain ID-", chainId);
 	const liquidClient = new ApolloClient({

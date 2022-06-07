@@ -274,8 +274,14 @@ function BuyScreen({
 							value={ticker ? ticker.amountGive : ""}
 						/>
 					</div>
-					{warningCheck && (
-						<WarningCard text={`You don't have enough ` + ticker?.GetAsset} />
+					{warningCheck && !tokenApproval && (
+						<WarningCard text={`You don't have enough ${ticker?.GetAsset}`} />
+					)}
+					{warningCheck && tokenApproval && (
+						<WarningCard
+							text={`Tokens Approved! Please swap your tokens.`}
+							isApproved={true}
+						/>
 					)}
 					{(!checkBuy?.["stableCoinLegal"] ||
 						!checkBuy?.["DerivativeLegal"]) && (
