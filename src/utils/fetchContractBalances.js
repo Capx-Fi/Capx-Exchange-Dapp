@@ -89,20 +89,20 @@ export const fetchContractBalances = async (
 			let userData = record[1];
 			let userTotalData = userData.totalBalance;
 			let userLockedData = userData.lockedBalance;
+
 			let assetToLockedBalance = {};
 			Object.entries(userLockedData).forEach((locked) => {
 				assetToLockedBalance[locked[1].assetID] = locked[1].lockedValue;
 			});
 			Object.entries(userTotalData).forEach((total) => {
 				// Not printing stable coin again
-				// console.log(total[1].assetID, stableCoin);
+
 				if (
 					web3?.utils.toChecksumAddress(total[1].assetID) ===
 					web3?.utils.toChecksumAddress(stableCoin)
 				) {
 					return;
 				}
-
 				let xData = {};
 				xData.asset = assetData.assets.find(
 					(asset) => asset.id === total[1].assetID
