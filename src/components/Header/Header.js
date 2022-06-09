@@ -38,8 +38,10 @@ import useWagmi from "../../useWagmi";
 function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   const location = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const { active, account, library, connector, connect, deactivate, chainId } =
-    useWagmi(injected);
+  const { active, account, library, connector, deactivate, chainId } =
+    useWagmi();
+
+  console.log(useWagmi());
   const { metaState, getChain } = useMetamask();
   const [projectData, setProjectData] = useState([]);
   const desiredChainId = "4";

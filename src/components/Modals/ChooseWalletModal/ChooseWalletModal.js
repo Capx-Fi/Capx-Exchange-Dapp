@@ -12,9 +12,12 @@ import { injected, walletconnect } from "../../../utils/connector";
 import { useTranslation } from "react-i18next";
 import CrossIcon from "../../../assets/cross.svg";
 import useWagmi from "../../../useWagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { useConnect } from "wagmi";
+import { disconnect } from "@wagmi/core";
 
 const Landing = ({ setModalMode }) => {
-  const { active, account, library, connector, connect } = useWagmi(injected);
+  const { active, account, library, connectors, connect } = useWagmi();
   const [isWalletConnect, setIsWalletConnect] = useState(false);
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -79,38 +82,40 @@ const Landing = ({ setModalMode }) => {
             {"Connect with one of our available wallet providers"}
           </div>
           <div className="herobuttons flex flex-col gap-y-2 my-14 w-full">
-            <div
-              onClick={() => connect()}
-              className="herocontainer_connectbutton flex flex-start rounded-xl items-center flex px-5 py-4 z-10 cursor-pointer"
-            >
-              <div>
-                <img
-                  src={MetamaskIcon}
-                  alt="Metamask Icon"
-                  className="inline-block phone:w-10 phone:h-10 desktop:w-16 desktop:h-16 ml-3 tablet:mr-12 phone:mr-6"
-                />
+            {connectors[0].ready && (
+              <div
+                onClick={() => connect(connectors[0])}
+                className="herocontainer_connectbutton flex flex-start rounded-xl items-center flex px-5 py-4 z-10 cursor-pointer"
+              >
+                <div>
+                  <img
+                    src={MetamaskIcon}
+                    alt="Metamask Icon"
+                    className="inline-block phone:w-10 phone:h-10 desktop:w-16 desktop:h-16 ml-3 tablet:mr-12 phone:mr-6"
+                  />
+                </div>
+                <div className="text-white desktop:text-paragraph-2 breakpoint:text-caption-1 twok:text-subheading desktop-captions-1 twok:leading-subheading font-semibold">
+                  {connectors[0].name}
+                </div>
               </div>
-              <div className="text-white desktop:text-paragraph-2 breakpoint:text-caption-1 twok:text-subheading desktop-captions-1 twok:leading-subheading font-semibold">
-                {"Metamask"}
+            )}
+            {connectors[1].ready && (
+              <div
+                onClick={() => connect(connectors[1])}
+                className="herocontainer_connectbutton flex flex-start rounded-xl items-center flex px-5 py-4 z-10 cursor-pointer"
+              >
+                <div>
+                  <img
+                    src={WalletConnectIcon}
+                    alt="WalletConnect Icon"
+                    className="inline-block phone:w-10 phone:h-10 desktop:w-16 desktop:h-16 ml-3 tablet:mr-12 phone:mr-6"
+                  />
+                </div>
+                <div className="text-white desktop:text-paragraph-2 breakpoint:text-caption-1 twok:text-subheading desktop-captions-1 twok:leading-subheading font-semibold">
+                  {connectors[1].name}
+                </div>
               </div>
-            </div>
-            <div
-              onClick={() => {
-                walletConnect();
-              }}
-              className="herocontainer_connectbutton flex flex-start rounded-xl items-center flex px-5 py-4 z-10 cursor-pointer"
-            >
-              <div>
-                <img
-                  src={WalletConnectIcon}
-                  alt="WalletConnect Icon"
-                  className="inline-block phone:w-10 phone:h-10 desktop:w-16 desktop:h-16 ml-3 tablet:mr-12 phone:mr-6"
-                />
-              </div>
-              <div className="text-white desktop:text-paragraph-2 breakpoint:text-caption-1 twok:text-subheading desktop-captions-1 twok:leading-subheading font-semibold">
-                {"WalletConnect"}
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

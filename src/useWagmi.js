@@ -1,24 +1,27 @@
-import { useConnect, useDisconnect, WagmiConfig } from "wagmi";
+import { useAccount, useConnect, useDisconnect, WagmiConfig } from "wagmi";
 
-function useWagmi(currentConnector) {
-  console.log(currentConnector);
-  const wagmiConnect = useConnect({
-    connector: currentConnector,
-  });
+function useWagmi() {
+  const wagmiConnect = useConnect();
   const wagmiDisconnect = useDisconnect();
+  const wagmiAccount = useAccount();
+
+  console.log("useWagmi", wagmiConnect, wagmiDisconnect, wagmiAccount);
   const active = wagmiConnect.isConnected;
-  const account = wagmiConnect.data?.address;
+  const account = wagmiAccount.data?.address;
   const chainId = wagmiConnect.data?.chain?.id;
+  const connectors = wagmiConnect.connectors;
   const connector = wagmiConnect.data?.connector;
   const deactivate = wagmiDisconnect.disconnect;
+  const connect = wagmiConnect.connect;
 
   return {
     active,
     account,
     connector,
-    connect: wagmiConnect.connect,
     deactivate,
     chainId,
+    connectors,
+    connect,
   };
 }
 

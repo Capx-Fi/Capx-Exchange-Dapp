@@ -7,9 +7,35 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { MetamaskStateProvider } from "./metamaskReactHook/index";
 import { SnackbarProvider } from "notistack";
 import Web3 from "web3";
-import { WagmiConfig, createClient } from "wagmi";
+import {
+  WagmiConfig,
+  createClient,
+  configureChains,
+  defaultChains,
+} from "wagmi";
 
-const client = createClient();
+import { publicProvider } from "wagmi/providers/public";
+import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
+
+const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
+  publicProvider(),
+]);
+
+const client = createClient({
+  autoConnect: false,
+  connectors: [
+    new MetaMaskConnector({ chains }),
+    new WalletConnectConnector({
+      chains,
+      options: {
+        qrcode: true,
+      },
+    }),
+  ],
+  provider,
+  webSocketProvider,
+});
 
 function getLibrary(provider) {
   return new Web3(provider);
