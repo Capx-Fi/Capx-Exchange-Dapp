@@ -11,6 +11,7 @@ import { WRONG_CHAIN_MESSAGE } from "../../../constants/config";
 import { injected, walletconnect } from "../../../utils/connector";
 import { useTranslation } from "react-i18next";
 import CrossIcon from "../../../assets/cross.svg";
+import infoIcon from "../../../assets/info.svg";
 
 const Landing = ({ setModalMode }) => {
 	const { active, account, library, connector, activate } = useWeb3React();
@@ -108,8 +109,18 @@ const Landing = ({ setModalMode }) => {
 									className="inline-block phone:w-10 phone:h-10 desktop:w-16 desktop:h-16 ml-3 tablet:mr-12 phone:mr-6"
 								/>
 							</div>
-							<div className="text-white desktop:text-paragraph-2 breakpoint:text-caption-1 twok:text-subheading desktop-captions-1 twok:leading-subheading font-semibold">
-								{"WalletConnect"}
+							<div className="flex flex-col text-left">
+								<div className="text-white desktop:text-paragraph-2 breakpoint:text-caption-1 twok:text-subheading desktop-captions-1 twok:leading-subheading font-semibold">
+									{"WalletConnect"}
+								</div>
+								<p className="infoText text-left mt-2 flex">
+									<img
+										src={infoIcon}
+										className="w-4 mr-2 items-start"
+										alt="info icon"
+									/>
+									{"Please refresh the page after connecting your wallet."}
+								</p>
 							</div>
 						</div>
 					</div>
