@@ -117,7 +117,7 @@ export const fetchOrderForTicker = async (
 		cache: new InMemoryCache(),
 	});
 	const query = `query {
-        orders (where:{cancelled: false, initiator_not: "${account}", tokenGive_in: [${derivativeIDs}] }) {
+        orders (where:{cancelled: false, tokenGive_in: [${derivativeIDs}] }) {
             id
             initiator
             tokenGive
