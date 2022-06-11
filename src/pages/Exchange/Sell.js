@@ -398,7 +398,7 @@ function SellScreen({
 												</>
 											}
 											showLeadingZeros={true}
-											calendarClassName="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_dateInput text-white"
+											calendarClassName="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_dateInput"
 										/>
 									</div>
 								</div>

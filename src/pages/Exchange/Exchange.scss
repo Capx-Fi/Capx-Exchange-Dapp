@@ -1,286 +1,285 @@
 .exchangeScreen {
-  @apply w-85p tablet:w-full mx-auto mt-16 breakpoint:w-full desktop:w-full desktop:mt-8 desktop:pt-2 desktop:pl-24 breakpoint:pl-2;
-  &_maincontainer {
-    @apply flex mt-4 desktop:mt-0 breakpoint:-mt-4 phone:-mt-8;
-  }
-  &_leftcontainer {
-    @apply tablet:mx-auto tablet:w-90v tablet:pr-0 pr-40 breakpoint:w-60v breakpoint:ml-12 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:w-90v;
-  }
-  &_rightcontainer {
-    @apply pl-4 phone:ml-0 phone:mx-4 phone:pl-0 tablet:mr-2 breakpoint:pr-16 upper:w-30v desktop:w-33v desktop:pr-16 upper:pr-16 breakpoint:-mr-3 desktop:mr-0 desktop:ml-4 breakpoint:w-33v breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
-    &_buyContainer {
-      @apply border rounded-2xl flex flex-col border-dark-50 relative;
-      background: linear-gradient(0deg, #19201d 0%, #151618 101.42%),
-        rgba(21, 21, 23, 0.2);
-      &_header {
-        @apply px-6 py-4 flex flex-row h-16 border-b rounded-t-2xl border-dark-50 w-full;
-        background-color: #171c1f;
-        &_title {
-          @apply text-paragraph-2 phone:text-caption-1 tablet:text-paragraph-2 text-primary-green-100 font-bold flex items-center breakpoint:text-caption-1 desktop:text-paragraph-2 upper:text-paragraph-1;
-          &_icon {
-            @apply h-5 w-5;
-          }
-          &_text {
-            @apply ml-2;
-          }
-        }
-      }
-      &_body {
-        @apply tablet:mt-4 phone:mt-0 px-6;
-        &_payContainer {
-          @apply flex flex-col w-full mb-4 phone:-mt-2 tablet:mt-0 desktop:mb-3;
-          &_title {
-            @apply text-caption-2 phone:text-caption-3 text-grayLabel mt-5 desktop:mt-3 font-black text-left breakpoint:text-caption-3 desktop:text-caption-2;
-          }
-          &_inputContainer {
-            @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
-            &_lockWrapper {
-              @apply flex justify-center w-full items-center px-4;
-              &_icon {
-                @apply h-5 w-5;
-              }
-            }
-            &_input {
-              @apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 px-1;
-              &:focus {
-                @apply outline-none;
-              }
-            }
-            &_balanceContainer {
-              &_main {
-                @apply flex flex-row justify-between text-left items-center px-4;
-                &_text {
-                  @apply text-caption-2 phone:text-10px tablet:text-caption-3 breakpoint:text-caption-2 text-grayLabel font-bold;
-                }
-                &_max {
-                  @apply text-caption-2 font-bold ml-2 cursor-pointer;
-                  background: -webkit-linear-gradient(
-                    355.38deg,
-                    #3f7ef8 -9.64%,
-                    #3ff8cc 87.34%
-                  );
-                  -webkit-background-clip: text;
-                  background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                }
-              }
-              &_value {
-                @apply text-left px-4 text-caption-2 text-grayLabel font-bold;
-              }
-            }
-          }
-        }
-        &_tokenContainer {
-          @apply flex flex-col w-full mb-4 phone:-mt-0 tablet:mt-0;
-          &_title {
-            @apply text-caption-3 breakpoint:text-caption-mid desktop:text-caption-2 text-grayLabel mt-5 font-black text-left;
-          }
-          &_inputContainer {
-            @apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
-            &_lockWrapper {
-              @apply flex justify-center items-center pr-4 pl-2;
-              &_icon {
-                @apply h-5 w-5;
-              }
-            }
-            &_input {
-              @apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 ring-success-color-500 px-2;
-              &:focus {
-                @apply outline-none;
-              }
-            }
-            &_dateInput {
-              &:focus {
-                @apply outline-none;
-              }
-            }
-            &_timeInput {
-              @apply bg-dark-400 text-primary-green-100;
-            }
-            &_balanceContainer {
-              &_main {
-                @apply flex flex-row justify-between text-left items-center px-4;
-                &_text {
-                  @apply text-caption-2 text-grayLabel font-bold;
-                }
-                &_max {
-                  @apply text-caption-2 font-bold ml-2 cursor-pointer;
-                  background: -webkit-linear-gradient(
-                    355.38deg,
-                    #3f7ef8 -9.64%,
-                    #3ff8cc 87.34%
-                  );
-                  -webkit-background-clip: text;
-                  background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                }
-              }
-              &_value {
-                @apply text-left px-4 text-caption-2 text-grayLabel font-bold;
-              }
-            }
-          }
-        }
-        &_splitContainer {
-          @apply flex gap-4;
-        }
-        &_separator {
-          @apply w-full flex items-center h-8 desktop:h-24;
-          &_line {
-            @apply bg-dark-50;
-            height: 1px;
-          }
-          &_iconContainer {
-            @apply flex justify-center items-center;
-            &_icon {
-              @apply h-10;
-            }
-          }
-        }
-        &_expiryDetailsContainer {
-          @apply text-tradeTitle text-caption-2 phone:text-caption-3 tablet:text-caption-2 font-bold text-left py-4;
-        }
-        &_swapButton {
-          background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
-          @apply rounded-lg py-3 my-4 phone:my-0 tablet:my-4 flex justify-center items-center cursor-pointer;
-          &_title {
-            @apply text-paragraph-2 desktop:text-caption-2 upper:text-caption-1 breakpoint:text-caption-3 phone:text-caption-3 tablet:text-caption-2 breakpoint:text-caption-1 text-dark-300 font-bold;
-          }
-          &_icon {
-            @apply pl-4;
-            img {
-              @apply w-6 h-6 phone:w-4 phone:h-4 tablet:w-6 tablet:h-6;
-            }
-          }
-        }
-      }
-      &_footer {
-        @apply h-5 border-t mt-8 border-dark-50;
-      }
-    }
-  }
-  &_header {
-    @apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v desktop:w-62v phone:w-full;
-    &_titlecontainer {
-      @apply flex flex-col items-start phone:pr-8 tablet:pr-0 tablet:pt-2;
-      &_title {
-        @apply text-subheading font-medium text-white upper:text-subheading desktop:text-paragraph-2 breakpoint:text-paragraph-2 tablet:text-caption-1 phone:font-normal phone:text-caption-2;
-      }
-      &_subtitle {
-        @apply text-caption-1 text-grayLabel font-semibold mb-5 upper:text-paragraph-2 desktop:text-caption-2 breakpoint:text-caption-2 tablet:text-caption-mid phone:text-caption-3;
-      }
-    }
-  }
+	@apply w-85p tablet:w-full mx-auto mt-16 breakpoint:w-full desktop:w-full desktop:mt-8 desktop:pt-2 desktop:pl-24 breakpoint:pl-2;
+	&_maincontainer {
+		@apply flex mt-4 desktop:mt-0 breakpoint:-mt-4 phone:-mt-8;
+	}
+	&_leftcontainer {
+		@apply tablet:mx-auto tablet:w-90v tablet:pr-0 pr-40 breakpoint:w-60v breakpoint:ml-12 desktop:-ml-8 desktop:w-77v desktop:-mt-4 breakpoint:-mt-2 phone:pr-0 phone:w-90v;
+	}
+	&_rightcontainer {
+		@apply pl-4 phone:ml-0 phone:mx-4 phone:pl-0 tablet:mr-2 breakpoint:pr-16 upper:w-30v desktop:w-33v desktop:pr-16 upper:pr-16 breakpoint:-mr-3 desktop:mr-0 desktop:ml-4 breakpoint:w-33v breakpoint:pl-6 breakpoint:pr-0 desktop:-ml-48;
+		&_buyContainer {
+			@apply border rounded-2xl flex flex-col border-dark-50 relative;
+			background: linear-gradient(0deg, #19201d 0%, #151618 101.42%),
+				rgba(21, 21, 23, 0.2);
+			&_header {
+				@apply px-6 py-4 flex flex-row h-16 border-b rounded-t-2xl border-dark-50 w-full;
+				background-color: #171c1f;
+				&_title {
+					@apply text-paragraph-2 phone:text-caption-1 tablet:text-paragraph-2 text-primary-green-100 font-bold flex items-center breakpoint:text-caption-1 desktop:text-paragraph-2 upper:text-paragraph-1;
+					&_icon {
+						@apply h-5 w-5;
+					}
+					&_text {
+						@apply ml-2;
+					}
+				}
+			}
+			&_body {
+				@apply tablet:mt-4 phone:mt-0 px-6;
+				&_payContainer {
+					@apply flex flex-col w-full mb-4 phone:-mt-2 tablet:mt-0 desktop:mb-3;
+					&_title {
+						@apply text-caption-2 phone:text-caption-3 text-grayLabel mt-5 desktop:mt-3 font-black text-left breakpoint:text-caption-3 desktop:text-caption-2;
+					}
+					&_inputContainer {
+						@apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
+						&_lockWrapper {
+							@apply flex justify-center w-full items-center px-4;
+							&_icon {
+								@apply h-5 w-5;
+							}
+						}
+						&_input {
+							@apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 px-1;
+							&:focus {
+								@apply outline-none;
+							}
+						}
+						&_balanceContainer {
+							&_main {
+								@apply flex flex-row justify-between text-left items-center px-4;
+								&_text {
+									@apply text-caption-2 phone:text-10px tablet:text-caption-3 breakpoint:text-caption-2 text-grayLabel font-bold;
+								}
+								&_max {
+									@apply text-caption-2 font-bold ml-2 cursor-pointer;
+									background: -webkit-linear-gradient(
+										355.38deg,
+										#3f7ef8 -9.64%,
+										#3ff8cc 87.34%
+									);
+									-webkit-background-clip: text;
+									background-clip: text;
+									-webkit-text-fill-color: transparent;
+								}
+							}
+							&_value {
+								@apply text-left px-4 text-caption-2 text-grayLabel font-bold;
+							}
+						}
+					}
+				}
+				&_tokenContainer {
+					@apply flex flex-col w-full mb-4 phone:-mt-0 tablet:mt-0;
+					&_title {
+						@apply text-caption-3 breakpoint:text-caption-mid desktop:text-caption-2 text-grayLabel mt-5 font-black text-left;
+					}
+					&_inputContainer {
+						@apply flex flex-row justify-between items-center border border-dark-50 rounded-xl mt-2 ring-2;
+						&_lockWrapper {
+							@apply flex justify-center items-center pr-4 pl-2;
+							&_icon {
+								@apply h-5 w-5;
+							}
+						}
+						&_input {
+							@apply w-full h-14 bg-transparent rounded-lg py-2 text-primary-green-100 ring-success-color-500 px-2;
+							&:focus {
+								@apply outline-none;
+							}
+						}
+						&_dateInput {
+							&:focus {
+								@apply outline-none;
+							}
+						}
+						&_timeInput {
+							@apply bg-dark-400 text-primary-green-100;
+						}
+						&_balanceContainer {
+							&_main {
+								@apply flex flex-row justify-between text-left items-center px-4;
+								&_text {
+									@apply text-caption-2 text-grayLabel font-bold;
+								}
+								&_max {
+									@apply text-caption-2 font-bold ml-2 cursor-pointer;
+									background: -webkit-linear-gradient(
+										355.38deg,
+										#3f7ef8 -9.64%,
+										#3ff8cc 87.34%
+									);
+									-webkit-background-clip: text;
+									background-clip: text;
+									-webkit-text-fill-color: transparent;
+								}
+							}
+							&_value {
+								@apply text-left px-4 text-caption-2 text-grayLabel font-bold;
+							}
+						}
+					}
+				}
+				&_splitContainer {
+					@apply flex gap-4;
+				}
+				&_separator {
+					@apply w-full flex items-center h-8 desktop:h-24;
+					&_line {
+						@apply bg-dark-50;
+						height: 1px;
+					}
+					&_iconContainer {
+						@apply flex justify-center items-center;
+						&_icon {
+							@apply h-10;
+						}
+					}
+				}
+				&_expiryDetailsContainer {
+					@apply text-tradeTitle text-caption-2 phone:text-caption-3 tablet:text-caption-2 font-bold text-left py-4;
+				}
+				&_swapButton {
+					background: linear-gradient(356.23deg, #96cf03 -65.8%, #f1fff6 89%);
+					@apply rounded-lg py-3 my-4 phone:my-0 tablet:my-4 flex justify-center items-center cursor-pointer;
+					&_title {
+						@apply text-paragraph-2 desktop:text-caption-2 upper:text-caption-1 breakpoint:text-caption-3 phone:text-caption-3 tablet:text-caption-2 breakpoint:text-caption-1 text-dark-300 font-bold;
+					}
+					&_icon {
+						@apply pl-4;
+						img {
+							@apply w-6 h-6 phone:w-4 phone:h-4 tablet:w-6 tablet:h-6;
+						}
+					}
+				}
+			}
+			&_footer {
+				@apply h-5 border-t mt-8 border-dark-50;
+			}
+		}
+	}
+	&_header {
+		@apply py-1 mb-3 flex justify-between breakpoint:pr-2 w-66v tablet:w-full breakpoint:w-60v desktop:w-62v phone:w-full;
+		&_titlecontainer {
+			@apply flex flex-col items-start phone:pr-8 tablet:pr-0 tablet:pt-2;
+			&_title {
+				@apply text-subheading font-medium text-white upper:text-subheading desktop:text-paragraph-2 breakpoint:text-paragraph-2 tablet:text-caption-1 phone:font-normal phone:text-caption-2;
+			}
+			&_subtitle {
+				@apply text-caption-1 text-grayLabel font-semibold mb-5 upper:text-paragraph-2 desktop:text-caption-2 breakpoint:text-caption-2 tablet:text-caption-mid phone:text-caption-3;
+			}
+		}
+	}
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+	-webkit-appearance: none;
+	margin: 0;
 }
 /* Firefox */
 input[type="number"] {
-  -moz-appearance: textfield;
+	-moz-appearance: textfield;
 }
-
 
 .react-date-picker {
-  @apply h-14 w-full border-none text-white;
-  &__calendar {
-    border-radius: 16px !important;
-  }
-  &__wrapper {
-    border: none !important;
-  }
-  &__inputGroup {
-    @apply pl-2;
-    text-align: left !important;
-    & > input {
-      @apply text-white;
-      &:focus {
-        outline: none !important;
-      }
-    }
-  }
+	@apply h-14 w-full border-none text-tradeTitle;
+	&__calendar {
+		border-radius: 16px !important;
+	}
+	&__wrapper {
+		border: none !important;
+	}
+	&__inputGroup {
+		@apply pl-2;
+		text-align: left !important;
+		& > input {
+			@apply text-tradeTitle;
+			&:focus {
+				outline: none !important;
+			}
+		}
+	}
 }
 .ant-picker-input > input {
-  @apply w-full border-none text-white;
-  color: #fff !important;
+	@apply w-full border-none text-white;
+	color: #83a1a9 !important;
 }
 .ant-picker-panel-container {
-  @apply bg-dark-400;
-  background-color: rgba(21, 21, 23, 1) !important;
-  color: rgba(241, 250, 242, 0.3) !important;
+	@apply bg-dark-400;
+	background-color: rgba(21, 21, 23, 1) !important;
+	color: rgba(241, 250, 242, 0.3) !important;
 }
 .ant-picker-time-panel-cell {
-  @apply text-white;
-  &:hover {
-    background: #2a383c !important;
-  }
+	@apply text-white;
+	&:hover {
+		background: #2a383c !important;
+	}
 }
 .ant-picker-time-panel-column
-  > li.ant-picker-time-panel-cell
-  .ant-picker-time-panel-cell-inner:hover {
-  background: #2a383c !important;
+	> li.ant-picker-time-panel-cell
+	.ant-picker-time-panel-cell-inner:hover {
+	background: #2a383c !important;
 }
 .ant-picker-time-panel-column
-  > li.ant-picker-time-panel-cell-selected
-  .ant-picker-time-panel-cell-inner {
-  @apply bg-dark-400;
-  background-color: rgba(21, 21, 23, 1) !important;
-  color: rgba(241, 250, 242, 0.3) !important;
+	> li.ant-picker-time-panel-cell-selected
+	.ant-picker-time-panel-cell-inner {
+	@apply bg-dark-400;
+	background-color: rgba(21, 21, 23, 1) !important;
+	color: rgba(241, 250, 242, 0.3) !important;
 }
 .ant-picker-time-panel-column
-  > li.ant-picker-time-panel-cell
-  .ant-picker-time-panel-cell-inner {
-  color: rgba(241, 250, 242, 0.3) !important;
+	> li.ant-picker-time-panel-cell
+	.ant-picker-time-panel-cell-inner {
+	color: rgba(241, 250, 242, 0.3) !important;
 }
 .react-calendar {
-  @apply bg-dark-400;
-  background-color: rgba(21, 21, 23, 1) !important;
-  border: #0c4555 !important;
-  &__month-view {
-    &__weekdays {
-      color: rgba(241, 250, 242, 0.3) !important;
-      text-decoration: none !important;
-    }
-  }
-  &__navigation {
-    @apply bg-dark-300;
-    border-radius: 16px !important;
-    color: rgba(241, 250, 242, 1) !important;
-    & > button {
-      background: #2a383c !important;
-      &:hover {
-        background: #2a383c !important;
-        // border-radius: 16px;
-      }
-      &:focus {
-        outline: none !important;
-      }
-      &:active {
-        background: #2a383c !important;
-        // border-radius: 16px;
-      }
-    }
-  }
-  &__tile {
-    color: rgba(241, 250, 242, 0.8) !important;
-    &:hover {
-      background: #2a383c !important;
-      // border-radius: 16px;
-    }
-    &:disabled {
-      background: #2a383c !important;
-      opacity: 0.2;
-      // border-radius: 16px;
-    }
-    &--now {
-      background: #2a383c !important;
-      // border-radius: 16px;
-    }
-    &--active {
-      background: #0c4555 !important;
-      // border-radius: 16px;
-    }
-  }
+	@apply bg-dark-400;
+	background-color: rgba(21, 21, 23, 1) !important;
+	border: #0c4555 !important;
+	&__month-view {
+		&__weekdays {
+			color: rgba(241, 250, 242, 0.3) !important;
+			text-decoration: none !important;
+		}
+	}
+	&__navigation {
+		@apply bg-dark-300;
+		border-radius: 16px !important;
+		color: rgba(241, 250, 242, 1) !important;
+		& > button {
+			background: #2a383c !important;
+			&:hover {
+				background: #2a383c !important;
+				// border-radius: 16px;
+			}
+			&:focus {
+				outline: none !important;
+			}
+			&:active {
+				background: #2a383c !important;
+				// border-radius: 16px;
+			}
+		}
+	}
+	&__tile {
+		color: rgba(241, 250, 242, 0.8) !important;
+		&:hover {
+			background: #2a383c !important;
+			// border-radius: 16px;
+		}
+		&:disabled {
+			background: #2a383c !important;
+			opacity: 0.2;
+			// border-radius: 16px;
+		}
+		&--now {
+			background: #2a383c !important;
+			// border-radius: 16px;
+		}
+		&--active {
+			background: #0c4555 !important;
+			// border-radius: 16px;
+		}
+	}
 }
