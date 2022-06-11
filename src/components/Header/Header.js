@@ -9,7 +9,6 @@ import { Web3Provider } from "@ethersproject/providers";
 
 import { useMetamask } from "../../metamaskReactHook/index";
 
-import { useWeb3React, UnsupportedChainIdError } from "@web3-react/core";
 import { injected } from "../../utils/connector";
 
 import { connect } from "react-redux";
@@ -38,10 +37,15 @@ import useWagmi from "../../useWagmi";
 function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   const location = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const { active, account, library, connector, deactivate, chainId } =
-    useWagmi();
-
-  console.log(useWagmi());
+  const {
+    active,
+    account,
+    library,
+    connector,
+    deactivate,
+    chainId,
+    switchNetwork,
+  } = useWagmi();
   const { metaState, getChain } = useMetamask();
   const [projectData, setProjectData] = useState([]);
   const desiredChainId = "4";
@@ -73,6 +77,8 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     setDashboardModal(false);
   };
 
+  console.log(useWagmi());
+
   useEffect(() => {
     if (active) fetchProjects();
   }, [account, chainId]);
@@ -88,140 +94,8 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     setProjectData(projects);
   };
 
-  const chainChange = async (chainName) => {
-    if (chainName === "Ethereum") {
-      try {
-        await web3.currentProvider.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: "0x4" }],
-        });
-      } catch (error) {}
-    } else if (chainName === "Matic") {
-      try {
-        await web3.currentProvider.request({
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainId: "0x13881",
-              chainName: "Polygon Testnet",
-              nativeCurrency: {
-                name: "MATIC",
-                symbol: "MATIC",
-                decimals: 18,
-              },
-              rpcUrls: ["https://rpc-mumbai.matic.today"],
-              blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-            },
-          ],
-        });
-        // await window.ethereum.request({
-        //   method: "wallet_addEthereumChain",
-        //   params: [
-        //     {
-        //       chainId: "0x89",
-        //       chainName: "Polygon",
-        //       nativeCurrency: {
-        //         name: "MATIC",
-        //         symbol: "MATIC",
-        //         decimals: 18,
-        //       },
-        //       rpcUrls: ["https://rpc-mainnet.maticvigil.com/"],
-        //       blockExplorerUrls: ["https://polygonscan.com/"],
-        //     },
-        //   ],
-        // });
-      } catch (error) {}
-    } else if (chainName === "BSC") {
-      try {
-        await web3.currentProvider.request({
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainId: "0x61",
-              chainName: "Binance Smart Chain Test",
-              nativeCurrency: {
-                name: "BNB",
-                symbol: "BNB",
-                decimals: 18,
-              },
-              rpcUrls: ["https://data-seed-prebsc-1-s3.binance.org:8545"],
-              blockExplorerUrls: ["https://testnet.bscscan.com/"],
-            },
-          ],
-        });
-        // await window.ethereum.request({
-        //   method: "wallet_addEthereumChain",
-        //   params: [
-        //     {
-        //       chainId: '0x61',
-        //       chainName: 'Binance Smart Chain Test',
-        //       nativeCurrency: {
-        //         name: 'BNB',
-        //         symbol: 'BNB',
-        //         decimals: 18,
-        //       },
-        //       rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
-        //       blockExplorerUrls: ['https://testnet.bscscan.com/'],
-        //     },
-        //   ],
-        // });
-        // await window.ethereum.request({
-        //   method: "wallet_addEthereumChain",
-        //   params: [
-        //     {
-        //       chainId: "0x38",
-        //       chainName: "Binance Smart Chain",
-        //       nativeCurrency: {
-        //         name: "BNB",
-        //         symbol: "BNB",
-        //         decimals: 18,
-        //       },
-        //       rpcUrls: ["https://bsc-dataseed.binance.org/"],
-        //       blockExplorerUrls: ["https://bscscan.com/"],
-        //     },
-        //   ],
-        // });
-      } catch (error) {
-        console.log(error);
-      }
-    } else if (chainName === "Avalanche") {
-      try {
-        await web3.currentProvider.request({
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainId: "0xA869",
-              chainName: "Avalanche Fuji",
-              nativeCurrency: {
-                name: "AVAX",
-                symbol: "AVAX",
-                decimals: 18,
-              },
-              rpcUrls: ["https://api.avax-test.network/ext/bc/C/rpc"],
-              blockExplorerUrls: ["https://testnet.snowtrace.io/"],
-            },
-          ],
-        });
-        // await window.ethereum.request({
-        //   method: "wallet_addEthereumChain",
-        //   params: [
-        //     {
-        //       chainId: "0xA86A",
-        //       chainName: "Avalanche",
-        //       nativeCurrency: {
-        //         name: "AVAX",
-        //         symbol: "AVAX",
-        //         decimals: 18,
-        //       },
-        //       rpcUrls: ["https://api.avax.network/ext/bc/C/rpc"],
-        //       blockExplorerUrls: ["https://snowtrace.io/"],
-        //     },
-        //   ],
-        // });
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  const chainChange = async (chainId) => {
+    await switchNetwork(chainId);
   };
   async function disconnect() {
     try {
@@ -309,16 +183,17 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
                 <div className="tablet:block breakpoint:hidden">
                   <AccountDropdown
                     disconnect={disconnect}
-                    accountAddress={`${account.substr(0, 6)}...`}
+                    accountAddress={`${account?.substr(0, 6)}...`}
                   />
                 </div>
 
                 <div className="tablet:hidden breakpoint:block">
                   <AccountDropdown
                     disconnect={disconnect}
-                    accountAddress={`${account.substr(0, 6)}...${account.substr(
-                      -4
-                    )}`}
+                    accountAddress={`${account?.substr(
+                      0,
+                      6
+                    )}...${account?.substr(-4)}`}
                   />
                 </div>
               </>

@@ -22,9 +22,6 @@ const Landing = ({ setModalMode }) => {
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { t } = useTranslation();
-  const { error } = useWeb3React();
-  const unsupportedChainIdError =
-    error && error instanceof UnsupportedChainIdError;
 
   //   async function connect() {
   //     try {

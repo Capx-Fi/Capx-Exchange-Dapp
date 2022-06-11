@@ -12,15 +12,20 @@ import {
   createClient,
   configureChains,
   defaultChains,
+  Chain,
 } from "wagmi";
+
+import { rinkeby, polygonMumbai } from "wagmi/chains";
 
 import { publicProvider } from "wagmi/providers/public";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
+import { avalancheChain } from "./chainObjects";
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  publicProvider(),
-]);
+const { chains, provider, webSocketProvider } = configureChains(
+  [avalancheChain, rinkeby, polygonMumbai],
+  [publicProvider()]
+);
 
 const client = createClient({
   autoConnect: false,
