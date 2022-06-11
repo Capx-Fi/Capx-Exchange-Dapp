@@ -2,7 +2,7 @@
 	@apply h-fit-content bg-dark-400 flex;
 
 	&_maincontainer {
-		@apply flex justify-center items-center m-auto mt-24 phone:mt-48 breakpoint:mt-24 desktop:mt-48;
+		@apply flex justify-center items-center m-auto mt-24 phone:mt-48 breakpoint:mt-24 desktop:mt-36;
 		&_herocontainer {
 			@apply px-12 py-6 phone:px-6 text-left phone:rounded-2xl phone:w-90v phone:py-16 desktop:px-16 upper:px-20 upper:py-16 desktop:py-8 rounded-lg bg-opacity-70 tablet:rounded-2xl desktop:rounded-4xl text-white relative tablet:w-75v breakpoint:w-60v desktop:w-60v upper:w-60v flex flex-col items-start;
 			background: linear-gradient(
