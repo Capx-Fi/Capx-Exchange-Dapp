@@ -42,7 +42,7 @@ const MainLayout = ({ sideNavState }) => {
 					<main>
 						<div
 							className={`w-11/12 mx-auto phone:pb-0 ${
-								!active ? `tablet:pb-0 desktop:-mt-8` : `tablet:pb-12`
+								!active ? `tablet:pb-0 desktop:-mt-8 ` : `tablet:pb-12`
 							} bg-dark-400 desktop:w-full desktop:mb-0 phone:w-full`}
 						>
 							<Switch>
