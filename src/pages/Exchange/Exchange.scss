@@ -191,7 +191,7 @@ input[type="number"] {
 		border: none !important;
 	}
 	&__inputGroup {
-		@apply pl-2;
+		@apply px-1;
 		text-align: left !important;
 		& > input {
 			@apply text-tradeTitle;

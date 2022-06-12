@@ -1,7 +1,7 @@
 .footer {
 	@apply h-16 bottom-0 left-0 fixed flex bg-dark-400 w-full desktop:px-24 justify-center desktop:justify-center items-center border-t border-dark-200 z-50;
 	&_text {
-		@apply text-primary-green-100 font-light text-caption-3 desktop:text-caption-2 desktop:leading-caption-2 leading-caption-3 opacity-40;
+		@apply text-primary-green-100 font-light text-caption-3 desktop:text-caption-2 desktop:leading-caption-2 tablet:text-caption-4 leading-caption-3 opacity-40;
 	}
 }
 
