@@ -7,7 +7,6 @@ import useWindowSize from "../../../utils/windowSize";
 
 function AccountDropdown({ accountAddress, disconnect, setShowMenu }) {
 	const [open, setOpen] = useState(false);
-	const web3 = new Web3(Web3.givenProvider);
 	const history = useHistory();
 	let location = useLocation();
 	const windowWidth = useWindowSize().width;

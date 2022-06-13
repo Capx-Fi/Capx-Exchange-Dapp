@@ -39,14 +39,27 @@ function WithdrawContainer({
 	useEffect(() => {
 		dispatch(hideSideNav());
 	}, []);
-	const web3 = new Web3(Web3.givenProvider);
-	const { active, account, chainId } = useWeb3React();
+	const [web3, setWeb3] = useState(null);
+	const { active, account, chainId, connector } = useWeb3React();
 	const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
 		chainId && getExchangeContractAddress(chainId);
 	const [disabled, setDisabled] = useState(false);
 	const [buttonDisabled, setButtonDisabled] = useState(false);
 	const [checkWithdraw, setCheckWithdraw] = useState({});
 	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+	const setupProvider = async () => {
+		let result = await connector?.getProvider().then((res) => {
+			return res;
+		});
+		return result;
+	};
+
+	useEffect(() => {
+		setupProvider().then((res) => {
+			setWeb3(new Web3(res));
+		});
+	}, [active, chainId]);
 
 	const [warningCheck, setWarningCheck] = useState(false);
 	const ticker = useSelector((state) => state.withdraw.withdrawTicker);
@@ -63,10 +76,9 @@ function WithdrawContainer({
 		setCheckWithdraw(checkValidity);
 	};
 	const tryWithdraw = async () => {
-		const exchangeContract = new web3.eth.Contract(
-			EXCHANGE_ABI,
-			CHAIN_EXCHANGE_CONTRACT_ADDRESS
-		);
+		const exchangeContract =
+			web3 &&
+			new web3.eth.Contract(EXCHANGE_ABI, CHAIN_EXCHANGE_CONTRACT_ADDRESS);
 		let totalTokens = ticker.quantity;
 		// console.log("My withdraw - ", ticker);
 		let totalAmount = checkWithdraw.amountWithdrawValue;
