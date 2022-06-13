@@ -73,6 +73,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
       CHAIN_USDT_CONTRACT_ADDRESS,
       web3
     );
+    console.log("listingData", listingData);
     setListings(listingData);
     setTokenList(listingData);
     setLoading(false);

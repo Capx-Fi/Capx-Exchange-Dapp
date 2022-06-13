@@ -12,13 +12,6 @@ function useWagmi() {
   const wagmiAccount = useAccount();
   const wagmiNetwork = useNetwork();
 
-  console.log(
-    "useWagmi",
-    wagmiConnect,
-    wagmiDisconnect,
-    wagmiAccount,
-    wagmiNetwork
-  );
   const active = wagmiConnect.isConnected;
   const account = wagmiAccount.data?.address;
   const chainId = wagmiNetwork.activeChain?.id;

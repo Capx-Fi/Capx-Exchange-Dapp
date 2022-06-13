@@ -38,6 +38,7 @@ export const getExchangeURL = (chainId) => {
       : chainId?.toString() === AVALANCHE_CHAIN_ID.toString()
       ? GRAPHAPIURL_EXCHANGE_AVALANCHE
       : GRAPHAPIURL_EXCHANGE_ETHEREUM;
+  console.log("exchangeURL--env", exchangeURL);
   return exchangeURL;
 };
 

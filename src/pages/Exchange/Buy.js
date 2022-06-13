@@ -33,6 +33,7 @@ import {
   getUsdtContractAddress,
 } from "../../constants/getChainConfig";
 import useWagmi from "../../useWagmi";
+import { useContract } from "wagmi";
 
 BigNumber.config({
   ROUNDING_MODE: 3,
@@ -84,6 +85,14 @@ function BuyScreen({
     web3 &&
     new web3.eth.Contract(CONTRACT_ABI_ERC20, CHAIN_USDT_CONTRACT_ADDRESS);
 
+  const exchangeContract =
+    // web3 &&
+    // new web3.eth.Contract(EXCHANGE_ABI, CHAIN_EXCHANGE_CONTRACT_ADDRESS);
+    useContract({
+      contractInterface: EXCHANGE_ABI,
+      addressOrName: CHAIN_EXCHANGE_CONTRACT_ADDRESS,
+    });
+
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -132,9 +141,6 @@ function BuyScreen({
     );
   };
   const finalizeSwap = async () => {
-    const exchangeContract =
-      web3 &&
-      new web3.eth.Contract(EXCHANGE_ABI, CHAIN_EXCHANGE_CONTRACT_ADDRESS);
     let totalTokens = ticker.amountGive;
     let totalAmount = checkBuy?.stableCoinValue;
     let tradeID = ticker.tradeID;

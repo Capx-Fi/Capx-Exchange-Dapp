@@ -15,3 +15,20 @@ export const avalancheChain = {
   },
   testnet: true,
 };
+
+export const bscTestnet = {
+  id: 97,
+  name: "Binance Smart Chain Test",
+  network: "bsc-testnet",
+  nativeCurrency: {
+    name: "BNB",
+    symbol: "BNB",
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+  },
+  blockExplorers: {
+    default: { name: "Binance", url: "https://testnet.bscscan.com/" },
+  },
+};

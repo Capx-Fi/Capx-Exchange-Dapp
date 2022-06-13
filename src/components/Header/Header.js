@@ -67,6 +67,8 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     });
   }, [active, chainId]);
 
+  console.log("Header-chainID", chainId);
+
   const exchangeURL = chainId && getExchangeURL(chainId);
   const wrappedURL = chainId && getWrappedURL(chainId);
   const masterURL = chainId && getMasterURL(chainId);
@@ -86,6 +88,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     setSortBy(chainId && getSortBy(chainId));
   }, [chainId]);
   const fetchProjects = async () => {
+    console.log("fetching projects", exchangeURL, masterURL, wrappedURL);
     const projects = await fetchAllProjectData(
       exchangeURL,
       masterURL,

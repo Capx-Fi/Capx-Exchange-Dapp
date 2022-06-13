@@ -20,10 +20,10 @@ import { rinkeby, polygonMumbai } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import { avalancheChain } from "./chainObjects";
+import { avalancheChain, bscTestnet } from "./chainObjects";
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [avalancheChain, rinkeby, polygonMumbai],
+  [avalancheChain, bscTestnet, rinkeby, polygonMumbai],
   [publicProvider()]
 );
 

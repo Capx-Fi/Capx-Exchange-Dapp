@@ -92,7 +92,15 @@ function DropDown({ sortBy, chainChange, setShowMenu }) {
                 }}
               >
                 <img
-                  src={maticLogo}
+                  src={
+                    chain === "80001"
+                      ? maticLogo
+                      : chain === "97"
+                      ? bscLogo
+                      : chain === "4"
+                      ? ethLogo
+                      : avalancheLogo
+                  }
                   alt="matic-logo"
                   className="w-4 h-4 mr-2"
                 />
