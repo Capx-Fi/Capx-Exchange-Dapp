@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
 async function fetchOrderTokens(exchangeURL, masterURL, wrappedURL) {
+  console.log("fetchOrderTokens--excahngeURL", exchangeURL);
   const client = new ApolloClient({
     uri: exchangeURL,
     cache: new InMemoryCache(),
@@ -12,7 +13,8 @@ async function fetchOrderTokens(exchangeURL, masterURL, wrappedURL) {
             }         
     }`;
   try {
-    const { data } = await client.query({
+    console.log("fetchOrderTokens--query", query, client);
+    const { data } = await client?.query({
       query: gql(query),
     });
     let derivatives = [];
@@ -64,7 +66,11 @@ async function fetchProjectIDForDerivatives(
   }
 }
 
-export const fetchAllProjectData = async (exchangeURL, masterURL, wrappedURL) => {
+export const fetchAllProjectData = async (
+  exchangeURL,
+  masterURL,
+  wrappedURL
+) => {
   let _project = [];
   let derivatives = await fetchOrderTokens(exchangeURL, masterURL, wrappedURL);
   let projects = await fetchProjectIDForDerivatives(

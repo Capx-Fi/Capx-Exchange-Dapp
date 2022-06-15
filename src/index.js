@@ -42,9 +42,6 @@ const client = createClient({
   webSocketProvider,
 });
 
-function getLibrary(provider) {
-  return new Web3(provider);
-}
 ReactDOM.render(
   <WagmiConfig client={client}>
     {/* <MetamaskStateProvider> */}
