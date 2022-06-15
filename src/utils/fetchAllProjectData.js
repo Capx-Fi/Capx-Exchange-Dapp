@@ -1,29 +1,29 @@
 import { ApolloClient, InMemoryCache, gql, cache } from "@apollo/client";
 async function fetchOrderTokens(exchangeURL, masterURL, wrappedURL) {
-  console.log("fetchOrderTokens--excahngeURL", exchangeURL);
-  const client = new ApolloClient({
-    uri: exchangeURL,
-    cache: new InMemoryCache(),
-  });
+  if (exchangeURL) {
+    const client = new ApolloClient({
+      uri: exchangeURL,
+      cache: new InMemoryCache(),
+    });
 
-  const query = `query {
+    const query = `query {
             orders {
                 tokenGive
                 tokenGiveTicker
             }         
     }`;
-  try {
-    console.log("fetchOrderTokens--query", query, client);
-    const { data } = await client?.query({
-      query: gql(query),
-    });
-    let derivatives = [];
-    data.orders.map((order) => {
-      derivatives.push(order.tokenGive);
-    });
-    return derivatives.map((s) => `"${s}"`).join(", ");
-  } catch (error) {
-    console.log(error);
+    try {
+      const { data } = await client.query({
+        query: gql(query),
+      });
+      let derivatives = [];
+      data.orders.map((order) => {
+        derivatives.push(order.tokenGive);
+      });
+      return derivatives.map((s) => `"${s}"`).join(", ");
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

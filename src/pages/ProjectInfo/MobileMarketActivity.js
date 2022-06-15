@@ -4,6 +4,7 @@ import { convertToInternationalCurrencySystem } from "../../utils/convertToInter
 import TokenLink from "../../assets/token-link.svg";
 import { getExplorerURL } from "../../constants/getChainConfig";
 import { useWeb3React } from "@web3-react/core";
+import useWagmi from "../../useWagmi";
 
 function MobileMarketActivity({ completeOrders, loading }) {
   return (

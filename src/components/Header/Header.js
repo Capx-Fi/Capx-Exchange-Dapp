@@ -79,16 +79,17 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
     setDashboardModal(false);
   };
 
-  console.log(useWagmi());
-
   useEffect(() => {
-    if (active) fetchProjects();
+    if (active) {
+      fetchProjects();
+    }
   }, [account, chainId]);
   useEffect(() => {
     setSortBy(chainId && getSortBy(chainId));
   }, [chainId]);
+
   const fetchProjects = async () => {
-    console.log("fetching projects", exchangeURL, masterURL, wrappedURL);
+    console.log("fetching projects", exchangeURL);
     const projects = await fetchAllProjectData(
       exchangeURL,
       masterURL,
