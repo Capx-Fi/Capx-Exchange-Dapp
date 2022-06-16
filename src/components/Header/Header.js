@@ -69,7 +69,8 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
 
   console.log("Header-chainID", chainId);
 
-  const exchangeURL = chainId && getExchangeURL(chainId);
+  var exchangeURL = getExchangeURL(4);
+  exchangeURL = chainId && getExchangeURL(chainId);
   const wrappedURL = chainId && getWrappedURL(chainId);
   const masterURL = chainId && getMasterURL(chainId);
 
@@ -80,10 +81,11 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   };
 
   useEffect(() => {
-    if (active) {
+    if (active && chainId && exchangeURL) {
+      console.log("inside-useEffect", chainId);
       fetchProjects();
     }
-  }, [account, chainId]);
+  }, [account, chainId, exchangeURL]);
   useEffect(() => {
     setSortBy(chainId && getSortBy(chainId));
   }, [chainId]);
@@ -91,7 +93,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   const fetchProjects = async () => {
     console.log("fetching projects", exchangeURL);
     const projects = await fetchAllProjectData(
-      exchangeURL,
+      "https://api.studio.thegraph.com/query/16341/exchange/v0.1.3",
       masterURL,
       wrappedURL
     );
