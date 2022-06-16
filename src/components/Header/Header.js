@@ -69,8 +69,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
 
   console.log("Header-chainID", chainId);
 
-  var exchangeURL = getExchangeURL(4);
-  exchangeURL = chainId && getExchangeURL(chainId);
+  const exchangeURL = chainId && getExchangeURL(chainId);
   const wrappedURL = chainId && getWrappedURL(chainId);
   const masterURL = chainId && getMasterURL(chainId);
 
@@ -82,7 +81,6 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
 
   useEffect(() => {
     if (active && chainId && exchangeURL) {
-      console.log("inside-useEffect", chainId);
       fetchProjects();
     }
   }, [account, chainId, exchangeURL]);
@@ -93,10 +91,11 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
   const fetchProjects = async () => {
     console.log("fetching projects", exchangeURL);
     const projects = await fetchAllProjectData(
-      "https://api.studio.thegraph.com/query/16341/exchange/v0.1.3",
+      exchangeURL,
       masterURL,
       wrappedURL
     );
+    console.log("projects-fetched", projects);
     setProjectData(projects);
   };
 
