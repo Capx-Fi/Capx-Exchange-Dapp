@@ -62,7 +62,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
       Object.keys(nullBuyTicker).forEach((i) => (nullBuyTicker[i] = ""));
       dispatch(setBuyTicker({ ...nullBuyTicker }));
     }
-    web3?.currentProvider && fetchListings();
+    active && fetchListings();
   }, [account, chainId, refresh, web3]);
   const fetchListings = async () => {
     setLoading(true);
