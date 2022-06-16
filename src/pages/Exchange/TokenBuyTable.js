@@ -25,6 +25,7 @@ import {
 } from "../../constants/getChainConfig";
 import Web3 from "web3";
 import useWagmi from "../../useWagmi";
+import { useProvider } from "wagmi";
 
 const { Column, ColumnGroup } = Table;
 
@@ -34,6 +35,7 @@ function TokenBuyTable({ filter, setBalance, refresh }) {
   const [loading, setLoading] = useState(false);
   const ticker = useSelector((state) => state.exchange.buyTicker);
   const { active, account, chainId, connector } = useWagmi();
+  const provider = useProvider();
   const [web3, setWeb3] = useState(null);
 
   const setupProvider = async () => {
