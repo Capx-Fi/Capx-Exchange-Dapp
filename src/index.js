@@ -8,57 +8,57 @@ import { MetamaskStateProvider } from "./metamaskReactHook/index";
 import { SnackbarProvider } from "notistack";
 import Web3 from "web3";
 import {
-  WagmiConfig,
-  createClient,
-  configureChains,
-  defaultChains,
-  Chain,
+	WagmiConfig,
+	createClient,
+	configureChains,
+	defaultChains,
+	Chain,
 } from "wagmi";
 
 import { rinkeby, polygonMumbai } from "wagmi/chains";
 
 import { publicProvider } from "wagmi/providers/public";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+import { InjectedConnector } from "wagmi/connectors/injected";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { avalancheChain, bscTestnet } from "./chainObjects";
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [avalancheChain, bscTestnet, rinkeby, polygonMumbai],
-  [publicProvider()]
+	[avalancheChain, bscTestnet, rinkeby, polygonMumbai],
+	[publicProvider()]
 );
 
 const client = createClient({
-  autoConnect: false,
-  connectors: [
-    new MetaMaskConnector({ chains }),
-    new WalletConnectConnector({
-      chains,
-      options: {
-        qrcode: true,
-      },
-    }),
-  ],
-  provider,
-  webSocketProvider,
+	autoConnect: false,
+	connectors: [
+		new InjectedConnector({ chains }),
+		new WalletConnectConnector({
+			chains,
+			options: {
+				qrcode: true,
+			},
+		}),
+	],
+	provider,
+	webSocketProvider,
 });
 
 ReactDOM.render(
-  <WagmiConfig client={client}>
-    {/* <MetamaskStateProvider> */}
-    <SnackbarProvider
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      maxSnack={3}
-    >
-      <App />
-      {/* <MetamaskModal /> */}
-      {/* <VestingOverview/> */}
-    </SnackbarProvider>
-    {/* </MetamaskStateProvider> */}
-  </WagmiConfig>,
-  document.getElementById("root")
+	<WagmiConfig client={client}>
+		{/* <MetamaskStateProvider> */}
+		<SnackbarProvider
+			anchorOrigin={{
+				vertical: "top",
+				horizontal: "right",
+			}}
+			maxSnack={3}
+		>
+			<App />
+			{/* <MetamaskModal /> */}
+			{/* <VestingOverview/> */}
+		</SnackbarProvider>
+		{/* </MetamaskStateProvider> */}
+	</WagmiConfig>,
+	document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
