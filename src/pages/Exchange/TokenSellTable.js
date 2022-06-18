@@ -46,9 +46,10 @@ function TokenSellTable({ filter, refresh }) {
   const [web3, setWeb3] = useState(null);
 
   useEffect(() => {
-    provider.then((res) => {
-      setWeb3(new Web3(res));
-    });
+    active &&
+      provider.then((res) => {
+        setWeb3(new Web3(res));
+      });
   }, [active, chainId]);
   let history = useHistory();
 

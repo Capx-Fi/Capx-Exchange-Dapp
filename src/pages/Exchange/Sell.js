@@ -64,9 +64,10 @@ function SellScreen({
   const [web3, setWeb3] = useState(null);
 
   useEffect(() => {
-    provider.then((res) => {
-      setWeb3(new Web3(res));
-    });
+    active &&
+      provider.then((res) => {
+        setWeb3(new Web3(res));
+      });
   }, [active, chainId]);
 
   // web3 && console.log(web3);

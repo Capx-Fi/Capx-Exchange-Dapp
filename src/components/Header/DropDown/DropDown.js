@@ -19,9 +19,10 @@ function DropDown({ sortBy, chainChange, setShowMenu }) {
   const [web3, setWeb3] = useState(null);
 
   useEffect(() => {
-    provider.then((res) => {
-      setWeb3(new Web3(res));
-    });
+    active &&
+      provider.then((res) => {
+        setWeb3(new Web3(res));
+      });
   }, [active, chainId]);
 
   return (
@@ -86,11 +87,11 @@ function DropDown({ sortBy, chainChange, setShowMenu }) {
               >
                 <img
                   src={
-                    chain === "80001"
+                    chain.trim() === "80001"
                       ? maticLogo
-                      : chain === "97"
+                      : chain.trim() === "97"
                       ? bscLogo
-                      : chain === "4"
+                      : chain.trim() === "4"
                       ? ethLogo
                       : avalancheLogo
                   }

@@ -50,9 +50,10 @@ function WithdrawContainer({
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   useEffect(() => {
-    provider.then((res) => {
-      setWeb3(new Web3(res));
-    });
+    active &&
+      provider.then((res) => {
+        setWeb3(new Web3(res));
+      });
   }, [active, chainId]);
 
   const [warningCheck, setWarningCheck] = useState(false);
