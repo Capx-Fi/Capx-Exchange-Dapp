@@ -38,7 +38,7 @@ function ProjectInfo({ match }) {
   const [projectDetails, setProjectDetails] = useState({});
   const [activeOrders, setActiveOrders] = useState([]);
   const [completeOrders, setCompleteOrders] = useState([]);
-  const { active, account, chainId, connector } = useWagmi();
+  const { active, account, chainId, connector, provider } = useWagmi();
   const [approveModalOpen, setApproveModalOpen] = useState(false);
   const [buyModalOpen, setBuyModalOpen] = useState(false);
   const [approveModalStatus, setApproveModalStatus] = useState("");
@@ -57,15 +57,8 @@ function ProjectInfo({ match }) {
   const [loading, setLoading] = useState(false);
   const [web3, setWeb3] = useState(null);
 
-  const setupProvider = async () => {
-    let result = await connector?.getProvider().then((res) => {
-      return res;
-    });
-    return result;
-  };
-
   useEffect(() => {
-    setupProvider().then((res) => {
+    provider.then((res) => {
       setWeb3(new Web3(res));
     });
   }, [active, chainId]);

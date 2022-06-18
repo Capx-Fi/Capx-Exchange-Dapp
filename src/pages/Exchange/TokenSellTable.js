@@ -36,7 +36,7 @@ const { Column, ColumnGroup } = Table;
 function TokenSellTable({ filter, refresh }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
   const [portfolioHoldings, setPortfolioHoldings] = useState([]);
-  const { active, account, chainId, connector } = useWagmi();
+  const { active, account, chainId, connector, provider } = useWagmi();
   const ticker = useSelector((state) => state.exchange.sellTicker);
 
   const exchangeURL = chainId && getExchangeURL(chainId);
@@ -45,15 +45,8 @@ function TokenSellTable({ filter, refresh }) {
   const [loading, setLoading] = useState(false);
   const [web3, setWeb3] = useState(null);
 
-  const setupProvider = async () => {
-    let result = await connector?.getProvider().then((res) => {
-      return res;
-    });
-    return result;
-  };
-
   useEffect(() => {
-    setupProvider().then((res) => {
+    provider.then((res) => {
       setWeb3(new Web3(res));
     });
   }, [active, chainId]);

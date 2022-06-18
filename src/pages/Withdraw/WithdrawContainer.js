@@ -41,7 +41,7 @@ function WithdrawContainer({
     dispatch(hideSideNav());
   }, []);
   const [web3, setWeb3] = useState(null);
-  const { active, account, chainId, connector } = useWagmi();
+  const { active, account, chainId, connector, provider } = useWagmi();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
     chainId && getExchangeContractAddress(chainId);
   const [disabled, setDisabled] = useState(false);
@@ -49,15 +49,8 @@ function WithdrawContainer({
   const [checkWithdraw, setCheckWithdraw] = useState({});
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const setupProvider = async () => {
-    let result = await connector?.getProvider().then((res) => {
-      return res;
-    });
-    return result;
-  };
-
   useEffect(() => {
-    setupProvider().then((res) => {
+    provider.then((res) => {
       setWeb3(new Web3(res));
     });
   }, [active, chainId]);

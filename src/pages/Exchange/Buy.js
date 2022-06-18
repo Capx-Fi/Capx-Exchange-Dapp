@@ -33,7 +33,6 @@ import {
   getUsdtContractAddress,
 } from "../../constants/getChainConfig";
 import useWagmi from "../../useWagmi";
-import { useContract } from "wagmi";
 
 BigNumber.config({
   ROUNDING_MODE: 3,
@@ -56,7 +55,7 @@ function BuyScreen({
 }) {
   const dispatch = useDispatch();
   var mode = useSelector((state) => state.exchange.exchangeMode);
-  const { active, account, chainId, connector } = useWagmi();
+  const { active, account, chainId, connector, provider } = useWagmi();
   const [web3, setWeb3] = useState(null);
 
   const ticker = useSelector((state) => state.exchange.buyTicker);
@@ -64,15 +63,8 @@ function BuyScreen({
     dispatch(hideSideNav());
   }, []);
 
-  const setupProvider = async () => {
-    let result = await connector?.getProvider().then((res) => {
-      return res;
-    });
-    return result;
-  };
-
   useEffect(() => {
-    setupProvider().then((res) => {
+    provider.then((res) => {
       setWeb3(new Web3(res));
     });
   }, [active, chainId]);
@@ -86,12 +78,8 @@ function BuyScreen({
     new web3.eth.Contract(CONTRACT_ABI_ERC20, CHAIN_USDT_CONTRACT_ADDRESS);
 
   const exchangeContract =
-    // web3 &&
-    // new web3.eth.Contract(EXCHANGE_ABI, CHAIN_EXCHANGE_CONTRACT_ADDRESS);
-    useContract({
-      contractInterface: EXCHANGE_ABI,
-      addressOrName: CHAIN_EXCHANGE_CONTRACT_ADDRESS,
-    });
+    web3 &&
+    new web3.eth.Contract(EXCHANGE_ABI, CHAIN_EXCHANGE_CONTRACT_ADDRESS);
 
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);

@@ -14,19 +14,12 @@ import {
 
 function DropDown({ sortBy, chainChange, setShowMenu }) {
   const [open, setOpen] = useState(false);
-  const { active, chainId, connector } = useWagmi();
+  const { active, chainId, connector, provider } = useWagmi();
 
   const [web3, setWeb3] = useState(null);
 
-  const setupProvider = async () => {
-    let result = await connector?.getProvider().then((res) => {
-      return res;
-    });
-    return result;
-  };
-
   useEffect(() => {
-    setupProvider().then((res) => {
+    provider.then((res) => {
       setWeb3(new Web3(res));
     });
   }, [active, chainId]);

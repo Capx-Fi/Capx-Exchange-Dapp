@@ -42,7 +42,7 @@ function WithdrawTokenTable({ filter, refetch }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
   const [portfolioHoldings, setPortfolioHoldings] = useState([]);
   const ticker = useSelector((state) => state.withdraw.withdrawTicker);
-  const { active, account, chainId, connector } = useWagmi();
+  const { active, account, chainId, connector, provider } = useWagmi();
   const CHAIN_EXCHANGE_CONTRACT_ADDRESS =
     chainId && getExchangeContractAddress(chainId);
   const CHAIN_USDT_CONTRACT_ADDRESS =
@@ -54,15 +54,8 @@ function WithdrawTokenTable({ filter, refetch }) {
   let history = useHistory();
   const [web3, setWeb3] = useState(null);
 
-  const setupProvider = async () => {
-    let result = await connector?.getProvider().then((res) => {
-      return res;
-    });
-    return result;
-  };
-
   useEffect(() => {
-    setupProvider().then((res) => {
+    provider.then((res) => {
       setWeb3(new Web3(res));
     });
   }, [active, chainId]);

@@ -58,7 +58,7 @@ function BuyScreen({
   useEffect(() => {
     dispatch(hideSideNav());
   }, []);
-  const { active, account, chainId, connector } = useWagmi();
+  const { active, account, chainId, connector, provider } = useWagmi();
   const [web3, setWeb3] = useState(null);
   const [tokenApproval, setTokenApproval] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -66,15 +66,8 @@ function BuyScreen({
   const [warningCheck, setWarningCheck] = useState(false);
   const [checkBuy, setCheckBuy] = useState({});
 
-  const setupProvider = async () => {
-    let result = await connector?.getProvider().then((res) => {
-      return res;
-    });
-    return result;
-  };
-
   useEffect(() => {
-    setupProvider().then((res) => {
+    provider.then((res) => {
       setWeb3(new Web3(res));
     });
   }, [active, chainId]);
