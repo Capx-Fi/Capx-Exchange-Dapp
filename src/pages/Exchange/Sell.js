@@ -35,6 +35,7 @@ import {
 } from "../../constants/getChainConfig";
 import SelectInput from "@material-ui/core/Select/SelectInput";
 import useWindowSize from "../../utils/windowSize";
+import useWagmi from "../../useWagmi";
 const format = "HH:mm";
 const currentDate = new Date();
 BigNumber.config({
@@ -59,20 +60,14 @@ function SellScreen({
 		dispatch(hideSideNav());
 	}, []);
 
-	const { active, account, chainId, connector } = useWeb3React();
+	const { active, account, chainId, connector, provider } = useWagmi();
 	const [web3, setWeb3] = useState(null);
 
-	const setupProvider = async () => {
-		let result = await connector?.getProvider().then((res) => {
-			return res;
-		});
-		return result;
-	};
-
 	useEffect(() => {
-		setupProvider().then((res) => {
-			setWeb3(new Web3(res));
-		});
+		active &&
+			provider.then((res) => {
+				setWeb3(new Web3(res));
+			});
 	}, [active, chainId]);
 
 	// web3 && console.log(web3);
@@ -361,6 +356,85 @@ function SellScreen({
 								}`}
 							/>
 						)}
+
+						<div className="exchangeScreen_rightcontainer_buyContainer_body_splitContainer">
+							<div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer">
+								<div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title">
+									EXPIRY DATE
+								</div>
+								<div
+									className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
+										!ticker ||
+										!ticker?.asset ||
+										ticker?.asset === "" ||
+										tokenApproval
+											? "pointer-events-none ring-dark-50"
+											: "ring-success-color-500 "
+									} `}
+								>
+									<div
+										className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper w-full ${
+											!ticker ||
+											!ticker?.asset ||
+											ticker?.asset === "" ||
+											tokenApproval
+												? "pointer-events-none ring-dark-50"
+												: "ring-success-color-500 "
+										} `}
+									>
+										<DatePicker
+											onChange={setDate}
+											value={ticker && ticker?.expiryDate}
+											clearIcon={null}
+											minDate={new Date()}
+											calendarIcon={
+												<>
+													<img src={DropdownIcon} alt="dropdown" />
+												</>
+											}
+											showLeadingZeros={true}
+											calendarClassName="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_dateInput text-white"
+										/>
+									</div>
+								</div>
+							</div>
+							<div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer">
+								<div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_title">
+									EXPIRY TIME (UTC)
+								</div>
+								<div
+									className={`exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer ${
+										!ticker ||
+										!ticker?.asset ||
+										ticker?.asset === "" ||
+										tokenApproval
+											? "pointer-events-none ring-dark-50"
+											: "ring-success-color-500 "
+									} `}
+								>
+									<div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_lockWrapper w-full">
+										<TimePicker
+											defaultValue={moment().utc().add(15, "minutes")}
+											allowClear={false}
+											disabled={!ticker}
+											bordered={false}
+											format={format}
+											onChange={(value) => setTime(value)}
+											popupClassName="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_timeInput"
+											className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer_inputContainer_input"
+											minuteStep={15}
+											showNow={false}
+											suffixIcon={
+												<>
+													<img src={DropdownIcon} alt="dropdown" />
+												</>
+											}
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+						{warningDate && <WarningCard text={warningDate} />}
 
 						<div className="exchangeScreen_rightcontainer_buyContainer_body_splitContainer">
 							<div className="exchangeScreen_rightcontainer_buyContainer_body_tokenContainer">

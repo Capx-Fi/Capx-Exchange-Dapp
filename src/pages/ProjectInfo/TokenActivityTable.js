@@ -13,12 +13,13 @@ import { convertToInternationalCurrencySystem } from "../../utils/convertToInter
 
 import { useWeb3React } from "@web3-react/core";
 import { getExplorerURL } from "../../constants/getChainConfig";
+import useWagmi from "../../useWagmi";
 
 const { Column, ColumnGroup } = Table;
 
 function TokenActivityTable({ completeOrders }) {
   const [tokenList, setTokenList] = useState(dummyDataExchange);
-  const { active, account, chainId } = useWeb3React();
+  const { active, account, chainId } = useWagmi();
 
   const EXPLORER_URL = chainId && getExplorerURL(chainId);
 

@@ -64,7 +64,11 @@ async function fetchProjectIDForDerivatives(
   }
 }
 
-export const fetchAllProjectData = async (exchangeURL, masterURL, wrappedURL) => {
+export const fetchAllProjectData = async (
+  exchangeURL,
+  masterURL,
+  wrappedURL
+) => {
   let _project = [];
   let derivatives = await fetchOrderTokens(exchangeURL, masterURL, wrappedURL);
   let projects = await fetchProjectIDForDerivatives(
