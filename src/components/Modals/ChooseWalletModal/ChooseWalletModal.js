@@ -61,7 +61,7 @@ const Landing = ({ setModalMode }) => {
 	}
 
 	return (
-		<article className="h-full bg-dark-400 flex choose_screen overflow-hidden m-auto phone:mt-20 tablet:-mt-10 breakpoint:mt-10 desktop:-mt-10">
+		<article className="h-full bg-dark-400 flex choose_screen overflow-hidden m-auto phone:mt-20 tablet:-mt-10 breakpoint:mt-10 desktop:-mt-12">
 			<Header hiddenNav />
 			<div className="justify-center items-center m-auto breakpoint:mt-20 desktop:mt-20 tablet:mt-48 laptop:mt-auto overflow-hidden">
 				<div className="herocontainer overflow-hidden phone:w-90v phone:mt-12 screen:mt-0 tablet:w-75v phone:px-8 phone:py-6 screen:px-16 screen:py-10 desktop:px-20 desktop:py-14 rounded-2xl bg-opacity-70 text-white relative screen:w-65v desktop:w-60v flex flex-col items-start">
