@@ -3,5 +3,5 @@
 }
 
 .option {
-	@apply flex flex-row items-center px-4 text-left py-2 w-11/12 breakpoint:text-caption-3 desktop:text-caption-2 text-grayLabel hover:bg-dark-75 hover:text-white;
+	@apply flex flex-row items-center px-4 text-left py-2 w-full breakpoint:text-caption-3 desktop:text-caption-2 text-grayLabel hover:bg-dark-75 hover:text-white;
 }
