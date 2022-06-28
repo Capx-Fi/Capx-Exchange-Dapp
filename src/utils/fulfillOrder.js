@@ -1,5 +1,3 @@
-import BigNumber from "bignumber.js";
-import moment from "moment";
 export const fulfillOrder = async (
 	exchangeContract,
 	account,

@@ -97,8 +97,6 @@ function BuyScreen({
 		const vestingTokenContract =
 			web3 &&
 			new web3.eth.Contract(CONTRACT_ABI_ERC20, CHAIN_USDT_CONTRACT_ADDRESS);
-		// console.log("CheckBuy", checkBuy.stableCoinValue);
-		// console.log("ticker", ticker?.balance);
 
 		const tokens = new BigNumber(checkBuy.stableCoinValue).minus(
 			BigNumber(ticker?.balance).multipliedBy(
@@ -160,13 +158,6 @@ function BuyScreen({
 
 	return (
 		<>
-			{/* <ApproveModal
-            open={approveModalOpen}
-            setOpen={setApproveModalOpen}
-            approveModalStatus={approveModalStatus}
-            setApproveModalStatus={setApproveModalStatus}
-      />
-    <BuyModal open={buyModalOpen} setOpen={setBuyModalOpen} buyModalStatus={buyModalStatus} /> */}
 			<div
 				className={`exchangeScreen_rightcontainer ${
 					(!ticker?.asset || ticker?.asset === "") &&
