@@ -1,6 +1,6 @@
 import { Table } from "antd";
 import { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./TokenListTable.scss";
 import MobileTableSell from "../../components/MobileTable/MobileTableSell";
 

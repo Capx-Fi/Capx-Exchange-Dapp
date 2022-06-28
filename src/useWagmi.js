@@ -1,10 +1,4 @@
-import {
-	useAccount,
-	useConnect,
-	useDisconnect,
-	useNetwork,
-	WagmiConfig,
-} from "wagmi";
+import { useAccount, useConnect, useDisconnect, useNetwork } from "wagmi";
 
 function useWagmi() {
 	const wagmiConnect = useConnect();
