@@ -10,7 +10,7 @@ import { rinkeby, polygonMumbai } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import { avalancheChain, bscTestnet } from "./chainObjects";
+import { avalancheChain, bscTestnet } from "./constants/chainObjects";
 
 const { chains, provider, webSocketProvider } = configureChains(
 	[avalancheChain, bscTestnet, rinkeby, polygonMumbai],
