@@ -34,8 +34,8 @@ const client = createClient({
 
 ReactDOM.render(
 	<WagmiConfig client={client}>
-		{/* <MetamaskStateProvider> */}
-		<SnackbarProvider
+		{/* wagmi client initialisation */}
+		<SnackbarProvider // Snackbar for transaction status
 			anchorOrigin={{
 				vertical: "top",
 				horizontal: "right",
@@ -43,10 +43,7 @@ ReactDOM.render(
 			maxSnack={3}
 		>
 			<App />
-			{/* <MetamaskModal /> */}
-			{/* <VestingOverview/> */}
 		</SnackbarProvider>
-		{/* </MetamaskStateProvider> */}
 	</WagmiConfig>,
 	document.getElementById("root")
 );

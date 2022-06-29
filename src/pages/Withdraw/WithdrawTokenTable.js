@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import "./TokenListTable.scss";
 import MobileWithdraw from "./MobileWithdraw";
 
-import dummyDataExchange from "../../layouts/TableLayout/dummyDataExchange.json";
 import WithdrawIcon from "../../assets/DepositIcon.svg";
 
 import $ from "jquery";
@@ -38,7 +37,7 @@ BigNumber.config({
 const { Column } = Table;
 
 function WithdrawTokenTable({ filter, refetch }) {
-	const [tokenList, setTokenList] = useState(dummyDataExchange);
+	const [tokenList, setTokenList] = useState([]);
 	const [portfolioHoldings, setPortfolioHoldings] = useState([]);
 	const ticker = useSelector((state) => state.withdraw.withdrawTicker);
 	const { active, account, chainId, provider } = useWagmi();

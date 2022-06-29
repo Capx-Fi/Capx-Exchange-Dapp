@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./DropDown.scss";
-import Web3 from "web3";
 import bscLogo from "../../../assets/bsc-logo.svg";
 import maticLogo from "../../../assets/matic-logo.svg";
 import avalancheLogo from "../../../assets/avalanche-logo.svg";
 import ethLogo from "../../../assets/ethereum-logo.svg";
-import { useWeb3React } from "@web3-react/core";
 import useWagmi from "../../../useWagmi";
 import {
 	SUPPORTED_CHAIN_IDS,

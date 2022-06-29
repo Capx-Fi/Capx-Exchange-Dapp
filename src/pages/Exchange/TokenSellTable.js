@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import "./TokenListTable.scss";
 import MobileTableSell from "../../components/MobileTable/MobileTableSell";
 
-import dummyDataExchange from "../../layouts/TableLayout/dummyDataExchange.json";
 import SellIcon from "../../assets/sell.svg";
 
 import $ from "jquery";
@@ -26,7 +25,7 @@ import useWagmi from "../../useWagmi";
 const { Column } = Table;
 
 function TokenSellTable({ filter, refresh }) {
-	const [tokenList, setTokenList] = useState(dummyDataExchange);
+	const [tokenList, setTokenList] = useState([]);
 	const [portfolioHoldings, setPortfolioHoldings] = useState([]);
 	const { active, account, chainId, provider } = useWagmi();
 	const ticker = useSelector((state) => state.exchange.sellTicker);
