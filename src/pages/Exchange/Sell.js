@@ -32,7 +32,7 @@ import {
 	getUsdtContractAddress,
 } from "../../constants/getChainConfig";
 import useWindowSize from "../../utils/windowSize";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 const format = "HH:mm";
 const currentDate = new Date();
 BigNumber.config({

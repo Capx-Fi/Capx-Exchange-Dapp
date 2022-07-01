@@ -20,7 +20,7 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { getExchangeURL, getWrappedURL } from "../../constants/getChainConfig";
 import Web3 from "web3";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 
 const { Column } = Table;
 

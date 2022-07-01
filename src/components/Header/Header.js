@@ -17,7 +17,7 @@ import {
 	getSortBy,
 	getWrappedURL,
 } from "../../constants/getChainConfig";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 
 function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
 	const location = useLocation();

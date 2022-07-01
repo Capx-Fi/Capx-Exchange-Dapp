@@ -12,7 +12,7 @@ import { setWithdrawTicker } from "../../redux/actions/withdraw";
 import useWindowSize from "../../utils/windowSize";
 import WithdrawModal from "../../components/Modals/VestAndApproveModal/WithdrawModal";
 import WalletModal from "../../components/WalletModal/WalletModal";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 
 function WithdrawScreen({ match }) {
 	const dispatch = useDispatch();

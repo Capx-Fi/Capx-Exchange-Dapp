@@ -26,7 +26,7 @@ import {
 	getExchangeContractAddress,
 	getUsdtContractAddress,
 } from "../../constants/getChainConfig";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 
 BigNumber.config({
 	ROUNDING_MODE: 3,

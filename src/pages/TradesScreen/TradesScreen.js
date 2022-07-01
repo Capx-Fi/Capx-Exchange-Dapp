@@ -15,7 +15,7 @@ import {
 	getExchangeURL,
 } from "../../constants/getChainConfig";
 import WalletModal from "../../components/WalletModal/WalletModal";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 
 function TradesScreen() {
 	const { active, account, chainId, provider } = useWagmi();

@@ -6,7 +6,7 @@ import TokenLink from "../../assets/token-link.svg";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 
 import { getExplorerURL } from "../../constants/getChainConfig";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 
 const { Column } = Table;
 

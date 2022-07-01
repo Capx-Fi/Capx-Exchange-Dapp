@@ -18,7 +18,7 @@ import { setWithdrawTicker } from "../../redux/actions/withdraw";
 
 import { validateWithdrawAmount } from "../../utils/validateWithdrawAmount";
 import { getExchangeContractAddress } from "../../constants/getChainConfig";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 
 function WithdrawContainer({
 	withdrawModalOpen,

@@ -9,7 +9,7 @@ import { hideSideNav } from "../redux/actions/sideNav";
 import ExchangeScreen from "./Exchange/Exchange";
 import WithdrawScreen from "./Withdraw/Withdraw";
 import ProjectInfo from "./ProjectInfo/ProjectInfo";
-import useWagmi from "../useWagmi";
+import useWagmi from "../constants/useWagmi";
 
 const MainLayout = ({ sideNavState }) => {
 	const { active } = useWagmi();

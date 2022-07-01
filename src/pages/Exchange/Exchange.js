@@ -19,7 +19,7 @@ import ApproveModal from "../../components/Modals/VestAndApproveModal/ApproveMod
 import SellModal from "../../components/Modals/VestAndApproveModal/SellModal";
 import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
 import WalletModal from "../../components/WalletModal/WalletModal";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 
 function ExchangeScreen({ match }) {
 	const dispatch = useDispatch();

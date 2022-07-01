@@ -25,7 +25,7 @@ import BuyModal from "../../components/Modals/VestAndApproveModal/BuyModal";
 import WalletModal from "../../components/WalletModal/WalletModal";
 import Web3 from "web3";
 import { EXCHANGE_ABI } from "../../contracts/ExchangeContract";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 // import { CONTRACT_ABI_ERC20 } from "../contracts/SampleERC20";
 
 function ProjectInfo({ match }) {

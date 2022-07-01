@@ -3,7 +3,7 @@ import marketActivity from "../../assets/marketActivity.svg";
 import { convertToInternationalCurrencySystem } from "../../utils/convertToInternationalCurrencySystem";
 import TokenLink from "../../assets/token-link.svg";
 import { getExplorerURL } from "../../constants/getChainConfig";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 
 function MobileMarketActivity({ completeOrders, loading }) {
 	return (

@@ -6,7 +6,7 @@ import WalletConnectIcon from "../../../assets/walletconnect-logo.svg";
 import "./ChooseWalletModal.scss";
 import CrossIcon from "../../../assets/cross.svg";
 import infoIcon from "../../../assets/info.svg";
-import useWagmi from "../../../useWagmi";
+import useWagmi from "../../../constants/useWagmi";
 
 const Landing = ({ setModalMode }) => {
 	const { connectors, connect } = useWagmi();

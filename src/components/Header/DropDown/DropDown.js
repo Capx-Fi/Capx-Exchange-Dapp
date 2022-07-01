@@ -4,7 +4,7 @@ import bscLogo from "../../../assets/bsc-logo.svg";
 import maticLogo from "../../../assets/matic-logo.svg";
 import avalancheLogo from "../../../assets/avalanche-logo.svg";
 import ethLogo from "../../../assets/ethereum-logo.svg";
-import useWagmi from "../../../useWagmi";
+import useWagmi from "../../../constants/useWagmi";
 import {
 	SUPPORTED_CHAIN_IDS,
 	SUPPORTED_CHAIN_NAMES,
