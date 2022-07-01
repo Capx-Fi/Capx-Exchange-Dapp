@@ -34,7 +34,6 @@ const client = createClient({
 
 ReactDOM.render(
 	<WagmiConfig client={client}>
-		{/* wagmi client initialisation */}
 		<SnackbarProvider // Snackbar for transaction status
 			anchorOrigin={{
 				vertical: "top",

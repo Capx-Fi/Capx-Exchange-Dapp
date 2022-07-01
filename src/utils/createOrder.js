@@ -1,9 +1,6 @@
 import BigNumber from "bignumber.js";
-import { time } from "highcharts";
-import moment from "moment";
 import { CONTRACT_ABI_ERC20 } from "../contracts/SampleERC20";
-import Web3 from "web3";
-import useWindowSize from "./windowSize";
+
 BigNumber.config({
 	ROUNDING_MODE: 3,
 	DECIMAL_PLACES: 18,
