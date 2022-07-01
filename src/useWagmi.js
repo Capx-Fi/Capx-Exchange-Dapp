@@ -1,22 +1,28 @@
-import { useAccount, useConnect, useDisconnect, useNetwork } from "wagmi";
+import {
+	useAccount,
+	useConnect,
+	useDisconnect,
+	useNetwork,
+	useSwitchNetwork,
+} from "wagmi";
 
 function useWagmi() {
 	const wagmiConnect = useConnect();
 	const wagmiDisconnect = useDisconnect();
 	const wagmiAccount = useAccount();
 	const wagmiNetwork = useNetwork();
+	const wagmiSwitch = useSwitchNetwork();
 
-	const active = wagmiConnect.isConnected;
-	const account = wagmiAccount.data?.address;
-	const chainId = wagmiNetwork.activeChain?.id;
+	const active = wagmiAccount.isConnected;
+	const account = wagmiAccount.address;
+	const chainId = wagmiNetwork.chain?.id;
 	const error = wagmiNetwork.error;
 	const connectors = wagmiConnect.connectors;
 	const connector = wagmiConnect.data?.connector;
 	const deactivate = wagmiDisconnect.disconnect;
 	const connect = wagmiConnect.connect;
-	const switchNetwork = wagmiNetwork.switchNetwork;
-	const { activeConnector } = wagmiConnect;
-	const provider = wagmiConnect.activeConnector?.getProvider().then((res) => {
+	const switchNetwork = wagmiSwitch.switchNetwork;
+	const provider = wagmiAccount.connector?.getProvider().then((res) => {
 		return res;
 	});
 
@@ -30,7 +36,6 @@ function useWagmi() {
 		error,
 		connect,
 		switchNetwork,
-		activeConnector,
 		provider,
 	};
 }

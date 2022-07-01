@@ -34,7 +34,7 @@ const Landing = ({ setModalMode }) => {
 					<div className="herobuttons flex flex-col gap-y-2 my-14 w-full">
 						{connectors[0].ready && (
 							<div
-								onClick={() => connect(connectors[0])}
+								onClick={() => connect({ connector: connectors[0] })}
 								className="herocontainer_connectbutton flex flex-start rounded-xl items-center flex px-5 py-4 z-10 cursor-pointer"
 							>
 								<div>
@@ -51,7 +51,7 @@ const Landing = ({ setModalMode }) => {
 						)}
 						{connectors[1].ready && (
 							<div
-								onClick={() => connect(connectors[1])}
+								onClick={() => connect({ connector: connectors[1] })}
 								className="herocontainer_connectbutton flex flex-start rounded-xl items-center flex px-5 py-4 z-10 cursor-pointer"
 							>
 								<div>
