@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { render } from "react-dom";
-import { hideSideNav, showSideNav } from "../../redux/actions/sideNav";
+import React, { useEffect, useState } from "react";
+import { hideSideNav } from "../../redux/actions/sideNav";
 import { useDispatch, useSelector } from "react-redux";
 import BuyIcon from "../../assets/buy.svg";
 import crossIcon from "../../assets/close-cyan.svg";
@@ -17,7 +16,6 @@ import LockIcon from "../../assets/lock-asset.svg";
 import NextIcon from "../../assets/next-black.svg";
 import DatePicker from "react-date-picker";
 import DropdownIcon from "../../assets/dropdown.svg";
-import { useWeb3React } from "@web3-react/core";
 import { TimePicker } from "antd";
 import "./antd.css";
 import moment from "moment";
@@ -33,9 +31,8 @@ import {
 	getExchangeContractAddress,
 	getUsdtContractAddress,
 } from "../../constants/getChainConfig";
-import SelectInput from "@material-ui/core/Select/SelectInput";
 import useWindowSize from "../../utils/windowSize";
-import useWagmi from "../../useWagmi";
+import useWagmi from "../../constants/useWagmi";
 const format = "HH:mm";
 const currentDate = new Date();
 BigNumber.config({
@@ -60,7 +57,7 @@ function SellScreen({
 		dispatch(hideSideNav());
 	}, []);
 
-	const { active, account, chainId, connector, provider } = useWagmi();
+	const { active, account, chainId, provider } = useWagmi();
 	const [web3, setWeb3] = useState(null);
 
 	useEffect(() => {
@@ -83,7 +80,6 @@ function SellScreen({
 	const ticker = useSelector((state) => state.exchange.sellTicker);
 	const balance = useSelector((state) => state.exchange.tickerBalance);
 	const [tokenApproval, setTokenApproval] = useState(false);
-	const [buttonClicked, setButtonClicked] = useState(false);
 	const [disabled, setDisabled] = useState(false);
 	const [warningDate, setWarningDate] = useState(false);
 	const [checkSell, setCheckSell] = useState({});
@@ -111,8 +107,6 @@ function SellScreen({
 	//   resetValue();
 	// }, [account]);
 
-	const windowWidth = useWindowSize().width;
-
 	const setAmount = (e) => {
 		dispatch(setSellTicker({ ...ticker, price: e }));
 	};
@@ -132,10 +126,8 @@ function SellScreen({
 	};
 
 	const checkQuantityUpdate = (value) => {
-		const { price, quantity } = ticker;
 		// let targetValue = new BigNumber(value).toFixed(6);
 		// setQuantity(targetValue);
-
 		setQuantity(value);
 	};
 
@@ -147,8 +139,6 @@ function SellScreen({
 		setCheckSell(checkValidity);
 	};
 	const initiateSwapApproval = async () => {
-		setButtonClicked(true);
-
 		const vestingTokenContract =
 			web3 && new web3.eth.Contract(CONTRACT_ABI_ERC20, ticker.assetID);
 

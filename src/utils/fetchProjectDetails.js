@@ -1,15 +1,13 @@
 // Orders created should not be completely filled, i.e. amountSent < amountGive || amountReceived < amountGet
 // expiryTime should be in future, i.e expiryTime > current_Timestamp in UTC.
 
-import { ApolloClient, InMemoryCache, gql, cache } from '@apollo/client';
-import BigNumber from 'bignumber.js';
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 export async function fetchProjectID(tokenAddress, wrappedURL) {
-
-  const client = new ApolloClient({
-    uri: wrappedURL,
-    cache: new InMemoryCache(),
-  });
-  const query = `query {
+	const client = new ApolloClient({
+		uri: wrappedURL,
+		cache: new InMemoryCache(),
+	});
+	const query = `query {
         projects {
           id
             projectTokenTicker
@@ -20,28 +18,28 @@ export async function fetchProjectID(tokenAddress, wrappedURL) {
           }
         }
       }`;
-  try {
-    const { data } = await client.query({
-      query: gql(query),
-    });
-    let id = "";
-    data.projects.map((project) => {
-      if (project.derivatives.length > 0) {
-        id = project.projectTokenAddress;
-      }
-    });
-    return id;
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		const { data } = await client.query({
+			query: gql(query),
+		});
+		let id = "";
+		data.projects.map((project) => {
+			if (project.derivatives.length > 0) {
+				id = project.projectTokenAddress;
+			}
+		});
+		return id;
+	} catch (error) {
+		console.log(error);
+	}
 }
 export const fetchProjectDetails = async (tokenAddress, masterURL) => {
-  let listedTokens = [];
-  const client = new ApolloClient({
-    uri: masterURL,
-    cache: new InMemoryCache(),
-  });
-  const query = `query {
+	let listedTokens = [];
+	const client = new ApolloClient({
+		uri: masterURL,
+		cache: new InMemoryCache(),
+	});
+	const query = `query {
     projects (where:{projectTokenAddress:"${tokenAddress}"}){
       id
       projectName
@@ -51,26 +49,26 @@ export const fetchProjectDetails = async (tokenAddress, masterURL) => {
     }
   }
 `;
-  try {
-    const { data } = await client.query({
-      query: gql(query),
-    });
-    let description = null;
-    try {
-      const res = await fetch(
-        `https://milliondollarhomepage.mypinata.cloud/ipfs/${data.projects[0].projectDocHash}`
-      );
-      // await console.log("Res response",res)
-      const desc = await res.json();
-      description = await desc.description;
-      // await console.log(desc)
-    } catch (error) {
-      description = "N/A";
-      console.log(error);
-    }
-    listedTokens = { ...data.projects[0], projectDescription: description };
-  } catch (error) {
-    console.log(error);
-  }
-  return listedTokens;
+	try {
+		const { data } = await client.query({
+			query: gql(query),
+		});
+		let description = null;
+		try {
+			const res = await fetch(
+				`https://milliondollarhomepage.mypinata.cloud/ipfs/${data.projects[0].projectDocHash}`
+			);
+			// await console.log("Res response",res)
+			const desc = await res.json();
+			description = await desc.description;
+			// await console.log(desc)
+		} catch (error) {
+			description = "N/A";
+			console.log(error);
+		}
+		listedTokens = { ...data.projects[0], projectDescription: description };
+	} catch (error) {
+		console.log(error);
+	}
+	return listedTokens;
 };

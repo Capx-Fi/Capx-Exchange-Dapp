@@ -1,6 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import WarningCard from "../WarningCard/WarningCard";
 import { Tooltip, withStyles } from "@material-ui/core";
 
 import "./RefresherInput.scss";

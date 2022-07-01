@@ -1,67 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Header from "../../Header/Header";
 import Footer from "../../Footer/Footer";
 import MetamaskIcon from "../../../assets/MetamaskIcon.svg";
 import WalletConnectIcon from "../../../assets/walletconnect-logo.svg";
-import { Link } from "react-router-dom";
 import "./ChooseWalletModal.scss";
-import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
-import { useSnackbar } from "notistack";
-import { WRONG_CHAIN_MESSAGE } from "../../../constants/config";
-import { injected, walletconnect } from "../../../utils/connector";
-import { useTranslation } from "react-i18next";
 import CrossIcon from "../../../assets/cross.svg";
 import infoIcon from "../../../assets/info.svg";
-import useWagmi from "../../../useWagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { useConnect } from "wagmi";
-import { disconnect } from "@wagmi/core";
+import useWagmi from "../../../constants/useWagmi";
 
 const Landing = ({ setModalMode }) => {
-	const { active, account, library, connectors, connect } = useWagmi();
-	const [isWalletConnect, setIsWalletConnect] = useState(false);
+	const { connectors, connect } = useWagmi();
 
-	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-	const { t } = useTranslation();
-
-	//   async function connect() {
-	//     try {
-	//       await activate(injected);
-	//       if (unsupportedChainIdError) {
-	//         enqueueSnackbar(`${WRONG_CHAIN_MESSAGE}`, {
-	//           variant: "error",
-	//         });
-	//       }
-	//     } catch (ex) {
-	//       if (error instanceof UnsupportedChainIdError) {
-	//         enqueueSnackbar(`${WRONG_CHAIN_MESSAGE}`, {
-	//           variant: "error",
-	//         });
-	//       }
-	//       alert(ex);
-	//     }
-	//   }
-
-	async function walletConnect() {
-		// try {
-		//   await activate(walletconnect);
-		//   if (unsupportedChainIdError) {
-		//     enqueueSnackbar(`${WRONG_CHAIN_MESSAGE}`, {
-		//       variant: "error",
-		//     });
-		//   }
-		// } catch (ex) {
-		//   if (error instanceof UnsupportedChainIdError) {
-		//     enqueueSnackbar(`${WRONG_CHAIN_MESSAGE}`, {
-		//       variant: "error",
-		//     });
-		//   }
-		//   console.log(ex);
-		// }
-	}
+	//TODO: Add notification for wrong chain
 
 	return (
-		<article className="h-full bg-dark-400 flex choose_screen overflow-hidden m-auto phone:mt-20 tablet:-mt-10 breakpoint:mt-10 desktop:-mt-12">
+		<article className="h-full bg-dark-400 flex choose_screen overflow-hidden m-auto phone:mt-20 tablet:-mt-10 breakpoint:mt-10">
 			<Header hiddenNav />
 			<div className="justify-center items-center m-auto breakpoint:mt-20 desktop:mt-20 tablet:mt-48 laptop:mt-auto overflow-hidden">
 				<div className="herocontainer overflow-hidden phone:w-90v phone:mt-12 screen:mt-0 tablet:w-75v phone:px-8 phone:py-6 screen:px-16 screen:py-10 desktop:px-20 desktop:py-14 rounded-2xl bg-opacity-70 text-white relative screen:w-65v desktop:w-60v flex flex-col items-start">
@@ -82,7 +35,7 @@ const Landing = ({ setModalMode }) => {
 					<div className="herobuttons flex flex-col gap-y-2 my-14 w-full">
 						{connectors[0].ready && (
 							<div
-								onClick={() => connect(connectors[0])}
+								onClick={() => connect({ connector: connectors[0] })}
 								className="herocontainer_connectbutton flex flex-start rounded-xl items-center flex px-5 py-4 z-10 cursor-pointer"
 							>
 								<div>
@@ -99,7 +52,7 @@ const Landing = ({ setModalMode }) => {
 						)}
 						{connectors[1].ready && (
 							<div
-								onClick={() => connect(connectors[1])}
+								onClick={() => connect({ connector: connectors[1] })}
 								className="herocontainer_connectbutton flex flex-start rounded-xl items-center flex px-5 py-4 z-10 cursor-pointer"
 							>
 								<div>

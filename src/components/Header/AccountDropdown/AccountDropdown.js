@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import "./DropDown.scss";
-import Web3 from "web3";
+import "./AccountDropDown.scss";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import useWindowSize from "../../../utils/windowSize";
