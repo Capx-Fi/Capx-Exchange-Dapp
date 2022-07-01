@@ -11,4 +11,7 @@
 			border: 1px solid #000000;
 		}
 	}
+	.infoText {
+		@apply text-tradeTitle;
+	}
 }

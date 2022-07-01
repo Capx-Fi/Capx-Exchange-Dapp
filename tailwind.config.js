@@ -171,6 +171,8 @@ module.exports = {
 				"fit-content": "fit-content",
 				"overview-card": "170px",
 				"overview-card-1440": "13px",
+				"100v": "100vh",
+				"90v": "90vh",
 				"70v": "70vh",
 				"6ov": "62vh",
 				"35v": "35vh",
@@ -181,6 +183,8 @@ module.exports = {
 			},
 			maxHeight: {
 				"fit-content": "fit-content",
+				"100v": "100vh",
+				"90v": "90vh",
 				"70v": "70vh",
 				"6ov": "60vh",
 				"35v": "35vh",

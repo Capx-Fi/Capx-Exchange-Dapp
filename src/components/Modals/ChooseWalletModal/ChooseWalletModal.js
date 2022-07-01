@@ -5,6 +5,7 @@ import MetamaskIcon from "../../../assets/MetamaskIcon.svg";
 import WalletConnectIcon from "../../../assets/walletconnect-logo.svg";
 import "./ChooseWalletModal.scss";
 import CrossIcon from "../../../assets/cross.svg";
+import infoIcon from "../../../assets/info.svg";
 import useWagmi from "../../../useWagmi";
 
 const Landing = ({ setModalMode }) => {
