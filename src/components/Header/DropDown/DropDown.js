@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DropDown.scss";
 import Web3 from "web3";
 import bscLogo from "../../../assets/bsc-logo.svg";
 import maticLogo from "../../../assets/matic-logo.svg";
 import avalancheLogo from "../../../assets/avalanche-logo.svg";
 import ethLogo from "../../../assets/ethereum-logo.svg";
+import { useWeb3React } from "@web3-react/core";
 
 function DropDown({ sortBy, chainChange, setShowMenu }) {
 	const [open, setOpen] = useState(false);
-	const web3 = new Web3(Web3.givenProvider);
+	const { active, chainId, connector } = useWeb3React();
+
+	const [web3, setWeb3] = useState(null);
+
+	const setupProvider = async () => {
+		let result = await connector?.getProvider().then((res) => {
+			return res;
+		});
+		return result;
+	};
+
+	useEffect(() => {
+		setupProvider().then((res) => {
+			setWeb3(new Web3(res));
+		});
+	}, [active, chainId]);
 
 	return (
 		<div className="relative">

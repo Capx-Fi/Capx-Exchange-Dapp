@@ -13,6 +13,7 @@ import crossIcon from "../../assets/close-cyan.svg";
 import { setWithdrawTicker } from "../../redux/actions/withdraw";
 import useWindowSize from "../../utils/windowSize";
 import WithdrawModal from "../../components/Modals/VestAndApproveModal/WithdrawModal";
+import WalletModal from "../../components/WalletModal/WalletModal";
 
 const format = "HH:mm";
 
@@ -25,6 +26,7 @@ function WithdrawScreen({ match }) {
 	const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
 	const [withdrawModalStatus, setWithdrawModalStatus] = useState("");
 	const [refetch, setRefetch] = useState(false);
+	const [modalMode, setModalMode] = useState(0);
 
 	var withdrawTicker = useSelector((state) => state.withdraw.withdrawTicker);
 
@@ -41,7 +43,7 @@ function WithdrawScreen({ match }) {
 				setWithdrawModalStatus={setWithdrawModalStatus}
 			/>
 			{!active ? (
-				<MetamaskModal />
+				<WalletModal modalMode={modalMode} setModalMode={setModalMode} />
 			) : (
 				<div
 					style={{

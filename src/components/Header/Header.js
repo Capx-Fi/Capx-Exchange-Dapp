@@ -45,7 +45,20 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
 	const currentChainId = metaState.chain.id?.toString();
 	const [dashboardModal, setDashboardModal] = useState(false);
 
-	const web3 = new Web3(Web3.givenProvider);
+	const [web3, setWeb3] = useState(null);
+
+	const setupProvider = async () => {
+		let result = await connector?.getProvider().then((res) => {
+			return res;
+		});
+		return result;
+	};
+
+	useEffect(() => {
+		setupProvider().then((res) => {
+			setWeb3(new Web3(res));
+		});
+	}, [active, chainId]);
 
 	const exchangeURL = chainId && getExchangeURL(chainId);
 	const wrappedURL = chainId && getWrappedURL(chainId);
@@ -138,7 +151,7 @@ function Header({ vesting, hiddenNav, showSteps, exchange, match }) {
 								symbol: "BNB",
 								decimals: 18,
 							},
-							rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
+							rpcUrls: ["https://data-seed-prebsc-1-s3.binance.org:8545"],
 							blockExplorerUrls: ["https://testnet.bscscan.com/"],
 						},
 					],

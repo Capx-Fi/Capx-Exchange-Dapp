@@ -1,0 +1,17 @@
+.choose_screen {
+	.herocontainer {
+		background: radial-gradient(
+			143.33% 143.33% at 82.41% -4.96%,
+			rgba(132, 214, 164, 0.3) 0%,
+			rgba(18, 28, 32, 0.3) 100%
+		);
+
+		.herocontainer_connectbutton {
+			background: #1f1f1f;
+			border: 1px solid #000000;
+		}
+	}
+	.infoText {
+		@apply text-tradeTitle;
+	}
+}
